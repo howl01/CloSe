@@ -19,6 +19,56 @@ function sendSMS(hp1, hp2, hp3) {
     // 버튼 숨기기
     document.getElementById('verificationSection').style.display = 'flex';
   }
+  
+  $(document).ready(function() { 
+		var isCheck = false;
+		
+		$('#idcheck').click(function(){ // 중복체크버튼
+			isCheck = true;
+			
+			$.ajax({
+				url : "duplicate.member", // 요청url
+				data : ({
+					inputid : $('input[name="id"]').val()
+				}),
+				success : function(data){
+					
+					if($('input[name="id"]').val() == ""){
+						$('#idmessage').html("<font color=red>아이디 입력 누락</font>");
+						$('#idmessage').show();
+					}
+					else if(jQuery.trim(data)=='YES'){
+						$('#idmessage').html("<font color=blue>사용 가능합니다.</font>");
+						use = "possible";
+						$('#idmessage').show();
+					}else{
+						$('#idmessage').html("<font color=red>이미 사용중인 아이디입니다.</font>")
+						use = "impossible";
+						$('#idmessage').show();
+					}
+				}//success
+			});//ajax
+			
+		});//중복체크 click
+		
+		$("input[name='id']").keydown(function(){
+
+			isCheck = false;
+			use="";
+			$('#idmessage').css('display','none');
+		}); // keydown
+		
+		$('#sub').click(function(){ // submit 클릭
+			if(use == "impossible"){
+				alert('이미 사용중인 아이디입니다.');
+				return false;
+			}else if(isCheck == false){ 
+				alert('중복체크 하세요');
+				return false;
+			} 
+		});//click(submit 클릭)
+		
+	}); // ready
 </script>
 
 <style type="text/css">
@@ -53,7 +103,7 @@ function sendSMS(hp1, hp2, hp3) {
               <form:errors cssClass="err" path="member_id"/>
               </div>
               <div class="col-4">
-              <input class="btn btn-outline-dark" type = "button" name = "idcheck" value = "중복체크" onclick = "return duplicate()">
+              <input class="btn btn-outline-dark" type = "button" id = "idcheck" name = "idcheck" value = "중복체크">
               </div>
               </div>
               &nbsp;<span id="idmessage" style = "display: none;"></span>
@@ -149,7 +199,7 @@ function sendSMS(hp1, hp2, hp3) {
 
           <hr class="my-4">
        <div class="d-grid gap-2 d-md-block" align = "center">
-          <button class="btn btn-outline-dark btn-md" type="submit">회원가입</button>
+          <button id="sub" class="btn btn-outline-dark btn-md" type="submit">회원가입</button>
           <button class="btn btn-outline-dark btn-md" type="reset">취소</button>
          </div>
         </form:form>

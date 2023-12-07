@@ -11,4 +11,15 @@ public class MemberDao {
 	private SqlSessionTemplate sqlSessionTemplate;
 	private String namespace = "member.MemberBean";
 	
+	public MemberDao() {
+		
+	}
+
+	public int findId(String inputid) {
+		int cnt = sqlSessionTemplate.selectOne(namespace+".findId",inputid);
+		
+		return cnt;
+	}
+	
+	
 }
