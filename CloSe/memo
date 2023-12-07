@@ -110,3 +110,14 @@ CREATE TABLE cart (
 );
 
 CREATE SEQUENCE cart_seq;
+
+create table t_popular_word(
+  popw_word varchar2(50),
+  popw_date date	
+);
+
+create table t_user_popular_word(
+  user_popw_word varchar2(50),
+  user_popw_date date,
+  user_popw_order varchar2(50)
+);

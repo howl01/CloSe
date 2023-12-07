@@ -30,6 +30,9 @@
       font-size: 12pt;
       font-weight: 600;
     }
+    .border{
+    	border: none;
+    }
 </style>
 
 <script type="text/javascript">
@@ -49,12 +52,28 @@
 
 <div id="overlay" class="overlay">
 <a href="javascript:hideOverlay()">
-<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="black" class="bi bi-x-square" viewBox="0 0 16 16" style="float: right;">
-  <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-  <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="black" class="bi bi-x-lg" viewBox="0 0 16 16" style="float: right; margin-right: 20px; margin-top: 20px;">
+  <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
 </svg>
 </a>
+<br><br>
+<form action="" method="get">
+	<div class="d-flex justify-content-center border-bottom border-dark" style="width: 50%; margin: auto; padding-bottom: 10px;">
+		<div><input type="text" name = "search" autocomplete= 'off' placeholder="카테고리, 상품 등" style="border: none; outline: none; width: 500px;"></div>
+		<div><a href="javascript:search()" class="link text-black"> 
+	    <svg src xmlns="http://www.w3.org/2000/svg" class="bi mb-1" width="28" height="28" style="margin-top: 2.5px;" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+	  	<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+		</svg>
+    </a></div>
+	</div>
+</form>
+	<div class="d-flex justify-content-start" style="border: none; outline: none; width: 555px; margin-left: 410px; ">
+		<div><span class="title">최근 검색어</span></div> &nbsp;&nbsp;
+		<div><a href="" style="color: black">지우기</a></div>
+	</div>
 </div>
+
+
 <div class="sticky-top">
 <div class="px-3 py-2 bg-white">
    <div class="container" style="width:66%;">

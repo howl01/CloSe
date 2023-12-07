@@ -77,42 +77,42 @@
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
       
       	<div class="col" align="center">
-         <a><img class="bd-placeholder-img card-img-top" style="width: 150px; height: 150px; border-radius: 50%;" id = "par" src = "resources/img/abc.jpeg" ></a>
+         <a><img class="bd-placeholder-img card-img-top" width="100%" height="120" style="border-radius: 20%;" id = "par" src = "resources/img/abc.jpeg" ></a>
          오늘의 옷비서
           </div>
         
         <div class="col" align="center">
-            <a><img class="bd-placeholder-img card-img-top" src = "/pimages/" width="100%" height="120"></a>
+            <a><img class="bd-placeholder-img card-img-top" src = "/pimages/" width="100%" height="120" style="border-radius: 20%;"></a>
                남자 코디
             </div>
         
         <div class="col" align="center">
-            <a><img class="bd-placeholder-img card-img-top" src = "/pimages/" width="100%" height="120"></a>
+            <a><img class="bd-placeholder-img card-img-top" src = "/pimages/" width="100%" height="120" style="border-radius: 20%;"></a>
                여자 코디
             </div>
             
         <div class="col" align="center">
-            <a><img class="bd-placeholder-img card-img-top" src = "/pimages/" width="100%" height="120"></a>
+            <a><img class="bd-placeholder-img card-img-top" src = "/pimages/" width="100%" height="120" style="border-radius: 20%;"></a>
                계절별 코디
         </div>
         
         <div class="col" align="center">
-            <a><img class="bd-placeholder-img card-img-top" src = "/pimages/" width="100%" height="120"></a>
+            <a><img class="bd-placeholder-img card-img-top" src = "/pimages/" width="100%" height="120" style="border-radius: 20%;"></a>
                아우터
         </div>
         
         <div class="col" align="center">
-            <a><img class="bd-placeholder-img card-img-top" src = "/pimages/" width="100%" height="120"></a>
+            <a><img class="bd-placeholder-img card-img-top" src = "/pimages/" width="100%" height="120" style="border-radius: 20%;"></a>
                상의
         </div>
         
         <div class="col" align="center">
-            <a><img class="bd-placeholder-img card-img-top" src = "/pimages/" width="100%" height="120"></a>
+            <a><img class="bd-placeholder-img card-img-top" src = "/pimages/" width="100%" height="120" style="border-radius: 20%;"></a>
                하의
         </div>
         
         <div class="col" align="center">
-            <a><img class="bd-placeholder-img card-img-top" src = "/pimages/" width="100%" height="120"></a>
+            <a><img class="bd-placeholder-img card-img-top" src = "/pimages/" width="100%" height="120" style="border-radius: 20%;"></a>
                신발
         </div>
         

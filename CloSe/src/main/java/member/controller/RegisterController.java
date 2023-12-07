@@ -2,11 +2,13 @@ package member.controller;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import category.model.CategoryDao;
 import member.model.MemberBean;
 
 @Controller
@@ -15,6 +17,9 @@ public class RegisterController {
    private final String command = "/register.member";
    private final String viewPage = "register";
    private final String gotoPage = "main";
+   
+   @Autowired
+   CategoryDao categoryDao;
    
    @RequestMapping(value = command, method = RequestMethod.GET)
    public String registerGet() {
