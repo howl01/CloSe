@@ -77,7 +77,8 @@
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
       
       	<div class="col" align="center">
-         <a><img class="bd-placeholder-img card-img-top" style="width: 150px; height: 150px; border-radius: 50%;" id = "par" src = "resources/img/abc.jpeg" ></a>
+         <a><img class="bd-placeholder-img card-img-top" 
+         style="width: 150px; height: 150px; border-radius: 50%;" id = "par" src = "resources/img/abc.jpeg" ></a>
          오늘의 옷비서
           </div>
         

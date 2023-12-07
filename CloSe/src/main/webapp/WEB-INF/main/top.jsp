@@ -28,7 +28,7 @@
     body {
       font-family: 'Hahmlet-VariableFont_wght.ttf', sans-serif;
       font-size: 12pt;
-      font-weight: 600;
+      font-weight: 500;
     }
 </style>
 
@@ -95,7 +95,7 @@
       <ul class="nav me-auto">
         <li class="nav-item"><a href="javscript:void(0);" onclick="goLogin()" class="nav-link link-body-emphasis px-2">HOME</a></li>
         <li class="nav-item"><a href="javscript:void(0);" onclick="goLogin()" class="nav-link link-body-emphasis px-2">오늘의 옷비서</a></li>
-        <li class="nav-item"><a href="javscript:void(0)" onclick="goLogin()" class="nav-link link-body-emphasis px-2">STYLE</a></li>
+        <li class="nav-item"><a href="mainView.style" class="nav-link link-body-emphasis px-2" id="styleNav">STYLE</a></li>
         <li class="nav-item"><a href="javscript:void(0)" onclick="goLogin()" class="nav-link link-body-emphasis px-2">SHOP</a></li>
         <li class="nav-item"><a href="javscript:void(0)" onclick="goLogin()" class="nav-link link-body-emphasis px-2">EVENT</a></li>
       </ul>
