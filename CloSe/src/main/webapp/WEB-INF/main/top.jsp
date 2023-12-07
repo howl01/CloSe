@@ -34,7 +34,7 @@
 
 <script type="text/javascript">
    function goLogin() {
-      location.href = "register.member";
+      location.href = "login.member";
    }
    
    function search() {

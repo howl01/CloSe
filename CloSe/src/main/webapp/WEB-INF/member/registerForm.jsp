@@ -12,12 +12,12 @@
 function sendSMS(hp1, hp2, hp3) {
     alert('인증번호를 요청했습니다.');
     // 버튼 숨기기
-    document.getElementById('verificationSection').style.display = 'block';
+    document.getElementById('verificationSection').style.display = 'flex';
   }
 
   function requestVerification() {
     // 버튼 숨기기
-    document.getElementById('verificationSection').style.display = 'block';
+    document.getElementById('verificationSection').style.display = 'flex';
   }
 </script>
 
@@ -33,7 +33,7 @@ function sendSMS(hp1, hp2, hp3) {
   <main>
     <div class="py-5 text-center">
     
-   <a href = "../main/main.jsp">
+   <a href = "view.main">
       <img class="d-block mx-auto mb-4" src="resources/img/logo.png" alt="" width="500" height="100">
     </a>
       <h2>회원가입</h2>
@@ -134,8 +134,8 @@ function sendSMS(hp1, hp2, hp3) {
                </div>
                <div id="verificationSection" style="display: none; margin-top: 20px;">
               <!-- 이곳에 텍스트 상자 및 기타 요소 추가 -->
-              <label for="verificationCode" class="form-label">인증번호</label>
-              <input type="text" class="form-control" id="verificationCode" name="verificationCode" style="border-color: black; width: 155px;">
+              <label for="verificationCode" class="form-label">인증번호 : </label>&nbsp;
+              <input type="text" class="form-control" id="verificationCode" name="verificationCode" style="border-color: black; width: 155px;">&nbsp;
               <input type="button" value="인증하기">
             </div>
             
@@ -149,8 +149,8 @@ function sendSMS(hp1, hp2, hp3) {
 
           <hr class="my-4">
        <div class="d-grid gap-2 d-md-block" align = "center">
-          <button class="btn btn-primary btn-md" type="submit">회원가입</button>
-          <button class="btn btn-primary btn-md" type="reset">취소</button>
+          <button class="btn btn-outline-dark btn-md" type="submit">회원가입</button>
+          <button class="btn btn-outline-dark btn-md" type="reset">취소</button>
          </div>
         </form:form>
       </div>

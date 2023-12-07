@@ -13,7 +13,7 @@ import member.model.MemberBean;
 public class RegisterController {
    
    private final String command = "/register.member";
-   private final String viewPage = "register";
+   private final String viewPage = "registerForm";
    private final String gotoPage = "main";
    
    @RequestMapping(value = command, method = RequestMethod.GET)
