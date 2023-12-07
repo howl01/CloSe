@@ -70,7 +70,7 @@
 </div>
 
 <div class="row">
-   <div class="col-lg-2"></div>
+   <div class="col-lg-2"><button onclick="location.href='register.product'">상등</button></div>
 <div class="col-lg-8">
 <div class="album py-5 bg-body-tertiary">
     <div class="container">

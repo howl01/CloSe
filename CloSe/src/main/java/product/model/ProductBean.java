@@ -1,5 +1,7 @@
 package product.model;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class ProductBean {
 	private int product_number;
 	private String product_name;
@@ -7,25 +9,46 @@ public class ProductBean {
 	private int price;
 	private String content;
 	private int temperature;
-	private String product_size;
-	private int stock;
+	private int s_stock;
+	private int m_stock;
+	private int l_stock;
+	private int xl_stock;
 	private String smallcategory_name;
+	
+	private MultipartFile pImage; //상품사진
+	private MultipartFile pContent; //설명사진
+	
+	public MultipartFile getpImage() {
+		System.out.println("getpImage");
+		return pImage;
+	}
+	public void setpImage(MultipartFile pImage) {
+		this.pImage = pImage;
+		System.out.println("setpImage");
+		if(this.pImage != null) { // 
+			System.out.println(pImage.getName()); //upload
+			System.out.println(pImage.getOriginalFilename()); 
+			image = pImage.getOriginalFilename();
+		}
+	}
+	public MultipartFile getpContent() {
+		System.out.println("getpContent");
+		return pContent;
+	}
+	public void setpContent(MultipartFile pContent) {
+		this.pContent = pContent;
+		System.out.println("setpContent");
+		if(this.pContent != null) { 
+			System.out.println(pContent.getName()); //upload
+			System.out.println(pContent.getOriginalFilename()); 
+			content = pImage.getOriginalFilename();
+		}
+	}
+	
+	
 	
 	public ProductBean() {
 		super();
-	}
-	public ProductBean(int product_number, String product_name, String image, int price, String content,
-			int temperature, String product_size, int stock, String smallcategory_name) {
-		super();
-		this.product_number = product_number;
-		this.product_name = product_name;
-		this.image = image;
-		this.price = price;
-		this.content = content;
-		this.temperature = temperature;
-		this.product_size = product_size;
-		this.stock = stock;
-		this.smallcategory_name = smallcategory_name;
 	}
 	public int getProduct_number() {
 		return product_number;
@@ -63,18 +86,6 @@ public class ProductBean {
 	public void setTemperature(int temperature) {
 		this.temperature = temperature;
 	}
-	public String getProduct_size() {
-		return product_size;
-	}
-	public void setProduct_size(String product_size) {
-		this.product_size = product_size;
-	}
-	public int getStock() {
-		return stock;
-	}
-	public void setStock(int stock) {
-		this.stock = stock;
-	}
 	public String getSmallcategory_name() {
 		return smallcategory_name;
 	}
@@ -82,6 +93,29 @@ public class ProductBean {
 		this.smallcategory_name = smallcategory_name;
 	}
 	
-	
+	public int getS_stock() {
+		return s_stock;
+	}
+	public void setS_stock(int s_stock) {
+		this.s_stock = s_stock;
+	}
+	public int getM_stock() {
+		return m_stock;
+	}
+	public void setM_stock(int m_stock) {
+		this.m_stock = m_stock;
+	}
+	public int getL_stock() {
+		return l_stock;
+	}
+	public void setL_stock(int l_stock) {
+		this.l_stock = l_stock;
+	}
+	public int getXl_stock() {
+		return xl_stock;
+	}
+	public void setXl_stock(int xl_stock) {
+		this.xl_stock = xl_stock;
+	}
 	
 }

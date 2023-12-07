@@ -14,7 +14,11 @@ public class ProductDao {
 	private String namespace = "product.ProductBean";
 	
 	public List<ProductBean> getAllProduct() {
-		return sqlSessionTemplate.selectList(namespace+"getAllProduct");
+		return sqlSessionTemplate.selectList(namespace+".getAllProduct");
+	}
+
+	public void insertProduct(ProductBean pb) {
+		sqlSessionTemplate.insert(namespace+".insertProduct",pb);
 	}
 	
 }

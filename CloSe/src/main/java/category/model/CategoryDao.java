@@ -11,7 +11,12 @@ public class CategoryDao {
 	
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
+	
 	private String namespace = "category.CategoryBean";
+	public List<CategoryBean> getAll() {
+		List<CategoryBean> lists = sqlSessionTemplate.selectList(namespace+".getAll");
+		return lists;
+	}
 	
 
 	
