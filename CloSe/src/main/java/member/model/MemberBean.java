@@ -1,35 +1,32 @@
 package member.model;
 
+import javax.validation.constraints.NotNull;
+
 import org.hibernate.validator.constraints.NotEmpty;
 
 public class MemberBean {
 	@NotEmpty(message = "아이디를 입력하세요")
 	private String member_id;
 	
-	@NotEmpty(message = "입력하세요")
+	@NotEmpty(message = "비밀번호를 입력하세요")
 	private String password;
 	 
-	@NotEmpty(message = "입력하세요")
+	@NotEmpty(message = "이름을 입력하세요")
 	private String name;
 	
-	@NotEmpty(message = "입력하세요")
-	private String hp1;
+	@NotEmpty(message = "전화번호를 입력하세요")
+	private String phone;
 	
-	@NotEmpty(message = "입력하세요")
-	private String hp2;
-	
-	@NotEmpty(message = "입력하세요")
-	private String hp3;
-	
-	@NotEmpty(message = "입력하세요")
+	@NotEmpty(message = "주소를 입력하세요")
 	private String address1;
 	
-	@NotEmpty(message = "입력하세요")
+	@NotEmpty(message = "상세주소를 입력하세요")
 	private String address2;
 	
+	@NotEmpty(message = "생년월일을 입력하세요")
 	private String birth;
 	
-	
+	@NotNull(message = "성별을 선택하세요")
 	private String gender;
 	
 	@NotEmpty(message = "닉네임을 입력하세요")
@@ -40,15 +37,13 @@ public class MemberBean {
 	public MemberBean() {
 		super();
 	}
-	public MemberBean(String member_id, String password, String name, String hp1, String hp2, String hp3,
+	public MemberBean(String member_id, String password, String name, String phone,
 			String address1, String address2, String birth, String gender, String nickname, int height, int weight) {
 		super();
 		this.member_id = member_id;
 		this.password = password;
 		this.name = name;
-		this.hp1 = hp1;
-		this.hp2 = hp2;
-		this.hp3 = hp3;
+		this.phone = phone;
 		this.address1 = address1;
 		this.address2 = address2;
 		this.birth = birth;
@@ -75,23 +70,11 @@ public class MemberBean {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getHp1() {
-		return hp1;
+	public String getPhone() {
+		return phone;
 	}
-	public void setHp1(String hp1) {
-		this.hp1 = hp1;
-	}
-	public String getHp2() {
-		return hp2;
-	}
-	public void setHp2(String hp2) {
-		this.hp2 = hp2;
-	}
-	public String getHp3() {
-		return hp3;
-	}
-	public void setHp3(String hp3) {
-		this.hp3 = hp3;
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 	public String getAddress1() {
 		return address1;
