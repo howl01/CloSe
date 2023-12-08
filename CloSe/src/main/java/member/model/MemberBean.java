@@ -10,6 +10,8 @@ public class MemberBean {
 	
 	@NotEmpty(message = "비밀번호를 입력하세요")
 	private String password;
+	
+	private String passwordcheck;
 	 
 	@NotEmpty(message = "이름을 입력하세요")
 	private String name;
@@ -57,6 +59,12 @@ public class MemberBean {
 	}
 	
 	
+	public String getPasswordcheck() {
+		return passwordcheck;
+	}
+	public void setPasswordcheck(String passwordcheck) {
+		this.passwordcheck = passwordcheck;
+	}
 	public String getVerificationCode() {
 		return verificationCode;
 	}

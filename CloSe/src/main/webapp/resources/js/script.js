@@ -27,7 +27,6 @@ function searchAddress(){
     }).open();
 }
 
-
 function repassword_keyup(){
 	//alert(1);
 	if($("input[name=password]").val() == $("input[name=passwordcheck]").val()){
@@ -42,7 +41,7 @@ function repassword_keyup(){
 function pwcheck(){ // 영문 소문자/숫자 조합 8~16자
 	pvalue = $("input[name=password").val();
 	
-	var regexp = /^[a-zA-Z0-9]{8,16}$/;
+	var regexp = /^[a-z0-9]{8,16}$/;
 	
 	if(pvalue.search(regexp) == -1){
 		alert("길이는 8~16 사이어야 합니다.");

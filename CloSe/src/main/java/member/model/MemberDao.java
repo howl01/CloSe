@@ -20,6 +20,10 @@ public class MemberDao {
 		
 		return cnt;
 	}
+
+	public void memberRegister(MemberBean mb) {
+		sqlSessionTemplate.insert(namespace+".memberRegister",mb);
+	}
 	
 	
 }
