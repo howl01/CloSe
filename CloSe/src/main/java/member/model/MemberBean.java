@@ -31,6 +31,9 @@ public class MemberBean {
 	
 	@NotEmpty(message = "닉네임을 입력하세요")
 	private String nickname;
+	
+	@NotNull(message = "인증번호를 입력하세요")
+	private String verificationCode;
 	private int height;
 	private int weight;
 	
@@ -51,6 +54,14 @@ public class MemberBean {
 		this.nickname = nickname;
 		this.height = height;
 		this.weight = weight;
+	}
+	
+	
+	public String getVerificationCode() {
+		return verificationCode;
+	}
+	public void setVerificationCode(String verificationCode) {
+		this.verificationCode = verificationCode;
 	}
 	public String getMember_id() {
 		return member_id;

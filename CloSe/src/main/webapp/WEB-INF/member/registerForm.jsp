@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ include file="../common/common.jsp" %>
 
 <script src="resources/js/bootstrap.bundle.min.js"></script>
 <link href="resources/css/bootstrap.min.css" rel="stylesheet">
@@ -9,16 +9,30 @@
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript" src="resources/js/jquery.js"></script>
 <script type="text/javascript">
-function sendSMS(hp1, hp2, hp3) {
+function sendSMS(phone) {
     alert('인증번호를 요청했습니다.');
-    // 버튼 숨기기
-    document.getElementById('verificationSection').style.display = 'flex';
-  }
 
-  function requestVerification() {
-    // 버튼 숨기기
-    document.getElementById('verificationSection').style.display = 'flex';
-  }
+    // Ajax 요청
+    $.ajax({
+        type: "GET",
+        url: "sendSms.member?phone="+phone,
+        data: { phone: phone },
+        success: function(response) {
+            // 서버에서 받은 응답(response)을 처리
+            console.log(response);
+
+            // 이 부분에서 필요한 로직을 추가하여 처리 결과를 사용자에게 보여줄 수 있습니다.
+            // 예: 인증번호 입력 창을 보이게 한다거나, 메시지를 표시한다 등.
+            document.getElementById('verificationSection').style.display = 'flex';
+        },
+        error: function(error) {
+            console.error(error);
+            // 에러가 발생했을 경우에 대한 처리를 추가할 수 있습니다.
+            alert('전화번호가 일치하지 않습니다.');
+        }
+    });
+}
+
   
   $(document).ready(function() { 
 		var isCheck = false;
@@ -138,11 +152,14 @@ function sendSMS(hp1, hp2, hp3) {
             </div>
             <div class="col-4">
               <label for="email" class="form-label">성별</label><br>
+              <%
+				String[] mgender = {"남자","여자"};
+			  %>
               <label class="btn btn-basic active">
-                 <input type="radio" id="gender" name = "gender">남자
-              </label>
-              <label class="btn btn-basic active">
-                 <input type="radio" id="gender" name = "gender">여자
+                 <c:forEach var="gender" items="<%= mgender %>">
+					<input type="radio" name="gender" value="${gender}" 
+					<c:if test="${memberBean.gender == gender}">checked</c:if>>${gender}
+				</c:forEach>
               </label>
               <form:errors cssClass="err" path="gender"/>
             </div>
@@ -164,13 +181,14 @@ function sendSMS(hp1, hp2, hp3) {
                </div>
                
             <div class="col-md-2" style="margin-top: 32px;">
-               <input class="btn btn-outline-dark" type = "button" value = "인증번호 요청" onclick = "sendSMS($('#hp1').val(), $('#hp2').val(), $('#hp3').val())" style="border-color: black;">
+               <input class="btn btn-outline-dark" type = "button" value = "인증번호 요청" onclick = "sendSMS($('#phone').val())" style="border-color: black;">
             </div>
             <div id="verificationSection" style="display: none; margin-top: 20px;">
               <!-- 이곳에 텍스트 상자 및 기타 요소 추가 -->
               <label for="verificationCode" class="form-label">인증번호 : </label>&nbsp;
               <input type="text" class="form-control" id="verificationCode" name="verificationCode" style="border-color: black; width: 155px;">&nbsp;
               <input type="button" value="인증하기" onClick="verify()">
+              <form:errors cssClass="err" path="verificationCode"/>
             </div>
             
             <div class="col-12">&nbsp;</div>
@@ -191,7 +209,7 @@ function sendSMS(hp1, hp2, hp3) {
           </div>
 
           <hr class="my-4">
-       <div class="d-grid gap-2 d-md-block" align = "center">
+         <div class="d-grid gap-2 d-md-block" align = "center">
           <button id="sub" class="btn btn-outline-dark btn-md" type="submit">회원가입</button>
           <button class="btn btn-outline-dark btn-md" type="reset">취소</button>
          </div>
