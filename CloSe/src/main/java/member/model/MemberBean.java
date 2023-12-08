@@ -1,11 +1,13 @@
 package member.model;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
 public class MemberBean {
 	@NotEmpty(message = "아이디를 입력하세요")
+	@Size(max = 6, message = "6글자이하로 입력하세요")
 	private String member_id;
 	
 	@NotEmpty(message = "비밀번호를 입력하세요")
@@ -14,6 +16,7 @@ public class MemberBean {
 	private String passwordcheck;
 	 
 	@NotEmpty(message = "이름을 입력하세요")
+	@Size(max = 3, message = "3글자이하로 입력하세요")
 	private String name;
 	
 	@NotEmpty(message = "전화번호를 입력하세요")
@@ -32,6 +35,7 @@ public class MemberBean {
 	private String gender;
 	
 	@NotEmpty(message = "닉네임을 입력하세요")
+	@Size(max = 6, message = "6글자이하로 입력하세요")
 	private String nickname;
 	
 	@NotNull(message = "인증번호를 입력하세요")

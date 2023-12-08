@@ -10,15 +10,15 @@
    <main class="form-signin w-100 m-auto">
       <form action = "login.member" method="post">
          <a href = "view.main">
-         <img class="mb-3" src="resources/img/logo.png" alt="" width="300"
-            height="130"
+         <img class="mb-3" src="resources/img/logo.png" alt="" width="350"
+            height="100"
             style="margin-left: auto; margin-right: auto; display: block;">
          </a>
          <h1 class="h3 mb-4 fw-normal" align="center"><b>통합로그인</b></h1>
 
          <div class="form-floating">
             <input type="text" class="form-control" id="floatingInput"
-               placeholder="name@example.com" name = "id"> <label for="floatingInput">아이디</label>
+               placeholder="Id" name = "member_id"> <label for="floatingInput">아이디</label>
          </div>
          <div class="form-floating">
             <input type="password" class="form-control" id="floatingPassword"

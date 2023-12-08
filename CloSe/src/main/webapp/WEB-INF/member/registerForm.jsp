@@ -13,7 +13,7 @@ var isVerificationRequested = false; // 인증번호 요청 여부를 저장할 
 
 function sendSMS(phone) {
     alert('인증번호를 요청했습니다.');
-
+	var cert = false;
     // Ajax 요청
     $.ajax({
         type: "GET",
@@ -26,7 +26,7 @@ function sendSMS(phone) {
             // 이 부분에서 필요한 로직을 추가하여 처리 결과를 사용자에게 보여줄 수 있습니다.
             // 예: 인증번호 입력 창을 보이게 한다거나, 메시지를 표시한다 등.
             document.getElementById('verificationSection').style.display = 'flex';
-
+			cert = true;
             // 받은 랜덤 값(response)을 전역 변수에 저장
             window.randomValue = response;
         },
@@ -146,7 +146,7 @@ $(document).ready(function() {
               <label for="lastName" class="form-label">아이디</label>
               <div class="row">
               <div class="col-6">
-              <input type="text" class="form-control mb-1" id="member_id" name = "member_id" placeholder="" value="${memberBean.member_id}" style="border-color: black;">
+              <input type="text" class="form-control mb-1" id="member_id" name = "member_id" value="${memberBean.member_id}" style="border-color: black;">
               <form:errors cssClass="err" path="member_id"/>
               </div>
               <div class="col-4">
@@ -211,13 +211,14 @@ $(document).ready(function() {
          	<div class="col-12">&nbsp;</div>
                <div class="col-md-6">
                  <label for="country" class="form-label">휴대폰 번호</label>
-                 <input type="text" class="form-control" id="phone" name = "phone" value="${memberBean.phone}" maxlength="11"  style="border-color: black;">
+                 <input type="text" class="form-control" id="phone" name = "phone" maxlength="11"  style="border-color: black;">
                  <form:errors cssClass="err" path="phone"/>
                </div>
                
             <div class="col-md-2" style="margin-top: 32px;">
                <input class="btn btn-outline-dark" type = "button" value = "인증번호 요청" onclick = "sendSMS($('#phone').val())" style="border-color: black;">
             </div>
+            <c:if test=""></c:if>
             <div id="verificationSection" style="display: none; margin-top: 20px;">
               <!-- 이곳에 텍스트 상자 및 기타 요소 추가 -->
               <label for="verificationCode" class="form-label">인증번호 : </label>&nbsp;
