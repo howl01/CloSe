@@ -45,6 +45,7 @@
 	      var overlay = document.getElementById('overlay');
 	      overlay.style.display = 'none';
 	}
+	// function 
 </script>
 
 <div id="overlay" class="overlay">
