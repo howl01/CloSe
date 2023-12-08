@@ -1,51 +1,60 @@
 package product.model;
 
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.web.multipart.MultipartFile;
 
 public class ProductBean {
 	private int product_number;
+	
+	@NotEmpty(message = "상품명을 입력해 주세요.")
 	private String product_name;
+	
+	@NotEmpty(message = "상품 사진을 등록해주세요.")
 	private String image;
-	private int price;
+	
+	@NotNull(message = "가격을 입력해 주세요.")
+	private Integer price;
+	
+	@NotEmpty(message = "상품상세사진을 등록해 주세요.")
 	private String content;
-	private int temperature;
+	
+	@NotNull(message = "적정추천온도를 선택해 주세요.")
+	private Integer temperature;
+	
 	private int s_stock;
+	
 	private int m_stock;
+	
 	private int l_stock;
+	
 	private int xl_stock;
+	
+	@NotEmpty(message = "카테고리를 선택해 주세요.")
 	private String smallcategory_name;
 	
 	private MultipartFile pImage; //상품사진
 	private MultipartFile pContent; //설명사진
 	
 	public MultipartFile getpImage() {
-		System.out.println("getpImage");
 		return pImage;
 	}
 	public void setpImage(MultipartFile pImage) {
 		this.pImage = pImage;
-		System.out.println("setpImage");
-		if(this.pImage != null) { // 
-			System.out.println(pImage.getName()); //upload
-			System.out.println(pImage.getOriginalFilename()); 
+		if(!this.pImage.isEmpty()) { // 
 			image = pImage.getOriginalFilename();
 		}
 	}
 	public MultipartFile getpContent() {
-		System.out.println("getpContent");
 		return pContent;
 	}
 	public void setpContent(MultipartFile pContent) {
 		this.pContent = pContent;
-		System.out.println("setpContent");
-		if(this.pContent != null) { 
-			System.out.println(pContent.getName()); //upload
-			System.out.println(pContent.getOriginalFilename()); 
-			content = pImage.getOriginalFilename();
+		if(!this.pContent.isEmpty()) { 
+			content = pContent.getOriginalFilename();
 		}
 	}
-	
-	
 	
 	public ProductBean() {
 		super();
@@ -68,22 +77,22 @@ public class ProductBean {
 	public void setImage(String image) {
 		this.image = image;
 	}
-	public int getPrice() {
-		return price;
-	}
-	public void setPrice(int price) {
-		this.price = price;
-	}
 	public String getContent() {
 		return content;
 	}
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public int getTemperature() {
+	public Integer getPrice() {
+		return price;
+	}
+	public void setPrice(Integer price) {
+		this.price = price;
+	}
+	public Integer getTemperature() {
 		return temperature;
 	}
-	public void setTemperature(int temperature) {
+	public void setTemperature(Integer temperature) {
 		this.temperature = temperature;
 	}
 	public String getSmallcategory_name() {
@@ -92,7 +101,6 @@ public class ProductBean {
 	public void setSmallcategory_name(String smallcategory_name) {
 		this.smallcategory_name = smallcategory_name;
 	}
-	
 	public int getS_stock() {
 		return s_stock;
 	}

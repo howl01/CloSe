@@ -13,8 +13,8 @@ public class CategoryDao {
 	private SqlSessionTemplate sqlSessionTemplate;
 	
 	private String namespace = "category.CategoryBean";
-	public List<CategoryBean> getAll() {
-		List<CategoryBean> lists = sqlSessionTemplate.selectList(namespace+".getAll");
+	public List<CategoryBean> getAllCategory() {
+		List<CategoryBean> lists = sqlSessionTemplate.selectList(namespace+".getAllCategory");
 		return lists;
 	}
 	
