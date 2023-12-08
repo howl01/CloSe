@@ -44,6 +44,7 @@
 	function hideOverlay() {
 	      var overlay = document.getElementById('overlay');
 	      overlay.style.display = 'none';
+	      location.href="list.popular";
 	}
 	// function 
 </script>

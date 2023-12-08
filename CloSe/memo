@@ -83,7 +83,7 @@ CREATE TABLE qna (
 	re_step	number,
 	re_level	number,
 	ip	varchar2(20),
-	member_id	varchar2(15)	NOT NULL
+	FOREIGN KEY (member_id) REFERENCES member(member_id) not null
 );
 
 CREATE SEQUENCE qna_seq;
