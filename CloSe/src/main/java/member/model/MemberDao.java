@@ -21,9 +21,15 @@ public class MemberDao {
 		return cnt;
 	}
 
+	public int findNick(String inputnick) {
+		int cnt = sqlSessionTemplate.selectOne(namespace+".findNick",inputnick);
+		return cnt;
+	}
+	
 	public void memberRegister(MemberBean mb) {
 		sqlSessionTemplate.insert(namespace+".memberRegister",mb);
 	}
+
 	
 	
 }

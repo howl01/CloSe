@@ -65,10 +65,8 @@ function verify() {
 }
 
 $(document).ready(function() { 
-    var isCheck = false;
 
-    $('#idcheck').click(function(){ // 중복체크버튼
-        isCheck = true;
+    $('#member_id').keyup(function(){ // 아이디 중복체크
 
         $.ajax({
             url : "duplicate.member", // 요청url
@@ -76,10 +74,7 @@ $(document).ready(function() {
                 inputid : $('input[name="member_id"]').val()
             }),
             success : function(data){
-                if($('input[name="member_id"]').val() == ""){
-                    $('#idmessage').html("<font color=red>아이디 입력 누락</font>");
-                    $('#idmessage').show();
-                } else if(jQuery.trim(data)=='YES'){
+               if(jQuery.trim(data)=='YES'){
                     $('#idmessage').html("<font color=blue>사용 가능합니다.</font>");
                     use = "possible";
                     $('#idmessage').show();
@@ -91,9 +86,29 @@ $(document).ready(function() {
             }
         });
     });
+    
+    $('#nickname').keyup(function(){ // 닉네임 중복체크
+
+        $.ajax({
+            url : "nickduplicate.member", // 요청url
+            data : ({
+                inputnick : $('input[name="nickname"]').val()
+            }),
+            success : function(data){
+               if(jQuery.trim(data)=='YES'){
+                    $('#nickmessage').html("<font color=blue>사용 가능합니다.</font>");
+                    nickuse = "possible";
+                    $('#nickmessage').show();
+                } else {
+                    $('#nickmessage').html("<font color=red>이미 사용중인 닉네임입니다.</font>")
+                    nickuse = "impossible";
+                    $('#nickmessage').show();
+                }
+            }
+        });
+    });
 
     $("input[name='member_id']").keydown(function(){
-        isCheck = false;
         use="";
         $('#idmessage').css('display','none');
     });
@@ -102,12 +117,14 @@ $(document).ready(function() {
         if(use == "impossible"){
             alert('이미 사용중인 아이디입니다.');
             return false;
-        } else if(pwuse == "nosame"){
+            
+        } else if(nickuse == "impossible"){
+        	alert('이미 사용중인 닉네임입니다.');
+        	return false;
+        	
+        }else if(pwuse == "nosame"){
         	alert('비밀번호가 일치하지 않습니다');
         	return false;
-        } else if(isCheck == false){ 
-            alert('중복체크 하세요');
-            return false;
         }
 
         event.preventDefault(); // 기본 동작 중지
@@ -149,11 +166,8 @@ $(document).ready(function() {
               <input type="text" class="form-control mb-1" id="member_id" name = "member_id" value="${memberBean.member_id}" style="border-color: black;">
               <form:errors cssClass="err" path="member_id"/>
               </div>
-              <div class="col-4">
-              <input class="btn btn-outline-dark" type = "button" id = "idcheck" name = "idcheck" value = "중복체크">
-              </div>
-              </div>
               &nbsp;<span id="idmessage" style = "display: none;"></span>
+              </div>
             </div>
             
             <div class="col-12">
@@ -162,6 +176,7 @@ $(document).ready(function() {
               <div class="col-6">
               <input type="text" class="form-control mb-1" id="nickname" name = "nickname" placeholder="" value="${memberBean.nickname}" style="border-color: black;">
               <form:errors cssClass="err" path="nickname"/>
+              &nbsp;<span id="nickmessage" style = "display: none;"></span>
               </div>
               </div>
             </div>
@@ -218,7 +233,6 @@ $(document).ready(function() {
             <div class="col-md-2" style="margin-top: 32px;">
                <input class="btn btn-outline-dark" type = "button" value = "인증번호 요청" onclick = "sendSMS($('#phone').val())" style="border-color: black;">
             </div>
-            <c:if test=""></c:if>
             <div id="verificationSection" style="display: none; margin-top: 20px;">
               <!-- 이곳에 텍스트 상자 및 기타 요소 추가 -->
               <label for="verificationCode" class="form-label">인증번호 : </label>&nbsp;
