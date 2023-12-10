@@ -7,10 +7,6 @@ var isCheck = false;
 var use;
 var pwuse;
 
-function go() {
-	alert(1);
-}
-
 $(function(){
 	$("input[name=id]").keydown(function(){
 		$("#idmessage").css('display','none');
@@ -18,6 +14,13 @@ $(function(){
 		use = "";
 	});
 });
+
+function login(){
+	alert(1);
+	if($("input[name=member_id]").val()==""){
+		alert(1);
+	}
+}
 
 function searchAddress(){
 	new daum.Postcode({
@@ -67,25 +70,6 @@ function pwcheck(){ // 영문 소문자/숫자 조합 8~16자
 	
 }
 
-function hp2check(){
-	//alert(f.hp2.value);
-	if(isNaN(f.hp2.value)){
-		alert("휴대폰 번호는 숫자로 입력해 주세요.");
-		setTimeout(function(){               
-			f.hp2.select();             
-		}, 10);
-	}
-}
-
-function hp3check(){
-	//alert(f.hp3.value);
-	if(isNaN(f.hp3.value)){
-		alert("휴대폰 번호는 숫자로 입력해 주세요.");
-		setTimeout(function(){               
-			f.hp3.select();             
-		}, 10);
-	}
-}
 
 function hpcheck(){
 	//alert(f.hp.value);

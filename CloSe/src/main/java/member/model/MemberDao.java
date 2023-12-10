@@ -30,6 +30,13 @@ public class MemberDao {
 		sqlSessionTemplate.insert(namespace+".memberRegister",mb);
 	}
 
+	public MemberBean getDetail(String member_id) {
+		MemberBean memberBean = sqlSessionTemplate.selectOne(namespace+".getDetail",member_id);
+		
+		return memberBean;
+	}
+
+
 	
 	
 }

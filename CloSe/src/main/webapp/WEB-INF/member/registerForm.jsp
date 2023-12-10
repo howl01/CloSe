@@ -64,7 +64,7 @@ function verify() {
     }
 }
 
-$(document).ready(function() { 
+$(document).ready(function() {
 
     $('#member_id').keyup(function(){ // 아이디 중복체크
 

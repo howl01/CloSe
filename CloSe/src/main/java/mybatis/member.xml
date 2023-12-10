@@ -15,4 +15,8 @@
 		insert into member
 		values(#{member_id},#{password},#{name},#{phone},#{address1},#{address2},#{birth},#{gender},#{nickname},#{height},#{weight})
 	</insert>
+	
+	<select id="getDetail" resultType="member.model.MemberBean">
+		select * from member where member_id = #{member_id}
+	</select>
 </mapper>
