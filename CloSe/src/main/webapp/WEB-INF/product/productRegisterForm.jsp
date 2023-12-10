@@ -223,7 +223,7 @@
 		</div>
 
 
-
+<button onclick="location.href='view.main'">이동</button>
 	</div>
 </div>
 

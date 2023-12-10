@@ -4,4 +4,4 @@
 <%
 	response.sendRedirect("view.main");
 	// 
-%>
+%> 

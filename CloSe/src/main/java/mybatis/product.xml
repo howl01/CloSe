@@ -10,4 +10,7 @@
 		insert into product values
 		(product_seq.nextval,#{product_name},#{image},#{price},#{content},#{temperature},#{s_stock},#{m_stock},#{l_stock},#{xl_stock},#{smallcategory_name})
 	</insert>
+	<select id="getOneProduct" resultType="ProductBean">
+		select * from product where product_number = #{product_number}
+	</select>
 </mapper>

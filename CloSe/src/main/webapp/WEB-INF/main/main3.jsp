@@ -25,7 +25,17 @@
 
 
 				<form:form action="" method="post">
-					<div></div>
+					<div>${pb.product_number }</div> 
+					<div>${pb.product_name }</div> 
+					<div>${pb.image }</div> 
+					<div>${pb.price }</div> 
+					<div>${pb.content }</div> 
+					<div>${pb.temperature }</div> 
+					<div>${pb.s_stock }</div> 
+					<div>${pb.m_stock }</div> 
+					<div>${pb.l_stock }</div> 
+					<div>${pb.xl_stock }</div> 
+					<div>${pb.smallcategory_name }</div> 
 				</form:form>
 			</div>
 		</div>

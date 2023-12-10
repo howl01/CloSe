@@ -20,5 +20,9 @@ public class ProductDao {
 	public void insertProduct(ProductBean pb) {
 		sqlSessionTemplate.insert(namespace+".insertProduct",pb);
 	}
+
+	public ProductBean getOneProduct(String product_number) {
+		return sqlSessionTemplate.selectOne(namespace+".getOneProduct",product_number);
+	}
 	
 }

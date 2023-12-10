@@ -70,7 +70,10 @@
 </div>
 
 <div class="row">
-   <div class="col-lg-2"><button onclick="location.href='register.product'">상등</button></div>
+   <div class="col-lg-2">
+   		<button onclick="location.href='register.product'">상등</button>
+   		<button onclick="location.href='detail.product?product_number=1'">상품상세</button>
+   </div>
 <div class="col-lg-8">
 <div class="album py-5 bg-body-tertiary">
     <div class="container">
