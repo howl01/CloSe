@@ -14,6 +14,13 @@
       <property name="suffix" value=".jsp" />
    </bean>
    
+   <context:component-scan base-package="main" />
+   <context:component-scan base-package="category" />
    <context:component-scan base-package="member" />
+   <context:component-scan base-package="orders" />
+   <context:component-scan base-package="product" />
+   <context:component-scan base-package="qna" />
+   <context:component-scan base-package="style" />
+   <context:component-scan base-package="cart" />
 
 </beans>

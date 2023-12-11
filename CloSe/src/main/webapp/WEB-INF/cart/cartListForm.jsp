@@ -22,6 +22,17 @@
 				<div style="">
 					<h3 style="padding: 22 0 22 0">상품등록</h3>
 				</div>
+			
+			<c:forEach var="cb" items="${cartLists }">
+				${cb.cart_number } <br>
+				${cb.product_number } <br>
+				${cb.product_size } <br>
+				${cb.qty } <br>
+				${cb.member_id } <br>
+			</c:forEach>
+
+
+
 
 
 			</div>
