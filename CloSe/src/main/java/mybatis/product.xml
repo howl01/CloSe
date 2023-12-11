@@ -3,5 +3,11 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
 <mapper namespace = "product.ProductBean">
-
+	<select id="findProductNames" resultType="String">
+        SELECT product_name
+        FROM product
+        WHERE product_name LIKE '%' || #{searchWord} || '%'
+        ORDER BY product_name
+        FETCH FIRST 10 ROWS ONLY
+    </select>
 </mapper>

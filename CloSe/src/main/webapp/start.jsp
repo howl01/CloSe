@@ -3,5 +3,4 @@
 
 <%
 	response.sendRedirect("view.main");
-	// .
 %>
