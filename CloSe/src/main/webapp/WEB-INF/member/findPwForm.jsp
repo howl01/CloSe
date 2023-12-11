@@ -6,6 +6,11 @@
 <link href="resources/css/bootstrap.min.css" rel="stylesheet">
 <script type="text/javascript" src = "resources/js/jquery.js"></script>
 <script type="text/javascript" src = "resources/js/script.js"></script>
+<script type="text/javascript">
+	function goLogin(){
+		location.href="login.member";
+	}
+</script>
 
 <body class="d-flex align-items-center py-4 bg-body-tertiary">
 
@@ -41,7 +46,8 @@
             <label for="floatingPassword">- 없이 휴대폰 번호 입력</label>
          </div>
 
-         <button class="btn btn-dark w-100 py-2" type="submit">비밀번호 찾기</button>
+         <button class="btn btn-dark w-100 py-2" type="submit">비밀번호 찾기</button>&nbsp;
+         <input type="button" class="btn btn-dark w-100 py-2" value="로그인하러 가기" onclick="goLogin()">
          <p class="mt-5 mb-3 text-body-secondary">© 2023 Minhyeok, Byeon</p>
       </form>
    </main>

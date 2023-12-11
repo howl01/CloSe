@@ -133,6 +133,10 @@ $(document).ready(function() {
     });
 });
 	
+function goLogin(){
+	location.href="login.member";
+}
+
 </script>
 
 <style type="text/css">
@@ -260,8 +264,8 @@ $(document).ready(function() {
 
           <hr class="my-4">
          <div class="d-grid gap-2 d-md-block" align = "center">
-          <button id="sub" class="btn btn-outline-dark btn-md" type="submit">회원가입</button>
-          <button class="btn btn-outline-dark btn-md" type="reset">취소</button>
+          <button id="sub" class="btn btn-dark btn-md" type="submit">회원가입</button>
+          <input type="button" class="btn btn-dark btn-md" value="취소" onclick="goLogin()">
          </div>
         </form:form>
       </div>
