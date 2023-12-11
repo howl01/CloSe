@@ -131,7 +131,28 @@ $(document).ready(function() {
         verify(); // verify 함수 호출
         f.submit();
     });
+    
+    $('#email').keyup(function () {
+        // Get the entered email value
+        var enteredEmail = $(this).val();
+
+        // Check if the email format is valid
+        if (isValidEmail(enteredEmail)) {
+            // If valid, hide the error message
+            $('#emailmessage').hide();
+        } else {
+            // If not valid, display the error message
+            $('#emailmessage').html("<font color='red'>형식이 올바르지 않습니다.</font>");
+            $('#emailmessage').show();
+        }
+    });
+    
 });
+
+function isValidEmail(email) {
+    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
 	
 function goLogin(){
 	location.href="login.member";
@@ -244,6 +265,14 @@ function goLogin(){
               <input type="button" value="인증하기" onClick="verify()">
               <form:errors cssClass="err" path="verificationCode"/>
             </div>
+            
+            <div class="col-12">&nbsp;</div>
+               <div class="col-md-6">
+                 <label for="country" class="form-label">이메일 주소</label>
+                 <input type="text" class="form-control" id="email" name = "email" value="${memberBean.email}" style="border-color: black;">
+                 <form:errors cssClass="err" path="email"/>
+                  &nbsp;<span id="emailmessage" style = "display: none;"></span>
+               </div>
             
             <div class="col-12">&nbsp;</div>
               

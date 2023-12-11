@@ -22,6 +22,9 @@ public class MemberBean {
 	@NotEmpty(message = "전화번호를 입력하세요")
 	private String phone;
 	
+	@NotEmpty(message = "이메일을 입력하세요")
+	private String email;
+	
 	@NotEmpty(message = "주소를 입력하세요")
 	private String address1;
 	
@@ -46,13 +49,14 @@ public class MemberBean {
 	public MemberBean() {
 		super();
 	}
-	public MemberBean(String member_id, String password, String name, String phone,
+	public MemberBean(String member_id, String password, String name, String phone, String email,
 			String address1, String address2, String birth, String gender, String nickname, int height, int weight) {
 		super();
 		this.member_id = member_id;
 		this.password = password;
 		this.name = name;
 		this.phone = phone;
+		this.email = email;
 		this.address1 = address1;
 		this.address2 = address2;
 		this.birth = birth;
@@ -63,6 +67,13 @@ public class MemberBean {
 	}
 	
 	
+	
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
 	public String getPasswordcheck() {
 		return passwordcheck;
 	}
