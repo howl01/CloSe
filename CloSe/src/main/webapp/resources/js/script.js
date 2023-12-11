@@ -15,13 +15,6 @@ $(function(){
 	});
 });
 
-function login(){
-	alert(1);
-	if($("input[name=member_id]").val()==""){
-		alert(1);
-	}
-}
-
 function searchAddress(){
 	new daum.Postcode({
         oncomplete: function(data) {
@@ -71,21 +64,54 @@ function pwcheck(){ // 영문 소문자/숫자 조합 8~16자
 }
 
 
-function hpcheck(){
-	//alert(f.hp.value);
-	if(isNaN(f.hp.value)){
+function idformcheck(){
+	if(f.name.value == ""){
+		alert('이름을 입력하세요.');
+		return false;
+	}
+
+	if(isNaN(f.phone.value)){
 		alert("휴대폰 번호는 숫자로 입력해 주세요.");
 		setTimeout(function(){               
-			f.hp2.select();             
+			f.phone.select();             
 		}, 10);
-		return;
+		return false;
 	}
 	
-	if(f.hp.value.length<11){
+	if(f.phone.value.length<11){
 		alert("휴대폰 번호를 전부 입력해 주세요.");
 		setTimeout(function(){               
-			f.hp.focus();             
+			f.phone.focus();             
 		}, 10);
-		return;
+		return false;
 	}
+}
+
+function pwformcheck(){
+	if(f.name.value == ""){
+		alert('이름을 입력하세요.');
+		return false;
+	}
+	
+	if(f.member_id.value == ""){
+		alert('아이디를 입력하세요.');
+		return false;
+	}
+
+	if(isNaN(f.phone.value)){
+		alert("휴대폰 번호는 숫자로 입력해 주세요.");
+		setTimeout(function(){               
+			f.phone.select();             
+		}, 10);
+		return false;
+	}
+	
+	if(f.phone.value.length<11){
+		alert("휴대폰 번호를 전부 입력해 주세요.");
+		setTimeout(function(){               
+			f.phone.focus();             
+		}, 10);
+		return false;
+	}
+	
 }

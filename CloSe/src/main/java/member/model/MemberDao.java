@@ -36,6 +36,18 @@ public class MemberDao {
 		return memberBean;
 	}
 
+	public MemberBean findwithName(String name) {
+		MemberBean memberBean = sqlSessionTemplate.selectOne(namespace+".findwithName",name);
+		
+		return memberBean;
+	}
+
+	public MemberBean findwithId(String member_id) {
+		MemberBean memberBean = sqlSessionTemplate.selectOne(namespace+".findwithId",member_id);
+		
+		return memberBean;
+	}
+
 
 	
 	
