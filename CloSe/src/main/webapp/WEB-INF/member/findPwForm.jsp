@@ -24,8 +24,11 @@
          <h1 class="h3 mb-8 fw-normal" align="center"><b>비밀번호 찾기</b></h1>
          
          <div class="btn-group w-100 py-2" role="group" aria-label="Basic example" style = "margin-top: 30px">
-              <button type="button" class="btn btn btn-light w-100 py-2 active" style = "border: 1px solid gray;" onclick = "location.href='findid.member'">아이디 찾기</button>
-              <button type="button" class="btn btn btn-light w-100 py-2 active" style = "border: 1px solid gray;" onclick = "location.href='findpw.member'">비밀번호 찾기</button>
+              <input type="radio" class="btn-check" name="options" id="option1" onclick = "location.href='findid.member'" autocomplete="off">
+			  <label class="btn btn-outline-secondary" for="option1">아이디 찾기</label>
+				
+			  <input type="radio" class="btn-check" name="options" id="option2" onclick = "location.href='findpw.member'" autocomplete="off" checked>
+			  <label class="btn btn-outline-secondary" for="option2">비번 찾기</label>
          </div>
 
          <label for="country" class="form-label" style = "margin-top: 30px">아이디</label>
@@ -36,13 +39,13 @@
          
          <label for="country" class="form-label">휴대폰 번호</label>
          <div class="form-floating">
-            <input type="text" class="form-control" id="floatingPassword" maxlength="11" name = "phone" placeholder="Password"> 
+            <input type="text" class="form-control mb-2" id="floatingPassword" maxlength="11" name = "phone" placeholder="Password"> 
             <label for="floatingPassword">- 없이 휴대폰 번호 입력</label>
          </div>
          
          <label for="country" class="form-label">이메일 주소</label>
-         <div class="form-floating mb-4">
-            <input type="text" class="form-control mb-2" id="floatingEmail" name = "email" placeholder="Email"> 
+         <div class="form-floating">
+            <input type="text" class="form-control mb-4" id="floatingEmail" name = "email" placeholder="Email"> 
             <label for="floatingEmail">name@example.com</label>
          </div>
 

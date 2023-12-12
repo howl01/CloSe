@@ -30,7 +30,7 @@ public class FindPwController {
 	
 	private final String command = "/findpw.member";
 	private final String viewPage = "findPwForm";
-	private final String gotoPage = "loginForm";
+	private final String gotoPage = "/login.member";
 	
 	@Autowired
 	private MemberDao memberDao;
@@ -43,13 +43,13 @@ public class FindPwController {
 	
 	//비밀번호 찾기 이메일 발송
 	@RequestMapping("/sendEmail.member")
-	public ModelAndView sendEmail(@RequestParam("mempassword") String mempassword,
+	public void sendEmail(@RequestParam("mempassword") String mempassword,
             			  @RequestParam("email") String email,
             			  HttpServletRequest request, HttpServletResponse response) throws AddressException, MessagingException, IOException {
 		//메일 관련 정보
 		String host = "smtp.naver.com";
 		final String username = "ksg980105";
-		final String password = "@rlatjdrb12";
+		final String password = "비밀번호 입력";
 		int port=465; //네이버 STMP 포트 번호
 		
 		//메일 내용
@@ -83,12 +83,9 @@ public class FindPwController {
 		
 		PrintWriter out = response.getWriter();
 	    response.setContentType("text/html; charset=UTF-8");
-	    out.println("<script>alert('이메일로 비밀번호가 전송되었습니다.')</script>");
+	    out.println("<script>alert('이메일로 비밀번호가 전송되었습니다.'); location.href='" + request.getContextPath() + "/" + gotoPage + "';</script>");
 	    out.flush();
 	    
-	    ModelAndView mav = new ModelAndView();
-	    mav.setViewName(gotoPage);
-		return mav;
 	}
 	
 	@RequestMapping(value = command, method = RequestMethod.POST)
