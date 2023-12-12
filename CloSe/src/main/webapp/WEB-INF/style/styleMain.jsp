@@ -11,6 +11,7 @@
     <style>
         #photo-container {
             position: relative;
+            width: 30%;
         }
 
         .tag-container {
@@ -48,74 +49,23 @@
 </head>
 <body>
 
-	<div class="border-bottom d-flex justify-content-around pt-4" id="imgContainer">
-		<div class="d-flex flex-column" id="imgDiv">
-			<div><img src="resources/img/abc.jpeg" id="img"></div>
-			<div><a href="" class="link-dark link-underline-opacity-0">겨울룩</a></div>
+	<div class="border-bottom d-flex justify-content-around py-3" id="imgContainer">
+		<c:forEach begin="0" end="4">
+		<a href="view.main" class="link-dark link-underline-opacity-0">
+		<div class="d-flex flex-column" id="imgDiv" onclick="location.href='view.main'">
+			<div>
+				<img src="resources/img/abc.jpeg" id="img">
+			</div>
+			<div>
+				겨울룩
+			</div>
 		</div>
-		
-		<div class="d-flex flex-column" id="imgDiv">
-			<div><img src="resources/img/abc.jpeg" id="img"></div>
-			<div><a href="" class="link-dark link-underline-opacity-0">겨울룩</a></div>
-		</div>
-		
-		<div class="d-flex flex-column" id="imgDiv">
-			<div><img src="resources/img/abc.jpeg" id="img"></div>
-			<div><a href="" class="link-dark link-underline-opacity-0">겨울룩</a></div>
-		</div>
-		
-		<div class="d-flex flex-column" id="imgDiv">
-			<div><img src="resources/img/abc.jpeg" id="img"></div>
-			<div><a href="" class="link-dark link-underline-opacity-0">겨울룩</a></div>
-		</div>
-		
-		<div class="d-flex flex-column" id="imgDiv">
-			<div><img src="resources/img/abc.jpeg" id="img"></div>
-			<div><a href="" class="link-dark link-underline-opacity-0">겨울룩</a></div>
-		</div>
+		</a>
+		</c:forEach>
 	</div>
 	
-    <div id="photo-container">
-        <img id="photo" src="resources/img/abc.jpeg" alt="Your Photo">
-        <div class="tag-container" id="tag-container"></div>
-    </div>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const photoContainer = document.getElementById("photo-container");
-            const tagContainer = document.getElementById("tag-container");
-
-            let isAddingTag = false;
-
-            // Function to add a tag at the clicked position
-            function addTag(event) {
-                if (isAddingTag) {
-                    const x = event.offsetX;
-                    const y = event.offsetY;
-
-                    const tagElement = document.createElement("div");
-                    tagElement.classList.add("tag");
-                    tagElement.style.left = x+"px";
-                    tagElement.style.top = y+"px";
-                    tagElement.innerText = "Tag";
-
-                    tagContainer.appendChild(tagElement);
-
-                    // Add click event to handle tag click or further interactions
-                    tagElement.addEventListener("click", () => {
-                        alert("Tag Clicked!");
-                        // Add your custom logic here
-                    });
-
-                    isAddingTag = false;
-                }
-            }
-
-            // Event listener to detect clicks on the photo container
-            photoContainer.addEventListener("mousemove", addTag);
-            photoContainer.addEventListener("mousedown", () => isAddingTag = true);
-        });
-    </script>
+	<input style="float: right;" type="button" value="나의 코디" onclick="location.href='insert.style'">
+	
 </body>
 </html>
     

@@ -54,19 +54,26 @@ CREATE SEQUENCE product_seq;
 
 CREATE TABLE style (
 	style_number	number	PRIMARY KEY,
-	image	varchar2(30),
-	title	varchar2(50)	NOT NULL,
+	image1	varchar2(50),
+    image2	varchar2(50),
+    image3	varchar2(50),
+    image4	varchar2(50),
+    image5	varchar2(50),
+	title	varchar2(100)	NOT NULL,
 	content	varchar2(4000)	NOT NULL,
 	read_count	number,
 	recommend_count	number,
 	write_date	Date,
-	ref	number,
-	re_step	number,
-	re_level number,
-	ip	varchar2(20),
-	product_number	number	NOT NULL,
+	product_number1	number,
+    product_number2	number,
+    product_number3	number,
+    product_number4	number,
 	member_id	varchar2(15)	NOT NULL,
-	FOREIGN KEY (product_number) REFERENCES product(product_number)
+	FOREIGN KEY (product_number1) REFERENCES product(product_number),
+    FOREIGN KEY (product_number2) REFERENCES product(product_number),
+    FOREIGN KEY (product_number3) REFERENCES product(product_number),
+    FOREIGN KEY (product_number4) REFERENCES product(product_number),
+    FOREIGN KEY (member_id) REFERENCES member(member_id)
 );
 
 CREATE SEQUENCE style_seq;

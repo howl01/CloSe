@@ -2,6 +2,10 @@
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <script src="resources/js/bootstrap.bundle.min.js"></script>
 <script src="resources/js/jquery.js"></script>
@@ -38,26 +42,148 @@
       location.href = "register.member";
    }
    
-   function search() {
-	      var overlay = document.getElementById('overlay');
-	      overlay.style.display = 'block';
-	   }
-	function hideOverlay() {
-	      var overlay = document.getElementById('overlay');
-	      overlay.style.display = 'none';
-	      location.href="view.main";
+   	function search() {
+       var overlay = document.getElementById('overlay');
+       overlay.style.display = 'block';
+    }
+   	function hideOverlay() {
+   		var overlay = document.getElementById('overlay');
+   		overlay.style.display = 'none';
+	 }
+   	
+   	
+   	$(document).ready(function () {
+   	    // 페이지 로드 시 최근 검색어 목록을 가져와서 업데이트
+   	    var recentSearchList = JSON.parse(localStorage.getItem("recentSearchList")) || [];
+   	    updateRecentSearchList(recentSearchList);
+
+   	    $("#searchWord").on("input", function () {
+   	        var searchWord = $(this).val().trim();
+   	        if (searchWord.length === 0) {
+   	            $("#displayList").hide();
+   	        } else {
+   	            $.ajax({
+   	                url: "wordSearchShow.main",
+   	                type: "get",
+   	                data: {"searchWord": searchWord},
+   	                dataType: "text",
+   	                success: function (json) {
+   	                    if (json.length > 0) {
+   	                        var html = "<ul>";
+   	                        var jsonArray = JSON.parse(json);
+   	                        $.each(jsonArray, function (index, item) {
+   	                            html += "<li class='result' style='cursor:pointer;'>" + item.word + "</li>";
+   	                        });
+   	                        html += "</ul>";
+   	                        var inputWidth = $("#searchWord").css("width");
+   	                        $("#displayList").css({"width": inputWidth});
+   	                        $("#displayList").html(html);
+   	                        $("#displayList").show();
+   	                    }
+   	                },
+   	                error: function (jqXHR, textStatus, errorThrown) {
+   	                    console.error("AJAX Error:", textStatus, errorThrown);
+   	                    alert("검색 중 오류가 발생했습니다. 자세한 내용은 콘솔을 확인하세요.");
+   	                }
+   	            });
+   	        }
+   	    });
+   	    
+   		// 전체 지우기 버튼 클릭 이벤트 핸들러
+   	    $("#clearAllBtn").on("click", function () {
+   	        // 로컬 스토리지에서 최근 검색어 목록을 제거
+   	        localStorage.removeItem("recentSearchList");
+
+   	        // 최근 검색어 목록 업데이트
+   	        updateRecentSearchList([]);
+   	    });
+
+   	    $(document).on('click', ".result", function () {
+   	        var word = $(this).text();
+   	        $("#searchWord").val(word);
+   	        $("#displayList").hide();
+   	    	});
+   		});
+   		
+	//검색어 저장 함수
+	function saveToLocalStorage() {
+	    var searchWord = $("#searchWord").val().trim();
+	    if (searchWord.length > 0) {
+	        // 로컬 스토리지에서 최근 검색어 목록을 읽어옴
+	        var recentSearchList = JSON.parse(localStorage.getItem("recentSearchList")) || [];
+	
+	        // 중복 확인
+	        var existingIndex = recentSearchList.indexOf(searchWord);
+	        if (existingIndex !== -1) {
+	            // 중복된 검색어가 이미 있다면 삭제
+	            recentSearchList.splice(existingIndex, 1);
+	        }
+	
+	        // 최근 검색어 목록에 추가
+	        recentSearchList.push(searchWord);
+	
+	        // 로컬 스토리지에 최근 검색어 목록을 저장
+	        localStorage.setItem("recentSearchList", JSON.stringify(recentSearchList));
+	
+	        // 최근 검색어 목록 업데이트
+	        updateRecentSearchList(recentSearchList);
+	    }
+	
+	    // 검색 버튼 클릭 시 페이지 이동을 방지하기 위해 false 반환
+	    return false;
 	}
+	
+	// 최근 검색어 목록 업데이트 함수
+	function updateRecentSearchList(list) {
+	    var recentSearchListElement = $("#recentSearchList");
+	    recentSearchListElement.empty(); // 목록 초기화
+	    for (var i = 0; i < list.length; i++) {
+	           // 각 검색어 옆에 지우기 버튼 추가
+	           recentSearchListElement.append("<li>" + list[i] +
+	               "<button class='delete-btn' data-word='" + list[i] + "'>삭제</button></li>");
+	       }
+	}
+	
+		// 검색어 삭제 버튼 클릭 시
+	   $(document).on('click', ".delete-btn", function (event) {
+	       event.stopPropagation(); // 부모 클릭 방지
+	       var wordToDelete = $(this).data("word");
+	
+	       // 로컬 스토리지에서 최근 검색어 목록을 읽어옴
+	       var recentSearchList = JSON.parse(localStorage.getItem("recentSearchList")) || [];
+	
+	       // 해당 검색어 삭제
+	       var indexToDelete = recentSearchList.indexOf(wordToDelete);
+	       if (indexToDelete !== -1) {
+	           recentSearchList.splice(indexToDelete, 1);
+	           localStorage.setItem("recentSearchList", JSON.stringify(recentSearchList));
+	           updateRecentSearchList(recentSearchList);
+	       }
+	   });
 	
 </script>
 
 <div id="overlay" class="overlay">
-
-<a href="javascript:hideOverlay()">
-<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="black" class="bi bi-x-square" viewBox="0 0 16 16" style="float: right;">
-  <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-  <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-</svg>
-</a>
+	<a href="javascript:hideOverlay()">
+	<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="black" class="bi bi-x-lg" viewBox="0 0 16 16" style="float: right; margin-right: 20px; margin-top: 20px;">
+	  <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+	</svg>
+	</a>
+	<br><br>
+	<form action="view.main" onsubmit="return saveToLocalStorage()" name="searchForm" method="get">
+	   <div class="d-flex justify-content-center border-bottom border-dark" style="width: 50%; margin: auto; padding-bottom: 10px;">
+	      <div><input type="text" id="searchWord" name="searchWord" autocomplete= 'off' placeholder="카테고리, 상품명 등" style="border: none; outline: none; width: 500px;"></div>
+	      <div><input type="image" src="resources/icon/search.svg" style="width: 25px; height: 25px;"></div>
+	   </div>
+	</form>
+	<div id="displayList" style="border: solid 1px gray; height: 100px; overflow: auto; margin-left: 77px; margin-top: -1px; border-top: 0px;"></div>
+	<div class="d-flex justify-content-start" style="border: none; outline: none; width: 555px; margin-left: 410px; ">
+      <!-- 최근 검색어를 출력하는 부분 추가 -->
+		<div id="recentSearchDiv">
+		    최근 검색어 <button id="clearAllBtn">전체 삭제</button>
+		    <ul id="recentSearchList"></ul>
+		</div>
+	</div>
 </div>
 
 <div class="sticky-top">
@@ -65,7 +191,7 @@
    <div class="container" style="width:66%;">
       <div
          class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-         <a href="/main/main_normal_home.jsp"
+         <a href="view.main"
             class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
             <img src="resources/img/logo.png" class="bi me-2" width="280"
             height="60" role="img" aria-label="#home">
@@ -88,8 +214,6 @@
   			<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
 			</svg> <font size="2">검색</font>
             </a></li>
-            
-
          </ul>
       </div>
    </div>
@@ -98,8 +222,8 @@
 <nav class="py-2 bg-white border-bottom">
     <div class="container d-flex flex-wrap" style="width:66%;">
       <ul class="nav me-auto">
-        <li class="nav-item"><a href="javscript:void(0);" onclick="goLogin()" class="nav-link link-body-emphasis px-2">HOME</a></li>
-        <li class="nav-item"><a href="javscript:void(0);" onclick="goLogin()" class="nav-link link-body-emphasis px-2">오늘의 옷비서</a></li>
+        <li class="nav-item"><a href="view.main" class="nav-link link-body-emphasis px-2">HOME</a></li>
+        <li class="nav-item"><a href="javscript:void(0);" onclick="goLogin()" class="nav-link link-body-emphasis px-2">CloSe</a></li>
         <li class="nav-item"><a href="mainView.style" class="nav-link link-body-emphasis px-2" id="styleNav">STYLE</a></li>
         <li class="nav-item"><a href="javscript:void(0)" onclick="goLogin()" class="nav-link link-body-emphasis px-2">SHOP</a></li>
         <li class="nav-item"><a href="javscript:void(0)" onclick="goLogin()" class="nav-link link-body-emphasis px-2">EVENT</a></li>

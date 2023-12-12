@@ -19,17 +19,12 @@ import product.model.ProductDao;
 @Controller
 public class SearchController {
 	@Autowired
-    private ProductDao productService;
+    private ProductDao productDao;
 	
-	@RequestMapping("/search.main")
-    public String showSearchPage() {
-        return "search"; // JSP 파일명과 일치해야 합니다.
-    }
-
     @RequestMapping(value = "/wordSearchShow.main", method = RequestMethod.GET)
     @ResponseBody
     public void wordSearchShow(@RequestParam("searchWord") String searchWord, HttpServletResponse response) throws IOException {
-    	List<String> wordList =  productService.findProductNames(searchWord);
+    	List<String> wordList =  productDao.findProductNames(searchWord);
         
         JSONArray jsonArr = new JSONArray(); 
 		if(wordList != null) {
