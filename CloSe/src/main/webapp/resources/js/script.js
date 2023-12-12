@@ -88,10 +88,6 @@ function idformcheck(){
 }
 
 function pwformcheck(){
-	if(f.name.value == ""){
-		alert('이름을 입력하세요.');
-		return false;
-	}
 	
 	if(f.member_id.value == ""){
 		alert('아이디를 입력하세요.');
@@ -100,18 +96,24 @@ function pwformcheck(){
 
 	if(isNaN(f.phone.value)){
 		alert("휴대폰 번호는 숫자로 입력해 주세요.");
-		setTimeout(function(){               
-			f.phone.select();             
-		}, 10);
 		return false;
 	}
 	
 	if(f.phone.value.length<11){
 		alert("휴대폰 번호를 전부 입력해 주세요.");
-		setTimeout(function(){               
-			f.phone.focus();             
-		}, 10);
 		return false;
 	}
+	
+	if (f.email.value.trim() == "") {
+        alert('이메일을 입력하세요.');
+        return false;
+    }
+	
+    var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+    if (!emailPattern.test(f.email.value)) {
+        alert('올바른 이메일 형식이 아닙니다.');
+        return false;
+    }
 	
 }

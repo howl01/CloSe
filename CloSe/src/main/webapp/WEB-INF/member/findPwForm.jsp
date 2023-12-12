@@ -30,20 +30,20 @@
 
          <label for="country" class="form-label" style = "margin-top: 30px">아이디</label>
          <div class="form-floating">
-            <input type="text" class="form-control mb-2" id="floatingInput" name = "member_id" placeholder="name@example.com"> 
-             <label for="floatingInput">아이디 입력</label>
-         </div>
-         
-         <label for="country" class="form-label">이름</label>
-         <div class="form-floating">
-            <input type="text" class="form-control mb-2" id="floatingInput" name = "name" placeholder="name@example.com"> 
-            <label for="floatingInput">이름 입력</label>
+            <input type="text" class="form-control mb-2" id="floatingId" name = "member_id" placeholder="Id"> 
+             <label for="floatingId">아이디 입력</label>
          </div>
          
          <label for="country" class="form-label">휴대폰 번호</label>
-         <div class="form-floating mb-4">
-            <input type="text" class="form-control" id="floatingPassword" name = "phone" placeholder="Password"> 
+         <div class="form-floating">
+            <input type="text" class="form-control" id="floatingPassword" maxlength="11" name = "phone" placeholder="Password"> 
             <label for="floatingPassword">- 없이 휴대폰 번호 입력</label>
+         </div>
+         
+         <label for="country" class="form-label">이메일 주소</label>
+         <div class="form-floating mb-4">
+            <input type="text" class="form-control mb-2" id="floatingEmail" name = "email" placeholder="Email"> 
+            <label for="floatingEmail">name@example.com</label>
          </div>
 
          <button class="btn btn-dark w-100 py-2" type="submit">비밀번호 찾기</button>&nbsp;
