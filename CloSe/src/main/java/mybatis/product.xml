@@ -13,4 +13,11 @@
 	<select id="getOneProduct" resultType="ProductBean">
 		select * from product where product_number = #{product_number}
 	</select>
+	
+	<select id="getProductByBigcategory" resultType="ProductBean">
+		SELECT * FROM product p 
+		INNER JOIN category c ON p.smallcategory_name = c.smallcategory_name
+		WHERE c.bigcategory_name = #{bigcategory_name} 
+		and p.s_stock>0 and p.M_STOCK>0 and p.L_STOCK>0 and p.XL_STOCK>0
+	</select> 
 </mapper>

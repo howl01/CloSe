@@ -24,5 +24,9 @@ public class ProductDao {
 	public ProductBean getOneProduct(String product_number) {
 		return sqlSessionTemplate.selectOne(namespace+".getOneProduct",product_number);
 	}
+
+	public List<ProductBean> getProductByBigcategory(String bigcategory_name) {
+		return sqlSessionTemplate.selectList(namespace+".getProductByBigcategory",bigcategory_name);
+	}
 	
 }

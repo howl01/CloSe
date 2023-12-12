@@ -1,6 +1,7 @@
 package cart.model;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,18 @@ public class CartDao {
 
 	public List<CartBean> getAllCartByMember_Id(String member_id) {
 		return sqlSessionTemplate.selectList(namespace+".getAllCartByMember_Id", member_id);
+	}
+	public List<CartInfoBean> getAllCartInfoByMember_Id(String member_id) {
+		return sqlSessionTemplate.selectList(namespace+".getAllCartInfoByMember_Id", member_id);
+	}
+
+	public void updateCart(CartBean cb) {
+		sqlSessionTemplate.update(namespace+".updateCart", cb);
+	}
+
+
+	public void qtyUpdate(Map<String, String> qtyMap) {
+		sqlSessionTemplate.update(namespace+".qtyUpdate", qtyMap);
 	}
 
 

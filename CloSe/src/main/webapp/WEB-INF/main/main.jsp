@@ -42,6 +42,11 @@
          bsComponent.stop().animate({"margin-top": newPosition + "px"}, 700);
        });
      });
+   
+   	 function productList(bigcate){
+   		 alert(bigcate);
+   		 location.href="list.product?bigcategory_name="+bigcate;
+   	 }
 </script>
 
 <div class = "body">
@@ -100,22 +105,26 @@
         </div>
         
         <div class="col" align="center">
-            <a><img class="bd-placeholder-img card-img-top" src = "/pimages/" width="100%" height="120"></a>
+            <a><img class="bd-placeholder-img card-img-top" src = "/pimages/" width="100%" height="120"
+            	onclick="productList('아우터')"></a>
                아우터
         </div>
         
         <div class="col" align="center">
-            <a><img class="bd-placeholder-img card-img-top" src = "/pimages/" width="100%" height="120"></a>
+            <a><img class="bd-placeholder-img card-img-top" src = "/pimages/" width="100%" height="120" 
+            	onclick="productList('상의')"></a>
                상의
         </div>
         
         <div class="col" align="center">
-            <a><img class="bd-placeholder-img card-img-top" src = "/pimages/" width="100%" height="120"></a>
+            <a><img class="bd-placeholder-img card-img-top" src = "/pimages/" width="100%" height="120" 
+  	           onclick="productList('하의')"></a>
                하의
         </div>
         
         <div class="col" align="center">
-            <a><img class="bd-placeholder-img card-img-top" src = "/pimages/" width="100%" height="120"></a>
+            <a><img class="bd-placeholder-img card-img-top" src = "/pimages/" width="100%" height="120"
+            	onclick="productList('신발')"></a>
                신발
         </div>
         
