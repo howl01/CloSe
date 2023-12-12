@@ -4,6 +4,49 @@
 <script src="resources/js/bootstrap.bundle.min.js"></script>
 <link href="resources/css/sign-in.css" rel="stylesheet">
 <link href="resources/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+<script type="text/javascript">
+
+	Kakao.init('2cdf0145ab332ff37556bbc8268b13a1');
+    function kakaoLogin() {
+        Kakao.Auth.login({
+            success: function (response) {
+                Kakao.API.request({
+                    url: '/v2/user/me',
+                    success: function (response) {
+                    	var id = response.kakao_account.profile.id;
+                        alert('Id: ' + id);
+                        alert(JSON.stringify(response))
+                    },
+                    fail: function (error) {
+                        alert(JSON.stringify(error))
+                    },
+                })
+            },
+            fail: function (error) {
+                alert(JSON.stringify(error))
+            },
+        })
+    }
+    
+  //카카오로그아웃  
+    function kakaoLogout() {
+        if (Kakao.Auth.getAccessToken()) {
+          Kakao.API.request({
+            url: '/v1/user/unlink',
+            success: function (response) {
+            	console.log(response)
+            	alert('로그아웃 되었습니다.');
+            },
+            fail: function (error) {
+              console.log(error)
+            },
+          })
+          Kakao.Auth.setAccessToken(undefined)
+        }
+    }  
+    
+</script>
 <script type="text/javascript" src="resources/js/script.js"></script>
 <script>
 	function setCookie(name, value, days) {
@@ -76,6 +119,8 @@
 	    // 유효한 경우 폼을 제출
 	    return true;
 	}
+	
+	
 </script>
 
 <body class="d-flex align-items-center py-4 bg-body-tertiary">
@@ -109,6 +154,20 @@
             </label>
          </div>
          <button class="btn btn-dark w-100 py-2" type="submit">로그인</button>
+         
+         <!-- 카카오톡 로그인 -->
+         <div class="form-group row" id="kakaologin">
+         	<div class="kakaobtn">
+         		<a href="javascript:kakaoLogin();">
+         			<img src="resources/img/kakao_login_medium_wide.png" style="width: 350px; height: 40px;"/>
+         		</a>
+         	</div>
+         </div>
+         
+         <a href="javascript:kakaoLogout();">
+         	카카오톡 로그아웃
+         </a>
+         
          <p class="mt-5 mb-3 text-body-secondary">© 2023 Minhyeok, Byeon</p>
       </form>
    </main>
