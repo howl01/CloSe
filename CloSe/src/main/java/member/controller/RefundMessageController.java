@@ -21,16 +21,16 @@ public class RefundMessageController {
 
 		String phone = request.getParameter("phone");
 		System.out.println(phone);
-		String api_key = "NCSAYCE2ZL54SKXP";
-		String api_secret = "ZDMHUGQ0R4DEIJQFY4LB7TDCWYAZUQSY";
+		String api_key = "api_key";
+		String api_secret = "api_secret";
 		Message coolsms = new Message(api_key, api_secret);
 
 		HashMap<String, String> set = new HashMap<String, String>();
 		set.put("to", phone);
 
 		String random = String.valueOf((int)(Math.random()*999999+10000));
-		set.put("from", "01048165732");
-		set.put("text", "ÀÎÁõ¹øÈ£´Â ["+random+"] ÀÔ´Ï´Ù.");
+		set.put("from", "phone");
+		set.put("text", "Ã€ÃÃÃµÂ¹Ã¸ÃˆÂ£Â´Ã‚ ["+random+"] Ã€Ã”Â´ÃÂ´Ã™.");
 		set.put("type", "sms");
 		set.put("app_version", "test app 1.2"); 
 
