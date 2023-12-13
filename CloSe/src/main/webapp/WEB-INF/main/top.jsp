@@ -39,7 +39,6 @@
    function goLogin() {
       location.href = "register.member";
    }
-   
    function search() {
 	      var overlay = document.getElementById('overlay');
 	      overlay.style.display = 'block';
@@ -47,6 +46,12 @@
 	function hideOverlay() {
 	      var overlay = document.getElementById('overlay');
 	      overlay.style.display = 'none';
+	}
+	function goQna(){
+		location.href = "list.qna";
+	}
+	function goNotice(){
+		location.href="list.notice";
 	}
 </script>
 
@@ -59,7 +64,7 @@
 <br><br>
 <form action="" method="get">
 	<div class="d-flex justify-content-center border-bottom border-dark" style="width: 50%; margin: auto; padding-bottom: 10px;">
-		<div><input type="text" name = "search" autocomplete= 'off' placeholder="카테고리, 상품 등" style="border: none; outline: none; width: 500px;"></div>
+		<div><input type="text" name = "search" autocomplete= 'off' placeholder="카테고리, 상품명 등" style="border: none; outline: none; width: 500px;"></div>
 		<div><a href="javascript:search()" class="link text-black"> 
 	    <svg src xmlns="http://www.w3.org/2000/svg" class="bi mb-1" width="28" height="28" style="margin-top: 2.5px;" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
 	  	<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
@@ -103,7 +108,6 @@
 			</svg> <font size="2">검색</font>
             </a></li>
             
-
          </ul>
       </div>
    </div>
@@ -119,7 +123,8 @@
         <li class="nav-item"><a href="javscript:void(0)" onclick="goLogin()" class="nav-link link-body-emphasis px-2">EVENT</a></li>
       </ul>
       <ul class="nav">
-        <li class="nav-item"><a href="javscript:void(0)" onclick="goLogin()" class="nav-link link-body-emphasis px-2"><font size="2">고객센터</font></a></li>
+        <li class="nav-item"><a href="javascript:goNotice()" class="nav-link link-body-emphasis px-2"><font size="2">공지사항</font></a></li>
+        <li class="nav-item"><a href="javascript:goQna()" class="nav-link link-body-emphasis px-2"><font size="2">고객센터</font></a></li>
       </ul>
     </div>
   </nav>

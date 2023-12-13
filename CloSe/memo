@@ -1,4 +1,4 @@
--- ±‚¡∏ ≈◊¿Ã∫Ì µÂ∑”
+-- Í∏∞Ï°¥ ÌÖåÏù¥Î∏î ÎìúÎ°≠
 DROP TABLE cart cascade constraints;
 DROP TABLE orders cascade constraints;
 DROP TABLE qna cascade constraints;
@@ -6,7 +6,7 @@ DROP TABLE style cascade constraints;
 DROP TABLE category cascade constraints;
 DROP TABLE product cascade constraints;
 drop table member cascade constraints;
--- Ω√ƒˆΩ∫ µÂ∑”
+-- ÏãúÌÄÄÏä§ ÎìúÎ°≠
 DROP SEQUENCE member_seq;
 DROP SEQUENCE product_seq;
 DROP SEQUENCE style_seq;
@@ -18,9 +18,7 @@ CREATE TABLE member (
 	member_id	varchar2(15)	PRIMARY KEY,
 	password	varchar2(20)	NOT NULL,
 	name	varchar2(15)	NOT NULL,
-	hp1	varchar2(10)	NOT NULL,
-	hp2	varchar2(10)	NOT NULL,
-	hp3	varchar2(10)	NOT NULL,
+	phone	varchar2(15)	NOT NULL,
 	address1	varchar2(100)	NOT NULL,
 	address2	varchar2(100)	NOT NULL,
 	birth	Date,
@@ -66,58 +64,63 @@ CREATE TABLE style (
 	ip	varchar2(20),
 	product_number	number	NOT NULL,
 	member_id	varchar2(15)	NOT NULL,
-	FOREIGN KEY (product_number) REFERENCES product(product_number)
+	FOREIGN KEY (product_number) REFERENCES product(product_number),
+  FOREIGN KEY (member_id) REFERENCES member(member_id)
 );
 
 CREATE SEQUENCE style_seq;
 
 CREATE TABLE qna (
 	qna_number	number	primary key,
-	image	varchar2(30)	NULL,
+	image	varchar2(30) default null,
 	title	varchar2(50)	NOT NULL,
 	content	varchar2(4000)	NOT NULL,
-	read_count	number,
-	recommend_count	number,
 	write_date	Date,
+	secret varchar2(10) default 'NO',
 	ref	number,
-	re_step	number,
 	re_level	number,
-	ip	varchar2(20),
-	member_id	varchar2(15)	NOT NULL
+	answer number default 0,
+	qna_category varchar2(20),
+  	member_id varchar2(15),
+	FOREIGN KEY (member_id) REFERENCES member(member_id)
 );
 
 CREATE SEQUENCE qna_seq;
 
-CREATE TABLE orders (
-	orders_number	number	primary key,
-	orders_date	Date	NULL,
-	amount	number	NULL,
-	qty	number	NULL,
-	product_number	number	NOT NULL,
-	member_id	varchar2(15)	NOT NULL,
-	cart_number	number	NOT NULL
+CREATE TABLE notice (
+	notice_number number primary key,
+	image varchar2(30),
+	title	varchar2(50)	NOT NULL,
+	content	varchar2(4000)	NOT NULL,
+	write_date	Date
 );
 
-CREATE SEQUENCE order_seq;
+CREATE SEQUENCE notice_seq;
 
 CREATE TABLE cart (
 	cart_number	number	primary key,
 	product_number	number	NOT NULL,
 	qty	number	NOT NULL,
 	member_id	varchar2(15)	NOT NULL,
-    	FOREIGN KEY (product_number) REFERENCES product(product_number),
-    	FOREIGN KEY (member_id) REFERENCES member(member_id)
+  FOREIGN KEY (product_number) REFERENCES product(product_number),
+  FOREIGN KEY (member_id) REFERENCES member(member_id)
 );
 
 CREATE SEQUENCE cart_seq;
 
-create table t_popular_word(
-  popw_word varchar2(50),
-  popw_date date	
+CREATE TABLE orders (
+	orders_number	number	primary key,
+	orders_date	Date	NULL,
+	amount	number	NULL,
+	qty	number	NULL,
+  	member_id varchar2(15),
+	product_number	number	NOT NULL,
+  	cart_number number,
+	FOREIGN KEY (member_id) REFERENCES member(member_id),
+  	FOREIGN KEY (product_number) REFERENCES product(product_number),
+	FOREIGN KEY (cart_number) REFERENCES cart(cart_number)
 );
 
-create table t_user_popular_word(
-  user_popw_word varchar2(50),
-  user_popw_date date,
-  user_popw_order varchar2(50)
-);
+
+
+CREATE SEQUENCE order_seq;
