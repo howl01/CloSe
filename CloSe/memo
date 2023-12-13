@@ -15,7 +15,7 @@ DROP SEQUENCE order_seq;
 DROP SEQUENCE cart_seq;
 
 CREATE TABLE member (
-	member_id	varchar2(20)	PRIMARY KEY,
+	member_id	varchar2(30)	PRIMARY KEY,
 	password	varchar2(20)	NOT NULL,
 	name	varchar2(10)	NOT NULL,
 	phone	varchar2(20)	NOT NULL,

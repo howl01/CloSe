@@ -7,7 +7,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 public class MemberBean {
 	@NotEmpty(message = "아이디를 입력하세요")
-	@Size(max = 6, message = "6글자이하로 입력하세요")
+	@Size(max = 10, message = "10글자이하로 입력하세요")
 	private String member_id;
 	
 	@NotEmpty(message = "비밀번호를 입력하세요")

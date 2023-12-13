@@ -21,6 +21,7 @@ public class NickDuplicateController {
 	public String duplicate(@RequestParam("inputnick") String inputnick) {
 		
 		int cnt = memberDao.findNick(inputnick);
+		
 		if(cnt == 0) {
 			return "YES";
 		}else {

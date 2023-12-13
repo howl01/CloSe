@@ -14,9 +14,8 @@
                 Kakao.API.request({
                     url: '/v2/user/me',
                     success: function (response) {
-                    	var id = response.kakao_account.profile.id;
-                        alert('Id: ' + id);
-                        alert(JSON.stringify(response))
+                    	var id = response.id;
+                        location.href="kakaologin.member?member_id="+id;
                     },
                     fail: function (error) {
                         alert(JSON.stringify(error))

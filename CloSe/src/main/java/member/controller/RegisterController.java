@@ -1,5 +1,10 @@
 package member.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +21,7 @@ public class RegisterController {
    
    private final String command = "/register.member";
    private final String viewPage = "registerForm";
-   private final String gotoPage = "main";
+   private final String gotoPage = "loginForm";
    
    @Autowired
    private MemberDao memberDao;
@@ -28,14 +33,16 @@ public class RegisterController {
    }
    
    @RequestMapping(value = command, method = RequestMethod.POST)
-   public String registerPost(@Valid MemberBean mb, BindingResult bresult) {
-      
-      if(bresult.hasErrors()) {
-         return viewPage;
-      }
-      
-      memberDao.memberRegister(mb);
-      
-      return gotoPage;
+   public String registerPost(@Valid MemberBean mb, BindingResult bresult, HttpServletResponse response){
+	   if(bresult.hasErrors()) {
+		   	 
+	         return viewPage;
+	      }
+	      
+	      memberDao.memberRegister(mb);
+	      
+	      return gotoPage;
+
+	  
    }
 }
