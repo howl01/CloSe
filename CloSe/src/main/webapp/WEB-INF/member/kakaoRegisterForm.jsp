@@ -13,7 +13,6 @@ var registercheck = false; //인증번호 확인 여부를 저장할 변수
 var cert = false;
 
 $(document).ready(function() {
-
 	$('#nickname').keyup(function(){ // 닉네임 중복체크
 
         $.ajax({
@@ -35,13 +34,8 @@ $(document).ready(function() {
         });
     });
 
-    $("input[name='member_id']").keydown(function(){
-        use="";
-        $('#idmessage').css('display','none');
-    });
-
     $('#sub').click(function(event){ // submit 클릭
-    	
+    	alert(cert);
         if(use == "impossible"){
             alert('이미 사용중인 아이디입니다.');
             return false;
@@ -62,9 +56,6 @@ $(document).ready(function() {
         	alert('인증번호를 확인하세요');
         	return false;
         }
-
-        event.preventDefault(); // 기본 동작 중지
-        f.submit();
     });
     
     $('#email').keyup(function () {
@@ -102,7 +93,6 @@ function sendSMS(phone) {
             console.error(error);
             // 에러가 발생했을 경우에 대한 처리를 추가할 수 있습니다.
             alert('전화번호가 일치하지 않습니다.');
-            cert = false;
         }
     });
 }
@@ -123,11 +113,9 @@ function verify() {
         // 일치할 경우, 여기에 원하는 동작 추가
         alert('인증 성공!');
         registercheck = true;
-        
     } else {
         // 불일치할 경우, 여기에 원하는 동작 추가
         alert('인증번호가 일치하지 않습니다. 다시 시도하세요.');
-        // 여기에 추가로 원하는 동작을 넣으면 됩니다.
     }
 }
 
@@ -140,6 +128,10 @@ function isValidEmail(email) {
 	
 function goLogin(){
 	location.href="login.member";
+}
+
+function resetPhoneVerification() {
+    cert = false;
 }
 
 </script>
