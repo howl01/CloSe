@@ -25,13 +25,13 @@
    	}
    
     @font-face {
-      font-family: 'Hahmlet-VariableFont_wght.ttf';
-      src: url('resources/font/Hahmlet-VariableFont_wght.ttf.ttf') format('woff');
-      src: url('resources/font/Hahmlet-VariableFont_wght.ttf.ttf') format('woff2');
+      font-family: 'IBMPlexSansKR-Regular';
+      src: url('resources/font/IBMPlexSansKR-Regular.ttf') format('woff');
+      src: url('resources/font/IBMPlexSansKR-Regular.ttf') format('woff2');
     }
 
     body {
-      font-family: 'Hahmlet-VariableFont_wght.ttf', sans-serif;
+      font-family: 'IBMPlexSansKR-Regular', sans-serif;
       font-size: 12pt;
       font-weight: 500;
     }
@@ -219,7 +219,7 @@
    </div>
 </div>
 
-<nav class="py-2 bg-white border-bottom">
+<nav class="mb-2 py-2 bg-white border-bottom">
     <div class="container d-flex flex-wrap" style="width:66%;">
       <ul class="nav me-auto">
         <li class="nav-item"><a href="view.main" class="nav-link link-body-emphasis px-2">HOME</a></li>
