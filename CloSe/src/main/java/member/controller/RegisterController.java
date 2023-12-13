@@ -1,10 +1,10 @@
 package member.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,16 +33,17 @@ public class RegisterController {
    }
    
    @RequestMapping(value = command, method = RequestMethod.POST)
-   public String registerPost(@Valid MemberBean mb, BindingResult bresult, HttpServletResponse response){
+   public String registerPost(@Valid MemberBean mb, BindingResult bresult, 
+		   					HttpSession session, HttpServletResponse response){
 	   if(bresult.hasErrors()) {
-		   	 
-	         return viewPage;
+		   	session.setAttribute("cert", false);
+	        return viewPage;
 	      }
-	      
+	   	
 	      memberDao.memberRegister(mb);
+	      session.setAttribute("cert", true);
 	      
 	      return gotoPage;
-
-	  
    }
+   
 }

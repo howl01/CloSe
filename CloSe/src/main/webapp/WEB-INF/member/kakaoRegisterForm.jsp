@@ -12,8 +12,23 @@
 var registercheck = false; //인증번호 확인 여부를 저장할 변수
 var cert = false;
 
-$(document).ready(function() {
+function updateCert() {
+    $.ajax({
+        type: "GET",
+        url: "getCertValue.jsp",
+        success: function(response) {
+            cert = (response.trim()); // 문자열 "true"를 boolean 값으로 변환
+            // 이후 필요한 로직 추가
+            alert(cert);
+        },
+        error: function(error) {
+            console.error(error);
+        }
+    });
+}
 
+
+$(document).ready(function() {
 	$('#nickname').keyup(function(){ // 닉네임 중복체크
 
         $.ajax({
@@ -33,6 +48,33 @@ $(document).ready(function() {
                 }
             }
         });
+	
+        $('#sub').click(function(){ // submit 클릭
+        	alert(cert);
+
+            if(use == "impossible"){
+                alert('이미 사용중인 아이디입니다.');
+                return false;
+                
+            } else if(nickuse == "impossible"){
+            	alert('이미 사용중인 닉네임입니다.');
+            	return false;
+            	
+            }else if(pwuse == "nosame"){
+            	alert('비밀번호가 일치하지 않습니다');
+            	return false;
+            	
+            }else if(!cert){
+            	alert('인증번호를 받으세요');
+            	return false;
+            	
+            }else if(!registercheck){
+            	alert('인증번호를 확인하세요');
+            	return false;
+            }
+
+            f.submit();
+        });
     });
 
     $("input[name='member_id']").keydown(function(){
@@ -40,32 +82,7 @@ $(document).ready(function() {
         $('#idmessage').css('display','none');
     });
 
-    $('#sub').click(function(event){ // submit 클릭
-    	
-        if(use == "impossible"){
-            alert('이미 사용중인 아이디입니다.');
-            return false;
-            
-        } else if(nickuse == "impossible"){
-        	alert('이미 사용중인 닉네임입니다.');
-        	return false;
-        	
-        }else if(pwuse == "nosame"){
-        	alert('비밀번호가 일치하지 않습니다');
-        	return false;
-        	
-        }else if(!cert){
-        	alert('인증번호를 받으세요');
-        	return false;
-        	
-        }else if(!registercheck){
-        	alert('인증번호를 확인하세요');
-        	return false;
-        }
-
-        event.preventDefault(); // 기본 동작 중지
-        f.submit();
-    });
+    
     
     $('#email').keyup(function () {
         var enteredEmail = $(this).val();
@@ -94,15 +111,15 @@ function sendSMS(phone) {
             // 이 부분에서 필요한 로직을 추가하여 처리 결과를 사용자에게 보여줄 수 있습니다.
             // 예: 인증번호 입력 창을 보이게 한다거나, 메시지를 표시한다 등.
             document.getElementById('verificationSection').style.display = 'flex';
-			cert = true;
+            cert = true;
             // 받은 랜덤 값(response)을 전역 변수에 저장
             window.randomValue = response;
         },
         error: function(error) {
             console.error(error);
             // 에러가 발생했을 경우에 대한 처리를 추가할 수 있습니다.
-            alert('전화번호가 일치하지 않습니다.');
             cert = false;
+            alert('전화번호가 일치하지 않습니다.');
         }
     });
 }
@@ -123,7 +140,7 @@ function verify() {
         // 일치할 경우, 여기에 원하는 동작 추가
         alert('인증 성공!');
         registercheck = true;
-        
+        location.reload();
     } else {
         // 불일치할 경우, 여기에 원하는 동작 추가
         alert('인증번호가 일치하지 않습니다. 다시 시도하세요.');
