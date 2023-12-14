@@ -42,6 +42,7 @@ public class MemberBean {
 	private String nickname;
 	
 	@NotNull(message = "인증번호를 입력하세요")
+	@Size(min = 4, message = "인증번호를 입력하세요")
 	private String verificationCode;
 	private int height;
 	private int weight;

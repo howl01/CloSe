@@ -14,10 +14,10 @@ import member.model.MemberBean;
 import member.model.MemberDao;
 
 @Controller
-public class RegisterController {
+public class KakaoRegisterController {
 
-	private final String command = "/register.member";
-	private final String viewPage = "registerForm";
+	private final String command = "/kakaoRegister.member";
+	private final String viewPage = "kakaoRegisterForm";
 	private final String gotoPage = "redirect:login.member";
 
 	@Autowired
@@ -41,4 +41,5 @@ public class RegisterController {
 
 
 	}
+
 }

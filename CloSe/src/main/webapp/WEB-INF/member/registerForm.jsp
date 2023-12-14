@@ -9,11 +9,10 @@
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript" src="resources/js/jquery.js"></script>
 <script type="text/javascript">
-var isVerificationRequested = false; // 인증번호 요청 여부를 저장할 변수
+var cert = false;
 
 function sendSMS(phone) {
     alert('인증번호를 요청했습니다.');
-	var cert = false;
     // Ajax 요청
     $.ajax({
         type: "GET",
@@ -24,11 +23,10 @@ function sendSMS(phone) {
             console.log(response);
 
             // 이 부분에서 필요한 로직을 추가하여 처리 결과를 사용자에게 보여줄 수 있습니다.
-            // 예: 인증번호 입력 창을 보이게 한다거나, 메시지를 표시한다 등.
             document.getElementById('verificationSection').style.display = 'flex';
-			cert = true;
             // 받은 랜덤 값(response)을 전역 변수에 저장
             window.randomValue = response;
+			cert = true;
         },
         error: function(error) {
             console.error(error);
@@ -51,16 +49,13 @@ function verify() {
     var userInput = document.getElementById('verificationCode').value;
 
     // 전역 변수에 저장된 랜덤 값과 사용자가 입력한 값 비교
-    if (userInput === window.randomValue) {
+    if (userInput == window.randomValue) {
         // 일치할 경우, 여기에 원하는 동작 추가
         alert('인증 성공!');
         
-        // 여기에 추가로 원하는 동작을 넣으면 됩니다.
-        // 예를 들어, form.submit() 등을 호출하여 회원가입을 진행할 수 있습니다.
     } else {
         // 불일치할 경우, 여기에 원하는 동작 추가
         alert('인증번호가 일치하지 않습니다. 다시 시도하세요.');
-        // 여기에 추가로 원하는 동작을 넣으면 됩니다.
     }
 }
 
@@ -125,23 +120,22 @@ $(document).ready(function() {
         }else if(pwuse == "nosame"){
         	alert('비밀번호가 일치하지 않습니다');
         	return false;
+        }else if(!cert){
+        	alert('인증번호를 받으세요');
+        	return false;
+        	
+        }else if(!registercheck){
+        	alert('인증번호를 확인하세요');
+        	return false;
         }
-
-        event.preventDefault(); // 기본 동작 중지
-        verify(); // verify 함수 호출
-        f.submit();
     });
     
     $('#email').keyup(function () {
-        // Get the entered email value
         var enteredEmail = $(this).val();
 
-        // Check if the email format is valid
         if (isValidEmail(enteredEmail)) {
-            // If valid, hide the error message
             $('#emailmessage').hide();
         } else {
-            // If not valid, display the error message
             $('#emailmessage').html("<font color='red'>형식이 올바르지 않습니다.</font>");
             $('#emailmessage').show();
         }
@@ -181,7 +175,7 @@ function goLogin(){
     <div align = "center">
       <div class="col-md-7 col-lg-8 text-start">
       <hr class="my-6">
-        <form:form commandName="memberBean" name="f" class="needs-validation" action = "register.member" method="post" onsubmit="return writeSave()">
+        <form:form commandName="memberBean" name="f" class="needs-validation" action = "register.member" method="post">
           <div class="row">
 
             <div class="col-12">
@@ -223,9 +217,9 @@ function goLogin(){
               <input type="text" class="form-control" id="name" name = "name" value="${memberBean.name}" style="border-color: black;">
               <form:errors cssClass="err" path="name"/>
             </div>
-            <div class="col-5">
+            <div class="col-4">
             	<div class="row">
-              <label for="email" class="form-label">성별</label><br>
+              <label for="gender" class="form-label">성별</label><br>
               <%
 				String[] mgender = {"남자","여자"};
 			  %>
@@ -249,32 +243,34 @@ function goLogin(){
             </div>
             
          	<div class="col-12">&nbsp;</div>
-               <div class="col-md-6">
+               <div class="col-md-5">
                  <label for="country" class="form-label">휴대폰 번호</label>
-                 <input type="text" class="form-control" id="phone" name = "phone" maxlength="11"  style="border-color: black;">
+                 <input type="text" class="form-control" id="phone" name = "phone" maxlength="11" value="${memberBean.phone}" style="border-color: black;">
                  <form:errors cssClass="err" path="phone"/>
                </div>
                
             <div class="col-md-2" style="margin-top: 32px;">
-               <input class="btn btn-outline-dark" type = "button" value = "인증번호 요청" onclick = "sendSMS($('#phone').val())" style="border-color: black;">
+               <input type = "button" class="btn btn-outline-dark" id="phoneVerificationButton" value = "인증번호 요청" onclick = "sendSMS($('#phone').val())" style="border-color: black;">
             </div>
+            	<form:errors cssClass="err" path="verificationCode"/>
+            	
             <div id="verificationSection" style="display: none; margin-top: 20px;">
               <!-- 이곳에 텍스트 상자 및 기타 요소 추가 -->
               <label for="verificationCode" class="form-label">인증번호 : </label>&nbsp;
               <input type="text" class="form-control" id="verificationCode" name="verificationCode" style="border-color: black; width: 155px;">&nbsp;
               <input type="button" value="인증하기" onClick="verify()">
-              <form:errors cssClass="err" path="verificationCode"/>
+              
             </div>
             
             <div class="col-12">&nbsp;</div>
-               <div class="col-md-6">
+               <div class="col-md-5">
                  <label for="country" class="form-label">이메일 주소</label>
                  <input type="text" class="form-control" id="email" name = "email" value="${memberBean.email}" style="border-color: black;">
                  <form:errors cssClass="err" path="email"/>
                   &nbsp;<span id="emailmessage" style = "display: none;"></span>
                </div>
             
-            <div class="col-12">&nbsp;</div>
+            <div class="col-5">&nbsp;</div>
               
             <div class="col-md-4">
             <label for="birth" class="form-label">생년월일</label>
@@ -293,7 +289,7 @@ function goLogin(){
 
           <hr class="my-4">
          <div class="d-grid gap-2 d-md-block" align = "center">
-          <button id="sub" class="btn btn-dark btn-md" type="submit">회원가입</button>
+          <input type="submit" id="sub" class="btn btn-dark btn-md" value="회원가입"/>
           <input type="button" class="btn btn-dark btn-md" value="취소" onclick="goLogin()">
          </div>
         </form:form>
