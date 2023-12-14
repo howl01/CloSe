@@ -29,6 +29,10 @@ public class MemberDao {
 	public void memberRegister(MemberBean mb) {
 		sqlSessionTemplate.insert(namespace+".memberRegister",mb);
 	}
+	
+	public void kakaoRegister(MemberBean mb) {
+		sqlSessionTemplate.insert(namespace+".kakaoRegister",mb);
+	}
 
 	public MemberBean getDetail(String member_id) {
 		MemberBean memberBean = sqlSessionTemplate.selectOne(namespace+".getDetail",member_id);

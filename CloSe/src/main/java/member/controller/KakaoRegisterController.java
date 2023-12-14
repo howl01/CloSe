@@ -35,7 +35,7 @@ public class KakaoRegisterController {
 			return viewPage;
 		}
 		model.addAttribute("memberBean", mb);
-		memberDao.memberRegister(mb);
+		memberDao.kakaoRegister(mb);
 
 		return gotoPage;
 

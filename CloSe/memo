@@ -26,7 +26,8 @@ CREATE TABLE member (
 	gender	varchar2(10),
 	nickname	varchar2(30)	NOT NULL,
 	height	number	NULL,
-	weight	number	NULL
+	weight	number	NULL,
+	social varchar2(20)
 );
 
 CREATE SEQUENCE member_seq;

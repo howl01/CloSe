@@ -51,11 +51,13 @@ public class MemberBean {
 	@NotEmpty(message = "¸ö¹«°Ô ÀÔ·Â")
 	private String weight;
 	
+	private String social;
+	
 	public MemberBean() {
 		super();
 	}
 	public MemberBean(String member_id, String password, String name, String phone, String email,
-			String address1, String address2, String birth, String gender, String nickname, String height, String weight) {
+			String address1, String address2, String birth, String gender, String nickname, String height, String weight, String social) {
 		super();
 		this.member_id = member_id;
 		this.password = password;
@@ -69,10 +71,15 @@ public class MemberBean {
 		this.nickname = nickname;
 		this.height = height;
 		this.weight = weight;
+		this.social = social;
 	}
 	
-	
-	
+	public String getSocial() {
+		return social;
+	}
+	public void setSocial(String social) {
+		this.social = social;
+	}
 	public String getEmail() {
 		return email;
 	}
