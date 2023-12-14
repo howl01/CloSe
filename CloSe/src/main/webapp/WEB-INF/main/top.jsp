@@ -64,7 +64,7 @@
    	        } else {
    	            $.ajax({
    	                url: "wordSearchShow.main",
-   	                type: "get",
+   	            	method: "get",
    	                data: {"searchWord": searchWord},
    	                dataType: "text",
    	                success: function (json) {

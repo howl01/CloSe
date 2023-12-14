@@ -10,23 +10,8 @@
 <script type="text/javascript" src="resources/js/jquery.js"></script>
 <script type="text/javascript">
 var registercheck = false; //인증번호 확인 여부를 저장할 변수
+alert(registercheck);
 var cert = false;
-
-function updateCert() {
-    $.ajax({
-        type: "GET",
-        url: "getCertValue.jsp",
-        success: function(response) {
-            cert = (response.trim()); // 문자열 "true"를 boolean 값으로 변환
-            // 이후 필요한 로직 추가
-            alert(cert);
-        },
-        error: function(error) {
-            console.error(error);
-        }
-    });
-}
-
 
 $(document).ready(function() {
 	$('#nickname').keyup(function(){ // 닉네임 중복체크
@@ -49,9 +34,7 @@ $(document).ready(function() {
             }
         });
 	
-        $('#sub').click(function(){ // submit 클릭
-        	alert(cert);
-
+        /* $('#sub').click(function(){ // submit 클릭
             if(use == "impossible"){
                 alert('이미 사용중인 아이디입니다.');
                 return false;
@@ -74,7 +57,7 @@ $(document).ready(function() {
             }
 
             f.submit();
-        });
+        }); */
     });
 
     $("input[name='member_id']").keydown(function(){
@@ -157,6 +140,20 @@ function isValidEmail(email) {
 	
 function goLogin(){
 	location.href="login.member";
+}
+
+function confirm() {
+	if(!registercheck || registercheck == null){
+		f.submit();
+	} else if(registercheck){
+		if(!cert){
+			var phoneInput = document.getElementById('phone');
+			var phoneValue = phoneInput.value;
+			sendsms(phoneValue);
+		} else if(cert){
+			f.submit();
+		}
+	}
 }
 
 </script>
@@ -292,7 +289,7 @@ function goLogin(){
 
           <hr class="my-4">
          <div class="d-grid gap-2 d-md-block" align = "center">
-          <input type="submit" id="sub" class="btn btn-dark btn-md" value="회원가입"/>
+          <input type="button" id="sub" class="btn btn-dark btn-md" value="인증요청" onclick="confirm()"/>
           <input type="button" class="btn btn-dark btn-md" value="취소" onclick="goLogin()">
          </div>
         </form:form>

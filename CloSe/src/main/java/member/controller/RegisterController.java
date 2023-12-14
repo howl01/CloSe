@@ -36,12 +36,12 @@ public class RegisterController {
    public String registerPost(@Valid MemberBean mb, BindingResult bresult, 
 		   					HttpSession session, HttpServletResponse response){
 	   if(bresult.hasErrors()) {
-		   	session.setAttribute("cert", false);
+		   	session.setAttribute("registercheck", false);
 	        return viewPage;
 	      }
 	   	
 	      memberDao.memberRegister(mb);
-	      session.setAttribute("cert", true);
+	      session.setAttribute("registercheck", true);
 	      
 	      return gotoPage;
    }

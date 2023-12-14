@@ -10,4 +10,12 @@
         ORDER BY product_name
         FETCH FIRST 10 ROWS ONLY
     </select>
+    
+    <select id="findProductNames2" resultType="ProductBean">
+        SELECT *
+        FROM product
+        WHERE product_name LIKE '%' || #{searchWord2} || '%'
+        ORDER BY product_name
+        FETCH FIRST 10 ROWS ONLY
+    </select>
 </mapper>

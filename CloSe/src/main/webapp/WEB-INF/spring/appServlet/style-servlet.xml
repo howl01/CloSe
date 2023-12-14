@@ -15,6 +15,8 @@
 	</bean>
 
 	<context:component-scan base-package="style" />
+	<context:component-scan base-package="product" />
+	<context:component-scan base-package="main" />
 	
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<property name="maxUploadSize" value="10485760"/>

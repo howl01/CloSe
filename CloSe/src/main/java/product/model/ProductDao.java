@@ -21,5 +21,9 @@ public class ProductDao {
 	public List<String> findProductNames(String searchWord) {
 		return sqlSessionTemplate.selectList(namespace + ".findProductNames", searchWord);
 	}
+
+	public List<ProductBean> findProductNames2(String searchWord2) {
+		return sqlSessionTemplate.selectList(namespace + ".findProductNames2", searchWord2);
+	}
 	
 }

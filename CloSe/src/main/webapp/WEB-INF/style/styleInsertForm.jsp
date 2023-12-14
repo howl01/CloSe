@@ -9,24 +9,24 @@
 	}
 	
 	.preview-container {
-	    width: 640px;
+	    width: 50vw;
 	    margin: auto;
 	}
 	
 	.preview-image {
 	    width: 100%;
-	    max-height: 900px;
+	    max-height: 70vw;
 	    height: auto;
 	}
 	
 	.carousel {
-	    width: 640px;
+	    width: 50vw;
 	    margin: auto;
 	}
 	
 	.carousel-item img {
 	    width: 100%;
-	    max-height: 900px;
+	    max-height: 70vw;
 	    height: auto;
 	}
 	
@@ -42,9 +42,93 @@
   		height: 7px;
 		border-radius:50%;
 	}
+	
+	.body {
+   width: 100vw;
+   margin: auto;
+	}
+
+#carouselExampleAutoplaying {
+   max-width: 66%; /* 최대 너비 설정 */
+   margin: auto; /* 가운데 정렬 */
+}
+
+.productrow {
+   border-bottom: 1px solid rgba(0, 0, 0, .1);
+   padding: 15 0 15 10;
+}
+ .err{
+      color: red;
+      font-weight: bold;
+      font-size: 9pt;
+   }
+   
+   
+.btn-upload {
+  width: 150px;
+  height: 30px;
+  background: #fff;
+  border: 1px solid rgb(77,77,77);
+  border-radius: 10px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &:hover {
+    background: rgb(77,77,77);
+    color: #fff;
+  }
+}
+#file1, #file2 {
+  display: none;
+}
+	.row{
+		width: 90vw;
+	}
 </style>
 
 <script type="text/javascript">
+$(document).ready(function () {
+    $("#searchWord2").on("input", function () {
+        var searchWord2 = $(this).val().trim();
+        if (searchWord2.length === 0) {
+            $("#displayList2").hide();
+        } else {
+            $.ajax({
+                url: "wordSearchShow.main",
+                method: "post",
+                data: {"searchWord2": searchWord2},
+                dataType: "text",
+                success: function (json) {
+                    if (json.length > 0) {
+                        var html = "<ul>";
+                        var jsonArray = JSON.parse(json);
+                        $.each(jsonArray, function (index, item) {
+                            html += "<li class='result' style='cursor:pointer;'>" + item.image + item.product_name + item.price + item.smallcategory_name + "</li>";
+                        });
+                        html += "</ul>";
+                        var inputWidth = $("#searchWord2").css("width");
+                        $("#displayList2").css({"width": inputWidth});
+                        $("#displayList2").html(html);
+                        $("#displayList2").show();
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error("AJAX Error:", textStatus, errorThrown);
+                    alert("검색 중 오류가 발생했습니다. 자세한 내용은 콘솔을 확인하세요.");
+                }
+            });
+        }
+    });
+
+    $(document).on('click', ".result", function () {
+        var word = $(this).text();
+        $("#searchWord2").val(word);
+        $("#displayList2").hide();
+   	});
+});
+
 	function updatePreview() {
 	    var fileInput = document.querySelector('input[type=file]');
 	    var files = fileInput.files;
@@ -61,8 +145,12 @@
 	    var carouselIndicators = document.querySelector('.carousel-indicators');
 	    carouselIndicators.innerHTML = ""; // Clear previous indicators
 	
-	    // If more than one file, create carousel previews
-	    if (files.length > 1) {
+	    if (files.length === 1) {
+            var img = document.createElement('img');
+            img.src = URL.createObjectURL(files[0]);
+            img.className = 'preview-image';
+            previewContainer.appendChild(img);
+        } else if (files.length > 1) {
 	        for (var i = 0; i < files.length; i++) {
 	            var img = document.createElement('img');
 	            img.src = URL.createObjectURL(files[i]);
@@ -111,18 +199,113 @@
 	        carouselContainer.appendChild(nextButton);
 	    }
 	}
+	
+	const clothingMap = new Map();
+
+	   <c:forEach var="category" items="${clists}">
+	      clothingMap.set('${category.smallcategory_name}','${category.bigcategory_name}');
+	   </c:forEach>
+	   
+	   
+	   const set1 = new Set();
+	   
+	   for (const [key, value] of clothingMap) {
+	      set1.add(value);
+	   } 
+	   
+	   
+	    const firstSelect = document.getElementById("firstSelect");
+	     for (const value of set1) {
+	         const option = document.createElement("option");
+	         option.value = value;
+	         option.text = value;
+	        if(value == clothingMap.get("${productBean.smallcategory_name}")){
+	           option.selected = true;
+	        }
+	         firstSelect.add(option);
+	        updateSecondSelect();
+	     }
+	     
+	   
+	     function updateSecondSelect() {
+	         const firstSelect = document.getElementById("firstSelect");
+	         const secondSelect = document.getElementById("secondSelect");
+	         const selectedCategory = firstSelect.value;
+
+	         // 이전 옵션 지우기
+	         secondSelect.innerHTML = '';
+
+	         // 선택한 카테고리에 기반하여 동적으로 옵션 추가
+	         for (const [key, value] of clothingMap) {
+	             if (value === selectedCategory) {
+	                 const option = document.createElement("option");
+	                 option.value = key;
+	                 option.text = key;
+	                 if(key == "${productBean.smallcategory_name}"){
+	                   option.selected = true;
+	                }
+	                 secondSelect.add(option);
+	             }
+	         }
+	     }
+	     
+	     function readURL(input) { //상품이미지 나오게
+	       var hiddenField = document.getElementsByName("image")[0];
+	       if (input.files && input.files[0]) {
+	          var reader = new FileReader();
+	          reader.onload = function(e) {
+	             document.getElementById('preview').src = e.target.result;
+	          };
+	          reader.readAsDataURL(input.files[0]);
+	          alert(hiddenField.value);
+	           hiddenField.value = "";
+	       }
+	     
+	    }
+	    function handleFileSelection() {
+	         var fileInput = document.getElementById("file2");
+	         var fileSelectionMessage = document.getElementById("fileSelectionMessage");
+	         var selectedFileName = document.getElementById("selectedFileName");
+
+	         if (fileInput.files.length > 0) {
+	             fileSelectionMessage.innerHTML = "선택된 파일: " + fileInput.files[0].name;
+	         } else {
+	             fileSelectionMessage.innerHTML = ""; // 파일이 선택되지 않은 경우 초기화
+	         }
+	    }
+	     
+	     
+	     function NumerInput(fieldName) { //숫자칸에는 숫자만 들어가게
+	           var inputField = document.getElementsByName(fieldName)[0];
+	           var inputValue = inputField.value;
+	           var numericValue = inputValue.replace(/[^0-9]/g, '');
+	           inputField.value = numericValue;
+	    }
 </script>
 
-<body>
-    <h2 align="center">코디 사진 선택</h2>
-    <form enctype="multipart/form-data" style="text-align: center;">
-    	<div class="form row">
-    	<div class="form-group col-md-4 mx-auto">
-        <input class="form-control" type="file" name="file" multiple accept="image/*" onchange="updatePreview()">
-    	</div>
-    	</div>
-    </form>
 
+
+<div class="body">
+	
+	<div class="row">
+		<div class="col-lg-2"></div>
+      
+		<div class="col-lg-8">
+		<form:form commandName="styleBean" action="insert.style" method="post" enctype="multipart/form-data">
+		<div style="border-bottom: 3px solid;">
+			<h3 style="padding: 22 0 22 0">Style Write</h3>
+		</div>
+			<div class="row productrow">
+   				<div class="col-2" style="white-space: nowrap;">
+   					<span>상품이미지<font color="red">*</font></span>
+				</div>
+				<div class="col-10">
+			    	<div class="form row">
+			    	<div class="form-group col-md-4 mx-auto">
+			        <input class="form-control" type="file" name="file" multiple accept="image/*" onchange="updatePreview()">
+			    	</div>
+			    	</div>
+    
     <div class="preview-container"></div>
 
     <div id="carouselExampleIndicators" class="carousel slide">
@@ -130,10 +313,112 @@
         <div class="carousel-inner"></div>
     </div>
 		
-	<div class="d-flex justify-content-between mt-2" style="width: 70%; margin: auto;">
+	
+	<div>
+	   <form:errors path="image" cssClass="err"/>
+	   </div>
+	</div>
+	<div class="col-3">
+	<label for="file1">
+	     <div class="btn-upload">파일 업로드하기</div>
+	  </label>
+	   <input type="file" name="pImage" onchange="readURL(this);" id="file1" >
+	   <input type="hidden" name="prevImage" value="${productBean.image}">
+	<input type="hidden" name="image" value="${productBean.image}">
+	   </div>
+	</div>
+	
+	<div class="row productrow">
+		<div class="col-3" style="white-space: nowrap;">
+			<span>상품태그</span>
+	    </div>
+	    <div class="col-4">
+	    	<form action="view.main" name="searchForm" method="get">
+				<div class="d-flex justify-content-center" style="width: 50%; margin: auto; padding-bottom: 10px;">
+				<div><input type="text" id="searchWord2" name="searchWord2" autocomplete= 'off' placeholder="브랜드, 상품명 등" ></div>
+				<div><input type="image" src="resources/icon/search.svg" style="width: 3vw; height: 3vh;"></div>
+				</div>
+			</form>
+		</div>
+		<div class="col-4">
+			<div id="displayList2" style="border: solid 1px gray; height: 100px; overflow: auto; margin-left: 77px; margin-top: -1px; border-top: 0px;"></div>
+		</div>
+	</div>
+
+	<div class="row productrow">
+	    <div class="col-2" style="white-space: nowrap;">
+			<span>제목</span>
+	    </div>
+	    <div class="col-6">
+			<input type="text" class="form-control mb-1" name="title" 
+                    placeholder="비워두시면 내용으로 대체됩니다.">
+                <div>
+                    <form:errors path="price" cssClass="err"/>
+              </div>      
+	    </div>
+	</div>
+	
+	<div class="row productrow">
+	    <div class="col-2" style="white-space: nowrap;">
+			<span>내용<font color="red">*</font></span>
+	    </div>
+	    <div class="col-6">
+			<textarea class="form-control mb-1" name="content" placeholder="자유롭게 작성하시면 됩니다.&#13;&#10;(#해시태그도 OK)" rows="5" style="resize: none;"></textarea>
+                <div>
+                    <form:errors path="price" cssClass="err"/>
+              </div>      
+	    </div>
+	</div>
+	
+	<div class="row productrow">
+        <div class="col-2" style="white-space: nowrap;">
+           <span>스타일<font color="red">*</font></span>
+        </div>
+        <div class="col-8">
+        	<c:set var="styleList">로맨틱, 모던, 미니멀, 빈티지, 스트릿, 스포티, 아메카지, 캐주얼, 클래식</c:set>
+			<c:forEach var="style" items="${styleList}">
+			    <input type="checkbox" class="btn-check" id="btn-${style}" autocomplete="off" name="style">
+			    <label class="btn btn-outline-dark" for="btn-${style}">${style}</label>
+			</c:forEach>
+           <div>
+              <form:errors path="temperature" cssClass="err"/>
+           </div>
+        </div>
+     </div>
+              <div style="padding-top: 15; float: right;">
+                 
+	</div>
+           </form:form>
+              </div>
+        </div>
+
+
+  <div class="col-2 mt-5 px-5">
+     <div class="bs-component">
+        <div class="card mb-3">
+           <h3 class="card-header">오늘의 날씨 정보</h3>
+           <div class="card-body">
+              <h5 class="card-title">Special title treatment</h5>
+              <h6 class="card-subtitle text-muted">Support card subtitle</h6>
+           </div>
+           <svg xmlns="http://www.w3.org/2000/svg"
+              class="d-block user-select-none" width="100%" height="200"
+              aria-label="Placeholder: Image cap" focusable="false" role="img"
+              preserveAspectRatio="xMidYMid slice" viewBox="0 0 318 180"
+              style="font-size: 1.125rem; text-anchor: middle">
+              <rect width="100%" height="100%" fill="#868e96"></rect>
+              <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
+            </svg>
+        </div>
+     </div>
+  </div>
+  </div>
+  
+  <div class="d-flex justify-content-between mt-2" style="width: 70%; margin: auto;">
 		<div><button type="button" class="btn btn-dark">처음</button></div>
 		<div><button type="button" class="btn btn-dark">다음</button></div>
-	</div>
-</body>
+  
+    </div>
+
 
 <%@ include file= "../main/bottom.jsp" %>
