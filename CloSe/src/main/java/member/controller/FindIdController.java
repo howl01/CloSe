@@ -50,14 +50,22 @@ public class FindIdController {
 			return mav;
 		}else {
 			if(phone.equals(memberBean.getPhone())) {
+				if(memberBean.getSocial().equals("kakao")) {
+					out.println("<script>alert('카카오 회원입니다. 카카오톡 로그인을 이용해주세요.')</script>");
+					out.flush();
+					mav.setViewName(viewPage);
+					return mav;
+					
+				}else {
+					String memberId = memberBean.getMember_id();
+					String alertMessage = "아이디는 [" + memberId + "] 입니다.";
+					
+					out.println("<script>alert('" + alertMessage + "')</script>");
+					out.flush();
+					mav.setViewName(viewPage);
+					return mav;
+				}
 				
-				String memberId = memberBean.getMember_id();
-				String alertMessage = "아이디는 [" + memberId + "] 입니다.";
-				
-				out.println("<script>alert('" + alertMessage + "')</script>");
-				out.flush();
-				mav.setViewName(viewPage);
-				return mav;
 			}else {
 				out.println("<script>alert('휴대폰 번호가 일치하지 않습니다.')</script>");
 				out.flush();
