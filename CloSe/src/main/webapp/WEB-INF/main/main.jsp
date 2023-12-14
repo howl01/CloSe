@@ -32,7 +32,7 @@
    
        $(window).scroll(function() {
          var scrollPosition = $(window).scrollTop();
-         var windowHeight = $(window).height();
+         var windowHeight = window.innerHeight;
          var elementHeight = bsComponent.outerHeight();
    
          // 새로운 top 위치 계산하여 요소를 수직으로 중앙에 배치

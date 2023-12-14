@@ -8,26 +8,14 @@
 	    padding-top: 3px;
 	}
 	
-	.preview-container {
-	    width: 50vw;
-	    margin: auto;
-	}
-	
 	.preview-image {
 	    width: 100%;
-	    max-height: 70vw;
-	    height: auto;
-	}
-	
-	.carousel {
-	    width: 50vw;
-	    margin: auto;
+	    height: 39vw;
 	}
 	
 	.carousel-item img {
 	    width: 100%;
-	    max-height: 70vw;
-	    height: auto;
+	    height: 39vw;
 	}
 	
 	.carousel-indicators {
@@ -44,52 +32,59 @@
 	}
 	
 	.body {
-   width: 100vw;
-   margin: auto;
+		width: 100vw;
+		margin: auto;
 	}
 
-#carouselExampleAutoplaying {
-   max-width: 66%; /* 최대 너비 설정 */
-   margin: auto; /* 가운데 정렬 */
-}
-
-.productrow {
-   border-bottom: 1px solid rgba(0, 0, 0, .1);
-   padding: 15 0 15 10;
-}
- .err{
-      color: red;
-      font-weight: bold;
-      font-size: 9pt;
-   }
-   
-   
-.btn-upload {
-  width: 150px;
-  height: 30px;
-  background: #fff;
-  border: 1px solid rgb(77,77,77);
-  border-radius: 10px;
-  font-weight: 500;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  &:hover {
-    background: rgb(77,77,77);
-    color: #fff;
-  }
-}
-#file1, #file2 {
-  display: none;
-}
-	.row{
-		width: 90vw;
+	#carouselExampleAutoplaying {
+	   max-width: 66%; /* 최대 너비 설정 */
+	   margin: auto; /* 가운데 정렬 */
 	}
+
+	.productrow {
+	   border-bottom: 1px solid rgba(0, 0, 0, .1);
+	   padding: 15 0 15 10;
+	}
+	.err{
+		color: red;
+		font-weight: bold;
+		font-size: 9pt;
+	}
+	
+	.col-2{
+		text-align: center;
+	}
+	
+	.result {
+		list-style-type: none; /* 이 부분이 li 요소 앞에 나타나는 점을 없애는 스타일입니다. */
+		cursor: pointer;
+	}
+	
+	.result ul {
+	    padding: 0 !important;
+	    margin: 0 !important;
+	}
+	
+	
 </style>
 
 <script type="text/javascript">
 $(document).ready(function () {
+	var bsComponent = $(".bs-component");
+    var initialPosition = bsComponent.offset().top;
+
+    $(window).scroll(function() {
+      var scrollPosition = $(window).scrollTop();
+      var windowHeight = window.innerHeight;
+      var elementHeight = bsComponent.outerHeight();
+
+      // 새로운 top 위치 계산하여 요소를 수직으로 중앙에 배치
+      var newPosition = (windowHeight - elementHeight) / 2 + scrollPosition - initialPosition;
+
+      // 새로운 top 위치를 부드러운 애니메이션으로 적용
+      bsComponent.stop().animate({"margin-top": newPosition + "px"}, 700);
+    });
+    
     $("#searchWord2").on("input", function () {
         var searchWord2 = $(this).val().trim();
         if (searchWord2.length === 0) {
@@ -150,6 +145,11 @@ $(document).ready(function () {
             img.src = URL.createObjectURL(files[0]);
             img.className = 'preview-image';
             previewContainer.appendChild(img);
+            
+            previewContainer.style.width = '30vw';
+            previewContainer.style.margin = 'auto';
+            previewContainer.style.marginTop = '20px';
+            previewContainer.style.marginBottom = '10px';
         } else if (files.length > 1) {
 	        for (var i = 0; i < files.length; i++) {
 	            var img = document.createElement('img');
@@ -175,7 +175,7 @@ $(document).ready(function () {
 	            }
 	
 	            carouselIndicators.appendChild(indicatorButton);
-	        }
+	        } 
 	
 	        // Show Carousel
 	        carouselContainer.style.display = 'block';
@@ -197,6 +197,17 @@ $(document).ready(function () {
 	
 	        carouselContainer.appendChild(prevButton);
 	        carouselContainer.appendChild(nextButton);
+	        
+	        carouselContainer.style.width = '30vw';
+	        carouselContainer.style.margin = 'auto';
+	        carouselContainer.style.marginTop = '20px';
+	        carouselContainer.style.marginBottom = '10px';
+	    } else {
+	        // No files selected, reset styles
+	        previewContainer.style.width = '';
+	        previewContainer.style.margin = '';
+	        previewContainer.style.marginTop = '';
+	        previewContainer.style.marginBottom = '';
 	    }
 	}
 	
@@ -249,19 +260,6 @@ $(document).ready(function () {
 	         }
 	     }
 	     
-	     function readURL(input) { //상품이미지 나오게
-	       var hiddenField = document.getElementsByName("image")[0];
-	       if (input.files && input.files[0]) {
-	          var reader = new FileReader();
-	          reader.onload = function(e) {
-	             document.getElementById('preview').src = e.target.result;
-	          };
-	          reader.readAsDataURL(input.files[0]);
-	          alert(hiddenField.value);
-	           hiddenField.value = "";
-	       }
-	     
-	    }
 	    function handleFileSelection() {
 	         var fileInput = document.getElementById("file2");
 	         var fileSelectionMessage = document.getElementById("fileSelectionMessage");
@@ -281,119 +279,111 @@ $(document).ready(function () {
 	           var numericValue = inputValue.replace(/[^0-9]/g, '');
 	           inputField.value = numericValue;
 	    }
+	     
 </script>
 
 
 
 <div class="body">
 	
-	<div class="row">
+	<div class="row d-flex justify-content-center">
 		<div class="col-lg-2"></div>
       
-		<div class="col-lg-8">
-		<form:form commandName="styleBean" action="insert.style" method="post" enctype="multipart/form-data">
-		<div style="border-bottom: 3px solid;">
+		<div class="col-lg-6">
+		<form:form name="f" commandName="styleBean" action="insert.style" method="post" enctype="multipart/form-data">
 			<h3 style="padding: 22 0 22 0">Style Write</h3>
-		</div>
-			<div class="row productrow">
-   				<div class="col-2" style="white-space: nowrap;">
+		
+			<div class="row productrow" style="border-top: 3px solid;"> 
+   				<div class="col-2 align-self-center" style="white-space: nowrap;">
    					<span>상품이미지<font color="red">*</font></span>
 				</div>
-				<div class="col-10">
-			    	<div class="form row">
-			    	<div class="form-group col-md-4 mx-auto">
-			        <input class="form-control" type="file" name="file" multiple accept="image/*" onchange="updatePreview()">
-			    	</div>
-			    	</div>
-    
-    <div class="preview-container"></div>
-
-    <div id="carouselExampleIndicators" class="carousel slide">
-    	<div class="carousel-indicators"></div>
-        <div class="carousel-inner"></div>
-    </div>
-		
-	
-	<div>
-	   <form:errors path="image" cssClass="err"/>
-	   </div>
-	</div>
-	<div class="col-3">
-	<label for="file1">
-	     <div class="btn-upload">파일 업로드하기</div>
-	  </label>
-	   <input type="file" name="pImage" onchange="readURL(this);" id="file1" >
-	   <input type="hidden" name="prevImage" value="${productBean.image}">
-	<input type="hidden" name="image" value="${productBean.image}">
-	   </div>
-	</div>
-	
-	<div class="row productrow">
-		<div class="col-3" style="white-space: nowrap;">
-			<span>상품태그</span>
-	    </div>
-	    <div class="col-4">
-	    	<form action="view.main" name="searchForm" method="get">
-				<div class="d-flex justify-content-center" style="width: 50%; margin: auto; padding-bottom: 10px;">
-				<div><input type="text" id="searchWord2" name="searchWord2" autocomplete= 'off' placeholder="브랜드, 상품명 등" ></div>
-				<div><input type="image" src="resources/icon/search.svg" style="width: 3vw; height: 3vh;"></div>
+				<div class="col-2"></div>
+				<div class="col-6 align-self-center">
+		        	<div><input class="form-control" type="file" name="image" multiple accept="image/*" onchange="updatePreview()"></div>
+			    <div class="preview-container"></div>
+			    <div id="carouselExampleIndicators" class="carousel carousel-dark slide">
+			    	<div class="carousel-indicators"></div>
+			        <div class="carousel-inner"></div>
+			    </div>
+				<div>
+				   <form:errors path="image" cssClass="err"/>
+				   </div>
 				</div>
-			</form>
-		</div>
-		<div class="col-4">
-			<div id="displayList2" style="border: solid 1px gray; height: 100px; overflow: auto; margin-left: 77px; margin-top: -1px; border-top: 0px;"></div>
-		</div>
-	</div>
+				<div class="col-2"></div>
+			</div>
+	
+			<div class="row productrow">
+				<div class="col-2 align-self-center" style="white-space: nowrap;">
+				<span>상품태그</span>
+				</div>
+				<div class="col-2"></div>
+				<div class="col-6 align-self-center">
+					<div><input type="text" class="form-control mb-1" id="searchWord2" name="searchWord2" autocomplete= 'off' placeholder="브랜드, 상품명을 검색하세요." ></div>
+					<div id="displayList2" style="overflow: auto; border-top: 0px;"></div>
+				</div>
+				<div class="col-2"></div>
+			</div>
 
 	<div class="row productrow">
-	    <div class="col-2" style="white-space: nowrap;">
+	    <div class="col-2 align-self-center" style="white-space: nowrap;">
 			<span>제목</span>
 	    </div>
-	    <div class="col-6">
+	    <div class="col-2"></div>
+	    <div class="col-6 align-self-center">
 			<input type="text" class="form-control mb-1" name="title" 
                     placeholder="비워두시면 내용으로 대체됩니다.">
                 <div>
                     <form:errors path="price" cssClass="err"/>
               </div>      
 	    </div>
+	    <div class="col-2"></div>
 	</div>
 	
 	<div class="row productrow">
-	    <div class="col-2" style="white-space: nowrap;">
+	    <div class="col-2 align-self-center" style="white-space: nowrap;">
 			<span>내용<font color="red">*</font></span>
 	    </div>
-	    <div class="col-6">
+	    <div class="col-2"></div>
+	    <div class="col-6 align-self-center">
 			<textarea class="form-control mb-1" name="content" placeholder="자유롭게 작성하시면 됩니다.&#13;&#10;(#해시태그도 OK)" rows="5" style="resize: none;"></textarea>
                 <div>
                     <form:errors path="price" cssClass="err"/>
               </div>      
 	    </div>
+	    <div class="col-2"></div>
 	</div>
 	
-	<div class="row productrow">
-        <div class="col-2" style="white-space: nowrap;">
+	<div class="row productrow" style="border-bottom: 3px solid;">
+        <div class="col-2 align-self-center" style="white-space: nowrap;">
            <span>스타일<font color="red">*</font></span>
         </div>
-        <div class="col-8">
+        <div class="col-2"></div>
+        <div class="col-6 align-self-center">
         	<c:set var="styleList">로맨틱, 모던, 미니멀, 빈티지, 스트릿, 스포티, 아메카지, 캐주얼, 클래식</c:set>
 			<c:forEach var="style" items="${styleList}">
 			    <input type="checkbox" class="btn-check" id="btn-${style}" autocomplete="off" name="style">
-			    <label class="btn btn-outline-dark" for="btn-${style}">${style}</label>
+			    <label class="btn btn-outline-dark" for="btn-${style}" style="margin-right: 2px; margin-bottom: 4px;">${style}</label>
 			</c:forEach>
            <div>
               <form:errors path="temperature" cssClass="err"/>
            </div>
         </div>
+        <div class="col-2"></div>
      </div>
               <div style="padding-top: 15; float: right;">
                  
 	</div>
+	
+	<div class="row py-3">
+	<div class="d-flex justify-content-center" style="margin: auto;">
+		<div style="margin-right: 5px;"><button type="button" class="btn btn-dark" onclick="submitForm()">등록</button></div>
+		<div><button type="button" class="btn btn-dark">취소</button></div>
+		</div>
+	</div>
            </form:form>
               </div>
-        </div>
 
-
-  <div class="col-2 mt-5 px-5">
+  <div class="col-2 mt-5 ps-5">
      <div class="bs-component">
         <div class="card mb-3">
            <h3 class="card-header">오늘의 날씨 정보</h3>
@@ -414,11 +404,6 @@ $(document).ready(function () {
   </div>
   </div>
   
-  <div class="d-flex justify-content-between mt-2" style="width: 70%; margin: auto;">
-		<div><button type="button" class="btn btn-dark">처음</button></div>
-		<div><button type="button" class="btn btn-dark">다음</button></div>
-  
-    </div>
-
+</div>
 
 <%@ include file= "../main/bottom.jsp" %>
