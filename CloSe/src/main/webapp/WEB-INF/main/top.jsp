@@ -66,12 +66,13 @@
             height="60" role="img" aria-label="#home">
          </a>
 
-         <ul
-            class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0">
-            <li><a href="javascript:goLogin()" class="nav-link text-black"> <img
-                  src="resources/icon/person.svg" class="bi d-block mx-auto mb-1"
-                  width="30" height="30"> <font size="2">로그인</font>
-            </a></li>
+         <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0">
+            <li>
+            	<a href="javascript:goLogin()" class="nav-link text-black"> 
+            		<img src="resources/icon/person.svg" class="bi d-block mx-auto mb-1" width="30" height="30"> 
+            		<font size="2">로그인</font>
+            	</a>
+            </li>
             
             <li><a href="javascript:goLogin()" class="nav-link text-black"> <img
                   src="resources/icon/cart.svg" class="bi d-block mx-auto mb-1" width="30"

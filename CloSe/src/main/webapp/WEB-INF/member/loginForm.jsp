@@ -158,7 +158,7 @@
          <div class="form-group row" id="kakaologin">
          	<div class="kakaobtn">
          		<a href="javascript:kakaoLogin();">
-         			<img src="resources/img/kakao_login_medium_wide.png" style="width: 350px; height: 40px;"/>
+         			<img src="resources/img/kakao_login_large_wide.png" style="width: 350px; height: 40px;"/>
          		</a>
          	</div>
          </div>

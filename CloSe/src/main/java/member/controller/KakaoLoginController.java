@@ -40,6 +40,7 @@ public class KakaoLoginController {
 			out.flush();
 		    
 		}else {
+			session.setAttribute("kakaoLoginInfo", memberBean);
 			out.println("<script>alert('로그인 되었습니다.'); location.href='" + request.getContextPath() + "/view.main';</script>");
 			out.flush();
 		}
