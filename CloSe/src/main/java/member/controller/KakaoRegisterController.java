@@ -34,12 +34,11 @@ public class KakaoRegisterController {
 		if(bresult.hasErrors()) {
 			return viewPage;
 		}
-
+		model.addAttribute("memberBean", mb);
 		memberDao.memberRegister(mb);
 
 		return gotoPage;
 
 
 	}
-
 }

@@ -152,7 +152,7 @@
                </a>
             </label>
          </div>
-         <button class="btn btn-dark w-100 py-2" type="submit">로그인</button>
+         <button class="btn btn-dark w-100 py-2" type="submit">로그인</button><hr>
          
          <!-- 카카오톡 로그인 -->
          <div class="form-group row" id="kakaologin">

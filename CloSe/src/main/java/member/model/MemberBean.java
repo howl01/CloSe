@@ -44,14 +44,18 @@ public class MemberBean {
 	@NotNull(message = "인증번호를 입력하세요")
 	@Size(min = 4, message = "인증번호를 입력하세요")
 	private String verificationCode;
-	private int height;
-	private int weight;
+	
+	@NotEmpty(message = "키 입력")
+	private String height;
+	
+	@NotEmpty(message = "몸무게 입력")
+	private String weight;
 	
 	public MemberBean() {
 		super();
 	}
 	public MemberBean(String member_id, String password, String name, String phone, String email,
-			String address1, String address2, String birth, String gender, String nickname, int height, int weight) {
+			String address1, String address2, String birth, String gender, String nickname, String height, String weight) {
 		super();
 		this.member_id = member_id;
 		this.password = password;
@@ -141,16 +145,16 @@ public class MemberBean {
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
-	public int getHeight() {
+	public String getHeight() {
 		return height;
 	}
-	public void setHeight(int height) {
+	public void setHeight(String height) {
 		this.height = height;
 	}
-	public int getWeight() {
+	public String getWeight() {
 		return weight;
 	}
-	public void setWeight(int weight) {
+	public void setWeight(String weight) {
 		this.weight = weight;
 	}
 	
