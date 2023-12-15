@@ -20,7 +20,7 @@ public class LoginController {
 
 	private final String command = "/login.member";
 	private final String viewPage = "loginForm";
-	private final String gotoPage = "";
+	private final String gotoPage = "../main/main";
 	
 	@Autowired
 	private MemberDao memberDao;
@@ -50,7 +50,8 @@ public class LoginController {
 		}else { //아이디 존재함
 			if(memberBean.getPassword().equals(mb.getPassword())) {	//비번이 일치함
 				session.setAttribute("loginInfo", memberBean); //DB에서 가져온 레코드를 loginInfo로 설정
-				
+				out.println("<script>alert('로그인 되었습니다.')</script>");
+				out.flush();
 				mav.setViewName(gotoPage);
 				return mav;
 				

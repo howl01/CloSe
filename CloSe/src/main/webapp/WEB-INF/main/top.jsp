@@ -2,6 +2,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
+<%@ include file="../common/common.jsp" %>
 
 <script src="resources/js/bootstrap.bundle.min.js"></script>
 <script src="resources/js/jquery.js"></script>
@@ -32,10 +33,52 @@
     }
 </style>
 
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script type="text/javascript">
    function goLogin() {
       location.href = "login.member";
    }
+   function goLogout() {
+      location.href = "logout.jsp";
+   }
+   function goKakaoLogin() {
+      location.href = "kakaologin.member";
+   }
+   
+   Kakao.init('2cdf0145ab332ff37556bbc8268b13a1');
+   function kakaoLogout() {
+	    if (Kakao.Auth.getAccessToken()) {
+	      Kakao.API.request({
+	        url: '/v1/user/unlink',
+	        success: function (response) {
+	        	console.log(response)
+	        	alert('로그아웃 되었습니다.');
+				location.href = 'kakaologout.jsp';
+
+	        },
+	        fail: function (error) {
+	          console.log(error)
+	        },
+	      })
+	      Kakao.Auth.setAccessToken(undefined)
+	    }
+	}
+
+   function goLoginOrKakaoLogin() {
+	    if (${not empty loginInfo}) {
+	        goLogout();
+	    } else if (${not empty kakaoLoginInfo}) {
+	    	goKakaoLogin();
+	    }
+	}
+
+	function goLogoutOrKakaoLogout() {
+	    if (${not empty loginInfo}) {
+	        goLogout();
+	    } else if (${not empty kakaoLoginInfo}) {
+	    	kakaoLogout();
+	    }
+	}
    
    function search() {
 	      var overlay = document.getElementById('overlay');
@@ -68,10 +111,19 @@
 
          <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0">
             <li>
-            	<a href="javascript:goLogin()" class="nav-link text-black"> 
-            		<img src="resources/icon/person.svg" class="bi d-block mx-auto mb-1" width="30" height="30"> 
-            		<font size="2">로그인</font>
-            	</a>
+            <c:if test="${empty loginInfo and empty kakaoLoginInfo}">
+			    <a href="javascript:goLogin()" class="nav-link text-black"> 
+			        <img src="resources/icon/person.svg" class="bi d-block mx-auto mb-1" width="30" height="30"> 
+			        <font size="2">로그인</font>
+			    </a>
+			</c:if>
+			
+			<c:if test="${not empty loginInfo or not empty kakaoLoginInfo}">
+			    <a href="javascript:goLogoutOrKakaoLogout()" class="nav-link text-black"> 
+			        <img src="resources/icon/person.svg" class="bi d-block mx-auto mb-1" width="30" height="30"> 
+			        <font size="2">로그아웃</font>
+			    </a>
+			</c:if>
             </li>
             
             <li><a href="javascript:goLogin()" class="nav-link text-black"> <img
@@ -101,6 +153,12 @@
         <li class="nav-item"><a href="javscript:void(0)" onclick="goLogin()" class="nav-link link-body-emphasis px-2">EVENT</a></li>
       </ul>
       <ul class="nav">
+      	<c:if test="${not empty loginInfo}">
+      		<li class="nav-item" style="margin-top: 5px;"><font size="2">${loginInfo.name} 님 환영합니다.  </font></li>
+      	</c:if>
+      	<c:if test="${not empty kakaoLoginInfo}">
+      		<li class="nav-item" style="margin-top: 5px;"><font size="2">${kakaoLoginInfo.name} 님 환영합니다.  </font></li>
+      	</c:if>
         <li class="nav-item"><a href="javscript:void(0)" onclick="goLogin()" class="nav-link link-body-emphasis px-2"><font size="2">고객센터</font></a></li>
       </ul>
     </div>

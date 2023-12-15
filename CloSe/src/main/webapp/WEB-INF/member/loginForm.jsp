@@ -28,23 +28,6 @@
         })
     }
     
-  //카카오로그아웃  
-    function kakaoLogout() {
-        if (Kakao.Auth.getAccessToken()) {
-          Kakao.API.request({
-            url: '/v1/user/unlink',
-            success: function (response) {
-            	console.log(response)
-            	alert('로그아웃 되었습니다.');
-            },
-            fail: function (error) {
-              console.log(error)
-            },
-          })
-          Kakao.Auth.setAccessToken(undefined)
-        }
-    }  
-    
 </script>
 <script type="text/javascript" src="resources/js/script.js"></script>
 <script>
@@ -162,10 +145,6 @@
          		</a>
          	</div>
          </div>
-         
-         <a href="javascript:kakaoLogout();">
-         	카카오톡 로그아웃
-         </a>
          
          <p class="mt-5 mb-3 text-body-secondary">© 2023 Minhyeok, Byeon</p>
       </form>
