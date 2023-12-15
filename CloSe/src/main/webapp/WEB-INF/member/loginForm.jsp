@@ -149,7 +149,7 @@
          </div>
 
          <div class="form-check text-start my-3">
-            <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault"> 
+            <input type="checkbox" value="remember-me" id="flexCheckDefault" style="accent-color: black; margin-left: -20px;"> 
             	<label class="form-check-label" for="flexCheckDefault"> 아이디 저장 </label> 
             	<label style="float: right;">
                <a href="findid.member" class="text-secondary link-underline link-underline-opacity-0">
