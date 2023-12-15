@@ -7,32 +7,6 @@
 <script src="resources/js/bootstrap.bundle.min.js"></script>
 <script src="resources/js/jquery.js"></script>
 <link href="resources/css/bootstrap.min.css" rel="stylesheet">
-
-<style>
-	.overlay {
-      display: none; /* 초기에는 배경 숨김 */
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(255, 255, 255); /* 반투명한 검은 배경 */
-      z-index: 1200;
-   	}
-   
-    @font-face {
-      font-family: 'Hahmlet-VariableFont_wght.ttf';
-      src: url('resources/font/Hahmlet-VariableFont_wght.ttf.ttf') format('woff');
-      src: url('resources/font/Hahmlet-VariableFont_wght.ttf.ttf') format('woff2');
-    }
-
-    body {
-      font-family: 'Hahmlet-VariableFont_wght.ttf', sans-serif;
-      font-size: 12pt;
-      font-weight: 600;
-    }
-</style>
-
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script type="text/javascript">
    function goLogin() {
@@ -88,7 +62,39 @@
 	      var overlay = document.getElementById('overlay');
 	      overlay.style.display = 'none';
 	}
+	
+	function goQna(){ //고객센터
+	      location.href = "list.qna";
+	}
+	function goNotice(){ //공지사항
+	      location.href="list.notice";
+	}
 </script>
+
+<style>
+	.overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255); /* 반투명한 검은 배경 */
+      z-index: 1200;
+   	}
+   
+    @font-face {
+      font-family: 'Hahmlet-VariableFont_wght.ttf';
+      src: url('resources/font/Hahmlet-VariableFont_wght.ttf.ttf') format('woff');
+      src: url('resources/font/Hahmlet-VariableFont_wght.ttf.ttf') format('woff2');
+    }
+
+    body {
+      font-family: 'Hahmlet-VariableFont_wght.ttf', sans-serif;
+      font-size: 12pt;
+      font-weight: 600;
+    }
+</style>
 
 <div id="overlay" class="overlay">
 <a href="javascript:hideOverlay()">
@@ -103,7 +109,7 @@
    <div class="container" style="width:66%;">
       <div
          class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-         <a href="/main/main_normal_home.jsp"
+         <a href="view.main"
             class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
             <img src="resources/img/logo.png" class="bi me-2" width="280"
             height="60" role="img" aria-label="#home">
@@ -146,20 +152,30 @@
 <nav class="py-2 bg-white border-bottom">
     <div class="container d-flex flex-wrap" style="width:66%;">
       <ul class="nav me-auto">
-        <li class="nav-item"><a href="javscript:void(0);" onclick="goLogin()" class="nav-link link-body-emphasis px-2">HOME</a></li>
-        <li class="nav-item"><a href="javscript:void(0);" onclick="goLogin()" class="nav-link link-body-emphasis px-2">오늘의 옷비서</a></li>
-        <li class="nav-item"><a href="javscript:void(0)" onclick="goLogin()" class="nav-link link-body-emphasis px-2">STYLE</a></li>
-        <li class="nav-item"><a href="javscript:void(0)" onclick="goLogin()" class="nav-link link-body-emphasis px-2">SHOP</a></li>
-        <li class="nav-item"><a href="javscript:void(0)" onclick="goLogin()" class="nav-link link-body-emphasis px-2">EVENT</a></li>
+      	<c:if test="${empty loginInfo and empty kakaoLoginInfo}">
+	        <li class="nav-item"><a href="javscript:void(0);" onclick="goLogin()" class="nav-link link-body-emphasis px-2">HOME</a></li>
+	        <li class="nav-item"><a href="javscript:void(0);" onclick="goLogin()" class="nav-link link-body-emphasis px-2">오늘의 옷비서</a></li>
+	        <li class="nav-item"><a href="javscript:void(0)" onclick="goLogin()" class="nav-link link-body-emphasis px-2">STYLE</a></li>
+	        <li class="nav-item"><a href="javscript:void(0)" onclick="goLogin()" class="nav-link link-body-emphasis px-2">SHOP</a></li>
+	        <li class="nav-item"><a href="javscript:void(0)" onclick="goLogin()" class="nav-link link-body-emphasis px-2">EVENT</a></li>
+      	</c:if>
+      	<c:if test="${not empty loginInfo or not empty kakaoLoginInfo}">
+      		<li class="nav-item"><a href="view.main" class="nav-link link-body-emphasis px-2">HOME</a></li>
+	        <li class="nav-item"><a href="javscript:void(0);" onclick="goLogin()" class="nav-link link-body-emphasis px-2">오늘의 옷비서</a></li>
+	        <li class="nav-item"><a href="mainView.style" class="nav-link link-body-emphasis px-2">STYLE</a></li>
+	        <li class="nav-item"><a href="javscript:void(0)" onclick="goLogin()" class="nav-link link-body-emphasis px-2">SHOP</a></li>
+	        <li class="nav-item"><a href="javscript:void(0)" onclick="goLogin()" class="nav-link link-body-emphasis px-2">EVENT</a></li>
+      	</c:if>
       </ul>
       <ul class="nav">
       	<c:if test="${not empty loginInfo}">
-      		<li class="nav-item" style="margin-top: 5px;"><font size="2">${loginInfo.name} 님 환영합니다.  </font></li>
+      		<li class="nav-item" style="margin-top: 4px;"><font size="2" color="green">${loginInfo.name} 님 환영합니다.</font> &nbsp;</li>
       	</c:if>
       	<c:if test="${not empty kakaoLoginInfo}">
-      		<li class="nav-item" style="margin-top: 5px;"><font size="2">${kakaoLoginInfo.name} 님 환영합니다.  </font></li>
+      		<li class="nav-item" style="margin-top: 4px;"><font size="2" color="green">${kakaoLoginInfo.name} 님 환영합니다.</font> &nbsp;</li>
       	</c:if>
-        <li class="nav-item"><a href="javscript:void(0)" onclick="goLogin()" class="nav-link link-body-emphasis px-2"><font size="2">고객센터</font></a></li>
+      	<li class="nav-item"><a href="javascript:goNotice()" class="nav-link link-body-emphasis px-2"><font size="2">공지사항</font></a></li>
+        <li class="nav-item"><a href="javascript:goQna()" class="nav-link link-body-emphasis px-2"><font size="2">고객센터</font></a></li>
       </ul>
     </div>
   </nav>

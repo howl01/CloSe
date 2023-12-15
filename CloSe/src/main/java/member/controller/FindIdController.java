@@ -2,6 +2,8 @@ package member.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -41,7 +43,11 @@ public class FindIdController {
 		out = response.getWriter();
 		response.setContentType("text/html; charset=UTF-8");
 		
-		MemberBean memberBean = memberDao.findwithName(name);
+		Map<String, String> params = new HashMap<String, String>();
+	    params.put("name", name);
+	    params.put("phone", phone);
+		
+		MemberBean memberBean = memberDao.findwithNameAndPhone(params);
 		
 		if(memberBean == null) {
 			out.println("<script>alert('회원정보가 없습니다.')</script>");

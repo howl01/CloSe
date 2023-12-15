@@ -49,7 +49,7 @@ public class FindPwController {
 		//메일 관련 정보
 		String host = "smtp.naver.com";
 		final String username = "ksg980105";
-		final String password = "비밀번호 입력";
+		final String password = "비밀번호";
 		int port=465; //네이버 STMP 포트 번호
 		
 		//메일 내용

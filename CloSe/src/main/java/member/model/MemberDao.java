@@ -1,5 +1,7 @@
 package member.model;
 
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -48,6 +50,12 @@ public class MemberDao {
 
 	public MemberBean findwithId(String member_id) {
 		MemberBean memberBean = sqlSessionTemplate.selectOne(namespace+".findwithId",member_id);
+		
+		return memberBean;
+	}
+
+	public MemberBean findwithNameAndPhone(Map<String,String> params) {
+		MemberBean memberBean = sqlSessionTemplate.selectOne(namespace+".findwithNameAndPhone",params);
 		
 		return memberBean;
 	}
