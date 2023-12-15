@@ -46,12 +46,9 @@ public class QnaUpdateController {
 								Model model) {
 		QnaBean qnaBean = qnaDao.selectQna(qna_number);
 		
-		String member_id = "kkk"; // 테스트용 지워야됨
-		
 		model.addAttribute("qnaBean", qnaBean);
 		model.addAttribute("pageNumber", pageNumber);
 		model.addAttribute("qna_number", qna_number);
-		model.addAttribute("member_id", member_id); // 테스트용 지워야됨
 		
 		return viewPage;
 	}
@@ -90,8 +87,6 @@ public class QnaUpdateController {
 		try {
 			multi.transferTo(destination);
 			destination2.delete();
-			out.println("<script>window.opener.location.reload(); window.close();</script>");
-			out.flush();
 			model.addAttribute("pageNumber", pageNumber);
 			return gotoPage;
 		}catch (Exception e) {

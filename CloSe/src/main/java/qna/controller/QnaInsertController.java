@@ -57,18 +57,16 @@ public class QnaInsertController {
 		File destination = new File(uploadPath+File.separator+qnaBean.getImage());
 		
 		MultipartFile multi = qnaBean.getUpload();
+		try {
+			multi.transferTo(destination);
+		}catch(Exception e) {
+			e.printStackTrace();
+		} 
 		if(cnt == -1) {
 			out.println("<script>alert('올바른 형식이 아닙니다.');</script>");
 			out.flush();
 			return viewPage;
 		}
-		try {
-			multi.transferTo(destination);
-			out.println("<script>window.opener.location.reload(); window.close();</script>");
-			out.flush();
-		}catch(Exception e) {
-			e.printStackTrace();
-		} 
 		return gotoPage;
 	}
 	

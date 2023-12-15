@@ -50,11 +50,14 @@ public class QnaDetailController {
 		 int number = totalCount - (pageInfo.getPageNumber() -1) * 10;
 		 
 		 List<QnaBean> lists = qnaDao.getAllQna(map, pageInfo);
+		 List<QnaBean> lists2 = qnaDao.getAllQna2(map, pageInfo);
 		
 		QnaBean qnaBean = qnaDao.selectQna(qna_number);
 		model.addAttribute("pageNumber", pageNumber);
 		model.addAttribute("qna_number", qna_number);
 		model.addAttribute("lists", lists);
+		model.addAttribute("lists2", lists2);
+		model.addAttribute("qnaBean", qnaBean);
 		model.addAttribute("pageInfo", pageInfo);
 		model.addAttribute("number", number);
 		model.addAttribute("content", qnaBean.getContent());

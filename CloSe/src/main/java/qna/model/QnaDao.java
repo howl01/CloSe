@@ -35,7 +35,15 @@ public class QnaDao {
 		System.out.println("QnaDao getAllQna lists.size() : " + lists.size());
 		return lists;
 	}
-
+	
+	public List<QnaBean> getAllQna2(Map<String, String> map, Paging pageInfo) {
+		RowBounds rowbounds = new RowBounds(pageInfo.getOffset(), pageInfo.getLimit());
+		List<QnaBean> lists2 = sqlSessionTemplate.selectList(namespace+".getAllQna2", map, rowbounds);
+		
+		System.out.println("QnaDao getAllQna lists2.size() : " + lists2.size());
+		return lists2;
+	}
+	
 	public int insertQna(QnaBean qnaBean) {
 		int cnt = -1;
 		try {
@@ -61,19 +69,21 @@ public class QnaDao {
 		return cnt;
 	}
 
+
+	public void deleteQna(String qna_number) {
+		sqlSessionTemplate.delete(namespace+".deleteQna", qna_number);
+	}
+
 	public int replyQna(QnaBean qnaBean) {
 		int cnt = -1;
 		try {
 			sqlSessionTemplate.update(namespace+".replyQna1", qnaBean);
 			cnt = sqlSessionTemplate.insert(namespace+".replyQna2", qnaBean);
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return cnt;
 	}
 
-	public void deleteQna(String qna_number) {
-		sqlSessionTemplate.delete(namespace+".deleteQna", qna_number);
-	}
 	
 }

@@ -7,26 +7,7 @@ noticeInsertForm.jsp <br>
 		color: red;
 	}
 </style>
-<script type="text/javascript">
-function insertForm() {
-    var formData = new FormData(document.getElementById("insertForm"));
 
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "insert.notice", true);
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4) {
-            if (xhr.status === 200) {
-                var result = xhr.responseText;
-                window.opener.location.reload();
-                window.close();
-            } else {
-                alert("서버 오류 발생");
-            }
-        }
-    };
-    xhr.send(formData);
-}
-</script>
 <form:form action="insert.notice" method="post" commandName="noticeBean" enctype="multipart/form-data">
 	<tr>
 		<td>제목</td>

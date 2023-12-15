@@ -7,6 +7,7 @@
 	<select id="getTotalCount" resultType="int">
 		select count(*) from qna qna 
 		left outer join member mem on qna.member_id = mem.member_id
+		where qna.re_level = 0			
 		<if test="whatColumn == 'nickname'">
         	and mem.nickname like #{keyword}
     	</if>
@@ -18,17 +19,40 @@
 	
 	<select id="getAllQna" resultType="QnaBean">
 	    SELECT rank, qna_number, answer, qna_category, member_id, title, nickname,
-	           write_date, secret, image, content, ref
+	           write_date, secret, image, content, ref, re_level
 	    FROM (
 	        SELECT rownum AS rank, qna_number, answer, qna_category, member_id,
-	               title, nickname, write_date, secret, image, content, ref
+	               title, nickname, write_date, secret, image, content, ref, re_level
 	        FROM (
 	            SELECT qna.qna_number, qna.answer, qna.qna_category, mem.member_id,
 	                   qna.title, mem.nickname, qna.write_date, qna.secret, qna.image,
-	                   qna.content, qna.ref
+	                   qna.content, qna.ref, qna.re_level
 	            FROM qna qna
 	            INNER JOIN member mem ON qna.member_id = mem.member_id
-	            WHERE 1 = 1
+	            WHERE qna.re_level = 0
+	            <if test="whatColumn == 'nickname'">
+	                AND mem.nickname LIKE #{keyword}
+	            </if>
+	            <if test="whatColumn == 'title'">
+	                AND qna.title LIKE #{keyword}
+	            </if>
+	            ORDER BY qna.ref DESC
+	        )
+	    )
+	</select>
+	
+	<select id="getAllQna2" resultType="QnaBean">
+	    SELECT rank, qna_number, answer, qna_category, member_id, title, nickname,
+	           write_date, secret, image, content, ref, re_level
+	    FROM (
+	        SELECT rownum AS rank, qna_number, answer, qna_category, member_id,
+	               title, nickname, write_date, secret, image, content, ref, re_level
+	        FROM (
+	            SELECT qna.qna_number, qna.answer, qna.qna_category, mem.member_id,
+	                   qna.title, mem.nickname, qna.write_date, qna.secret, qna.image,
+	                   qna.content, qna.ref, qna.re_level
+	            FROM qna qna
+	            INNER JOIN member mem ON qna.member_id = mem.member_id
 	            <if test="whatColumn == 'nickname'">
 	                AND mem.nickname LIKE #{keyword}
 	            </if>
@@ -69,8 +93,8 @@
 	</update>
 	
 	<insert id="replyQna2">
-		insert into qna (qna_number, ref, member_id, title, content)
-		values(qna_seq.nextval, #{ref}, ${member_id}, #{title}, #{content})
+		insert into qna (qna_number, title, content, write_date, ref, re_level, member_id)
+		values(qna_seq.nextval, #{title}, #{content}, #{write_date}, #{ref}, #{re_level}+1, #{member_id})
 	</insert>
 	
 	<delete id="deleteQna">
