@@ -5,32 +5,29 @@
 <link href="resources/css/sign-in.css" rel="stylesheet">
 <link href="resources/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-<script type="text/javascript">
-
-	Kakao.init('2cdf0145ab332ff37556bbc8268b13a1');
-    function kakaoLogin() {
-        Kakao.Auth.login({
-            success: function (response) {
-                Kakao.API.request({
-                    url: '/v2/user/me',
-                    success: function (response) {
-                    	var id = response.id;
-                        location.href="kakaologin.member?member_id="+id;
-                    },
-                    fail: function (error) {
-                        alert(JSON.stringify(error))
-                    },
-                })
-            },
-            fail: function (error) {
-                alert(JSON.stringify(error))
-            },
-        })
-    }
-    
-</script>
 <script type="text/javascript" src="resources/js/script.js"></script>
 <script>
+	Kakao.init('2cdf0145ab332ff37556bbc8268b13a1');
+	function kakaoLogin() {
+	    Kakao.Auth.login({
+	        success: function (response) {
+	            Kakao.API.request({
+	                url: '/v2/user/me',
+	                success: function (response) {
+	                	var id = response.id;
+	                    location.href="kakaologin.member?member_id="+id;
+	                },
+	                fail: function (error) {
+	                    alert(JSON.stringify(error))
+	                },
+	            })
+	        },
+	        fail: function (error) {
+	            alert(JSON.stringify(error))
+	        },
+	    })
+	}
+
 	function setCookie(name, value, days) {
 	    var expires = '';
 	    if (days) {
@@ -102,8 +99,34 @@
 	    return true;
 	}
 	
+	function togglePasswordVisibility() {
+	    var passwordInput = document.getElementById('floatingPassword');
+	    var passwordToggle = document.querySelector('.password-toggle');
+
+	    if (passwordInput.type === 'password') {
+	        passwordInput.type = 'text';
+	        passwordToggle.style.backgroundImage = 'url(\'resources/icon/eye.svg\')';
+	    } else {
+	        passwordInput.type = 'password';
+	        passwordToggle.style.backgroundImage = 'url(\'resources/icon/eye-slash.svg\')';
+	    }
+	}
+	
 	
 </script>
+
+<style>
+	.password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    cursor: pointer;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    background: url('resources/icon/eye-slash.svg') center/cover no-repeat;
+	}
+</style>
 
 <body class="d-flex align-items-center py-4 bg-body-tertiary">
 
@@ -121,6 +144,8 @@
          <div class="form-floating">
             <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password"> 
             <label for="floatingPassword">비밀번호</label>
+            <!-- 눈 모양 아이콘 -->
+    		<span class="password-toggle" onclick="togglePasswordVisibility()"></span>
          </div>
 
          <div class="form-check text-start my-3">
