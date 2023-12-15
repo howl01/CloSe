@@ -23,7 +23,7 @@
    #carouselExampleAutoplaying {
        max-width: 66%; /* 최대 너비 설정 */
        margin: auto; /* 가운데 정렬 */
-     }
+    }
 </style>
 <script type="text/javascript">
    $(document).ready(function(){
@@ -227,7 +227,7 @@
     </div>
     </div>
     
-       <div class="col-lg-2 mt-5 px-5">
+       <div class="col-lg-2 px-5">
             <div class="bs-component">
               <div class="card mb-3">
                 <h3 class="card-header">오늘의 날씨 정보</h3>

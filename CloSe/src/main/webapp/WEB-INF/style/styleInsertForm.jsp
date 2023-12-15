@@ -55,16 +55,29 @@
 		text-align: center;
 	}
 	
-	.result {
-		list-style-type: none; /* 이 부분이 li 요소 앞에 나타나는 점을 없애는 스타일입니다. */
-		cursor: pointer;
+	/* 이전(prev) 및 다음(next) 컨트롤 버튼의 아이콘 크기와 배경색 변경 */
+	.carousel-control-prev-icon, .carousel-control-next-icon {
+	  width: 30px; /* 아이콘 크기 지정 */
+	  height: 30px; /* 아이콘 크기 지정 */
+	  background-color: red; /* 배경색 지정 */
+	  border-radius: 50%;
 	}
 	
-	.result ul {
-	    padding: 0 !important;
-	    margin: 0 !important;
+	.list-group{
+		margin-top: -5px; 
+		border-top: 0px;
 	}
 	
+	#displayList2_img{
+		width:100px;
+		height:100px;
+	}
+	
+	#searchWord2{
+	  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray" class="bi bi-search" viewBox="0 0 16 16"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/></svg>');
+	  background-position: 97%;
+	  background-repeat: no-repeat;
+	}
 	
 </style>
 
@@ -97,12 +110,19 @@ $(document).ready(function () {
                 dataType: "text",
                 success: function (json) {
                     if (json.length > 0) {
-                        var html = "<ul>";
+                        var html = '<ol class="list-group" style="cursor:pointer;">';
                         var jsonArray = JSON.parse(json);
+                        $(document).data('jsonArray', jsonArray);
+                        var contextPath = '<%= request.getContextPath() %>';
                         $.each(jsonArray, function (index, item) {
-                            html += "<li class='result' style='cursor:pointer;'>" + item.image + item.product_name + item.price + item.smallcategory_name + "</li>";
+                        	html += '<li class="list-group-item d-flex justify-content-between align-items-start">';
+              			   	html += '<div><img id="displayList2_img" src="' + contextPath + item.image + '"></div>';
+              			    html += '<div class="ms-2 me-auto my-auto">';
+              			    html += '<div class="fw-bold">'+item.product_name+'</div>₩ '+item.price+'</div>';
+              			    html += '<span class="badge bg-black rounded-pill my-auto">'+item.smallcategory_name+'</span></li>';
                         });
-                        html += "</ul>";
+                        
+                        html += '</ol>';
                         var inputWidth = $("#searchWord2").css("width");
                         $("#displayList2").css({"width": inputWidth});
                         $("#displayList2").html(html);
@@ -117,10 +137,15 @@ $(document).ready(function () {
         }
     });
 
-    $(document).on('click', ".result", function () {
+    $(document).on('click', ".list-group-item", function () {
         var word = $(this).text();
+        var jsonArray = $(document).data('jsonArray');
+        var itemIndex = $(this).index(); // 클릭된 항목의 인덱스 가져오기
+        var productNumber = jsonArray[itemIndex].product_number;
         $("#searchWord2").val(word);
+        $("#product_number1").val(productNumber); // hidden input에 값을 설정
         $("#displayList2").hide();
+        alert(productNumber);
    	});
 });
 
@@ -139,14 +164,13 @@ $(document).ready(function () {
 	
 	    var carouselIndicators = document.querySelector('.carousel-indicators');
 	    carouselIndicators.innerHTML = ""; // Clear previous indicators
-	
+	    
 	    if (files.length === 1) {
             var img = document.createElement('img');
             img.src = URL.createObjectURL(files[0]);
             img.className = 'preview-image';
             previewContainer.appendChild(img);
             
-            previewContainer.style.width = '30vw';
             previewContainer.style.margin = 'auto';
             previewContainer.style.marginTop = '20px';
             previewContainer.style.marginBottom = '10px';
@@ -198,7 +222,6 @@ $(document).ready(function () {
 	        carouselContainer.appendChild(prevButton);
 	        carouselContainer.appendChild(nextButton);
 	        
-	        carouselContainer.style.width = '30vw';
 	        carouselContainer.style.margin = 'auto';
 	        carouselContainer.style.marginTop = '20px';
 	        carouselContainer.style.marginBottom = '10px';
@@ -209,77 +232,8 @@ $(document).ready(function () {
 	        previewContainer.style.marginTop = '';
 	        previewContainer.style.marginBottom = '';
 	    }
+	    
 	}
-	
-	const clothingMap = new Map();
-
-	   <c:forEach var="category" items="${clists}">
-	      clothingMap.set('${category.smallcategory_name}','${category.bigcategory_name}');
-	   </c:forEach>
-	   
-	   
-	   const set1 = new Set();
-	   
-	   for (const [key, value] of clothingMap) {
-	      set1.add(value);
-	   } 
-	   
-	   
-	    const firstSelect = document.getElementById("firstSelect");
-	     for (const value of set1) {
-	         const option = document.createElement("option");
-	         option.value = value;
-	         option.text = value;
-	        if(value == clothingMap.get("${productBean.smallcategory_name}")){
-	           option.selected = true;
-	        }
-	         firstSelect.add(option);
-	        updateSecondSelect();
-	     }
-	     
-	   
-	     function updateSecondSelect() {
-	         const firstSelect = document.getElementById("firstSelect");
-	         const secondSelect = document.getElementById("secondSelect");
-	         const selectedCategory = firstSelect.value;
-
-	         // 이전 옵션 지우기
-	         secondSelect.innerHTML = '';
-
-	         // 선택한 카테고리에 기반하여 동적으로 옵션 추가
-	         for (const [key, value] of clothingMap) {
-	             if (value === selectedCategory) {
-	                 const option = document.createElement("option");
-	                 option.value = key;
-	                 option.text = key;
-	                 if(key == "${productBean.smallcategory_name}"){
-	                   option.selected = true;
-	                }
-	                 secondSelect.add(option);
-	             }
-	         }
-	     }
-	     
-	    function handleFileSelection() {
-	         var fileInput = document.getElementById("file2");
-	         var fileSelectionMessage = document.getElementById("fileSelectionMessage");
-	         var selectedFileName = document.getElementById("selectedFileName");
-
-	         if (fileInput.files.length > 0) {
-	             fileSelectionMessage.innerHTML = "선택된 파일: " + fileInput.files[0].name;
-	         } else {
-	             fileSelectionMessage.innerHTML = ""; // 파일이 선택되지 않은 경우 초기화
-	         }
-	    }
-	     
-	     
-	     function NumerInput(fieldName) { //숫자칸에는 숫자만 들어가게
-	           var inputField = document.getElementsByName(fieldName)[0];
-	           var inputValue = inputField.value;
-	           var numericValue = inputValue.replace(/[^0-9]/g, '');
-	           inputField.value = numericValue;
-	    }
-	     
 </script>
 
 
@@ -291,15 +245,18 @@ $(document).ready(function () {
       
 		<div class="col-lg-6">
 		<form:form name="f" commandName="styleBean" action="insert.style" method="post" enctype="multipart/form-data">
+			<input type="hidden" name="product_number1" id="product_number1">
 			<h3 style="padding: 22 0 22 0">Style Write</h3>
 		
 			<div class="row productrow" style="border-top: 3px solid;"> 
    				<div class="col-2 align-self-center" style="white-space: nowrap;">
-   					<span>상품이미지<font color="red">*</font></span>
+   					<span>코디 사진<font color="red">*</font><br>(최대 5장)</span>
 				</div>
 				<div class="col-2"></div>
-				<div class="col-6 align-self-center">
-		        	<div><input class="form-control" type="file" name="image" multiple accept="image/*" onchange="updatePreview()"></div>
+				<div class="col-7 align-self-center">
+		        	<div id="imgInput" >
+		        		<input class="form-control" type="file" name="image" multiple accept="image/*" onchange="updatePreview()">
+	        		</div>
 			    <div class="preview-container"></div>
 			    <div id="carouselExampleIndicators" class="carousel carousel-dark slide">
 			    	<div class="carousel-indicators"></div>
@@ -317,9 +274,9 @@ $(document).ready(function () {
 				<span>상품태그</span>
 				</div>
 				<div class="col-2"></div>
-				<div class="col-6 align-self-center">
+				<div class="col-7 align-self-center" id="drop_the_text">
 					<div><input type="text" class="form-control mb-1" id="searchWord2" name="searchWord2" autocomplete= 'off' placeholder="브랜드, 상품명을 검색하세요." ></div>
-					<div id="displayList2" style="overflow: auto; border-top: 0px;"></div>
+					<div id="displayList2" style="overflow: auto; border-top: 0px; margin-top: -4px;"></div>
 				</div>
 				<div class="col-2"></div>
 			</div>
@@ -329,7 +286,7 @@ $(document).ready(function () {
 			<span>제목</span>
 	    </div>
 	    <div class="col-2"></div>
-	    <div class="col-6 align-self-center">
+	    <div class="col-7 align-self-center">
 			<input type="text" class="form-control mb-1" name="title" 
                     placeholder="비워두시면 내용으로 대체됩니다.">
                 <div>
@@ -344,7 +301,7 @@ $(document).ready(function () {
 			<span>내용<font color="red">*</font></span>
 	    </div>
 	    <div class="col-2"></div>
-	    <div class="col-6 align-self-center">
+	    <div class="col-7 align-self-center">
 			<textarea class="form-control mb-1" name="content" placeholder="자유롭게 작성하시면 됩니다.&#13;&#10;(#해시태그도 OK)" rows="5" style="resize: none;"></textarea>
                 <div>
                     <form:errors path="price" cssClass="err"/>
@@ -358,10 +315,10 @@ $(document).ready(function () {
            <span>스타일<font color="red">*</font></span>
         </div>
         <div class="col-2"></div>
-        <div class="col-6 align-self-center">
+        <div class="col-7 align-self-center">
         	<c:set var="styleList">로맨틱, 모던, 미니멀, 빈티지, 스트릿, 스포티, 아메카지, 캐주얼, 클래식</c:set>
 			<c:forEach var="style" items="${styleList}">
-			    <input type="checkbox" class="btn-check" id="btn-${style}" autocomplete="off" name="style">
+			    <input type="checkbox" class="btn-check" id="btn-${style}" autocomplete="off" name="style" value="${style}">
 			    <label class="btn btn-outline-dark" for="btn-${style}" style="margin-right: 2px; margin-bottom: 4px;">${style}</label>
 			</c:forEach>
            <div>
@@ -376,12 +333,13 @@ $(document).ready(function () {
 	
 	<div class="row py-3">
 	<div class="d-flex justify-content-center" style="margin: auto;">
-		<div style="margin-right: 5px;"><button type="button" class="btn btn-dark" onclick="submitForm()">등록</button></div>
-		<div><button type="button" class="btn btn-dark">취소</button></div>
+		<div style="margin-right: 5px;"><button type="submit" class="btn btn-dark">등록</button></div>
+		<div><button type="button" class="btn btn-dark" onclick="location.href='mainView.style'">취소</button></div>
 		</div>
 	</div>
            </form:form>
-              </div>
+           
+  </div>
 
   <div class="col-2 mt-5 ps-5">
      <div class="bs-component">

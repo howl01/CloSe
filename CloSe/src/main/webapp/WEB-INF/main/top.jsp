@@ -35,6 +35,7 @@
       font-size: 12pt;
       font-weight: 500;
     }
+    
 </style>
 
 <script type="text/javascript">

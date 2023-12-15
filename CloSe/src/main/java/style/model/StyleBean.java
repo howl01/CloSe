@@ -9,6 +9,7 @@ public class StyleBean {
 	private String image5;
 	private String title;
 	private String content;
+	private String style;
 	private int read_count;
 	private int recommend_count;
 	private String write_date;
@@ -23,8 +24,8 @@ public class StyleBean {
 	}
 
 	public StyleBean(int style_number, String image1, String image2, String image3, String image4, String image5,
-			String title, String content, int read_count, int recommend_count, String write_date, int product_number1,
-			int product_number2, int product_number3, int product_number4, String member_id) {
+			String title, String content, String style, int read_count, int recommend_count, String write_date,
+			int product_number1, int product_number2, int product_number3, int product_number4, String member_id) {
 		super();
 		this.style_number = style_number;
 		this.image1 = image1;
@@ -34,6 +35,7 @@ public class StyleBean {
 		this.image5 = image5;
 		this.title = title;
 		this.content = content;
+		this.style = style;
 		this.read_count = read_count;
 		this.recommend_count = recommend_count;
 		this.write_date = write_date;
@@ -106,6 +108,14 @@ public class StyleBean {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+
+	public String getStyle() {
+		return style;
+	}
+
+	public void setStyle(String style) {
+		this.style = style;
 	}
 
 	public int getRead_count() {

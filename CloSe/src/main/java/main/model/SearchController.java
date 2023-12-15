@@ -49,6 +49,7 @@ public class SearchController {
 		if(productList != null) {
 			for(ProductBean productBean : productList) {
 				JSONObject jsonObj = new JSONObject();
+				jsonObj.put("product_number", productBean.getProduct_number());			
 				jsonObj.put("product_name", productBean.getProduct_name());			
 				jsonObj.put("image", productBean.getImage());			
 				jsonObj.put("price", productBean.getPrice());		
