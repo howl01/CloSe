@@ -60,6 +60,10 @@ public class MemberDao {
 		return memberBean;
 	}
 
+	public void memberUpdate(MemberBean memberBean) {
+		sqlSessionTemplate.update(namespace+".memberUpdate", memberBean);
+	}
+
 
 	
 	

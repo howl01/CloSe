@@ -5,6 +5,7 @@
 <script src="resources/js/jquery.js"></script>
 <link href="resources/css/bootstrap.min.css" rel="stylesheet">
 <link href="resources/css/checkout.css" rel="stylesheet">
+<script type="text/javascript" src = "resources/js/script.js"></script>
 
 <style>
 	table{
@@ -16,12 +17,39 @@
 </style>
 
 <script type="text/javascript">
-	function goMain(){
-		location.href="view.main";
-	}
-	
-	function goUpdate(){
-		location.href="update.member";
+$(document).ready(function() {
+    
+    $('#nickname').keyup(function(){ // 닉네임 중복체크
+
+        $.ajax({
+            url : "nickduplicate.member", // 요청url
+            data : ({
+                inputnick : $('input[name="nickname"]').val()
+            }),
+            success : function(data){
+               if(jQuery.trim(data)=='YES'){
+                    $('#nickmessage').html("<font color=blue>사용 가능합니다.</font>");
+                    nickuse = "possible";
+                    $('#nickmessage').show();
+                } else {
+                    $('#nickmessage').html("<font color=red>이미 사용중인 닉네임입니다.</font>")
+                    nickuse = "impossible";
+                    $('#nickmessage').show();
+                }
+            }
+        });
+    });
+    
+    $('#sub').click(function(event){ // submit 클릭
+        if(nickuse == "impossible"){
+        	alert('이미 사용중인 닉네임입니다.');
+        	return false;
+        }
+    });
+});
+
+	function goMyPage(){
+		location.href="mypage.member";
 	}
 </script>
 
@@ -46,7 +74,7 @@
 		<!-- 첫번째 탭 -->
 		<div class="tab-pane fade active show" id="home" role="tabpanel">
 			<div class="row">
-				<form>
+		        <form name="f" class="needs-validation" action = "update.member" method="post" onsubmit="return updatecheck()">
 			        <table class="table" id="article-table">
 			        	<c:if test="${not empty loginInfo or not empty kakaoLoginInfo}">
 					        <tr>
@@ -54,12 +82,14 @@
 					           <td>
 					           	  <c:choose>
 						              <c:when test="${not empty kakaoLoginInfo}">
-				                        ${kakaoLoginInfo.member_id}
+				                        <input type="text" id="member_id" name="member_id" disabled="disabled" value="${kakaoLoginInfo.member_id}">
 				                        <input type="hidden" name="member_id" value="${kakaoLoginInfo.member_id}">
+				                        <input type="hidden" name="social" value="kakao">
 				                      </c:when>
 				                      <c:when test="${not empty loginInfo}">
-				                        ${loginInfo.member_id}
+				                        <input type="text" id="member_id" name="member_id" disabled="disabled" value="${loginInfo.member_id}">
 				                        <input type="hidden" name="member_id" value="${loginInfo.member_id}">
+				                        <input type="hidden" name="social" value="general">
 				                      </c:when>
 			                      </c:choose>
 					           </td>
@@ -69,10 +99,12 @@
 					           <td>
 					              <c:choose>
 						              <c:when test="${not empty kakaoLoginInfo}">
-				                        ${kakaoLoginInfo.nickname}
+				                        <input type="text" id="nickname" name="nickname" value="${kakaoLoginInfo.nickname}"><br>
+				                        <span id="nickmessage" style = "display: none;"></span>
 				                      </c:when>
 				                      <c:when test="${not empty loginInfo}">
-				                        ${loginInfo.nickname}
+				                        <input type="text" id="nickname" name="nickname" value="${loginInfo.nickname}"><br>
+				                        <span id="nickmessage" style = "display: none;"></span>
 				                      </c:when>
 			                      </c:choose>
 					           </td>
@@ -82,10 +114,11 @@
 					           <td>
 					              <c:choose>
 						              <c:when test="${not empty kakaoLoginInfo}">
-				                        ${kakaoLoginInfo.password}
+				                        <input type="text" id="password" name="password" value="${kakaoLoginInfo.password}">
+				                        <form:errors cssClass="err" path="password"/>
 				                      </c:when>
 				                      <c:when test="${not empty loginInfo}">
-				                        ${loginInfo.password}
+				                        <input type="text" id="password" name="password" value="${loginInfo.password}">
 				                      </c:when>
 			                      </c:choose>
 					           </td>
@@ -95,11 +128,11 @@
 					           <td>
 					           	  <c:choose>
 						              <c:when test="${not empty kakaoLoginInfo}">
-				                        ${kakaoLoginInfo.name}
+				                        <input type="text" id="name" name="name" disabled="disabled" value="${kakaoLoginInfo.name}">
 				                        <input type="hidden" name="name" value="${kakaoLoginInfo.name}">
 				                      </c:when>
 				                      <c:when test="${not empty loginInfo}">
-				                        ${loginInfo.name}
+				                        <input type="text" id="name" name="name" disabled="disabled" value="${loginInfo.name}">
 				                        <input type="hidden" name="name" value="${loginInfo.name}">
 				                      </c:when>
 			                      </c:choose>
@@ -110,10 +143,12 @@
 					           <td>
 					              <c:choose>
 						              <c:when test="${not empty kakaoLoginInfo}">
-								        ${kakaoLoginInfo.gender}
+								        <input type="radio" id="gender" name="gender" value="남자" <c:if test="${kakaoLoginInfo.gender eq '남자'}">checked</c:if>> 남자
+								        <input type="radio" id="gender" name="gender" value="여자" <c:if test="${kakaoLoginInfo.gender eq '여자'}">checked</c:if>> 여자
 								      </c:when>
 								      <c:when test="${not empty loginInfo}">
-								        ${loginInfo.gender}
+								        <input type="radio" id="gender" name="gender" value="남자" <c:if test="${loginInfo.gender eq '남자'}">checked</c:if>> 남자
+								        <input type="radio" id="gender" name="gender" value="여자" <c:if test="${loginInfo.gender eq '여자'}">checked</c:if>> 여자
 								      </c:when>
 			                      </c:choose>
 					           </td>
@@ -123,10 +158,10 @@
 					           <td>
 					              <c:choose>
 						              <c:when test="${not empty kakaoLoginInfo}">
-				                        ${kakaoLoginInfo.address1}
+				                        <input type="text" id="address1" name="address1" value="${kakaoLoginInfo.address1}">
 				                      </c:when>
 				                      <c:when test="${not empty loginInfo}">
-				                        ${loginInfo.address1}
+				                        <input type="text" id="address1" name="address1" value="${loginInfo.address1}">
 				                      </c:when>
 			                      </c:choose>
 					           </td>
@@ -136,10 +171,10 @@
 					           <td>
 					              <c:choose>
 						              <c:when test="${not empty kakaoLoginInfo}">
-				                        ${kakaoLoginInfo.address2}
+				                        <input type="text" id="address2" name="address2" value="${kakaoLoginInfo.address2}">
 				                      </c:when>
 				                      <c:when test="${not empty loginInfo}">
-				                        ${loginInfo.address2}
+				                        <input type="text" id="address2" name="address2" value="${loginInfo.address2}">
 				                      </c:when>
 			                      </c:choose>
 					           </td>
@@ -149,11 +184,11 @@
 					           <td>
 					              <c:choose>
 						              <c:when test="${not empty kakaoLoginInfo}">
-				                        ${kakaoLoginInfo.phone}
+				                        <input type="text" id="phone" name="phone" disabled="disabled" value="${kakaoLoginInfo.phone}">
 				                        <input type="hidden" name="phone" value="${kakaoLoginInfo.phone}">
 				                      </c:when>
 				                      <c:when test="${not empty loginInfo}">
-				                        ${loginInfo.phone}
+				                        <input type="text" id="phone" name="phone" disabled="disabled" value="${loginInfo.phone}">
 				                        <input type="hidden" name="phone" value="${loginInfo.phone}">
 				                      </c:when>
 			                      </c:choose>
@@ -164,10 +199,10 @@
 					           <td>
 					              <c:choose>
 						              <c:when test="${not empty kakaoLoginInfo}">
-				                        ${kakaoLoginInfo.email}
+				                        <input type="text" id="email" name="email" value="${kakaoLoginInfo.email}">
 				                      </c:when>
 				                      <c:when test="${not empty loginInfo}">
-				                        ${loginInfo.email}
+				                        <input type="text" id="email" name="email" value="${loginInfo.email}">
 				                      </c:when>
 			                      </c:choose>
 					           </td>
@@ -178,11 +213,11 @@
 					              <c:choose>
 						              <c:when test="${not empty kakaoLoginInfo}">
 						              	<c:set var="kakaoBirth" value="${fn:substring(kakaoLoginInfo.birth, 0, 10)}" />
-		    							${kakaoBirth}
+		    							<input type="date" id="birth" name="birth" value="${kakaoBirth}">
 				                      </c:when>
 				                      <c:when test="${not empty loginInfo}">
 				                        <c:set var="Birth" value="${fn:substring(loginInfo.birth, 0, 10)}" />
-		    							${Birth}
+		    							<input type="date" id="birth" name="birth" value="${Birth}">
 				                      </c:when>
 			                      </c:choose>
 					           </td>
@@ -192,10 +227,10 @@
 					           <td>
 					              <c:choose>
 						              <c:when test="${not empty kakaoLoginInfo}">
-				                        ${kakaoLoginInfo.height}cm
+				                        <input type="text" id="height" name="height" value="${kakaoLoginInfo.height}">
 				                      </c:when>
 				                      <c:when test="${not empty loginInfo}">
-				                        ${loginInfo.height}cm
+				                        <input type="text" id="height" name="height" value="${loginInfo.height}">
 				                      </c:when>
 			                      </c:choose>
 					           </td>
@@ -205,10 +240,10 @@
 					           <td>
 					              <c:choose>
 						              <c:when test="${not empty kakaoLoginInfo}">
-				                        ${kakaoLoginInfo.weight}kg
+				                        <input type="text" id="weight" name="weight" value="${kakaoLoginInfo.weight}">
 				                      </c:when>
 				                      <c:when test="${not empty loginInfo}">
-				                        ${loginInfo.weight}kg
+				                        <input type="text" id="weight" name="weight" value="${loginInfo.weight}">
 				                      </c:when>
 			                      </c:choose>
 					           </td>
@@ -216,8 +251,8 @@
 				        </c:if>
 				        <tr>
 				        	<td colspan="2">
-						       <input type="button" id="sub" class="btn btn-dark btn-md" value="수정하기" onclick="goUpdate()"/>
-						       <input type="button" class="btn btn-dark btn-md" value="취소" onclick="goMain()">
+						       <input type="submit" id="sub" class="btn btn-dark btn-md" value="수정"/>
+						       <input type="button" class="btn btn-dark btn-md" value="돌아가기" onclick="goMyPage()">
 				        	</td>
 				        </tr>
 			        </table>
