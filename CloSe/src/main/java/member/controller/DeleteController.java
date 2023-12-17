@@ -25,13 +25,11 @@ public class DeleteController {
 	@RequestMapping(value = command)
 	public void delete(@RequestParam("member_id") String member_id, HttpServletResponse response, HttpServletRequest request) throws IOException {
 		
-		ModelAndView mav = new ModelAndView();
-		
 		PrintWriter out;
 		out = response.getWriter();
 		response.setContentType("text/html; charset=UTF-8");
 		
-		//memberDao.memberDelete(member_id);
+		memberDao.memberDelete(member_id);
 		
 		out.println("<script>alert('È¸¿øÅ»Åð µÇ¾ú½À´Ï´Ù.'); location.href='" + request.getContextPath() + "/logout.jsp';</script>");
 		out.flush();

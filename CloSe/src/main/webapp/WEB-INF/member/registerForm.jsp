@@ -140,7 +140,6 @@ $(document).ready(function() {
             $('#emailmessage').show();
         }
     });
-    
 });
 
 function isValidEmail(email) {
@@ -280,10 +279,12 @@ function goLogin(){
             <div class="col-md-3">
             <label for="height" class="form-label">키 (cm)</label>
               <input type="text" class="form-control" id="height" name = "height" value="${memberBean.height}" style="border-color: black;">
+              <form:errors cssClass="err" path="height"/>
             </div>
             <div class="col-md-3">
             <label for="weight" class="form-label">몸무게 (kg)</label>
               <input type="text" class="form-control" id="weight" name = "weight" value="${memberBean.weight}" style="border-color: black;">
+              <form:errors cssClass="err" path="weight"/>
             </div>
           </div>
 

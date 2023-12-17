@@ -1,6 +1,7 @@
 package member.model;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -20,6 +21,7 @@ public class MemberBean {
 	private String name;
 	
 	@NotEmpty(message = "전화번호를 입력하세요")
+	@Pattern(regexp = "^[0-9]+$", message = "숫자만 입력가능")
 	private String phone;
 	
 	@NotEmpty(message = "이메일을 입력하세요")
@@ -46,9 +48,11 @@ public class MemberBean {
 	private String verificationCode;
 	
 	@NotEmpty(message = "키 입력")
+	@Pattern(regexp = "^[0-9]+$", message = "숫자만 입력가능")
 	private String height;
 	
 	@NotEmpty(message = "몸무게 입력")
+	@Pattern(regexp = "^[0-9]+$", message = "숫자만 입력가능")
 	private String weight;
 	
 	private String social;
