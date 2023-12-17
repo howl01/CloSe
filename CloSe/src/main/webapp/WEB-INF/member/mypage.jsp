@@ -103,6 +103,12 @@
 	    <a class="nav-link active" data-bs-toggle="tab" href="#mypage" aria-selected="true" role="tab">내 정보</a>
 	  </li>
 	  <li class="nav-item" role="presentation">
+	    <a class="nav-link" data-bs-toggle="tab" href="aa" aria-selected="false" role="tab" tabindex="-1">내 코디</a>
+	  </li>
+	  <li class="nav-item" role="presentation">
+	    <a class="nav-link" data-bs-toggle="tab" href="bb" aria-selected="false" role="tab" tabindex="-1">구매 상품</a>
+	  </li>
+	  <li class="nav-item" role="presentation">
 	    <a class="nav-link" data-bs-toggle="tab" href="#delete" aria-selected="false" role="tab" tabindex="-1">회원탈퇴</a>
 	  </li>
 	</ul>
@@ -291,6 +297,20 @@
 		</div>
 		
 		<!-- 두번째 탭 -->
+		<div class="tab-pane fade" id="aa" role="tabpanel">
+			<div class="row">
+			
+			</div>
+		</div>
+		
+		<!-- 세번째 탭 -->
+		<div class="tab-pane fade" id="bb" role="tabpanel">
+			<div class="row">
+			
+			</div>
+		</div>
+		
+		<!-- 네번째 탭 -->
 		<div class="tab-pane fade" id="delete" role="tabpanel">
 			<div class="row">
 		        <table class="table" id="article-table">
