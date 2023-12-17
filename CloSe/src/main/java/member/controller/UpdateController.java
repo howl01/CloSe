@@ -32,20 +32,23 @@ public class UpdateController {
 	
 	@RequestMapping(value = command, method = RequestMethod.POST)
 	public void update(MemberBean memberBean, HttpServletResponse response, HttpServletRequest request, HttpSession session) throws IOException {
-		if(memberBean.getSocial().equals("kakao")) {
-			session.setAttribute("kakaoLoginInfo", memberBean);
-		}else {
-			session.setAttribute("loginInfo", memberBean);
-		}
-		
 		PrintWriter out;
 		out = response.getWriter();
 		response.setContentType("text/html; charset=UTF-8");
 		
-		memberDao.memberUpdate(memberBean);
-		
-		out.println("<script>alert('회원정보가 수정되었습니다.'); location.href='" + request.getContextPath() + "/mypage.member';</script>");
-		out.flush();
+		if(memberBean.getSocial().equals("kakao")) {
+			session.setAttribute("kakaoLoginInfo", memberBean);
+			memberDao.memberUpdate(memberBean);
+			
+			out.println("<script>alert('회원정보가 수정되었습니다.'); location.href='" + request.getContextPath() + "/mypage.member';</script>");
+			out.flush();
+		}else {
+			session.setAttribute("loginInfo", memberBean);
+			memberDao.memberUpdate(memberBean);
+			
+			out.println("<script>alert('회원정보가 수정되었습니다.'); location.href='" + request.getContextPath() + "/mypage.member';</script>");
+			out.flush();
+		}
 		
 	}
 }

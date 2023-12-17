@@ -64,6 +64,10 @@ public class MemberDao {
 		sqlSessionTemplate.update(namespace+".memberUpdate", memberBean);
 	}
 
+	public void memberDelete(String member_id) {
+		sqlSessionTemplate.delete(namespace+".memberDelete", member_id);
+	}
+
 
 	
 	

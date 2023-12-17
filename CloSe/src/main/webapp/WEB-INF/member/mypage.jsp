@@ -16,6 +16,56 @@
 </style>
 
 <script type="text/javascript">
+
+	var cert = false;
+	var registercheck = false;
+	
+	function sendSMS(phone) {
+	    alert('인증번호를 요청했습니다.');
+	    // Ajax 요청
+	    $.ajax({
+	        type: "GET",
+	        url: "sendSms.member?phone="+phone,
+	        data: { phone: phone },
+	        success: function(response) {
+	            // 서버에서 받은 응답(response)을 처리
+	            console.log(response);
+	
+	            // 받은 랜덤 값(response)을 전역 변수에 저장
+	            window.randomValue = response;
+				cert = true;
+	        },
+	        error: function(error) {
+	            console.error(error);
+	            // 에러가 발생했을 경우에 대한 처리를 추가할 수 있습니다.
+	            alert('전화번호가 일치하지 않습니다.');
+	        }
+	    });
+	}
+	
+	function verify() {
+	    var verificationCode = document.getElementById('verificationCode').value;
+
+	    // 인증번호가 비어 있으면 알림창을 띄우고 함수를 종료
+	    if (verificationCode.trim() === '') {
+	        alert('인증번호를 입력하세요.');
+	        return;
+	    }
+
+	    // 사용자가 입력한 값
+	    var userInput = document.getElementById('verificationCode').value;
+
+	    // 전역 변수에 저장된 랜덤 값과 사용자가 입력한 값 비교
+	    if (userInput == window.randomValue) {
+	        // 일치할 경우, 여기에 원하는 동작 추가
+	        alert('인증 성공!');
+	        registercheck = true;
+	    } else {
+	        // 불일치할 경우, 여기에 원하는 동작 추가
+	        alert('인증번호가 일치하지 않습니다. 다시 시도하세요.');
+	    }
+	}
+
 	function goMain(){
 		location.href="view.main";
 	}
@@ -23,6 +73,21 @@
 	function goUpdate(){
 		location.href="update.member";
 	}
+	
+	function goDelete(member_id) {
+	    if (!cert) {
+	        alert('인증번호를 받으세요');
+	        return;
+	    } else if (!registercheck) {
+	        alert('인증번호를 확인하세요');
+	        return;
+	    }
+
+	    // If the conditions are met, proceed with the deletion
+	    location.href = "delete.member?member_id=" + member_id;
+	}
+
+	
 </script>
 
 <div class="container">
@@ -35,16 +100,16 @@
  
 	<ul class="nav nav-tabs" role="tablist">
 	  <li class="nav-item" role="presentation">
-	    <a class="nav-link active" data-bs-toggle="tab" href="#home" aria-selected="true" role="tab">내 정보</a>
+	    <a class="nav-link active" data-bs-toggle="tab" href="#mypage" aria-selected="true" role="tab">내 정보</a>
 	  </li>
 	  <li class="nav-item" role="presentation">
-	    <a class="nav-link" data-bs-toggle="tab" href="#profile" aria-selected="false" role="tab" tabindex="-1">구매상품</a>
+	    <a class="nav-link" data-bs-toggle="tab" href="#delete" aria-selected="false" role="tab" tabindex="-1">회원탈퇴</a>
 	  </li>
 	</ul>
 	
 	<div id="myTabContent" class="tab-content">
 		<!-- 첫번째 탭 -->
-		<div class="tab-pane fade active show" id="home" role="tabpanel">
+		<div class="tab-pane fade active show" id="mypage" role="tabpanel">
 			<div class="row">
 				<form>
 			        <table class="table" id="article-table">
@@ -226,10 +291,58 @@
 		</div>
 		
 		<!-- 두번째 탭 -->
-		<div class="tab-pane fade" id="profile" role="tabpanel">
-			aaa
+		<div class="tab-pane fade" id="delete" role="tabpanel">
+			<div class="row">
+		        <table class="table" id="article-table">
+		        	<c:if test="${not empty loginInfo or not empty kakaoLoginInfo}">
+		        		<tr>
+					       <th>아이디</th>
+					           <td>
+					           	  <c:choose>
+						              <c:when test="${not empty kakaoLoginInfo}">
+				                        ${kakaoLoginInfo.member_id}
+				                        <input type="hidden" id="member_id" name="member_id" value="${kakaoLoginInfo.member_id}">
+				                      </c:when>
+				                      <c:when test="${not empty loginInfo}">
+				                        ${loginInfo.member_id}
+				                        <input type="hidden" id="member_id" name="member_id" value="${loginInfo.member_id}">
+				                      </c:when>
+			                      </c:choose>
+					           </td>
+					        </tr>
+				        <tr>
+			               <th>휴대폰번호</th>
+				           <td>
+				              <c:choose>
+					              <c:when test="${not empty kakaoLoginInfo}">
+					              	${kakaoLoginInfo.phone}
+			                        <input type="hidden" id="phone" name="phone">
+			                      </c:when>
+			                      <c:when test="${not empty loginInfo}">
+			                      	${loginInfo.phone}
+			                        <input type="hidden" id="phone" name="phone">
+			                      </c:when>
+		                      </c:choose>
+			                  <input type = "button" id="phoneVerificationButton" value = "인증번호 요청" onclick = "sendSMS($('input[name=phone]').val())" style="border-color: black;">
+				           </td>
+				        </tr>
+				        <tr>
+				        	<th>휴대폰 인증</th>
+				        	<td>
+				              <input type="text" id="verificationCode" name="verificationCode" style="border-color: black;">&nbsp;
+				              <input type="button" value="인증하기" onClick="verify()">
+				        	</td>
+				        </tr>
+			        </c:if>
+			        <tr>
+				      <td colspan="2">
+				       	<input type="button" id="sub" class="btn btn-dark btn-md" value="회원탈퇴" onclick="goDelete($('#member_id').val())"/>
+				        <input type="button" class="btn btn-dark btn-md" value="취소" onclick="goMain()">
+				      </td>
+				    </tr>
+		        </table>
+	        </div>
 		</div>
-		
 	</div>
 
 
