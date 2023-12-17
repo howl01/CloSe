@@ -82,6 +82,19 @@
 </style>
 
 <script type="text/javascript">
+
+//중복 체크 함수
+function isProductNumberAlreadySet(productNumber) {
+    for (var i = 1; i <= 4; i++) {
+        var inputId = "#product_number" + i;
+        console.log("Comparing:", $(inputId).val(), productNumber);
+        if ($(inputId).val() === productNumber.toString()) {
+            return true; // 중복된 경우 true 반환
+        }
+    }
+    return false; // 중복이 아닌 경우 false 반환
+}
+
 $(document).ready(function () {
 	var bsComponent = $(".bs-component");
     var initialPosition = bsComponent.offset().top;
@@ -142,16 +155,60 @@ $(document).ready(function () {
         var jsonArray = $(document).data('jsonArray');
         var itemIndex = $(this).index(); // 클릭된 항목의 인덱스 가져오기
         var productNumber = jsonArray[itemIndex].product_number;
-        $("#searchWord2").val(word);
-        $("#product_number1").val(productNumber); // hidden input에 값을 설정
-        $("#displayList2").hide();
-        alert(productNumber);
-   	});
-});
+        var image = jsonArray[itemIndex].image;
+        var price = jsonArray[itemIndex].price;
+        var productName = jsonArray[itemIndex].product_name;
+    
+        alert(isProductNumberAlreadySet(productNumber));
+     	// 중복 체크
+        if (isProductNumberAlreadySet(productNumber)) {
+            alert("이미 선택된 제품입니다.");
+            return; // 중복이면 추가 작업을 수행하지 않고 함수 종료
+        }
 
+        // 최대 4개까지의 hidden input에 값을 설정
+        var isSet = false;
+        for (var i = 1; i <= 4; i++) {
+            var inputId = "#product_number" + i;
+            if (!isSet && $(inputId).val() === "") {
+                $(inputId).val(productNumber);
+                $("#displayList2").hide(); // 예시에 따라 displayList1, displayList2, ... 가려주기
+                alert(productNumber);
+                isSet = true; // 값을 설정한 경우 isSet을 true로 변경
+                
+             // Assuming you have a container div with id 'tagImage'
+                var tagImageContainer = $("#tagImage");
+
+                // Create HTML elements for image, product_name, and price
+                var imageElement = $("<img>").attr("src", image);
+                var productNameElement = $("<div>").text(productName);
+                var priceElement = $("<div>").text(price);
+
+                // Append the elements to the container
+                tagImageContainer.append(imageElement, productNameElement, priceElement);
+            }
+        }
+
+        // 4개 이상 클릭 시 알림 띄우기
+        if (!isSet) {
+            alert("최대 4개까지만 선택할 수 있습니다.");
+        }
+
+        // searchWord2 비우기
+        $("#searchWord2").val("");
+    });
+
+    
+});
+	
 	function updatePreview() {
 	    var fileInput = document.querySelector('input[type=file]');
 	    var files = fileInput.files;
+	    
+	    if (files.length > 5) {
+            alert('최대 5개의 파일까지만 선택할 수 있습니다.');
+            fileInput.value = ''; // 선택된 파일 초기화
+        }
 	
 	    var previewContainer = document.querySelector('.preview-container');
 	    previewContainer.innerHTML = ""; // Clear previous previews
@@ -245,7 +302,12 @@ $(document).ready(function () {
       
 		<div class="col-lg-6">
 		<form:form name="f" commandName="styleBean" action="insert.style" method="post" enctype="multipart/form-data">
-			<input type="hidden" name="product_number1" id="product_number1">
+			<input type="hidden" name="member_id" value="kim">
+			<input type="hidden" name="product_number1" id="product_number1" value="${styleBean.product_number1}">
+			<input type="hidden" name="product_number2" id="product_number2" value="${styleBean.product_number2}">
+			<input type="hidden" name="product_number3" id="product_number3" value="${styleBean.product_number3}">
+			<input type="hidden" name="product_number4" id="product_number4" value="${styleBean.product_number4}">
+			
 			<h3 style="padding: 22 0 22 0">Style Write</h3>
 		
 			<div class="row productrow" style="border-top: 3px solid;"> 
@@ -255,7 +317,7 @@ $(document).ready(function () {
 				<div class="col-2"></div>
 				<div class="col-7 align-self-center">
 		        	<div id="imgInput" >
-		        		<input class="form-control" type="file" name="image" multiple accept="image/*" onchange="updatePreview()">
+		        		<input class="form-control" type="file" name="images" multiple accept="image/*" onchange="updatePreview()">
 	        		</div>
 			    <div class="preview-container"></div>
 			    <div id="carouselExampleIndicators" class="carousel carousel-dark slide">
@@ -263,20 +325,21 @@ $(document).ready(function () {
 			        <div class="carousel-inner"></div>
 			    </div>
 				<div>
-				   <form:errors path="image" cssClass="err"/>
-				   </div>
+				   <form:errors path="image1" cssClass="err"/>
+			   </div>
 				</div>
 				<div class="col-2"></div>
 			</div>
 	
 			<div class="row productrow">
 				<div class="col-2 align-self-center" style="white-space: nowrap;">
-				<span>상품태그</span>
+				<span>상품태그<br>(최대 4개)</span>
 				</div>
 				<div class="col-2"></div>
 				<div class="col-7 align-self-center" id="drop_the_text">
 					<div><input type="text" class="form-control mb-1" id="searchWord2" name="searchWord2" autocomplete= 'off' placeholder="브랜드, 상품명을 검색하세요." ></div>
 					<div id="displayList2" style="overflow: auto; border-top: 0px; margin-top: -4px;"></div>
+					<div class="d-flex justify-content-start" id="tagImage"></div>
 				</div>
 				<div class="col-2"></div>
 			</div>
@@ -288,10 +351,7 @@ $(document).ready(function () {
 	    <div class="col-2"></div>
 	    <div class="col-7 align-self-center">
 			<input type="text" class="form-control mb-1" name="title" 
-                    placeholder="비워두시면 내용으로 대체됩니다.">
-                <div>
-                    <form:errors path="price" cssClass="err"/>
-              </div>      
+                    placeholder="비워두시면 내용으로 대체됩니다." value="${styleBean.title}">
 	    </div>
 	    <div class="col-2"></div>
 	</div>
@@ -302,9 +362,9 @@ $(document).ready(function () {
 	    </div>
 	    <div class="col-2"></div>
 	    <div class="col-7 align-self-center">
-			<textarea class="form-control mb-1" name="content" placeholder="자유롭게 작성하시면 됩니다.&#13;&#10;(#해시태그도 OK)" rows="5" style="resize: none;"></textarea>
+			<textarea class="form-control mb-1" name="content" placeholder="자유롭게 작성하시면 됩니다.&#13;&#10;(#해시태그도 OK)" rows="5" style="resize: none;">${styleBean.content}</textarea>
                 <div>
-                    <form:errors path="price" cssClass="err"/>
+                    <form:errors path="content" cssClass="err"/>
               </div>      
 	    </div>
 	    <div class="col-2"></div>
@@ -318,11 +378,11 @@ $(document).ready(function () {
         <div class="col-7 align-self-center">
         	<c:set var="styleList">로맨틱, 모던, 미니멀, 빈티지, 스트릿, 스포티, 아메카지, 캐주얼, 클래식</c:set>
 			<c:forEach var="style" items="${styleList}">
-			    <input type="checkbox" class="btn-check" id="btn-${style}" autocomplete="off" name="style" value="${style}">
+			    <input type="checkbox" class="btn-check" id="btn-${style}" autocomplete="off" name="style" value="${style}" <c:if test="${fn:contains(styleBean.style, style)}">checked</c:if>>
 			    <label class="btn btn-outline-dark" for="btn-${style}" style="margin-right: 2px; margin-bottom: 4px;">${style}</label>
 			</c:forEach>
            <div>
-              <form:errors path="temperature" cssClass="err"/>
+              <form:errors path="style" cssClass="err"/>
            </div>
         </div>
         <div class="col-2"></div>

@@ -10,19 +10,10 @@
 	<mvc:annotation-driven /> <!-- 유효성검사 -->
 
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix" value="/WEB-INF/style/"></property>
+		<property name="prefix" value="/WEB-INF/cart/"></property>
 		<property name="suffix" value=".jsp"></property>
 	</bean>
 
-	<context:component-scan base-package="style" />
-	<context:component-scan base-package="product" />
-	<context:component-scan base-package="member" />
-	<context:component-scan base-package="main" />
-	
-	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		<property name="maxUploadSize" value="10485760"/>
-		<property name="maxInMemorySize" value="10240"/>
-		<property name="defaultEncoding" value="UTF-8"/>
-	</bean>
+	<context:component-scan base-package="cart" />
 	
 </beans>

@@ -1,5 +1,9 @@
 package style.model;
 
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
+
 public class StyleBean {
 	private int style_number;
 	private String image1;
@@ -13,19 +17,21 @@ public class StyleBean {
 	private int read_count;
 	private int recommend_count;
 	private String write_date;
-	private int product_number1;
-	private int product_number2;
-	private int product_number3;
-	private int product_number4;
+	private Integer product_number1;
+	private Integer product_number2;
+	private Integer product_number3;
+	private Integer product_number4;
 	private String member_id;
+	private List<MultipartFile> images;
 
-	public StyleBean() {
+	StyleBean() {
 		super();
 	}
 
-	public StyleBean(int style_number, String image1, String image2, String image3, String image4, String image5,
-			String title, String content, String style, int read_count, int recommend_count, String write_date,
-			int product_number1, int product_number2, int product_number3, int product_number4, String member_id) {
+	StyleBean(int style_number, String image1, String image2, String image3, String image4, String image5, String title,
+			String content, String style, int read_count, int recommend_count, String write_date,
+			Integer product_number1, Integer product_number2, Integer product_number3, Integer product_number4,
+			String member_id, List<MultipartFile> images) {
 		super();
 		this.style_number = style_number;
 		this.image1 = image1;
@@ -44,6 +50,36 @@ public class StyleBean {
 		this.product_number3 = product_number3;
 		this.product_number4 = product_number4;
 		this.member_id = member_id;
+		this.images = images;
+	}
+
+	public List<MultipartFile> getImages() {
+		return images;
+	}
+
+	public void setImages(List<MultipartFile> images) {
+		this.images = images;
+		for (int i = 1; i < images.size() + 1; i++) {
+			switch (i) {
+			case 1:
+				setImage1(images.get(i - 1).getOriginalFilename());
+				break;
+			case 2:
+				setImage2(images.get(i - 1).getOriginalFilename());
+				break;
+			case 3:
+				setImage3(images.get(i - 1).getOriginalFilename());
+				break;
+			case 4:
+				setImage4(images.get(i - 1).getOriginalFilename());
+				break;
+			case 5:
+				setImage5(images.get(i - 1).getOriginalFilename());
+				break;
+			default:
+				break;
+			}
+		}
 	}
 
 	public int getStyle_number() {
@@ -142,35 +178,35 @@ public class StyleBean {
 		this.write_date = write_date;
 	}
 
-	public int getProduct_number1() {
+	public Integer getProduct_number1() {
 		return product_number1;
 	}
 
-	public void setProduct_number1(int product_number1) {
+	public void setProduct_number1(Integer product_number1) {
 		this.product_number1 = product_number1;
 	}
 
-	public int getProduct_number2() {
+	public Integer getProduct_number2() {
 		return product_number2;
 	}
 
-	public void setProduct_number2(int product_number2) {
+	public void setProduct_number2(Integer product_number2) {
 		this.product_number2 = product_number2;
 	}
 
-	public int getProduct_number3() {
+	public Integer getProduct_number3() {
 		return product_number3;
 	}
 
-	public void setProduct_number3(int product_number3) {
+	public void setProduct_number3(Integer product_number3) {
 		this.product_number3 = product_number3;
 	}
 
-	public int getProduct_number4() {
+	public Integer getProduct_number4() {
 		return product_number4;
 	}
 
-	public void setProduct_number4(int product_number4) {
+	public void setProduct_number4(Integer product_number4) {
 		this.product_number4 = product_number4;
 	}
 
