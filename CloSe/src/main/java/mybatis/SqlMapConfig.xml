@@ -6,6 +6,7 @@
 <configuration>
 	<typeAliases>
 		<typeAlias type="member.model.MemberBean" alias="MemberBean"/>
+		<typeAlias type="report.model.ReportBean" alias="ReportBean"/>
 		<typeAlias type="product.model.ProductBean" alias="ProductBean"/>
 		<typeAlias type="category.model.CategoryBean" alias="CategoryBean"/>
 		<typeAlias type="style.model.StyleBean" alias="StyleBean"/>
@@ -17,6 +18,7 @@
 	
 	<mappers>
 		<mapper resource="mybatis/member.xml"/>
+		<mapper resource="mybatis/report.xml"/>
 		<mapper resource="mybatis/product.xml"/>
 		<mapper resource="mybatis/category.xml"/>
 		<mapper resource="mybatis/style.xml"/>

@@ -25,7 +25,23 @@ CREATE TABLE member (
 	gender	varchar2(10),
 	nickname	varchar2(30)	NOT NULL,
 	height	number	NULL,
-	weight	number	NULL
+	weight	number	NULL,
+	ban_count number default 0,
+	ban_expiration date
+);
+
+CREATE TABLE report (
+    report_number number PRIMARY KEY,
+    report_category varchar2(30),
+    content varchar2(4000),
+    image varchar2(50),
+    reporter_id varchar2(15),
+    reported_user_id varchar2(15),
+    style_number number,
+    write_date date,
+    FOREIGN KEY (reporter_id) REFERENCES member(member_id),
+    FOREIGN KEY (reported_user_id) REFERENCES member(member_id),
+    FOREIGN KEY (style_number) REFERENCES style(style_number)
 );
 
 CREATE SEQUENCE member_seq;
@@ -65,7 +81,7 @@ CREATE TABLE style (
 	product_number	number	NOT NULL,
 	member_id	varchar2(15)	NOT NULL,
 	FOREIGN KEY (product_number) REFERENCES product(product_number),
-  FOREIGN KEY (member_id) REFERENCES member(member_id)
+  	FOREIGN KEY (member_id) REFERENCES member(member_id)
 );
 
 CREATE SEQUENCE style_seq;

@@ -1,30 +1,32 @@
 package member.model;
 
+import java.time.LocalDate;
+
 import org.hibernate.validator.constraints.NotEmpty;
 
 public class MemberBean {
-	@NotEmpty(message = "¾ÆÀÌµð¸¦ ÀÔ·ÂÇÏ¼¼¿ä")
+	@NotEmpty(message = "ï¿½ï¿½ï¿½Ìµï¿½ ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½")
 	private String member_id;
 	
-	@NotEmpty(message = "ÀÔ·ÂÇÏ¼¼¿ä")
+	@NotEmpty(message = "ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½")
 	private String password;
 	 
-	@NotEmpty(message = "ÀÔ·ÂÇÏ¼¼¿ä")
+	@NotEmpty(message = "ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½")
 	private String name;
 	
-	@NotEmpty(message = "ÀÔ·ÂÇÏ¼¼¿ä")
+	@NotEmpty(message = "ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½")
 	private String hp1;
 	
-	@NotEmpty(message = "ÀÔ·ÂÇÏ¼¼¿ä")
+	@NotEmpty(message = "ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½")
 	private String hp2;
 	
-	@NotEmpty(message = "ÀÔ·ÂÇÏ¼¼¿ä")
+	@NotEmpty(message = "ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½")
 	private String hp3;
 	
-	@NotEmpty(message = "ÀÔ·ÂÇÏ¼¼¿ä")
+	@NotEmpty(message = "ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½")
 	private String address1;
 	
-	@NotEmpty(message = "ÀÔ·ÂÇÏ¼¼¿ä")
+	@NotEmpty(message = "ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½")
 	private String address2;
 	
 	private String birth;
@@ -32,16 +34,21 @@ public class MemberBean {
 	
 	private String gender;
 	
-	@NotEmpty(message = "´Ð³×ÀÓÀ» ÀÔ·ÂÇÏ¼¼¿ä")
+	@NotEmpty(message = "ï¿½Ð³ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½")
 	private String nickname;
 	private int height;
 	private int weight;
 	
+	private int ban_count;
+	private LocalDate ban_expiration;
+	
 	public MemberBean() {
 		super();
 	}
+
 	public MemberBean(String member_id, String password, String name, String hp1, String hp2, String hp3,
-			String address1, String address2, String birth, String gender, String nickname, int height, int weight) {
+			String address1, String address2, String birth, String gender, String nickname, int height, int weight,
+			int ban_count, LocalDate ban_expiration) {
 		super();
 		this.member_id = member_id;
 		this.password = password;
@@ -56,6 +63,21 @@ public class MemberBean {
 		this.nickname = nickname;
 		this.height = height;
 		this.weight = weight;
+		this.ban_count = ban_count;
+		this.ban_expiration = ban_expiration;
+	}
+
+	public int getBan_count() {
+		return ban_count;
+	}
+	public void setBan_count(int ban_count) {
+		this.ban_count = ban_count;
+	}
+	public LocalDate getBan_expiration() {
+		return ban_expiration;
+	}
+	public void setBan_expiration(LocalDate ban_expiration) {
+		this.ban_expiration = ban_expiration;
 	}
 	public String getMember_id() {
 		return member_id;

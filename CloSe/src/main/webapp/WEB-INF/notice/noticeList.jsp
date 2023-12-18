@@ -117,13 +117,13 @@
 	</div>
 </div>
 
+<h2 style="width: 60%; margin: auto;">공지사항</h2> <br>
 <div class="row">
-	<table class="table" id="article-table" style="width: 70%; margin: auto;">
+	<table class="table" id="article-table" style="width: 60%; margin: auto;">
 		<thead>
 			<tr>
-				<th class="title col-3"><a>제목</a></th>
-                <th class="content col-6"><a>내용</a></th>
-                <th class="created-at"><a>작성일</a></th>
+				<th class="title col-8"><a>제목</a></th>
+                <th class="created-at col-2"><a>작성일</a></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -135,11 +135,10 @@
 			<c:if test="${ fn:length(lists) != 0 }">
 				<c:forEach var="noticeBean" items="${ lists }">
 					<tr>
-						<td><a
-						href="detail.notice?pageNumber=${ pageInfo.pageNumber }&notice_number=${ noticeBean.notice_number }">${ noticeBean.title }</a></td>
-						<td>${ noticeBean.content }</td>
-						<td><fmt:formatDate value="${ noticeBean.write_date }"
-								pattern="yyyy-MM-dd" /></td>
+						<td>
+						<a href="detail.notice?pageNumber=${ pageInfo.pageNumber }&notice_number=${ noticeBean.notice_number }">${ noticeBean.title }</a>
+						</td>
+						<td><fmt:formatDate value="${ noticeBean.write_date }" pattern="yyyy-MM-dd" /></td>
 					</tr>
 				</c:forEach>
 			</c:if>
@@ -149,9 +148,8 @@
 
 <div class="row">
 	<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-		<a role="button" class="btn btn-dark me-md-2" id="write-article">글쓰기</a>
 		<c:if test="${ member_id == 'admin' }">
-			<input type="button" class="btn btn-dark me-md-2" value="추가하기" onClick="insert()"> 
+			<input type="button" class="btn btn-dark me-md-2" value="글쓰기" onClick="location.href='insert.notice'">
 			<input type="button" class="btn btn-dark me-md-2" value="선택하기" onClick="location.href='delete.notice?pageNumber=${ pageInfo.pageNumber }'">
 		</c:if>
 	</div>

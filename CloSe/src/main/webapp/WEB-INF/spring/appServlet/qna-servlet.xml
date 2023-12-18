@@ -22,6 +22,7 @@
 	
 	<context:component-scan base-package="main" />
 	<context:component-scan base-package="category" />
+	<context:component-scan base-package="report" />
 	<context:component-scan base-package="member" />
 	<context:component-scan base-package="orders" />
 	<context:component-scan base-package="product" />

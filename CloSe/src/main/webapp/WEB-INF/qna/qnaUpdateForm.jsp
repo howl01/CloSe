@@ -82,7 +82,7 @@
         <table class="table" id="article-table" style="width: 70%; margin: auto;">
             <tbody>
             <tr>
-                <td>문의유형</td>
+                <th>문의유형</th>
 				<td>
 					<% String[] qna_categoryList = {"사이즈", "배송", "재입고", "상품상세","교환/환불/취소"};  %>
 					<c:forEach var="qna_category" items="<%= qna_categoryList %>">
@@ -92,7 +92,7 @@
 				</td>
             </tr>
             <tr>
-                <td>제목</td>
+                <th>제목</th>
 				<td>
 					<input type="text" name="title" value="${ qnaBean.title }">
 					<input type="checkbox" style="accent-color: black;" name="secret" value="YES" <c:if test="${ qnaBean.secret == 'YES' }">checked</c:if>>비밀글
@@ -100,25 +100,34 @@
 				</td>
             </tr>
             <tr>
-                <td>작성자</td>
+                <th>작성자</th>
 				<td>${ qnaBean.nickname }
 					<input type="hidden" name="nickname" value="${ qnaBean.nickname }">
 				</td>
             </tr>
             <tr>
-                <td colspan="6">
-					내용 :
-						<c:if test="${ qnaBean.image != null }">
-							<img src="<%= request.getContextPath() %>/resources/uploadQna/${ qnaBean.image }" width="150px" />
-						</c:if>
-						<div style="width: 300px;">
-						<input type="file" class="form-control" name="upload" value="${ qnaBean.image }">
-						<input type="hidden" name="upload2" value="${ qnaBean.image }">
-						</div>
-						<textarea name="content" cols="130" rows="10"  style="resize: none;">${ qnaBean.content }</textarea>
-						<br><form:errors cssClass="err" path="content" />
-					<input type="submit" class="btn btn-Dark me-md-2" value="수정" style="float: right;">
+            	<th>내용</th>
+                <td>
+					<textarea name="content" cols="130" rows="10"  style="resize: none;">${ qnaBean.content }</textarea>
+					<br><form:errors cssClass="err" path="content" />
 				</td>
+            </tr>
+            <tr>
+				<th>사진첨부</th>
+				<td>
+					<c:if test="${ qnaBean.image != null }">
+						<img src="<%= request.getContextPath() %>/resources/uploadQna/${ qnaBean.image }" width="150px" />
+					</c:if>
+					<div style="width: 300px;">
+					<input type="file" class="form-control" name="upload" value="${ qnaBean.image }">
+					<input type="hidden" name="upload2" value="${ qnaBean.image }">
+					</div>
+				</td>
+			</tr>
+            <tr>
+            	<td colspan="2">
+            		<input type="submit" class="btn btn-Dark me-md-2" value="수정" style="float: right;">
+            	</td>
             </tr>
             </tbody>
         </table>

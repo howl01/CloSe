@@ -57,12 +57,13 @@
 
    $.getJSON('https://api.openweathermap.org/data/2.5/weather?q=Seoul&appid=27f0e2dcc40e953d16644b55e897423d&units=metric',
       function (result) {
+	   	var $ctemp = result.main.temp;
 	   	$('#ctemp').text(result.main.temp + '°C');
      	var wiconUrl = '<img src="http://openweathermap.org/img/wn/' + result.weather[0].icon + '.png" alt="' + result.weather[0].description + '">';
-        $('.icon').html(wiconUrl);
+       	$('.icon').html(wiconUrl);
         $('#feel').text(result.main.feels_like + '°C');
         $('#description').text(result.main.description);
-
+        
          var ct = result.dt;
 
          function convertTime(ct) {

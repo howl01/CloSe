@@ -2,6 +2,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
+<%@ include file="../common/common.jsp" %>
 
 <script src="resources/js/bootstrap.bundle.min.js"></script>
 <script src="resources/js/jquery.js"></script>
@@ -51,7 +52,10 @@
 		location.href = "list.qna";
 	}
 	function goNotice(){
-		location.href="list.notice";
+		location.href = "list.notice";
+	}
+	function goAdmin(){
+		location.href="admin.member";
 	}
 </script>
 
@@ -84,7 +88,7 @@
    <div class="container" style="width:66%;">
       <div
          class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-         <a href="/main/main_normal_home.jsp"
+         <a href="start.jsp"
             class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
             <img src="resources/img/logo.png" class="bi me-2" width="280"
             height="60" role="img" aria-label="#home">
@@ -123,6 +127,7 @@
         <li class="nav-item"><a href="javscript:void(0)" onclick="goLogin()" class="nav-link link-body-emphasis px-2">EVENT</a></li>
       </ul>
       <ul class="nav">
+        <li class="nav-item"><a href="javascript:goAdmin()" class="nav-link link-body-emphasis px-2"><font size="2">관리자모드</font></a></li>
         <li class="nav-item"><a href="javascript:goNotice()" class="nav-link link-body-emphasis px-2"><font size="2">공지사항</font></a></li>
         <li class="nav-item"><a href="javascript:goQna()" class="nav-link link-body-emphasis px-2"><font size="2">고객센터</font></a></li>
       </ul>

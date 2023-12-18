@@ -74,6 +74,11 @@
 	border-radius: 8px;
 }
 </style>
+<script type="text/javascript">
+	function update(pageNumber, notice_number){
+		location.href = "update.notice?pageNumber="+pageNumber+"&notice_number="+notice_number;
+	}
+</script>
 
 <div class="row">
 	<div class="card card-margin search-form">
@@ -117,76 +122,39 @@
 	</div>
 </div>
 
+<h2 style="width: 60%; margin: auto;">공지사항</h2> <br>
     <div class="row">
-        <table class="table" id="article-table" style="width: 70%; margin: auto;">
-            <thead>
-            <tr>
-                <th class="title col-6"><a>제목</a></th>
-                <th class="user-id"><a>내용</a></th>
-                <th class="created-at"><a>작성일</a></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td class="title"><a>첫글</a></td>
-                <td class="hashtag">#java</td>
-                <td class="user-id">Uno</td>
-                <td class="created-at">
-                    <time>2022-01-01</time>
-                </td>
-            </tr>
-            <tr>
-                <td>두번째글</td>
-                <td>#spring</td>
-                <td>Uno</td>
-                <td>
-                    <time>2022-01-02</time>
-                </td>
-            </tr>
-            <tr>
-                <td>세번째글</td>
-                <td>#java</td>
-                <td>Uno</td>
-                <td>
-                    <time>2022-01-03</time>
-                </td>
-            </tr>
+        <table class="table" id="article-table" style="width: 60%; margin: auto;">
+        <thead>
+			<tr>
+				<th class="title col-8"><a>제목</a></th>
+                <th class="created-at col-2"><a>작성일</a></th>
+			</tr>
+		</thead>
+        <tbody>
+		<tr>
+			<td>${ noticeBean.title }</td>
+			<td><fmt:formatDate value="${ noticeBean.write_date }" pattern="yyyy-MM-dd" /></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<c:if test="${ noticeBean.image != null }">
+					<img src="<%= request.getContextPath() %>/resources/uploadFolder/${ noticeBean.image }" width="150px">
+				</c:if>
+				${ noticeBean.content }
+			</td>
+		</tr>
+			<tr>
+				<td colspan="2" align="right">
+					<input type="button" class="btn btn-dark me-md-2" value="목록" onClick="location.href='list.notice?pageNumber=${ pageNumber }'">
+					<c:if test="${ member_id == 'admin' }">
+					<input type="button" class="btn btn-dark me-md-2" value="수정" onClick="update('${ pageNumber }', '${ noticeBean.notice_number }')">
+					</c:if>
+				</td>
+			</tr>
             </tbody>
         </table>
     </div>
 
-    <div class="row">
-        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <a class="btn btn-primary me-md-2" role="button" id="write-article">글쓰기</a>
-        </div>
-    </div>
-
-    <div class="row">
-        <nav id="pagination" aria-label="Page navigation">
-            <ul class="pagination justify-content-center">
-                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">Next</a></li>
-            </ul>
-        </nav>
-    </div>
-
-<table border="1">
-	<c:if test="${ member_id == 'admin' }">
-		<tr>
-			<td colspan="2" align="right">
-				<input type="button" value="수정" onClick="update('${ pageNumber }', '${ noticeBean.notice_number }')">
-			</td>
-		</tr>
-	</c:if>
 	
-	<tr>
-		<td>${ noticeBean.title }</td>
-		<td>
-			<c:if test="${ noticeBean.image != null }">
-				<img src="<%= request.getContextPath() %>/resources/uploadFolder/${ noticeBean.image }" width="150px">
-			</c:if>
-			${ noticeBean.content }
-		</td>
-	</tr>
 </table>

@@ -3,5 +3,36 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
 <mapper namespace = "member.MemberBean">
-
+	
+	<select id="getTotalCount" resultType="int">
+		select count(*) from member
+		where not member_id = 'admin'
+		<if test="whatColumn == member_id">
+			and member_id like #{keyword}
+		</if> 
+		<if test="whatColumn == nickname">
+			and nickname like #{keyword}
+		</if> 
+	</select>
+	
+	<select id="getAllMemebr" resultType="MemberBean">
+		select * from member
+		where not member_id = 'admin'
+		<if test="whatColumn == member_id">
+			and member_id like #{keyword}
+		</if> 
+		<if test="whatColumn == nickname">
+			and nickname like #{keyword}
+		</if> 
+	</select>
+	
+	<select id="getMember" resultType="MemberBean">
+		select * from member
+		where member_id = #{member_id}
+	</select>
+	
+	<update id="updateMemberBan">
+		update member set ban_count = #{ban_count}, ban_expiration = #{ban_expiration}
+		where member_id = #{member_id}
+	</update>
 </mapper>

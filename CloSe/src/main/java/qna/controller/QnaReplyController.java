@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import qna.model.QnaBean;
-import qna.model.QnaBean2;
 import qna.model.QnaDao;
 import utility.Paging;
 

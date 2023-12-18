@@ -37,6 +37,7 @@ public class NoticeUpdateController {
 	public String updateForm(@RequestParam("notice_number") String notice_number,
 								@RequestParam("pageNumber") String pageNumber,
 								Model model) {
+		
 		NoticeBean noticeBean = noticeDao.getNoticeByNumber(notice_number);
 		
 		model.addAttribute("noticeBean", noticeBean);
