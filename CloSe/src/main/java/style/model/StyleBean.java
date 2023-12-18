@@ -1,7 +1,9 @@
 package style.model;
 
 import java.util.List;
+import java.util.UUID;
 
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.web.multipart.MultipartFile;
 
 public class StyleBean {
@@ -23,6 +25,51 @@ public class StyleBean {
 	private Integer product_number4;
 	private String member_id;
 	private List<MultipartFile> images;
+	private MultipartFile MImage1;
+	private MultipartFile MImage2;
+	private MultipartFile MImage3;
+	private MultipartFile MImage4;
+	private MultipartFile MImage5;
+	
+	public MultipartFile getMImage1() {
+		return MImage1;
+	}
+
+	public void setMImage1(MultipartFile mImage1) {
+		MImage1 = mImage1;
+	}
+
+	public MultipartFile getMImage2() {
+		return MImage2;
+	}
+
+	public void setMImage2(MultipartFile mImage2) {
+		MImage2 = mImage2;
+	}
+
+	public MultipartFile getMImage3() {
+		return MImage3;
+	}
+
+	public void setMImage3(MultipartFile mImage3) {
+		MImage3 = mImage3;
+	}
+
+	public MultipartFile getMImage4() {
+		return MImage4;
+	}
+
+	public void setMImage4(MultipartFile mImage4) {
+		MImage4 = mImage4;
+	}
+
+	public MultipartFile getMImage5() {
+		return MImage5;
+	}
+
+	public void setMImage5(MultipartFile mImage5) {
+		MImage5 = mImage5;
+	}
 
 	StyleBean() {
 		super();
@@ -58,23 +105,29 @@ public class StyleBean {
 	}
 
 	public void setImages(List<MultipartFile> images) {
+		UUID uuid = UUID.randomUUID();
 		this.images = images;
 		for (int i = 1; i < images.size() + 1; i++) {
 			switch (i) {
 			case 1:
-				setImage1(images.get(i - 1).getOriginalFilename());
+				setImage1(uuid.toString()+images.get(i - 1).getOriginalFilename());
+				setMImage1(images.get(i-1));
 				break;
 			case 2:
-				setImage2(images.get(i - 1).getOriginalFilename());
+				setImage2(uuid.toString()+images.get(i - 1).getOriginalFilename());
+				setMImage2(images.get(i-1));
 				break;
 			case 3:
-				setImage3(images.get(i - 1).getOriginalFilename());
+				setImage3(uuid.toString()+images.get(i - 1).getOriginalFilename());
+				setMImage3(images.get(i-1));
 				break;
 			case 4:
-				setImage4(images.get(i - 1).getOriginalFilename());
+				setImage4(uuid.toString()+images.get(i - 1).getOriginalFilename());
+				setMImage4(images.get(i-1));
 				break;
 			case 5:
-				setImage5(images.get(i - 1).getOriginalFilename());
+				setImage5(uuid.toString()+images.get(i - 1).getOriginalFilename());
+				setMImage5(images.get(i-1));
 				break;
 			default:
 				break;

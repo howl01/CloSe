@@ -96,6 +96,39 @@ function isProductNumberAlreadySet(productNumber) {
 }
 
 $(document).ready(function () {
+	// 이미지 업로드, 내용 입력, 스타일 선택 여부에 따라 submit 버튼 활성화/비활성화
+    function updateSubmitButton() {
+        var imagesInput = $('input[name="images"]');
+        var contentTextarea = $('textarea[name="content"]');
+        var styleCheckboxes = $('input[name="style"]');
+        var submitButton = $('button[type="submit"]');
+
+        // 이미지 업로드, 내용 입력, 스타일 선택 여부 확인
+        var isImagesSelected = imagesInput[0].files.length > 0;
+        var isContentValid = contentTextarea.val().trim().length > 0;
+        var isStyleSelected = styleCheckboxes.filter(':checked').length > 0;
+
+        // 모든 조건을 만족하는 경우 submit 버튼 활성화, 그렇지 않으면 비활성화
+        if (isImagesSelected && isContentValid && isStyleSelected) {
+            submitButton.prop('disabled', false);
+        } else {
+            submitButton.prop('disabled', true);
+        }
+    }
+
+    // 이미지, 내용, 스타일 변경 시 활성화/비활성화 여부 업데이트
+    $('input[name="images"], textarea[name="content"], input[name="style"]').on('change', function () {
+        updateSubmitButton();
+    });
+
+    // 폼 제출 시에도 한 번 더 업데이트
+    $('form[name="f"]').submit(function () {
+        updateSubmitButton();
+    });
+
+    // 초기 로딩 시에도 업데이트 수행
+    updateSubmitButton();
+	
 	var bsComponent = $(".bs-component");
     var initialPosition = bsComponent.offset().top;
 
@@ -198,7 +231,6 @@ $(document).ready(function () {
         $("#searchWord2").val("");
     });
 
-    
 });
 	
 	function updatePreview() {
@@ -212,7 +244,14 @@ $(document).ready(function () {
 	
 	    var previewContainer = document.querySelector('.preview-container');
 	    previewContainer.innerHTML = ""; // Clear previous previews
-	
+		
+	    var originalDisplay = previewContainer.style.display; // 현재 display 상태 저장
+
+	    // Clear previous previews
+	    while (previewContainer.firstChild) {
+	        previewContainer.removeChild(previewContainer.firstChild);
+	    }
+	    
 	    var carouselContainer = document.querySelector('.carousel');
 	    carouselContainer.style.display = 'none'; // Hide carousel initially
 	
@@ -289,7 +328,12 @@ $(document).ready(function () {
 	        previewContainer.style.marginTop = '';
 	        previewContainer.style.marginBottom = '';
 	    }
-	    
+	 	// 추가: form:errors가 발생하면 다시 보이도록 설정
+	    var errors = document.querySelectorAll('.err');
+	    if (errors.length > 0) {
+	        previewContainer.style.display = originalDisplay; // 이전 상태로 복원
+	        carouselContainer.style.display = 'block';
+	    }
 	}
 </script>
 
@@ -325,7 +369,6 @@ $(document).ready(function () {
 			        <div class="carousel-inner"></div>
 			    </div>
 				<div>
-				   <form:errors path="image1" cssClass="err"/>
 			   </div>
 				</div>
 				<div class="col-2"></div>
@@ -362,9 +405,8 @@ $(document).ready(function () {
 	    </div>
 	    <div class="col-2"></div>
 	    <div class="col-7 align-self-center">
-			<textarea class="form-control mb-1" name="content" placeholder="자유롭게 작성하시면 됩니다.&#13;&#10;(#해시태그도 OK)" rows="5" style="resize: none;">${styleBean.content}</textarea>
+			<textarea class="form-control mb-1" name="content" placeholder="자유롭게 작성하시면 됩니다.&#13;&#10;(#해시태그도 OK)" rows="5" style="resize: none;"></textarea>
                 <div>
-                    <form:errors path="content" cssClass="err"/>
               </div>      
 	    </div>
 	    <div class="col-2"></div>
@@ -378,11 +420,10 @@ $(document).ready(function () {
         <div class="col-7 align-self-center">
         	<c:set var="styleList">로맨틱, 모던, 미니멀, 빈티지, 스트릿, 스포티, 아메카지, 캐주얼, 클래식</c:set>
 			<c:forEach var="style" items="${styleList}">
-			    <input type="checkbox" class="btn-check" id="btn-${style}" autocomplete="off" name="style" value="${style}" <c:if test="${fn:contains(styleBean.style, style)}">checked</c:if>>
+			    <input type="checkbox" class="btn-check" id="btn-${style}" autocomplete="off" name="style" value="${style}">
 			    <label class="btn btn-outline-dark" for="btn-${style}" style="margin-right: 2px; margin-bottom: 4px;">${style}</label>
 			</c:forEach>
            <div>
-              <form:errors path="style" cssClass="err"/>
            </div>
         </div>
         <div class="col-2"></div>

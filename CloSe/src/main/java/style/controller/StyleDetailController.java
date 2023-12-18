@@ -12,20 +12,22 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import style.model.StyleBean;
 import style.model.StyleDao;
 
 @Controller
-public class StyleInsertController {
+public class StyleDetailController {
 
-	private final String command = "insert.style";
-	private final String viewPage = "styleInsertForm";
+	private final String command = "detail.style";
+	private final String viewPage = "styleDetailView";
 	private final String gotoPage = "redirect:/mainView.style";
 
 	@Autowired
@@ -35,8 +37,8 @@ public class StyleInsertController {
 	private StyleDao styleDao;
 
 	@RequestMapping(value = command, method = RequestMethod.GET)
-	public String insertForm(HttpSession session) {
-		session.setAttribute("member_id", "kim");
+	public String insertForm(HttpSession session, @RequestParam("style_number") int style_number, Model model) {
+		model.addAttribute("styleBean", styleDao.getStyleByStyleNumber(style_number));
 		return viewPage;
 	}
 

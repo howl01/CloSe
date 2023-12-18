@@ -1,5 +1,7 @@
 package style.model;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -19,6 +21,14 @@ public class StyleDao {
 			e.printStackTrace();
 		}
 		return cnt;
+	}
+
+	public List<StyleBean> getStyleList() {
+		return sqlSessionTemplate.selectList(namespace + ".getStyleList");
+	}
+
+	public StyleBean getStyleByStyleNumber(int style_number) {
+		return sqlSessionTemplate.selectOne(namespace + ".getStyleByStyleNumber", style_number);
 	}
 
 }

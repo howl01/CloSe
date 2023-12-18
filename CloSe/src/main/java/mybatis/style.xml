@@ -7,4 +7,13 @@
 		insert into style values
 		(style_seq.nextval, #{image1}, #{image2, jdbcType=VARCHAR}, #{image3, jdbcType=VARCHAR}, #{image4, jdbcType=VARCHAR}, #{image5, jdbcType=VARCHAR}, #{title, jdbcType=VARCHAR}, #{content}, #{style}, 0, 0, sysdate, #{product_number1, jdbcType=VARCHAR}, #{product_number2, jdbcType=VARCHAR}, #{product_number3, jdbcType=VARCHAR}, #{product_number4, jdbcType=VARCHAR}, #{member_id})
 	</insert>
+	
+	<select id="getStyleList" resultType="StyleBean">
+		select * from style
+	</select>
+	
+	<select id="getStyleByStyleNumber" resultType="StyleBean">
+		select * from style
+		where style_number = #{style_number}
+	</select>
 </mapper>
