@@ -56,30 +56,49 @@
    });
 
    $.getJSON('https://api.openweathermap.org/data/2.5/weather?q=Seoul&appid=27f0e2dcc40e953d16644b55e897423d&units=metric',
-      function (result) {
-	   	var $ctemp = result.main.temp;
-	   	$('#ctemp').text(result.main.temp + '°C');
-     	var wiconUrl = '<img src="http://openweathermap.org/img/wn/' + result.weather[0].icon + '.png" alt="' + result.weather[0].description + '">';
-       	$('.icon').html(wiconUrl);
-        $('#feel').text(result.main.feels_like + '°C');
-        $('#description').text(result.main.description);
-        
-         var ct = result.dt;
+	        function (result) {
+	            var openWeatherTemperature = result.main.temp;
+	            var openWeatherTemperature2 = result.main.feels_like;
 
-         function convertTime(ct) {
-            var ot = new Date(ct * 1000);
-            var year = ot.getFullYear();
-            var month = ot.getMonth() + 1;
-            var dt = ot.getDate();
-            var hr = ot.getHours();
-            var m = ot.getMinutes();
+	            $.ajax({
+	                url: '/view.close',
+	                type: 'POST',
+	                data: {
+	                    openWeatherTemperature: openWeatherTemperature
+	                },
+	                success: function (response) {
+	                    console.log(response);
+	                    var openWeatherTemperature = response.openWeatherTemperature;
+	                    console.log(openWeatherTemperature);
+	                },
+	                error: function (error) {
+	                    console.error(error);
+	                }
+	            });
 
-            return year + '년 ' + month + '월 ' + dt + '일 ' + hr + '시 기준';
-         }
+	            var $ctemp = result.main.temp;
+	            $('#ctemp').text(openWeatherTemperature + '°C');
+	            var wiconUrl = '<img src="http://openweathermap.org/img/wn/' + result.weather[0].icon + '.png" alt="' + result.weather[0].description + '">';
+	            $('.icon').html(wiconUrl);
+	            $('#feel').text(result.main.feels_like + '°C');
+	            $('#description').text(result.weather[0].description);
 
-         var currentTime = convertTime(ct);
-         $('.time').text(currentTime);
-      });
+	            var ct = result.dt;
+
+	            function convertTime(ct) {
+	                var ot = new Date(ct * 1000);
+	                var year = ot.getFullYear();
+	                var month = ot.getMonth() + 1;
+	                var dt = ot.getDate();
+	                var hr = ot.getHours();
+	                var m = ot.getMinutes();
+
+	                return year + '년 ' + month + '월 ' + dt + '일 ' + hr + '시 기준';
+	            }
+
+	            var currentTime = convertTime(ct);
+	            $('.time').text(currentTime);
+	        });
 </script>
 
 <div class="body">
@@ -119,7 +138,7 @@
                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
 
                   <div class="col" align="center">
-                     <a><img class="bd-placeholder-img card-img-top" width="100%" height="120"
+                     <a href="view.close"><img class="bd-placeholder-img card-img-top" width="100%" height="120"
                            style="border-radius: 20%;" id="par" src="resources/img/abc.jpeg"></a>
                      오늘의 옷비서
                   </div>
