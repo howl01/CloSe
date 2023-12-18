@@ -58,24 +58,23 @@
    $.getJSON('https://api.openweathermap.org/data/2.5/weather?q=Seoul&appid=27f0e2dcc40e953d16644b55e897423d&units=metric',
 	        function (result) {
 	            var openWeatherTemperature = result.main.temp;
-	            var openWeatherTemperature2 = result.main.feels_like;
-
-	            $.ajax({
-	                url: '/view.close',
-	                type: 'POST',
-	                data: {
-	                    openWeatherTemperature: openWeatherTemperature
-	                },
-	                success: function (response) {
-	                    console.log(response);
-	                    var openWeatherTemperature = response.openWeatherTemperature;
-	                    console.log(openWeatherTemperature);
-	                },
-	                error: function (error) {
-	                    console.error(error);
-	                }
+	            
+	            $("#close").click(function(){
+	            	alert("click");
+	            	
+	            	$.ajax({
+	            		url: "/view.close",
+	            		type: "get",
+	            		data: {openWeatherTemperature:result.main.temp},
+	            		success:function(data){
+	            			alert("성공");
+	            		},
+	            		error:function(){
+	            			alert("실패");
+	            		}
+	            	});
 	            });
-
+	            
 	            var $ctemp = result.main.temp;
 	            $('#ctemp').text(openWeatherTemperature + '°C');
 	            var wiconUrl = '<img src="http://openweathermap.org/img/wn/' + result.weather[0].icon + '.png" alt="' + result.weather[0].description + '">';
