@@ -73,7 +73,7 @@ public class CartAddController {
 	}
 	
 	@RequestMapping(value=command,method=RequestMethod.GET)
-	public String cartForm(@RequestParam("member_id")String member_id,
+	public String cartForm(@RequestParam("member_id") String member_id,
 							Model model) {
 		List<CartInfoBean> cartInfoLists = cartDao.getAllCartInfoByMember_Id(member_id);
 		model.addAttribute("cartInfoLists", cartInfoLists);

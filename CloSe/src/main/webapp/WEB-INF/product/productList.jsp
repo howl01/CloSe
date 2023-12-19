@@ -35,8 +35,7 @@
 				        <td align="center" valign="top" width="300" height="200" style="padding: 10px">
 				          <div>
 				           <a href="detail.product?product_number=${pb.product_number }">
-				          	<img id="preview" width="70px"
-							src='<c:url value='/resources/product/image/'/>${pb.image }' />
+				          	 <img id="preview" width="70px" src='<c:url value='/resources/product/image/'/>${pb.image }' />
 				           </a>
 				          </div>
 				          
