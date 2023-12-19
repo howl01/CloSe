@@ -18,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import style.model.StyleBean;
 import style.model.StyleDao;
 
 @Controller
@@ -137,6 +138,8 @@ public class CloseViewController {
        }else if(avg > 27.0) {
     	   season = "summer";
        }
+       
+       StyleBean styleBean = styleDao.selectManStyle();
        
        return viewPage;
    }

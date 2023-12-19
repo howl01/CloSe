@@ -8,201 +8,184 @@ import java.time.LocalDate;
 import org.hibernate.validator.constraints.NotEmpty;
 
 public class MemberBean {
-	@NotEmpty(message = "¾ÆÀÌµð¸¦ ÀÔ·ÂÇÏ¼¼¿ä")
-	@Size(max = 10, message = "10±ÛÀÚÀÌÇÏ·Î ÀÔ·ÂÇÏ¼¼¿ä")
+	@NotEmpty(message = "ï¿½ï¿½ï¿½Ìµï¿½ ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½")
+	@Size(max = 10, message = "10ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï·ï¿½ ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½")
 	private String member_id;
 
-	@NotEmpty(message = "ºñ¹Ð¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä")
+	@NotEmpty(message = "ï¿½ï¿½Ð¹ï¿½È£ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½")
 	private String password;
 
 	private String passwordcheck;
 
-	@NotEmpty(message = "ÀÌ¸§À» ÀÔ·ÂÇÏ¼¼¿ä")
-	@Size(max = 3, message = "3±ÛÀÚÀÌÇÏ·Î ÀÔ·ÂÇÏ¼¼¿ä")
+	@NotEmpty(message = "ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½")
+	@Size(max = 3, message = "3ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï·ï¿½ ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½")
 	private String name;
 
-	@NotEmpty(message = "ÀüÈ­¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä")
-	@Pattern(regexp = "^[0-9]+$", message = "¼ýÀÚ¸¸ ÀÔ·Â°¡´É")
+	@NotEmpty(message = "ï¿½ï¿½È­ï¿½ï¿½È£ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½")
+	@Pattern(regexp = "^[0-9]+$", message = "ï¿½ï¿½ï¿½Ú¸ï¿½ ï¿½Ô·Â°ï¿½ï¿½ï¿½")
 	private String phone;
-	@NotEmpty(message = "ÀÌ¸ÞÀÏÀ» ÀÔ·ÂÇÏ¼¼¿ä")
+	@NotEmpty(message = "ï¿½Ì¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½")
 	private String email;
 	private String address1;
 
-	@NotEmpty(message = "»ó¼¼ÁÖ¼Ò¸¦ ÀÔ·ÂÇÏ¼¼¿ä")
+	@NotEmpty(message = "ï¿½ï¿½ï¿½Ö¼Ò¸ï¿½ ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½")
 	private String address2;
 
-	@NotEmpty(message = "»ý³â¿ùÀÏÀ» ÀÔ·ÂÇÏ¼¼¿ä")
+	@NotEmpty(message = "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½")
 	private String birth;
 
-	@NotNull(message = "¼ºº°À» ¼±ÅÃÇÏ¼¼¿ä")
+	@NotNull(message = "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½")
 	private String gender;
 
-	@NotEmpty(message = "´Ð³×ÀÓÀ» ÀÔ·ÂÇÏ¼¼¿ä")
-	@Size(max = 6, message = "6±ÛÀÚÀÌÇÏ·Î ÀÔ·ÂÇÏ¼¼¿ä")
+	@NotEmpty(message = "ï¿½Ð³ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½")
+	@Size(max = 6, message = "6ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï·ï¿½ ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½")
 	private String nickname;
 
-	@NotNull(message = "ÀÎÁõ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä")
-	@Size(min = 4, message = "ÀÎÁõ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä")
+	@NotNull(message = "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È£ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½")
+	@Size(min = 4, message = "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È£ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½")
 	private String verificationCode;
 
-	@NotEmpty(message = "Å° ÀÔ·Â")
-	@Pattern(regexp = "^[0-9]+$", message = "¼ýÀÚ¸¸ ÀÔ·Â°¡´É")
+	@NotEmpty(message = "Å° ï¿½Ô·ï¿½")
+	@Pattern(regexp = "^[0-9]+$", message = "ï¿½ï¿½ï¿½Ú¸ï¿½ ï¿½Ô·Â°ï¿½ï¿½ï¿½")
 	private String height;
 
-	@NotEmpty(message = "¸ö¹«°Ô ÀÔ·Â")
-	@Pattern(regexp = "^[0-9]+$", message = "¼ýÀÚ¸¸ ÀÔ·Â°¡´É")
+	@NotEmpty(message = "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½")
+	@Pattern(regexp = "^[0-9]+$", message = "ï¿½ï¿½ï¿½Ú¸ï¿½ ï¿½Ô·Â°ï¿½ï¿½ï¿½")
 	private String weight;
 
 	private String social;
 
 	private int ban_count;
 	private LocalDate ban_expiration;
-
+	
 	public MemberBean() {
 		super();
 	}
-
-	public MemberBean(String member_id, String password, String name, String phone, String email, String address1,
-			String address2, String birth, String gender, String nickname, String height, String weight,
-			String social) {
-	}
-
-	public String getSocial() {
-		return social;
-	}
-
-	public void setSocial(String social) {
-		this.social = social;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getPasswordcheck() {
-		return passwordcheck;
-	}
-
-	public void setPasswordcheck(String passwordcheck) {
+	public MemberBean(String member_id, String password, String passwordcheck, String name, String phone, String email,
+			String address1, String address2, String birth, String gender, String nickname, String verificationCode,
+			String height, String weight, String social, int ban_count, LocalDate ban_expiration) {
+		super();
+		this.member_id = member_id;
+		this.password = password;
 		this.passwordcheck = passwordcheck;
-	}
-
-	public String getVerificationCode() {
-		return verificationCode;
-	}
-
-	public void setVerificationCode(String verificationCode) {
+		this.name = name;
+		this.phone = phone;
+		this.email = email;
+		this.address1 = address1;
+		this.address2 = address2;
+		this.birth = birth;
+		this.gender = gender;
+		this.nickname = nickname;
 		this.verificationCode = verificationCode;
+		this.height = height;
+		this.weight = weight;
+		this.social = social;
 		this.ban_count = ban_count;
 		this.ban_expiration = ban_expiration;
 	}
-
+	public String getMember_id() {
+		return member_id;
+	}
+	public void setMember_id(String member_id) {
+		this.member_id = member_id;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public String getPasswordcheck() {
+		return passwordcheck;
+	}
+	public void setPasswordcheck(String passwordcheck) {
+		this.passwordcheck = passwordcheck;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getAddress1() {
+		return address1;
+	}
+	public void setAddress1(String address1) {
+		this.address1 = address1;
+	}
+	public String getAddress2() {
+		return address2;
+	}
+	public void setAddress2(String address2) {
+		this.address2 = address2;
+	}
+	public String getBirth() {
+		return birth;
+	}
+	public void setBirth(String birth) {
+		this.birth = birth;
+	}
+	public String getGender() {
+		return gender;
+	}
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+	public String getNickname() {
+		return nickname;
+	}
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+	public String getVerificationCode() {
+		return verificationCode;
+	}
+	public void setVerificationCode(String verificationCode) {
+		this.verificationCode = verificationCode;
+	}
+	public String getHeight() {
+		return height;
+	}
+	public void setHeight(String height) {
+		this.height = height;
+	}
+	public String getWeight() {
+		return weight;
+	}
+	public void setWeight(String weight) {
+		this.weight = weight;
+	}
+	public String getSocial() {
+		return social;
+	}
+	public void setSocial(String social) {
+		this.social = social;
+	}
 	public int getBan_count() {
 		return ban_count;
 	}
-
 	public void setBan_count(int ban_count) {
 		this.ban_count = ban_count;
 	}
-
 	public LocalDate getBan_expiration() {
 		return ban_expiration;
 	}
-
 	public void setBan_expiration(LocalDate ban_expiration) {
 		this.ban_expiration = ban_expiration;
 	}
 
-	public String getMember_id() {
-		return member_id;
-	}
-
-	public void setMember_id(String member_id) {
-		this.member_id = member_id;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
-	public String getAddress1() {
-		return address1;
-	}
-
-	public void setAddress1(String address1) {
-		this.address1 = address1;
-	}
-
-	public String getAddress2() {
-		return address2;
-	}
-
-	public void setAddress2(String address2) {
-		this.address2 = address2;
-	}
-
-	public String getBirth() {
-		return birth;
-	}
-
-	public void setBirth(String birth) {
-		this.birth = birth;
-	}
-
-	public String getGender() {
-		return gender;
-	}
-
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
-
-	public String getNickname() {
-		return nickname;
-	}
-
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
-	}
-
-	public String getHeight() {
-		return height;
-	}
-
-	public void setHeight(String height) {
-		this.height = height;
-	}
-
-	public String getWeight() {
-		return weight;
-	}
-
-	public void setWeight(String weight) {
-		this.weight = weight;
-	}
+	
 
 }

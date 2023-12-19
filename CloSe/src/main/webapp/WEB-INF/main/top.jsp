@@ -303,7 +303,7 @@
 	        <li class="nav-item"><a href="javscript:goLogin()" onclick="goLogin()" class="nav-link link-body-emphasis px-2">HOME</a></li>
 	        <li class="nav-item"><a href="javscript:void(0);" onclick="goLogin()" class="nav-link link-body-emphasis px-2">오늘의 옷비서</a></li>
 	        <li class="nav-item"><a href="javscript:void(0)" onclick="goLogin()" class="nav-link link-body-emphasis px-2">STYLE</a></li>
-	        <li class="nav-item"><a href="javscript:void(0)" onclick="goLogin()" class="nav-link link-body-emphasis px-2">SHOP</a></li>
+	        <li class="nav-item"><a href="list.product" class="nav-link link-body-emphasis px-2">SHOP</a></li>
 	        <li class="nav-item"><a href="javscript:void(0)" onclick="goLogin()" class="nav-link link-body-emphasis px-2">EVENT</a></li>
       	</c:if>
       	<c:if test="${not empty loginInfo or not empty kakaoLoginInfo}">

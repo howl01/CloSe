@@ -28,12 +28,10 @@ public class ProductRegisterController {
 
 	private final String command = "/register.product";
 	private final String viewPage = "productRegisterForm";
-	private final String gotoPage = "";
+	private final String gotoPage = "redirect:/list.product";
 
 	@Autowired
 	ServletContext servletContext;
-
-
 
 	@Autowired
 	ProductDao productDao;
@@ -43,7 +41,7 @@ public class ProductRegisterController {
 
 	@RequestMapping(value=command, method=RequestMethod.GET)
 	public String registerForm(Model model) {
-		List<CategoryBean> clists = categoryDao.getAllCategory(); //Ä«Å×°í¸® insert¸¦ À§ÇØ
+		List<CategoryBean> clists = categoryDao.getAllCategory(); //Ä«ï¿½×°ï¿½ insertï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		model.addAttribute("clists", clists);
 		return viewPage;
 	}
@@ -54,30 +52,30 @@ public class ProductRegisterController {
 			@RequestParam(value = "prevContent", required = false) String prevContent,
 			Model model) {
 		List<ProductBean> plists = productDao.getAllProduct();
-		List<CategoryBean> clists = categoryDao.getAllCategory(); //Ä«Å×°í¸® insert¸¦ À§ÇØ
+		List<CategoryBean> clists = categoryDao.getAllCategory(); //Ä«ï¿½×°ï¿½ insertï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		model.addAttribute("clists", clists);
 		
 		if(pb.getImage().equals("")) {
 			pb.setImage(prevImage);
 		}
 		
-		System.out.println("ÀÌÀüÄÁÅÙÃ÷:"+prevContent);
-		System.out.println("Áö±İÄÁÅÙÃ÷:"+pb.getContent());
+		System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½:"+prevContent);
+		System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½:"+pb.getContent());
 		
 
 		String uploadPath = servletContext.getRealPath("/resources/product/image"); 
 		String uploadPath2 = servletContext.getRealPath("/resources/product/content"); 
 
-		File destination0 = new File(uploadPath+File.separator+prevImage); //ÀÌÀüÀÌ¹ÌÁö
-		File destination = new File(uploadPath+File.separator+pb.getImage()); //ÇöÀçÀÌ¹ÌÁö
+		File destination0 = new File(uploadPath+File.separator+prevImage); //ï¿½ï¿½ï¿½ï¿½ï¿½Ì¹ï¿½ï¿½ï¿½
+		File destination = new File(uploadPath+File.separator+pb.getImage()); //ï¿½ï¿½ï¿½ï¿½ï¿½Ì¹ï¿½ï¿½ï¿½
 		
-		File destination1 = new File(uploadPath2+File.separator+prevContent); //ÀÌÀüÄÁÅÙÃ÷
-		File destination2 = new File(uploadPath2+File.separator+pb.getContent()); //ÇöÀçÄÁÅÙÃ÷
+		File destination1 = new File(uploadPath2+File.separator+prevContent); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		File destination2 = new File(uploadPath2+File.separator+pb.getContent()); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 		MultipartFile multi = pb.getpImage();
 		MultipartFile multi2 = pb.getpContent();
 		try {
-			//Àü¿¡°Å Å×ÀÌºí¿¡ ÀÖ´ÂÁö È®ÀÎ	 
+			//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ È®ï¿½ï¿½	 
 			boolean existsPImage = false;
 			for(int i=0;i<plists.size();i++) {
 				ProductBean pb0 = plists.get(i);
@@ -90,7 +88,7 @@ public class ProductRegisterController {
 					destination0.delete();
 				}
 			}
-			//Àü¿¡°Å Å×ÀÌºí¿¡ ÀÖ´ÂÁö È®ÀÎ	 
+			//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ È®ï¿½ï¿½	 
 			boolean existsPContent = false;
 			for(int i=0;i<plists.size();i++) {
 				ProductBean pb0 = plists.get(i);
@@ -104,14 +102,7 @@ public class ProductRegisterController {
 				}
 			}
 			
-			
-			
-			
-			
-			
-			
-			
-			// À¥¼­¹ö Æú´õÀÇ »õ ÀÌ¹ÌÁö ¾÷·Îµå
+			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Îµï¿½
 			if(!destination.exists()) {
 				multi.transferTo(destination);
 			}
@@ -119,16 +110,16 @@ public class ProductRegisterController {
 				multi2.transferTo(destination2);
 			}
 
-			// À¥¼­¹ö Æú´õÀÇ ±âÁ¸ ÀÌ¹ÌÁö »èÁ¦
+			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			//destination2.delete();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
 
-		if(bresult.hasErrors()) { //À¯È¿¼º°Ë»ç
+		if(bresult.hasErrors()) { //ï¿½ï¿½È¿ï¿½ï¿½ï¿½Ë»ï¿½
 			return viewPage;
 		}
-		for(int i=0;i<plists.size();i++) { //ÀÌ¸§ Áßº¹ °Ë»ç
+		for(int i=0;i<plists.size();i++) { //ï¿½Ì¸ï¿½ ï¿½ßºï¿½ ï¿½Ë»ï¿½
 			ProductBean pb0 = plists.get(i);
 			if(pb0.getProduct_name().equals(pb.getProduct_name())) {
 				return viewPage;

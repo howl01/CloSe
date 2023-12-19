@@ -2,6 +2,7 @@ package member.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDate;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -42,25 +43,37 @@ public class LoginController {
 		
 		MemberBean memberBean = memberDao.getDetail(mb.getMember_id());
 		
+		LocalDate now = LocalDate.now();
+		
 		if(memberBean == null) {
-			out.println("<script>alert('°¡ÀÔÇÏÁö ¾ÊÀº È¸¿øÀÔ´Ï´Ù.')</script>");
+			out.println("<script>alert('ê°€ì…í•˜ì§€ ì•Šì€ íšŒì›ì…ë‹ˆë‹¤.')</script>");
 			out.flush();
 			mav.setViewName(viewPage);
 			return mav;
-		}else { //¾ÆÀÌµğ Á¸ÀçÇÔ
-			if(memberBean.getPassword().equals(mb.getPassword())) {	//ºñ¹øÀÌ ÀÏÄ¡ÇÔ
-				session.setAttribute("loginInfo", memberBean); //DB¿¡¼­ °¡Á®¿Â ·¹ÄÚµå¸¦ loginInfo·Î ¼³Á¤
-				out.println("<script>alert('·Î±×ÀÎ µÇ¾ú½À´Ï´Ù.')</script>");
-				out.flush();
-				mav.setViewName(gotoPage);
-				return mav;
-				
-			}else { //ºñ¹øÀÌ ÀÏÄ¡¾ÈÇÔ
-				out.println("<script>alert('ºñ¹øÀÌ Àß¸øµÇ¾ú½À´Ï´Ù.')</script>");
+		}else { //ì•„ì´ë”” ì¡´ì¬í•¨
+			if(memberBean.getPassword().equals(mb.getPassword())) {	//ë¹„ë²ˆì´ ì¼ì¹˜í•¨
+				if(memberBean.getBan_count() > 0 && memberBean.getBan_expiration() != null) {
+					LocalDate expirationDate = memberBean.getBan_expiration();
+					if(now.isBefore(expirationDate)) {
+						out.println("<script>alert('ê·œì¹™ ìœ„ë°˜ìœ¼ë¡œ ê³„ì • ì´ìš© ì •ì§€ ê¸°ê°„ì…ë‹ˆë‹¤.')</script>");
+						out.flush();
+						mav.setViewName(gotoPage);
+						return mav;
+					}else if(now.isAfter(expirationDate)) {
+						session.setAttribute("loginInfo", memberBean); //DBì—ì„œ ê°€ì ¸ì˜¨ ë ˆì½”ë“œë¥¼ loginInfoë¡œ ì„¤ì •
+						out.println("<script>alert('ë¡œê·¸ì¸ ë˜ì—ˆìŠµë‹ˆë‹¤.')</script>");
+						out.flush();
+						mav.setViewName(gotoPage);
+						return mav;
+					}
+				}
+			}else { //ë¹„ë²ˆì´ ì¼ì¹˜ì•ˆí•¨
+				out.println("<script>alert('ë¹„ë²ˆì´ ì˜ëª»ë˜ì—ˆìŠµë‹ˆë‹¤.')</script>");
 				out.flush();
 				mav.setViewName(viewPage);
 				return mav;
 			}
 		}
+		return mav;
 	}
 }
