@@ -55,15 +55,6 @@
 	    	kakaoLogout();
 	    }
 	}
-   
-   function search() {
-	    var overlay = document.getElementById('overlay');
-	    overlay.style.display = 'block';
-	}
-	function hideOverlay() {
-	    var overlay = document.getElementById('overlay');
-	    overlay.style.display = 'none';
-	}
 	
 	function goQna(){ //고객센터
 	    location.href = "list.qna";
@@ -277,12 +268,28 @@
             </li>
             
             <li>
-            	<c:if test="${not empty loginInfo or not empty kakaoLoginInfo}">
-				    <a href="javascript:goMyPage()" class="nav-link text-black"> 
-				        <img src="resources/icon/person.svg" class="bi d-block mx-auto mb-1" width="30" height="30"> 
-				        <font size="2">마이페이지</font>
-				    </a>
-				</c:if>
+               <c:if test="${not empty loginInfo or not empty kakaoLoginInfo}">
+                <a href="javascript:goMyPage()" class="nav-link text-black"> 
+                    <img src="resources/icon/person.svg" class="bi d-block mx-auto mb-1" width="30" height="30"> 
+                    <font size="2">마이페이지</font>
+                </a>
+            </c:if>
+            </li>
+            
+            <li>
+               <a href="javascript:goLogin()" class="nav-link text-black"> 
+                  <img src="resources/icon/cart.svg" class="bi d-block mx-auto mb-1" width="30" height="30" style="margin-top: 1px;"> 
+                  <font size="2">장바구니</font>
+               </a>
+            </li>
+            
+            <li>
+               <a href="javascript:search()" class="nav-link text-black"> 
+               <svg src xmlns="http://www.w3.org/2000/svg" class="bi d-block mx-auto mb-1" width="28" height="28" style="margin-top: 2.5px;" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                 <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+            </svg> 
+            <font size="2">검색</font>
+               </a>
             </li>
          </ul>
       </div>
@@ -293,7 +300,7 @@
     <div class="container d-flex flex-wrap" style="width:66%;">
       <ul class="nav me-auto">
       	<c:if test="${empty loginInfo and empty kakaoLoginInfo}">
-	        <li class="nav-item"><a href="javscript:void(0);" onclick="goLogin()" class="nav-link link-body-emphasis px-2">HOME</a></li>
+	        <li class="nav-item"><a href="javscript:goLogin()" onclick="goLogin()" class="nav-link link-body-emphasis px-2">HOME</a></li>
 	        <li class="nav-item"><a href="javscript:void(0);" onclick="goLogin()" class="nav-link link-body-emphasis px-2">오늘의 옷비서</a></li>
 	        <li class="nav-item"><a href="javscript:void(0)" onclick="goLogin()" class="nav-link link-body-emphasis px-2">STYLE</a></li>
 	        <li class="nav-item"><a href="javscript:void(0)" onclick="goLogin()" class="nav-link link-body-emphasis px-2">SHOP</a></li>

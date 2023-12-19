@@ -106,19 +106,18 @@
 
 <div class="body">
 
-<<<<<<< HEAD
    <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
       <div class="carousel-inner">
          <div class="carousel-item active">
-            <img src="//cdn-mart.baemin.com/inventory-unit/d3f87c07-c411-4c22-a17c-0db6cc9a5bed.jpg?w=1080"
+            <img src="resources/img/logo.png"
                class="d-block w-100" alt="...">
          </div>
          <div class="carousel-item">
-            <img src="https://cdn-mart.baemin.com/inventory-unit/92e7b4b2-897e-4498-9bd2-9f4f545c2928.jpg?w=1080"
+            <img src="resources/img/logo.png"
                class="d-block w-100" alt="...">
          </div>
          <div class="carousel-item">
-            <img src="https://cdn-mart.baemin.com/inventory-unit/04624c21-af52-4a3e-a7f7-5f7b920f41c4.jpg?w=1080"
+            <img src="resources/img/logo.png"
                class="d-block w-100" alt="...">
          </div>
       </div>
