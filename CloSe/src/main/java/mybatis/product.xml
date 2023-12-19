@@ -20,4 +20,20 @@
 		WHERE c.bigcategory_name = #{bigcategory_name} 
 		and p.s_stock>0 and p.M_STOCK>0 and p.L_STOCK>0 and p.XL_STOCK>0
 	</select> 
+	
+	<select id="findProductNames" resultType="String">
+        SELECT product_name
+        FROM product
+        WHERE product_name LIKE '%' || #{searchWord} || '%'
+        ORDER BY product_name
+        FETCH FIRST 10 ROWS ONLY
+    </select>
+    
+    <select id="findProductNames2" resultType="ProductBean">
+        SELECT *
+        FROM product
+        WHERE product_name LIKE '%' || #{searchWord2} || '%'
+        ORDER BY product_name
+        FETCH FIRST 10 ROWS ONLY
+    </select>
 </mapper>

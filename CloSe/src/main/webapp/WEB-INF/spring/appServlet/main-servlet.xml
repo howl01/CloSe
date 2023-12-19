@@ -15,14 +15,20 @@
 	</bean>
 
 	<context:component-scan base-package="main" />
+<<<<<<< HEAD
 	<context:component-scan base-package="close" />
 	<context:component-scan base-package="category" />
 	<context:component-scan base-package="report" />
 	<context:component-scan base-package="member" />
 	<context:component-scan base-package="orders" />
+=======
+>>>>>>> refs/remotes/origin/howl
 	<context:component-scan base-package="product" />
+<<<<<<< HEAD
 	<context:component-scan base-package="qna" />
 	<context:component-scan base-package="style" />
 	<context:component-scan base-package="cart" />
+=======
+>>>>>>> refs/remotes/origin/howl
 	
 </beans>

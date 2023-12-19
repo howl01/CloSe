@@ -29,7 +29,6 @@
       margin: auto;
       /* 가운데 정렬 */
    }
-
 </style>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script type="text/javascript">
@@ -107,6 +106,7 @@
 
 <div class="body">
 
+<<<<<<< HEAD
    <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
       <div class="carousel-inner">
          <div class="carousel-item active">
@@ -315,7 +315,6 @@
       </div>
       
    </div>
-</div>
 
 <div class="row">
    <div class="col-lg-2">
@@ -323,12 +322,13 @@
    		<button onclick="location.href='detail.product?product_number=1'">상품상세</button>
    </div>
 <div class="col-lg-8">
-<div class="album py-5 bg-body-tertiary">
+<div class="album py-5 bg-white">
     <div class="container">
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
       
       	<div class="col" align="center">
-         <a><img class="bd-placeholder-img card-img-top" style="width: 150px; height: 150px; border-radius: 50%;" id = "par" src = "resources/img/abc.jpeg" ></a>
+         <a><img class="bd-placeholder-img card-img-top" 
+         style="width: 150px; height: 150px; border-radius: 50%;" id = "par" src = "resources/img/abc.jpeg" ></a>
          오늘의 옷비서
           </div>
         
@@ -482,7 +482,7 @@
     </div>
     </div>
     
-       <div class="col-lg-2 mt-5 px-5">
+       <div class="col-lg-2 px-5">
             <div class="bs-component">
               <div class="card mb-3">
                 <h3 class="card-header">오늘의 날씨 정보</h3>

@@ -18,6 +18,4 @@ public class CategoryDao {
 		return lists;
 	}
 	
-
-	
 }
