@@ -31,7 +31,11 @@ window.onload = function () {
 
 
 function goCart() {
-    location.href = "cartAdd.cart?member_id='kim'";
+	if("${not empty loginInfo}"){
+		location.href = "cartAdd.cart?member_id='${loginInfo.member_id}'";
+	} else if("${not empty kakaoLoginInfo}"){
+		location.href = "cartAdd.cart?member_id='${kakaoLoginInfo.member_id}'";
+	}
 }
 
 function allCheck(all) { //전체체크박스를 눌렀을때
@@ -169,7 +173,13 @@ function pay() {
 					<h4>1.주문하는상품</h4>
 					<form method="post" action="order.orders" name="orderform">
 						<input type="hidden" name="orders_id" id="orders_id" value="">
-						<input type="hidden" name="member_id" value="kim">
+						
+						<c:if test="${not empty loginInfo }">
+							<input type="hidden" name="member_id" value="${loginInfo.member_id}">
+						</c:if>
+						<c:if test="${not empty kakaoLoginInfo }">
+							<input type="hidden" name="member_id" value="${kakaoLoginInfo.member_id}">
+						</c:if>
 						<input type="hidden" name="totalamount" id="totalAmount">
 			            <table class="table">
                            <thead>
@@ -189,7 +199,7 @@ function pay() {
                                                     src='<c:url value='/resources/product/image/'/>${cib.image }'
                                                     class="rounded" />
                                             </td>
-                                            <td>
+                                            <td> 
                                                 [${fn:substringBefore(cib.product_name,'/') }] <br>
                                             	${fn:substringAfter(cib.product_name,'/') } <br>
                                             	사이즈:${cib.product_size }

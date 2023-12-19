@@ -207,7 +207,7 @@ public class Paging_orderDetail {
       this.pageNumber = Integer.parseInt( _pageNumber ) ; 
 
       if( _pageSize == null || _pageSize.equals("null") || _pageSize.equals("") ){
-         _pageSize = "10" ; 
+         _pageSize = "2" ; 
       }      
       this.pageSize = Integer.parseInt( _pageSize ) ;
    

@@ -3,6 +3,7 @@ package cart.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,11 +38,13 @@ public class CartAddController {
 							@RequestParam(value="s_stock", required = false)String s_stock,
 							@RequestParam(value="m_stock", required = false)String m_stock,
 							@RequestParam(value="l_stock", required = false)String l_stock,
-							@RequestParam(value="xl_stock", required = false)String xl_stock) {
+							@RequestParam(value="xl_stock", required = false)String xl_stock,
+							HttpSession session) {
 		String[] size = {"S","M","L","XL"}; 
 		String[] size_stock = {s_stock,m_stock,l_stock,xl_stock};
 		CartBean cb = null;
 		List<CartBean> cartLists = null;
+		 
 		cartLists = cartDao.getAllCartByMember_Id(member_id); 
 		
 		for(int i=0;i<size.length;i++) {

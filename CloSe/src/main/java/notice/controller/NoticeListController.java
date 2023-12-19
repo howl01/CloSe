@@ -47,12 +47,10 @@ public class NoticeListController {
 		
 		List<NoticeBean> lists = noticeDao.getAllNotice(map, pageInfo);
 		
-		String member_id = "admin";
 		
 		model.addAttribute("lists", lists);
 		model.addAttribute("pageInfo", pageInfo);
 		model.addAttribute("number", number);
-		session.setAttribute("member_id", member_id);
 		return viewPage;
 	}
 	

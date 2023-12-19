@@ -109,42 +109,68 @@
 	function updateProduct(pnum){
 		location.href="update.product?product_number="+pnum;
 	}
+	
+	function addToCart(){
+		var formData = $("#buyForm").serialize();
 
+        $.ajax({
+            type: "POST", // or "GET" depending on your server-side implementation
+            url: "cartAdd.cart", // Specify the URL to your server-side endpoint
+            async : false,
+            data: formData,
+            success: function(response) {
+                var addToCart = confirm("상품을 장바구니에 추가했습니다. 장바구니로 이동하시겠습니까?");
+        	    
+        	    if (addToCart) {
+        	    	if("${not empty loginInfo}"){
+        				alert("카카오${kakaoLoginInfo.member_id}")
+        				alert('${loginInfo.member_id}');
+        				location.href = "cartAdd.cart?member_id=${loginInfo.member_id}";
+        			} else if("${not empty kakaoLoginInfo}"){
+        				location.href = "cartAdd.cart?member_id=${kakaoLoginInfo.member_id}";
+        			}
+        	    } else{
+        	    	return;
+        	    }
+            }
+        });
+	}
 	
 	$(document).ready(function() {
 		$('#insertBasket').click(function () {
 			alert("장바구니버튼");
+			 
+			if(${empty loginInfo or empty kakaoLoginInfo}){
+				   alert("로그인이 필요한 서비스입니다.");
+				   location.href = "login.member";
+			}
+
 			if ($('.quantity-selection').length === 0) {
 	            alert("사이즈를 선택해주세요.");
 	            return;
 	        }
-			var formData = $("#buyForm").serialize();
-
-	        $.ajax({
-	            type: "POST", // or "GET" depending on your server-side implementation
-	            url: "cartAdd.cart", // Specify the URL to your server-side endpoint
-	            async : false,
-	            data: formData,
-	            success: function(response) {
-	                var addToCart = confirm("상품을 장바구니에 추가했습니다. 장바구니로 이동하시겠습니까?");
-	        	    
-	        	    if (addToCart) {
-	        	        location.href="cartAdd.cart?member_id='kim'";
-	        	    } else{
-	        	    	return;
-	        	    }
-	            }
-	        });
+			addToCart();
 		});
 		
 		
 		$('#goodsOrder').click(function () { 
 			alert("구매하기버튼");
+			
+			if("${empty loginInfo or empty kakaoLoginInfo}"){
+				   alert("로그인이 필요한 서비스입니다.");
+				   location.href = "login.member";
+			}
+			
 		  	if ($('.quantity-selection').length === 0) {
             	alert("사이즈를 선택해주세요.");
            	 	return;
         	}
-		  	$("#buyForm").attr("action", "details2.orders");
+		  	if("${not empty loginInfo}"){
+		  		$("#buyForm").attr("action", "details2.orders?member_id='${loginInfo.member_id}'");
+		  	} else if("${not empty kakaoLoginInfo}"){
+		  		$("#buyForm").attr("action", "details2.orders?member_id='${kakaoLoginInfo.member_id}'");
+			}
+		  	
 		  	$("#buyForm").submit();
 		});
 		

@@ -40,12 +40,13 @@ public class OrdersDetailController {
 	@Autowired
 	ProductDao productDao;
 	
-	@RequestMapping(value=command)
+	@RequestMapping(value=command) //선택구매
 	public String ordersDetailForm(@RequestParam(value="cnum",required = false)String cnum,
 									@RequestParam(value="cnums",required = false)String[] cnums,
+									@RequestParam(value="member_id")String member_id,
 									Model model,HttpSession session) {
-		
-		MemberBean mb = memberDao.getMember("kim");
+		System.out.println(member_id);
+		MemberBean mb = memberDao.getMember(member_id);
 		model.addAttribute("mb", mb);
 		
 		if(cnums!=null) {
@@ -57,12 +58,13 @@ public class OrdersDetailController {
 			List<CartInfoBean> clists = new ArrayList<CartInfoBean>();
 			clists.add(cib);
 			model.addAttribute("clists", clists);
+			System.out.println("clists다"+clists);
 		}
-		session.removeAttribute("clists");
+		session.removeAttribute("clists"); 
 		return viewPage;
 	}
 	
-	@RequestMapping(value=command2)
+	@RequestMapping(value=command2) //바로구매
 	public String orderDetailForm(@RequestParam("product_number")String product_number,
 								@RequestParam("member_id")String member_id,
 								@RequestParam(value="s_stock", required = false)String s_stock,
@@ -70,7 +72,7 @@ public class OrdersDetailController {
 								@RequestParam(value="l_stock", required = false)String l_stock,
 								@RequestParam(value="xl_stock", required = false)String xl_stock,
 								Model model, HttpSession session) {
-		MemberBean mb = memberDao.getMember("kim");
+		MemberBean mb = memberDao.getMember(member_id);
 		model.addAttribute("mb", mb);
 		
 		

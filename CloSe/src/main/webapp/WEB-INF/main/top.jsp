@@ -20,6 +20,20 @@
    function goKakaoLogin() {
       location.href = "kakaologin.member";
    }
+   function goCart() {
+	   if("${empty loginInfo and empty kakaoLoginInfo}"){
+		   alert("로그인이 필요한 서비스입니다.");
+		   goLogin();
+	   }
+	   if("${not empty loginInfo}"){
+		   alert("카카오${kakaoLoginInfo.member_id}")
+		   alert('${loginInfo.member_id}');
+		   location.href = "cartAdd.cart?member_id='${loginInfo.member_id}'";
+	   } else if("${not empty kakaoLoginInfo}"){
+		   location.href = "cartAdd.cart?member_id='${kakaoLoginInfo.member_id}'";
+	   }
+	   
+	}
    
    Kakao.init('2cdf0145ab332ff37556bbc8268b13a1');
    function kakaoLogout() {
@@ -278,14 +292,14 @@
             
             <li>
             	<c:if test="${empty loginInfo and empty kakaoLoginInfo}">
-	               <a href="javascript:goLogin()" class="nav-link text-black"> 
+	               <a href="javascript:goCart()" class="nav-link text-black"> 
 	                  <img src="resources/icon/cart.svg" class="bi d-block mx-auto mb-1" width="30" height="30" style="margin-top: 1px;"> 
 	                  <font size="2">장바구니</font>
 	               </a>
                 </c:if>
                 
                 <c:if test="${not empty loginInfo or not empty kakaoLoginInfo}">
-	               <a href="javascript:goLogin()" class="nav-link text-black"> 
+	               <a href="javascript:goCart()" class="nav-link text-black"> 
 	                  <img src="resources/icon/cart.svg" class="bi d-block mx-auto mb-1" width="30" height="30" style="margin-top: 1px;"> 
 	                  <font size="2">장바구니</font>
 	               </a>

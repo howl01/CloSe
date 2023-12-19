@@ -14,6 +14,7 @@
 		<typeAlias type="notice.model.NoticeBean" alias="NoticeBean"/>
 		<typeAlias type="orders.model.OrdersBean" alias="OrdersBean"/>
 		<typeAlias type="cart.model.CartBean" alias="CartBean"/>
+		<typeAlias type="orderdetail.model.OrderDetailBean" alias="OrderDetailBean"/>
 	</typeAliases>
 	
 	<mappers>
@@ -26,6 +27,7 @@
 		<mapper resource="mybatis/notice.xml"/>
 		<mapper resource="mybatis/orders.xml"/>
 		<mapper resource="mybatis/cart.xml"/>
+		<mapper resource="mybatis/orderdetail.xml"/>
 	</mappers>
 </configuration>
 <!-- SqlMapConfig.xml -->
