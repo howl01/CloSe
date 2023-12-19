@@ -52,11 +52,11 @@ $.getJSON("http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcs
 		</td>
 	</tr>
 	<tr>
-		<td>현재온도 : ${ TMNValue }</td>
+	
+		<td>최고 온도 : ${ TMXValue }</td>
 	</tr>
 	<tr>
-	
-		<td>체감 온도 : ${ TMXValue }</td>
+		<td>최저 온도 : ${ TMNValue }</td>
 	</tr>
 </table>
 
