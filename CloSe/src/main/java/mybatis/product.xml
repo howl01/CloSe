@@ -8,7 +8,7 @@
         FROM product
         WHERE product_name LIKE '%' || #{searchWord} || '%'
         ORDER BY product_name
-        FETCH FIRST 10 ROWS ONLY
+        FETCH FIRST 5 ROWS ONLY
     </select>
     
     <select id="findProductNames2" resultType="ProductBean">
@@ -16,6 +16,6 @@
         FROM product
         WHERE product_name LIKE '%' || #{searchWord2} || '%'
         ORDER BY product_name
-        FETCH FIRST 10 ROWS ONLY
+        FETCH FIRST 5 ROWS ONLY
     </select>
 </mapper>

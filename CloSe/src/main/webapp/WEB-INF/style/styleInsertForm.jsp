@@ -162,7 +162,7 @@ $(document).ready(function () {
                         var contextPath = '<%= request.getContextPath() %>';
                         $.each(jsonArray, function (index, item) {
                         	html += '<li class="list-group-item d-flex justify-content-between align-items-start">';
-              			   	html += '<div><img id="displayList2_img" src="' + contextPath + item.image + '"></div>';
+              			   	html += '<div><img id="displayList2_img" src="' + contextPath +"/resources/productImage/"+ item.image + '"></div>';
               			    html += '<div class="ms-2 me-auto my-auto">';
               			    html += '<div class="fw-bold">'+item.product_name+'</div>₩ '+item.price+'</div>';
               			    html += '<span class="badge bg-black rounded-pill my-auto">'+item.smallcategory_name+'</span></li>';
