@@ -49,10 +49,10 @@ public class StyleInsertController {
 
 		String path = servletContext.getRealPath("/resources/styleImage");
 		
-		// Æú´õ°¡ ¾øÀ¸¸é »ý¼º
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	    File directory = new File(path);
 	    if (!directory.exists()) {
-	        directory.mkdirs(); // µð·ºÅä¸® »ý¼º
+	        directory.mkdirs(); // ï¿½ï¿½ï¿½ä¸® ï¿½ï¿½ï¿½ï¿½
 	    }
 		
 		List<MultipartFile> images = styleBean.getImages();

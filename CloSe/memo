@@ -43,7 +43,9 @@ CREATE TABLE member (
    nickname   varchar2(30)   NOT NULL,
    height   number   NULL,
    weight   number   NULL,
-   social varchar2(20)
+   social varchar2(20),
+   ban_count number default 0,
+   ban_expiration date
 );
 
 CREATE TABLE category (
