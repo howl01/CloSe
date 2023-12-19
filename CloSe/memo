@@ -20,6 +20,15 @@ DROP SEQUENCE report_seq;
 DROP SEQUENCE qna_seq;
 DROP SEQUENCE notice_seq;
 
+create SEQUENCE category_seq;
+create SEQUENCE product_seq;
+create SEQUENCE style_seq;
+create SEQUENCE orders_seq;
+create SEQUENCE orderdetail_seq;
+create SEQUENCE cart_seq;
+create SEQUENCE report_seq;
+create SEQUENCE qna_seq;
+create SEQUENCE notice_seq;
 
 CREATE TABLE member (
    member_id   varchar2(30)   PRIMARY KEY,
