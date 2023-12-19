@@ -77,4 +77,14 @@ public class MemberDao {
 		return memberBean;
 	}
 
+	public int updateMemberBan(MemberBean memberBean) {
+		int cnt = -1;
+		try {
+			cnt = sqlSessionTemplate.update(namespace + ".updateMemberBan", memberBean);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return cnt;
+	}
+
 }

@@ -44,9 +44,9 @@ public class AdminLimit {
 		int cnt = memberDao.updateMemberBan(memberBean);
 		
 		if(cnt == -1) {
-			System.out.println("update memberBan ì‹¤íŒ¨" );
+			System.out.println("update memberBan ½ÇÆÐ" );
 		}else {
-			System.out.println("update memberBan ì„±ê³µ" );
+			System.out.println("update memberBan ¼º°ø" );
 		}
 		
 		return gotoPage;

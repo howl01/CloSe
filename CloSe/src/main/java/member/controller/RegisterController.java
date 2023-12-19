@@ -20,7 +20,6 @@ import member.model.MemberDao;
 
 @Controller
 public class RegisterController {
-<<<<<<< HEAD
 
 	private final String command = "/register.member";
 	private final String viewPage = "registerForm";
@@ -36,45 +35,22 @@ public class RegisterController {
 	}
 
 	@RequestMapping(value = command, method = RequestMethod.POST)
-	public String registerPost(@Valid MemberBean mb, BindingResult bresult, HttpServletResponse response, HttpServletRequest request, Model model) throws IOException{
-		
+	public String registerPost(@Valid MemberBean mb, BindingResult bresult, HttpServletResponse response,
+			HttpServletRequest request, Model model) throws IOException {
+
 		PrintWriter out;
 		out = response.getWriter();
 		response.setContentType("text/html; charset=UTF-8");
-		
-		if(bresult.hasErrors()) {
+
+		if (bresult.hasErrors()) {
 			return viewPage;
 		}
 
 		memberDao.memberRegister(mb);
-		out.println("<script>alert('회원가입 되었습니다.'); location.href='" + request.getContextPath() + "/login.member';</script>");
+		out.println("<script>alert('회원가입 되었습니다.'); location.href='" + request.getContextPath()
+				+ "/login.member';</script>");
 		out.flush();
 
 		return null;
 	}
-=======
-   
-   private final String command = "/register.member";
-   private final String viewPage = "register";
-   private final String gotoPage = "main";
-   
-   @Autowired
-   CategoryDao categoryDao;
-   
-   @RequestMapping(value = command, method = RequestMethod.GET)
-   public String registerGet() {
-      
-      return viewPage;
-   }
-   
-   @RequestMapping(value = command, method = RequestMethod.POST)
-   public String registerPost(@Valid MemberBean mb, BindingResult bresult) {
-      
-      if(bresult.hasErrors()) {
-         return viewPage;
-      }
-      
-      return gotoPage;
-   }
->>>>>>> refs/remotes/origin/wook
 }

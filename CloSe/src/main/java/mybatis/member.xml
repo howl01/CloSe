@@ -49,4 +49,9 @@
 		select * from member
 		where member_id = #{member_id}
 	</select>
+	
+	<update id="updateMemberBan">
+		update member set ban_count = #{ban_count}, ban_expiration = #{ban_expiration}
+		where member_id = #{member_id}
+	</update>
 </mapper>
