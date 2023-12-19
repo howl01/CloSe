@@ -3,6 +3,7 @@ package cart.model;
 public class CartBean {
 	private int cart_number;
 	private int product_number;
+	private String product_size;
 	private int qty;
 	private String member_id;
 	
@@ -27,6 +28,12 @@ public class CartBean {
 	}
 	public void setProduct_number(int product_number) {
 		this.product_number = product_number;
+	}
+	public String getProduct_size() {
+		return product_size;
+	}
+	public void setProduct_size(String product_size) {
+		this.product_size = product_size;
 	}
 	public int getQty() {
 		return qty;

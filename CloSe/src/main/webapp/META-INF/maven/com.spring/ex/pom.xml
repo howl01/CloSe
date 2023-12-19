@@ -175,6 +175,12 @@
 			<scope>runtime</scope>
 		</dependency>
 		
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.0</version>
+		</dependency>
+		
 		<!-- 유효성검사 -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -205,7 +211,6 @@
 		    <artifactId>javax.mail</artifactId>
 		    <version>1.6.2</version>
 		</dependency>
-
 		    
 	</dependencies>
 		      

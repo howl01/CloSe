@@ -4,6 +4,10 @@
    pageEncoding="UTF-8"%>
 <%@ include file="../common/common.jsp" %>
 
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%> 
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <script src="resources/js/bootstrap.bundle.min.js"></script>
 <script src="resources/js/jquery.js"></script>
 <link href="resources/css/bootstrap.min.css" rel="stylesheet">

@@ -3,5 +3,21 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
 <mapper namespace = "product.ProductBean">
-
+	<select id="getAllProduct" resultType="ProductBean">
+		select * from product
+	</select>
+	<insert id="insertProduct">
+		insert into product values
+		(product_seq.nextval,#{product_name},#{image},#{price},#{content},#{temperature},#{s_stock},#{m_stock},#{l_stock},#{xl_stock},#{smallcategory_name})
+	</insert>
+	<select id="getOneProduct" resultType="ProductBean">
+		select * from product where product_number = #{product_number}
+	</select>
+	
+	<select id="getProductByBigcategory" resultType="ProductBean">
+		SELECT * FROM product p 
+		INNER JOIN category c ON p.smallcategory_name = c.smallcategory_name
+		WHERE c.bigcategory_name = #{bigcategory_name} 
+		and p.s_stock>0 and p.M_STOCK>0 and p.L_STOCK>0 and p.XL_STOCK>0
+	</select> 
 </mapper>

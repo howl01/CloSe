@@ -139,6 +139,4 @@ CREATE TABLE orders (
 	FOREIGN KEY (cart_number) REFERENCES cart(cart_number)
 );
 
-
-
 CREATE SEQUENCE order_seq;
