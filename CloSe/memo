@@ -1,35 +1,52 @@
--- ���� ���̺� ���
-DROP TABLE cart cascade constraints;
-DROP TABLE orders cascade constraints;
-DROP TABLE qna cascade constraints;
-DROP TABLE style cascade constraints;
+DROP TABLE member cascade constraints;
 DROP TABLE category cascade constraints;
 DROP TABLE product cascade constraints;
-drop table member cascade constraints;
--- ������ ���
-DROP SEQUENCE member_seq;
+DROP TABLE style cascade constraints;
+DROP TABLE orders cascade constraints;
+DROP TABLE orderdetail cascade constraints;
+DROP TABLE cart cascade constraints;
+DROP TABLE report cascade constraints;
+DROP TABLE qna cascade constraints;
+DROP TABLE notice cascade constraints;
+
+
+DROP SEQUENCE category_seq;
 DROP SEQUENCE product_seq;
 DROP SEQUENCE style_seq;
-DROP SEQUENCE qna_seq;
-DROP SEQUENCE order_seq;
+DROP SEQUENCE orders_seq;
+DROP SEQUENCE orderdetail_seq;
 DROP SEQUENCE cart_seq;
+DROP SEQUENCE report_seq;
+DROP SEQUENCE qna_seq;
+DROP SEQUENCE notice_seq;
+
+create SEQUENCE category_seq;
+create SEQUENCE product_seq;
+create SEQUENCE style_seq;
+create SEQUENCE orders_seq;
+create SEQUENCE orderdetail_seq;
+create SEQUENCE cart_seq;
+create SEQUENCE report_seq;
+create SEQUENCE qna_seq;
+create SEQUENCE notice_seq;
 
 CREATE TABLE member (
-	member_id	varchar2(30)	PRIMARY KEY,
-	password	varchar2(20)	NOT NULL,
-	name	varchar2(10)	NOT NULL,
-	phone	varchar2(20)	NOT NULL,
-	email	varchar2(20)	NOT NULL,
-	address1	varchar2(100)	NOT NULL,
-	address2	varchar2(100)	NOT NULL,
-	birth	Date,
-	gender	varchar2(10),
-	nickname	varchar2(30)	NOT NULL,
-	height	number	NULL,
-	weight	number	NULL
+   member_id   varchar2(30)   PRIMARY KEY,
+   password   varchar2(20)   NOT NULL,
+   name   varchar2(10)   NOT NULL,
+   phone   varchar2(20)   NOT NULL,
+   email   varchar2(20)   NOT NULL,
+   address1   varchar2(100)   NOT NULL,
+   address2   varchar2(100)   NOT NULL,
+   birth   Date,
+   gender   varchar2(10),
+   nickname   varchar2(30)   NOT NULL,
+   height   number   NULL,
+   weight   number   NULL,
+   social varchar2(20),
+   ban_count number default 0,
+   ban_expiration date
 );
-
-CREATE SEQUENCE member_seq;
 
 CREATE TABLE category (
 	smallcategory_name	varchar2(20)	PRIMARY KEY,
@@ -37,82 +54,197 @@ CREATE TABLE category (
 );
 
 CREATE TABLE product (
-	product_number	number	PRIMARY KEY,
-	product_name	varchar2(30)	NOT NULL,
-	image	varchar2(30)	NULL,
-	price	number	NOT NULL,
-	content	varchar2(30)	NOT NULL,
-	temperature	number	NOT NULL,
-	product_size	varchar2(10)	NOT NULL,
-	stock	number	NOT NULL,
-	smallcategory_name varchar2(20) NOT NULL,
-	FOREIGN KEY (smallcategory_name) REFERENCES category(smallcategory_name)
+    product_number  number  PRIMARY KEY,
+    product_name    varchar2(30)    NOT NULL,
+    image   varchar2(30)    NULL,
+    price   number  NOT NULL,
+    content varchar2(30)    NOT NULL,
+    temperature number  NOT NULL,
+    s_stock   number  NOT NULL,
+    m_stock   number  NOT NULL,
+    l_stock   number  NOT NULL,
+    xl_stock   number  NOT NULL,
+    smallcategory_name varchar2(20) NOT NULL,
+    FOREIGN KEY (smallcategory_name) REFERENCES category(smallcategory_name)
 );
 
-CREATE SEQUENCE product_seq;
-
 CREATE TABLE style (
-	style_number	number	PRIMARY KEY,
-	image1	varchar2(50),
-    image2	varchar2(50),
-    image3	varchar2(50),
-    image4	varchar2(50),
-    image5	varchar2(50),
-	title	varchar2(100)	NOT NULL,
-	content	varchar2(4000)	NOT NULL,
-	read_count	number,
-	recommend_count	number,
-	write_date	Date,
-	product_number1	number,
-    product_number2	number,
-    product_number3	number,
-    product_number4	number,
-	member_id	varchar2(15)	NOT NULL,
-	FOREIGN KEY (product_number1) REFERENCES product(product_number),
-    FOREIGN KEY (product_number2) REFERENCES product(product_number),
-    FOREIGN KEY (product_number3) REFERENCES product(product_number),
-    FOREIGN KEY (product_number4) REFERENCES product(product_number),
+   style_number   number   PRIMARY KEY,
+   image1   varchar2(50) not null,
+  image2   varchar2(50),
+  image3   varchar2(50),
+  image4   varchar2(50),
+  image5   varchar2(50),
+   title   varchar2(100),
+   content   varchar2(4000)   NOT NULL,
+  style varchar2(200) not null,
+   read_count   number,
+   recommend_count   number,
+   write_date   Date,
+   product_number1   number,
+  product_number2   number,
+  product_number3   number,
+  product_number4   number,
+   member_id   varchar2(15)   NOT NULL,
+   FOREIGN KEY (product_number1) REFERENCES product(product_number),
+  FOREIGN KEY (product_number2) REFERENCES product(product_number),
+  FOREIGN KEY (product_number3) REFERENCES product(product_number),
+  FOREIGN KEY (product_number4) REFERENCES product(product_number),
+  FOREIGN KEY (member_id) REFERENCES member(member_id)
+);
+
+CREATE TABLE orders (
+    orders_number   number  primary key,
+    orders_id varchar2(50) NOT NULL,
+    orders_date Date NOT NULL,
+    receiver varchar2(15) NOT NULL,
+    receiver_phone varchar2(15) NOT NULL,
+    address varchar2(150) NOT NULL,
+    member_id   varchar2(15) NOT NULL,
+    d_message varchar2(100) NULL,
+    totalamount NUMBER NOT NULL,
+    status varchar2(20),
     FOREIGN KEY (member_id) REFERENCES member(member_id)
 );
 
-CREATE SEQUENCE style_seq;
-
-CREATE TABLE qna (
-	qna_number	number	primary key,
-	image	varchar2(30)	NULL,
-	title	varchar2(50)	NOT NULL,
-	content	varchar2(4000)	NOT NULL,
-	read_count	number,
-	recommend_count	number,
-	write_date	Date,
-	ref	number,
-	re_step	number,
-	re_level	number,
-	ip	varchar2(20),
-	FOREIGN KEY (member_id) REFERENCES member(member_id) not null
+create table orderdetail (
+    orderdetail_number number primary key,
+    product_number  number NOT NULL,
+    orders_id varchar2(50) NOT NULL,
+    product_size varchar2(10) Not NULL,
+    qty number NOT NULL,
+    FOREIGN KEY (product_number) REFERENCES product(product_number)
 );
-
-CREATE SEQUENCE qna_seq;
-
-CREATE TABLE orders (
-	orders_number	number	primary key,
-	orders_date	Date	NULL,
-	amount	number	NULL,
-	qty	number	NULL,
-	product_number	number	NOT NULL,
-	member_id	varchar2(15)	NOT NULL,
-	cart_number	number	NOT NULL
-);
-
-CREATE SEQUENCE order_seq;
 
 CREATE TABLE cart (
-	cart_number	number	primary key,
-	product_number	number	NOT NULL,
-	qty	number	NOT NULL,
-	member_id	varchar2(15)	NOT NULL,
-    	FOREIGN KEY (product_number) REFERENCES product(product_number),
-    	FOREIGN KEY (member_id) REFERENCES member(member_id)
+    cart_number number  primary key,
+    product_number  number  NOT NULL,
+    product_size varchar2(10) Not NULL,
+    qty number  NOT NULL,
+    member_id   varchar2(15)    NOT NULL,
+        FOREIGN KEY (product_number) REFERENCES product(product_number),
+        FOREIGN KEY (member_id) REFERENCES member(member_id)
 );
 
-CREATE SEQUENCE cart_seq;
+CREATE TABLE report (
+    report_number number PRIMARY KEY,
+    report_category varchar2(30),
+    content varchar2(4000),
+    image varchar2(50),
+    reporter_id varchar2(15),
+    reported_user_id varchar2(15),
+    style_number number,
+    write_date date,
+    FOREIGN KEY (reporter_id) REFERENCES member(member_id),
+    FOREIGN KEY (reported_user_id) REFERENCES member(member_id),
+    FOREIGN KEY (style_number) REFERENCES style(style_number)
+);
+
+CREATE TABLE qna (
+   qna_number   number   primary key,
+   image   varchar2(30) default null,
+   title   varchar2(50)   NOT NULL,
+   content   varchar2(4000)   NOT NULL,
+   write_date   Date,
+   secret varchar2(10) default 'NO',
+   ref   number,
+   re_level   number,
+   answer number default 0,
+   qna_category varchar2(20),
+     member_id varchar2(15),
+   FOREIGN KEY (member_id) REFERENCES member(member_id)
+);
+
+CREATE TABLE notice (
+   notice_number number primary key,
+   image varchar2(30),
+   title   varchar2(50)   NOT NULL,
+   content   varchar2(4000)   NOT NULL,
+   write_date   Date
+);
+
+select * from member;
+select * from category;
+select * from product;
+select * from style;
+select * from orders;
+select * from orderdetail;
+select * from cart;
+select * from report;
+select * from qna;
+select * from notice;
+
+insert into category values
+('긴소매 티셔츠','상의');
+insert into category values
+('반소매 티셔츠','상의');
+insert into category values
+('맨투맨','상의');
+insert into category values
+('니트','상의');
+insert into category values
+('셔츠','상의');
+insert into category values
+('후드 티셔츠','상의');
+insert into category values
+('스포츠','상의');
+insert into category values
+('민소매 티셔츠','상의');
+
+
+insert into category values
+('슬랙스','하의');
+insert into category values
+('데님','하의');
+insert into category values
+('코튼','하의');
+insert into category values
+('숏','하의');
+insert into category values
+('레깅스','하의');
+insert into category values
+('트레이닝','하의');
+insert into category values
+('미니스커트','하의');
+insert into category values
+('롱스커트','하의');
+insert into category values
+('미디스커트','하의');
+
+insert into category values
+('재킷','아우터');
+insert into category values
+('코트','아우터');
+insert into category values
+('숏패딩','아우터');
+insert into category values
+('롱패딩','아우터');
+
+insert into product values
+(product_seq.nextval,'스파오/니트1','니트1.jpg',29000,'니트c1.jpg','5',100,100,100,100,'니트');
+insert into product values
+(product_seq.nextval,'나이키/니트2','니트2.jpg',39000,'니트c2.jpg','5',100,100,100,100,'니트');
+insert into product values
+(product_seq.nextval,'나이키/데님1','데님1.jpg',59000,'데님c1.jpg','5',100,100,100,100,'데님');
+insert into product values
+(product_seq.nextval,'노스페이스/롱패딩1','롱패딩1.jpg',199000,'롱패딩c1.jpg','0',100,100,100,100,'롱패딩');
+insert into product values
+(product_seq.nextval,'아이앱/맨투맨1','맨투맨1.jpg',30000,'맨투맨c1.jpg','10',100,100,100,100,'맨투맨');
+insert into product values
+(product_seq.nextval,'아디다스/반소매티1','반소매티1.jpg',4900,'반소매티c1.jpg','10',100,100,100,100,'반소매 티셔츠');
+insert into product values
+(product_seq.nextval,'아디다스/숏패딩1','숏패딩1.jpg',99000,'숏패딩c1.jpg','0',100,100,100,100,'숏패딩');
+insert into product values
+(product_seq.nextval,'슈프림/슬랙스1','슬랙스1.jpg',49000,'슬랙스c1.jpg','15',100,100,100,100,'슬랙스');
+insert into product values
+(product_seq.nextval,'슈프림/재킷1','재킷1.jpg',249000,'재킷c1.jpg','10',100,100,100,100,'재킷');
+insert into product values
+(product_seq.nextval,'슈프림/코트1','코트1.jpg',249000,'코트c1.jpg','10',100,100,100,100,'코트');
+insert into product values
+(product_seq.nextval,'반스/트레이닝바지1','트레이닝바지1.jpg',24000,'트레이닝바지c1.jpg','15',100,100,100,100,'트레이닝');
+insert into product values
+(product_seq.nextval,'반스/후드티1','후드티1.jpg',49000,'후드티c1.jpg','15',100,100,100,100,'후드 티셔츠');
+insert into product values
+(product_seq.nextval,'반스/롱스커트1','롱스커트1.jpg',79000,'롱스커트c1.jpg','10',100,100,100,100,'롱스커트');
+
+commit;

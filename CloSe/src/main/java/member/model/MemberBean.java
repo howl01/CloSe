@@ -1,158 +1,211 @@
 package member.model;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.time.LocalDate;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
 public class MemberBean {
-	@NotEmpty(message = "¾ÆÀÌµğ¸¦ ÀÔ·ÂÇÏ¼¼¿ä")
-	@Size(max = 10, message = "10±ÛÀÚÀÌÇÏ·Î ÀÔ·ÂÇÏ¼¼¿ä")
+	@NotEmpty(message = "ì•„ì´ë””ë¥¼ ì…ë ¥í•˜ì„¸ìš”")
+	@Size(max = 10, message = "10ê¸€ìì´í•˜ë¡œ ì…ë ¥í•˜ì„¸ìš”")
 	private String member_id;
 	
-	@NotEmpty(message = "ºñ¹Ğ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä")
+	@NotEmpty(message = "ë¹„ë°€ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”")
 	private String password;
 	
 	private String passwordcheck;
 	 
-	@NotEmpty(message = "ÀÌ¸§À» ÀÔ·ÂÇÏ¼¼¿ä")
-	@Size(max = 3, message = "3±ÛÀÚÀÌÇÏ·Î ÀÔ·ÂÇÏ¼¼¿ä")
+	@NotEmpty(message = "ì´ë¦„ì„ ì…ë ¥í•˜ì„¸ìš”")
+	@Size(max = 3, message = "3ê¸€ìì´í•˜ë¡œ ì…ë ¥í•˜ì„¸ìš”")
 	private String name;
 	
-	@NotEmpty(message = "ÀüÈ­¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä")
+	@NotEmpty(message = "ì „í™”ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”")
+	@Pattern(regexp = "^[0-9]+$", message = "ìˆ«ìë§Œ ì…ë ¥ê°€ëŠ¥")
 	private String phone;
 	
-	@NotEmpty(message = "ÀÌ¸ŞÀÏÀ» ÀÔ·ÂÇÏ¼¼¿ä")
+	@NotEmpty(message = "ì´ë©”ì¼ì„ ì…ë ¥í•˜ì„¸ìš”")
 	private String email;
 	
-	@NotEmpty(message = "ÁÖ¼Ò¸¦ ÀÔ·ÂÇÏ¼¼¿ä")
+	@NotEmpty(message = "ì£¼ì†Œë¥¼ ì…ë ¥í•˜ì„¸ìš”")
 	private String address1;
 	
-	@NotEmpty(message = "»ó¼¼ÁÖ¼Ò¸¦ ÀÔ·ÂÇÏ¼¼¿ä")
+	@NotEmpty(message = "ìƒì„¸ì£¼ì†Œë¥¼ ì…ë ¥í•˜ì„¸ìš”")
 	private String address2;
 	
-	@NotEmpty(message = "»ı³â¿ùÀÏÀ» ÀÔ·ÂÇÏ¼¼¿ä")
+	@NotEmpty(message = "ìƒë…„ì›”ì¼ì„ ì…ë ¥í•˜ì„¸ìš”")
 	private String birth;
 	
-	@NotNull(message = "¼ºº°À» ¼±ÅÃÇÏ¼¼¿ä")
+	@NotNull(message = "ì„±ë³„ì„ ì„ íƒí•˜ì„¸ìš”")
 	private String gender;
 	
-	@NotEmpty(message = "´Ğ³×ÀÓÀ» ÀÔ·ÂÇÏ¼¼¿ä")
-	@Size(max = 6, message = "6±ÛÀÚÀÌÇÏ·Î ÀÔ·ÂÇÏ¼¼¿ä")
+	@NotEmpty(message = "ë‹‰ë„¤ì„ì„ ì…ë ¥í•˜ì„¸ìš”")
+	@Size(max = 6, message = "6ê¸€ìì´í•˜ë¡œ ì…ë ¥í•˜ì„¸ìš”")
 	private String nickname;
 	
-	@NotNull(message = "ÀÎÁõ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä")
+	@NotNull(message = "ì¸ì¦ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”")
+	@Size(min = 4, message = "ì¸ì¦ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”")
 	private String verificationCode;
-	private int height;
-	private int weight;
 	
+	@NotEmpty(message = "í‚¤ ì…ë ¥")
+	@Pattern(regexp = "^[0-9]+$", message = "ìˆ«ìë§Œ ì…ë ¥ê°€ëŠ¥")
+	private String height;
+	
+	@NotEmpty(message = "ëª¸ë¬´ê²Œ ì…ë ¥")
+	@Pattern(regexp = "^[0-9]+$", message = "ìˆ«ìë§Œ ì…ë ¥ê°€ëŠ¥")
+	private String weight;
+	
+	private String social;
+
+	private int ban_count;
+	private LocalDate ban_expiration;
+
 	public MemberBean() {
 		super();
 	}
-	public MemberBean(String member_id, String password, String name, String phone, String email,
-			String address1, String address2, String birth, String gender, String nickname, int height, int weight) {
-		super();
-		this.member_id = member_id;
-		this.password = password;
-		this.name = name;
-		this.phone = phone;
-		this.email = email;
-		this.address1 = address1;
-		this.address2 = address2;
-		this.birth = birth;
-		this.gender = gender;
-		this.nickname = nickname;
-		this.height = height;
-		this.weight = weight;
+
+	public MemberBean(String member_id, String password, String name, String phone, String email, String address1,
+			String address2, String birth, String gender, String nickname, String height, String weight,
+			String social) {
 	}
-	
-	
-	
+
+	public String getSocial() {
+		return social;
+	}
+
+	public void setSocial(String social) {
+		this.social = social;
+	}
+
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 	public String getPasswordcheck() {
 		return passwordcheck;
 	}
+
 	public void setPasswordcheck(String passwordcheck) {
 		this.passwordcheck = passwordcheck;
 	}
+
 	public String getVerificationCode() {
 		return verificationCode;
 	}
+
 	public void setVerificationCode(String verificationCode) {
 		this.verificationCode = verificationCode;
+		this.ban_count = ban_count;
+		this.ban_expiration = ban_expiration;
 	}
+
+	public int getBan_count() {
+		return ban_count;
+	}
+
+	public void setBan_count(int ban_count) {
+		this.ban_count = ban_count;
+	}
+
+	public LocalDate getBan_expiration() {
+		return ban_expiration;
+	}
+
+	public void setBan_expiration(LocalDate ban_expiration) {
+		this.ban_expiration = ban_expiration;
+	}
+
 	public String getMember_id() {
 		return member_id;
 	}
+
 	public void setMember_id(String member_id) {
 		this.member_id = member_id;
 	}
+
 	public String getPassword() {
 		return password;
 	}
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public String getPhone() {
 		return phone;
 	}
+
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
+
 	public String getAddress1() {
 		return address1;
 	}
+
 	public void setAddress1(String address1) {
 		this.address1 = address1;
 	}
+
 	public String getAddress2() {
 		return address2;
 	}
+
 	public void setAddress2(String address2) {
 		this.address2 = address2;
 	}
+
 	public String getBirth() {
 		return birth;
 	}
+
 	public void setBirth(String birth) {
 		this.birth = birth;
 	}
+
 	public String getGender() {
 		return gender;
 	}
+
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
+
 	public String getNickname() {
 		return nickname;
 	}
+
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
-	public int getHeight() {
+
+	public String getHeight() {
 		return height;
 	}
-	public void setHeight(int height) {
+
+	public void setHeight(String height) {
 		this.height = height;
 	}
-	public int getWeight() {
+
+	public String getWeight() {
 		return weight;
 	}
-	public void setWeight(int weight) {
+
+	public void setWeight(String weight) {
 		this.weight = weight;
 	}
-	
-	
-	
+
 }

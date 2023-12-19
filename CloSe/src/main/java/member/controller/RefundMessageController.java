@@ -30,7 +30,7 @@ public class RefundMessageController {
 
 		String random = String.valueOf((int)(Math.random()*999999+10000));
 		set.put("from", "phone");
-		set.put("text", "ÀÎÁõ¹øÈ£´Â ["+random+"] ÀÔ´Ï´Ù.");
+		set.put("text", "ì¸ì¦ë²ˆí˜¸ëŠ” ["+random+"] ì…ë‹ˆë‹¤.");
 		set.put("type", "sms");
 		set.put("app_version", "test app 1.2"); 
 

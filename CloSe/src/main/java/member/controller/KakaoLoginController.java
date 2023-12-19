@@ -22,41 +22,28 @@ import member.model.MemberDao;
 public class KakaoLoginController {
 	
 	private final String command = "/kakaologin.member";
-	private final String viewPage = "kakaoRegisterForm";
-	private final String gotoPage = "loginForm";
 	
 	@Autowired
 	private MemberDao memberDao;
 	
 	@RequestMapping(value = command, method = RequestMethod.GET)
-	public String kakaoregister(@RequestParam("member_id") String member_id, HttpSession session, HttpServletResponse response, HttpServletRequest request) throws IOException {
+	public void kakaoregister(@RequestParam("member_id") String member_id, HttpSession session, HttpServletResponse response, HttpServletRequest request) throws IOException {
 		session.setAttribute("member_id", member_id);
 		
 		PrintWriter out = response.getWriter();
 	    response.setContentType("text/html; charset=UTF-8");
 	    
-		int cnt = memberDao.findId(member_id);
+	    MemberBean memberBean = memberDao.findwithId(member_id);//가입한 아이디가 있는지 확인
 		
-		if(cnt == 0) {
-			return viewPage;
+		if(memberBean == null) {
+			out.println("<script>alert('등록된 정보가없어 회원가입페이지로 이동합니다.'); location.href='" + request.getContextPath() + "/kakaoRegister.member';</script>");
+			out.flush();
 		    
 		}else {
-			out.println("<script>alert('�α��� �Ǿ����ϴ�.'); location.href='" + request.getContextPath() + "/view.main';</script>");
+			session.setAttribute("kakaoLoginInfo", memberBean);
+			out.println("<script>alert('로그인 되었습니다.'); location.href='" + request.getContextPath() + "/view.main';</script>");
 			out.flush();
 		}
 		
-		return viewPage;
-	}
-	
-	@RequestMapping(value = command, method = RequestMethod.POST)
-	public String kakaoregister(@Valid MemberBean mb, BindingResult bresult) {
-		
-		if(bresult.hasErrors()) {
-			
-			return viewPage;
-		}
-		
-		memberDao.memberRegister(mb);
-		return gotoPage;
 	}
 }

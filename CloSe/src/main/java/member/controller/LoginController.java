@@ -20,7 +20,7 @@ public class LoginController {
 
 	private final String command = "/login.member";
 	private final String viewPage = "loginForm";
-	private final String gotoPage = "";
+	private final String gotoPage = "../main/main";
 	
 	@Autowired
 	private MemberDao memberDao;
@@ -43,19 +43,20 @@ public class LoginController {
 		MemberBean memberBean = memberDao.getDetail(mb.getMember_id());
 		
 		if(memberBean == null) {
-			out.println("<script>alert('°¡ÀÔÇÏÁö ¾ÊÀº È¸¿øÀÔ´Ï´Ù.')</script>");
+			out.println("<script>alert('ê°€ì…í•˜ì§€ ì•Šì€ íšŒì›ì…ë‹ˆë‹¤.')</script>");
 			out.flush();
 			mav.setViewName(viewPage);
 			return mav;
-		}else { //¾ÆÀÌµğ Á¸ÀçÇÔ
-			if(memberBean.getPassword().equals(mb.getPassword())) {	//ºñ¹øÀÌ ÀÏÄ¡ÇÔ
-				session.setAttribute("loginInfo", memberBean); //DB¿¡¼­ °¡Á®¿Â ·¹ÄÚµå¸¦ loginInfo·Î ¼³Á¤
-				
+		}else { //ì•„ì´ë”” ì¡´ì¬í•¨
+			if(memberBean.getPassword().equals(mb.getPassword())) {	//ë¹„ë²ˆì´ ì¼ì¹˜í•¨
+				session.setAttribute("loginInfo", memberBean); //DBì—ì„œ ê°€ì ¸ì˜¨ ë ˆì½”ë“œë¥¼ loginInfoë¡œ ì„¤ì •
+				out.println("<script>alert('ë¡œê·¸ì¸ ë˜ì—ˆìŠµë‹ˆë‹¤.')</script>");
+				out.flush();
 				mav.setViewName(gotoPage);
 				return mav;
 				
-			}else { //ºñ¹øÀÌ ÀÏÄ¡¾ÈÇÔ
-				out.println("<script>alert('ºñ¹øÀÌ Àß¸øµÇ¾ú½À´Ï´Ù.')</script>");
+			}else { //ë¹„ë²ˆì´ ì¼ì¹˜ì•ˆí•¨
+				out.println("<script>alert('ë¹„ë²ˆì´ ì˜ëª»ë˜ì—ˆìŠµë‹ˆë‹¤.')</script>");
 				out.flush();
 				mav.setViewName(viewPage);
 				return mav;

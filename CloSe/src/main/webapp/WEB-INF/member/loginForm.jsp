@@ -5,49 +5,29 @@
 <link href="resources/css/sign-in.css" rel="stylesheet">
 <link href="resources/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-<script type="text/javascript">
-
-	Kakao.init('2cdf0145ab332ff37556bbc8268b13a1');
-    function kakaoLogin() {
-        Kakao.Auth.login({
-            success: function (response) {
-                Kakao.API.request({
-                    url: '/v2/user/me',
-                    success: function (response) {
-                    	var id = response.id;
-                        location.href="kakaologin.member?member_id="+id;
-                    },
-                    fail: function (error) {
-                        alert(JSON.stringify(error))
-                    },
-                })
-            },
-            fail: function (error) {
-                alert(JSON.stringify(error))
-            },
-        })
-    }
-    
-  //카카오로그아웃  
-    function kakaoLogout() {
-        if (Kakao.Auth.getAccessToken()) {
-          Kakao.API.request({
-            url: '/v1/user/unlink',
-            success: function (response) {
-            	console.log(response)
-            	alert('로그아웃 되었습니다.');
-            },
-            fail: function (error) {
-              console.log(error)
-            },
-          })
-          Kakao.Auth.setAccessToken(undefined)
-        }
-    }  
-    
-</script>
 <script type="text/javascript" src="resources/js/script.js"></script>
 <script>
+	Kakao.init('2cdf0145ab332ff37556bbc8268b13a1');
+	function kakaoLogin() {
+	    Kakao.Auth.login({
+	        success: function (response) {
+	            Kakao.API.request({
+	                url: '/v2/user/me',
+	                success: function (response) {
+	                	var id = response.id;
+	                    location.href="kakaologin.member?member_id="+id;
+	                },
+	                fail: function (error) {
+	                    alert(JSON.stringify(error))
+	                },
+	            })
+	        },
+	        fail: function (error) {
+	            alert(JSON.stringify(error))
+	        },
+	    })
+	}
+
 	function setCookie(name, value, days) {
 	    var expires = '';
 	    if (days) {
@@ -119,8 +99,34 @@
 	    return true;
 	}
 	
+	function togglePasswordVisibility() {
+	    var passwordInput = document.getElementById('floatingPassword');
+	    var passwordToggle = document.querySelector('.password-toggle');
+
+	    if (passwordInput.type === 'password') {
+	        passwordInput.type = 'text';
+	        passwordToggle.style.backgroundImage = 'url(\'resources/icon/eye.svg\')';
+	    } else {
+	        passwordInput.type = 'password';
+	        passwordToggle.style.backgroundImage = 'url(\'resources/icon/eye-slash.svg\')';
+	    }
+	}
+	
 	
 </script>
+
+<style>
+	.password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    cursor: pointer;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    background: url('resources/icon/eye-slash.svg') center/cover no-repeat;
+	}
+</style>
 
 <body class="d-flex align-items-center py-4 bg-body-tertiary">
 
@@ -138,10 +144,12 @@
          <div class="form-floating">
             <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password"> 
             <label for="floatingPassword">비밀번호</label>
+            <!-- 눈 모양 아이콘 -->
+    		<span class="password-toggle" onclick="togglePasswordVisibility()"></span>
          </div>
 
          <div class="form-check text-start my-3">
-            <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault"> 
+            <input type="checkbox" value="remember-me" id="flexCheckDefault" style="accent-color: black; margin-left: -20px;"> 
             	<label class="form-check-label" for="flexCheckDefault"> 아이디 저장 </label> 
             	<label style="float: right;">
                <a href="findid.member" class="text-secondary link-underline link-underline-opacity-0">
@@ -152,20 +160,16 @@
                </a>
             </label>
          </div>
-         <button class="btn btn-dark w-100 py-2" type="submit">로그인</button>
+         <button class="btn btn-dark w-100 py-2" type="submit">로그인</button><hr>
          
          <!-- 카카오톡 로그인 -->
          <div class="form-group row" id="kakaologin">
          	<div class="kakaobtn">
          		<a href="javascript:kakaoLogin();">
-         			<img src="resources/img/kakao_login_medium_wide.png" style="width: 350px; height: 40px;"/>
+         			<img src="resources/img/kakao_login_large_wide.png" style="width: 350px; height: 40px;"/>
          		</a>
          	</div>
          </div>
-         
-         <a href="javascript:kakaoLogout();">
-         	카카오톡 로그아웃
-         </a>
          
          <p class="mt-5 mb-3 text-body-secondary">© 2023 Minhyeok, Byeon</p>
       </form>
