@@ -42,7 +42,6 @@ public class ProductListController {
 		if(bigcategory_name != null) {
 			plists = productDao.getProductByBigcategory(bigcategory_name);
 		}
-		
 		model.addAttribute("plists", plists);
 		return viewPage;
 	}

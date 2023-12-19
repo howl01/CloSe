@@ -24,5 +24,6 @@
 	<context:component-scan base-package="qna" />
 	<context:component-scan base-package="style" />
 	<context:component-scan base-package="cart" />
+	<context:component-scan base-package="orderdetail" />
 
 </beans>

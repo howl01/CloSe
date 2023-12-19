@@ -1,11 +1,12 @@
 package product.model;
 
 import java.util.List;
-import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import cart.model.CartInfoBean;
 
 @Component("ProductDao")
 public class ProductDao {
@@ -30,10 +31,20 @@ public class ProductDao {
 		return sqlSessionTemplate.selectList(namespace+".getProductByBigcategory",bigcategory_name);
 	}
 
+	public void updateStock(CartInfoBean cib) {
+		sqlSessionTemplate.update(namespace+".updateStock", cib);
+	}
+
+	public void deleteProduct(String product_number) {
+		sqlSessionTemplate.delete(namespace+".deleteProduct", product_number); 
+	}
+
+	public void updateProduct(ProductBean pb) {
+		sqlSessionTemplate.update(namespace+".updateProduct", pb);
+	}
 	public List<String> findProductNames(String searchWord) {
 		return sqlSessionTemplate.selectList(namespace + ".findProductNames", searchWord);
 	}
-
 	public List<ProductBean> findProductNames2(String searchWord2) {
 		return sqlSessionTemplate.selectList(namespace + ".findProductNames2", searchWord2);
 	}

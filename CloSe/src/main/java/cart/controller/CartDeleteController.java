@@ -12,22 +12,24 @@ import cart.model.CartDao;
 import product.model.ProductDao;
 
 @Controller
-public class CartUpdateController {
-	private final String command = "/qtyUpdate.cart";
-	private final String viewPage = "cartListForm";
+public class CartDeleteController {
+	private final String command = "/delete.cart";
+	private final String viewPage = "";
 	private final String gotoPage = "";
 	
 	@Autowired
 	CartDao cartDao;
 	
 	@RequestMapping(command)
-	public String qtyUpdate(@RequestParam("cart_number")String cart_number,
-							@RequestParam("qty")String qty) {
-		Map<String,String> qtyMap = new HashMap<String, String>();
-		qtyMap.put("cart_number", cart_number);
-		qtyMap.put("qty", qty);
-		
-		cartDao.qtyUpdate(qtyMap);
+	public String qtyUpdate(@RequestParam(value="cnum",required = false)String cnum,
+							@RequestParam(value="cnums",required = false)String[] cnums) {
+
+		if(cnums!=null) {
+			cartDao.deleteCarts(cnums);
+		}
+		if(cnum!=null) {
+			cartDao.deleteCart(cnum);
+		}
 		
 		return "redirect:/cartAdd.cart?member_id='kim'";
 	}
