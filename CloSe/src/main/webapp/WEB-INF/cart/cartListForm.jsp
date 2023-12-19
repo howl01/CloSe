@@ -11,7 +11,6 @@
 		width: 75%;
 		margin: auto;
 	}
-	
 	.a {
 		text-align: center;
 	}
@@ -30,20 +29,12 @@
 		height: 150px;
 		margin-top: 50px;
 	}
-	
 	.name {
 		text-align: left;
 		margin-top: 2em;
 	}
-	
 	#procheck {
 		margin-top: 65px;
-		width: 25px;
-		height: 25px;
-	}
-	.form-check-input {
-		width: 25px;
-		height: 25px;
 	}
 	#aaa {
 		width: 110%;
@@ -53,9 +44,58 @@
 		display: inline;
 		float: right;
 	}
+	input[type="checkbox"] {
+ 		accent-color: black;
+	}
 </style>
 <script type="text/javascript">
-	function allCheck(all) {
+	function checkAllOnLoad() {
+	    var allCheckbox = document.getElementById("bbb");
+	    allCheckbox.checked = true; // 전체 선택 체크박스를 선택 상태로 만듭니다.
+	    allCheck(allCheckbox); // 모든 체크박스를 선택 상태로 만드는 함수 호출
+	}
+	window.addEventListener('load', checkAllOnLoad);
+	
+	
+	function updateTotalPrice() { //checkbox를 선택, 해제했을 때 전체적인 금액부분 변경
+        var selectedValues = getSelectedValues();
+        var totalPrice = 0;
+
+        <c:forEach var="cib" items="${cartInfoLists}">
+            if (selectedValues.includes('${cib.cart_number}')) {
+                totalPrice += ${cib.price * cib.qty};
+            }
+        </c:forEach>
+
+        var allCheckbox = document.getElementById("bbb");
+        var allCheckStatus = selectedValues.length === document.getElementsByName("rowcheck").length;
+        allCheckbox.checked = allCheckStatus;
+        
+        document.getElementById('totalPrice').innerText = totalPrice; // 여기서 변경
+        
+        var deliveryElement = document.getElementById('delivery');
+        var deliveryPriceElement = document.getElementById('deliveryPrice');
+        var delivery = 0;
+        
+        if (selectedValues.length > 0) { //배송비계산
+            if (totalPrice > 100000) {
+            	delivery ='0';
+                deliveryElement.innerText = '0'; 
+                deliveryPriceElement.innerText = '0'; 
+            } else {
+            	delivery ='4000';
+                deliveryElement.innerText = '4000'; 
+                deliveryPriceElement.innerText = '4000'; 
+            }
+        } else {
+            deliveryElement.innerText = '0';
+            deliveryPriceElement.innerText = '0';
+        }
+        
+        document.getElementById('total').innerText = Number(totalPrice) + Number(delivery);
+    }
+	
+	function allCheck(all) { //전체체크박스를 눌렀을때
 		rcheck = document.getElementsByName("rowcheck");
 		acheck = all.checked;
 
@@ -68,27 +108,10 @@
 				rcheck[i].checked = false;
 			}
 		}
+		updateTotalPrice();
 	} // allCheck
 
-	function selectDelete() {
-		rcheck = document.getElementsByName("rowcheck");
-		flag = false;
-
-		for (i = 0; i < rcheck.length; i++) {
-			if (rcheck[i].checked) {
-				flag = true;
-			}
-		}
-
-		if (!flag) {
-			alert("하나 이상 체크해야 삭제 가능합니다.");
-			return;
-		}
-
-		myform.submit();
-	} // selectDelete
-
-	function fnCalCount(type, cindex) {
+	function fnCalCount(type, cindex) { //수량 + - 버튼
         // size를 사용하여 적절한 선택자를 찾도록 수정
         var $input = $("#oqty"+cindex);
         var tCount = Number($input.val());
@@ -98,83 +121,67 @@
         } else {
             if (tCount > 1) $input.val(Number(tCount) - 1);
         }
-        //updateTotalPrice(size, $input.val());
     }
-	function cartUpdate(cnum,cindex){
+	
+	function cartUpdate(cnum,cindex){ //수량 변경버튼
 		var oqty = document.getElementById("oqty" + cindex).value;
 		
 		location.href="qtyUpdate.cart?cart_number="+cnum+"&qty="+oqty;
 	}
-	/* function plus(stock, index) {
-		var inputValue = parseInt(document.getElementById("oqty" + index).value);
-		inputValue = inputValue + 1;
-		document.getElementById("oqty" + index).value = inputValue;
-
-		document.getElementById("minus" + index).disabled = false;
-
-		if (stock == inputValue) {
-			document.getElementById("plus" + index).disabled = true;
-		}
-		updateTotalValue();
+	
+	function getSelectedValues() {//선택되어있는 rowcheck의 value 얻음
+	    var selectedValues = [];
+	    var cnums = document.getElementsByName("rowcheck");
+	    for (var i = 0; i < cnums.length; i++) {
+	        if (cnums[i].checked) {
+	            selectedValues.push(cnums[i].value);
+	        }
+	    }
+	    return selectedValues;
 	}
-
-	function minus(index) {
-		var inputValue = parseInt(document.getElementById("oqty" + index).value);
-		inputValue = inputValue - 1;
-		document.getElementById("oqty" + index).value = inputValue;
-
-		if (inputValue == 1) {
-			document.getElementById("minus" + index).disabled = true;
-		}
-
-		updateTotalValue();
-	} 
-
-	var oqtyInputs = document.querySelectorAll(".form-control.oqty");
-	var priceElements = document.querySelectorAll(".mb-0.price");
-	var sumpElement = document.getElementById("sump");
-	var delcElement = document.getElementById("delc");
-	var finalpElement = document.getElementById("finalp");
-	var sumPrice = 0;
-	var deliveryPrice = 0;
-	var totalValue = 0;
-
-	function updateTotalValue() {
-		totalValue = 0;
-		sumPrice = 0;
-		deliveryPrice = 0;
-		oqtyInputs.forEach(function(input, index) {
-			var quantity = parseInt(input.value);
-			var price = parseInt(priceElements[index].textContent);
-			totalValue += quantity * price;
-		});
-		if (totalValue >= 30000) {
-			delcElement.textContent = "무료";
-			deliveryPrice = 0;
-		} else {
-			delcElement.textContent = "3000원";
-			deliveryPrice = 3000;
-		}
-		sumPrice = totalValue + deliveryPrice;
-		sumpElement.textContent = totalValue + "원";
-		finalpElement.textContent = sumPrice + "원";
+	
+	
+	function deleteSelected() { //선택삭제버튼
+	    var selectedValues = getSelectedValues();
+	    if (selectedValues.length === 0) {
+	        alert("삭제할 항목을 하나 이상 선택하세요.");
+	        return;
+	    }
+	    var deleteToCart = confirm("상품을 삭제하시겠습니까?");
+	    if(deleteToCart){
+		    document.myform.action = "delete.cart?cnums="+selectedValues;
+		    document.myform.submit();
+	    }else{
+	    	return;
+	    }
 	}
-
-	updateTotalValue();
-
-	oqtyInputs.forEach(function(input) {
-		input.addEventListener("change", updateTotalValue);
-	});
-
-	function cal(orderPName) {
-		location.href = "calculate.jsp?pname=" + orderPName + "&amount="
-				+ sumPrice;
-	} */
+	function deleteSel(cnum){
+		var deleteToCart = confirm("상품을 삭제하시겠습니까?");
+	    if(deleteToCart){
+		    document.myform.action = "delete.cart?cnum="+cnum;
+		    document.myform.submit();
+	    }else{
+	    	return;
+	    }
+	}
+	
+	function purchaseSelected() { //선택구매 버튼
+	    var selectedValues = getSelectedValues();
+	    if (selectedValues.length === 0) {
+	        alert("구매할 항목을 하나 이상 선택하세요.");
+	        return;
+	    }
+	    
+	    document.myform.action = "details.orders?cnums="+selectedValues; // 실제 URL로 업데이트
+	    document.myform.submit();
+	}
+	
+	function buyNow(cnum){
+		location.href="details.orders?cnum="+cnum;
+	}
 </script>
 
 <div class="body">
-
-
 	<div class="row">
 		<div class="col-lg-2"></div>
 		<div class="col-lg-8">
@@ -202,18 +209,20 @@
     
     
     <c:otherwise>
-            <form method="post" name="myform" action="cartDelAll.jsp">
+            <form method="post" name="myform">
             <table class="table">
                                 <thead>
                                     <tr>
                                         <th scope="col">
-                                        	<input id = "bbb" size="3" class="form-check-input" type="checkbox" name = "allcheck" onclick = "allCheck(this)">
+                                        	<input checked id="bbb" size="3" type="checkbox" name = "allcheck" onclick = "allCheck(this)">
 								        </th>
                                         <th scope="col">이미지</th>
                                         <th scope="col">상품정보</th>
                                         <th scope="col">가격</th>
                                         <th scope="col">주문수량</th>
                                         <th scope="col">소계</th>
+                                        <th scope="col">구분</th>
+                                        <th scope="col">배송비</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -221,8 +230,8 @@
                                         <tr>
                                             <%-- <th scope="row">${status.index + 1}</th> --%>
                                             <td>
-                                                <input class="form-check-input pnum" type="checkbox" id="procheck"
-                                                    name="rowcheck" value="${cib.cart_number}">
+                                                <input class="pnum" type="checkbox" id="procheck"
+                                                    name="rowcheck" value="${cib.cart_number}" onclick="updateTotalPrice()">
                                             </td>
                                             <td>
                                                 <img id="preview" width="100px"
@@ -260,18 +269,35 @@
                                             <td>
                                             	${cib.price*cib.qty}원
                                             </td>
+                                            <td>
+                                            	<button type="button" onclick="buyNow('${cib.cart_number}')">바로구매</button>
+                                            	<button type="button" onclick="deleteSel('${cib.cart_number}')">삭제하기</button>
+                                            </td>
+                                            <c:if test="${status.index==0 }">
+	                                            <td rowspan="100%">
+	                                            	<span id="delivery"></span>원
+	                                            </td>
+                                            </c:if>
                                         </tr>
                                     </c:forEach>
                                 </tbody>
                                 <tr>
-                                	<td colspan="6">
-                                		${totalPrice }
+                                	<td colspan="2">
+                                		<span>상품금액 합계:</span><br>
+                                		<span>배송비:</span>
+                                	</td>
+                                	<td colspan="2">
+                                		<span id="totalPrice"></span>원 <br>
+                                		<span id="deliveryPrice"></span>원
+                                	</td>
+                                	<td colspan="4">
+                                		총결제금액: <span id="total"></span>원
                                 	</td>
                                 </tr>
                                 <tr>
-                                	<td colspan="6">
-                                		<button type="button">선택삭제</button>
-                                		<button type="button">선택구매</button>
+                                	<td colspan="8">
+                                		<button type="button" onclick="deleteSelected()">선택삭제</button>
+                                		<button type="button" onclick="purchaseSelected()">선택구매</button>
                                 	</td>
                                 </tr>
                             </table>

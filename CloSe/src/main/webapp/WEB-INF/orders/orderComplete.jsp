@@ -9,48 +9,21 @@
 <style type="text/css">
 </style>
 <script type="text/javascript">
-	
 </script>
 
 <div class="body">
-
-
 	<div class="row">
 		<div class="col-lg-2"></div>
 		<div class="col-lg-8">
 			<div style="padding:20 10 20 10">
 				<div style="">
-					<h3 style="padding: 22 0 22 0">상품등록</h3>
+					<h3 style="padding: 22 0 22 0">주문완료</h3>
 				</div>
-				<table width="800">
-				  <c:choose>
-				    <c:when test="${empty plists}">
-				      <td align="center" width="300" height="200" style="padding: 10px; font-size: 30px;">
-				        <span class="nog">등록된 제품이 없습니다.</span>
-				      </td>
-				    </c:when>
-				    <c:otherwise>
-				      <c:forEach var="pb" items="${plists}" varStatus="Status">
-				        <c:set var="count" value="${Status.count}" />
-				        <td align="center" valign="top" width="300" height="200" style="padding: 10px">
-				          <div>
-				           <a href="detail.product?product_number=${pb.product_number }">
-				          	<img id="preview" width="70px"
-							src='<c:url value='/resources/product/image/'/>${pb.image }' />
-				           </a>
-				          </div>
-				          
-				          <div>브랜드:${fn:substringBefore(pb.product_name,'/') }</div>
-				          <div>상품명:${fn:substringAfter(pb.product_name,'/') }</div>
-				          <div>가격:${pb.price }원</div>
-				        </td>
-				        <c:if test="${count % 4 == 0}">
-				          </tr><tr>
-				        </c:if>
-				      </c:forEach>
-				    </c:otherwise>
-				  </c:choose>
-				</table>
+				
+				<h4>고객님의 주문이 완료 되었습니다.</h4>
+				<span>주문일시:${orderBean.orders_date }</span> <br>
+				<span>주문번호:${orderBean.orders_id }</span> <br>
+				
 
 			</div>
 		</div>

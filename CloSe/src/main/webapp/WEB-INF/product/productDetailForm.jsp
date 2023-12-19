@@ -10,7 +10,6 @@
 #preview {
 	width: 100%;
 }
-
 .ptab {
 	text-decoration: none;
 	color: black;
@@ -25,6 +24,44 @@
 }
 #totalP:focus{
 	outline:none;
+}
+.layer {
+	display: none;
+}
+
+
+.td {
+	position: relative;
+	box-sizing: border-box;
+	border-top: 1px solid #f2f2f2;
+	margin-left: 100px;
+}
+
+.d {
+	width: 100%;
+	heiht: 100%;
+}
+
+.total_price {
+    color: #666;
+    font-size: 14px;
+     padding: 20px 0 8px; 
+    text-align: right;
+    box-sizing: border-box;
+}
+
+.total_cartAdd {
+    color: #666;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+.totals-value {
+    font-size: 30px;
+    color: #333;
+    font-style: normal;
+    font-weight: bold;
+    padding-left: 12px;
+    text-align: right;
 }
 </style>
 <script type="text/javascript">
@@ -66,31 +103,48 @@
         updateTotalPrice(size, $input.val());
     }
 	
+	function deleteProduct(pnum){
+		location.href="delete.product?product_number="+pnum;
+	}
+	function updateProduct(pnum){
+		location.href="update.product?product_number="+pnum;
+	}
+
 	
 	$(document).ready(function() {
-		$('#cartBtn').click(function () {
+		$('#insertBasket').click(function () {
 			alert("장바구니버튼");
 			if ($('.quantity-selection').length === 0) {
-	            alert("사이즈를 선택하세요.");
+	            alert("사이즈를 선택해주세요.");
 	            return;
 	        }
-			var addToCart = confirm("상품을 장바구니에 추가했습니다. 장바구니로 이동하시겠습니까?");
-	        
-	        if (addToCart) {
-	            $("#buyForm").attr("action", "cartAdd.cart");
-	        } else {
-	        	return;
-	        }
-			$("#buyForm").submit();
+			var formData = $("#buyForm").serialize();
+
+	        $.ajax({
+	            type: "POST", // or "GET" depending on your server-side implementation
+	            url: "cartAdd.cart", // Specify the URL to your server-side endpoint
+	            async : false,
+	            data: formData,
+	            success: function(response) {
+	                var addToCart = confirm("상품을 장바구니에 추가했습니다. 장바구니로 이동하시겠습니까?");
+	        	    
+	        	    if (addToCart) {
+	        	        location.href="cartAdd.cart?member_id='kim'";
+	        	    } else{
+	        	    	return;
+	        	    }
+	            }
+	        });
 		});
 		
-		$('#buyNow').click(function () { 
+		
+		$('#goodsOrder').click(function () { 
 			alert("구매하기버튼");
 		  	if ($('.quantity-selection').length === 0) {
-            	alert("사이즈를 선택하세요.");
+            	alert("사이즈를 선택해주세요.");
            	 	return;
         	}
-		  	$("#buyForm").attr("action", "/your_buy_now_action_url");
+		  	$("#buyForm").attr("action", "details2.orders");
 		  	$("#buyForm").submit();
 		});
 		
@@ -131,7 +185,7 @@
 		        totalSum += Number($(this).text());
 		    });
 
-		    $('#totalP').text(totalSum);
+		    $('#cart-total').html(totalSum);
 	    });
 		
 		
@@ -145,7 +199,7 @@
 		        totalSum += Number($(this).text());
 		    });
 
-		    $('#totalP').text(totalSum);
+		    $('#cart-total').html(totalSum);
 		}
 		function updateTotalPrice(selectedSize, quantity) {
 		    var productPrice = ${pb.price};
@@ -158,7 +212,7 @@
 		        totalSum += Number($(this).text());
 		    });
 
-		    $('#totalP').text(totalSum);
+		    $('#cart-total').html(totalSum);
 		}
 </script>
 
@@ -168,7 +222,6 @@
 	<div class="row">
 		<div class="col-lg-2"></div>
 		<div class="col-lg-8">
-			<div style="padding: 20 10 20 10">
 
 
 
@@ -180,64 +233,160 @@
 					<div class="row">
 						<div class="col-lg-1"></div>
 						<div class="col-lg-10 row">
-							<div class="col-lg-7" style="text-align: center;">
-								<img id="preview"
-									src='<c:url value='/resources/product/image/'/>${pb.image }' />
-							</div>
-							<div class="col-lg-5">
-								<div style="border-bottom: 0.5px solid gray;">${fn:substringAfter(pb.product_name,'/') }</div>
-								<div>브랜드 : ${fn:substringBefore(pb.product_name,'/') }</div>
-								<div>가격 : ${pb.price }</div>
-								<div>
-									<div>사이즈</div>
-									<div>
-										<select id="selsize" name="size">
-											<option value="">옵션선택</option>
-											<option value="s_stock"
-												<c:if test="${pb.s_stock == 0}"> disabled </c:if>>
-												S
-												<c:if test="${pb.s_stock == 0}">(품절)</c:if><c:if
-													test="${1<=pb.s_stock and 5>=pb.s_stock}"> [${pb.s_stock }개 남음]</c:if>
-											</option>
-											<option value="m_stock"
-												<c:if test="${pb.m_stock == 0}"> disabled </c:if>>
-												M
-												<c:if test="${pb.m_stock == 0}">(품절)</c:if><c:if
-													test="${1<=pb.m_stock and 5>=pb.m_stock}"> [${pb.m_stock }개 남음]</c:if>
-											</option>
-											<option value="l_stock"
-												<c:if test="${pb.l_stock == 0}"> disabled </c:if>>
-												L
-												<c:if test="${pb.l_stock == 0}">(품절)</c:if><c:if
-													test="${1<=pb.l_stock and 5>=pb.l_stock}"> [${pb.l_stock }개 남음]</c:if>
-											</option>
-											<option value="xl_stock"
-												<c:if test="${pb.xl_stock == 0}"> disabled </c:if>>
-												XL
-												<c:if test="${pb.xl_stock == 0}">(품절)</c:if><c:if
-													test="${1<=pb.xl_stock and 5>=pb.xl_stock}"> [${pb.xl_stock }개 남음]</c:if>
-											</option>
-										</select>
-									</div>
-								</div>
+						
+		<div style="width:100%; align:center; height:600px;">
+		
+		<div style="float:left; margin-left:30px; width: 40%;">
+			<table border="0" width="100%">
+				<tr>
+					<td><img id="preview" width="100%"
+						src='<c:url value='/resources/product/image/'/>${pb.image }' />
+				</tr>
+			</table>
+		</div>
 
-								<div class="selSize">
-									<!-- 수량선택 -->
-								</div>
-								<div style="display: flex;">
-									<span>총 상품 금액</span> 
-									<span id="totalP">0</span> 
-									<span>원</span>
-								</div>
+		<div style="float:left; margin-left:30px; width: 50%;">
+			<table border="0">
 
-								<div>
-									<button id="cartBtn" type="button">장바구니</button>
-									<button id="buyNow" type="button">구매하기</button>
-								</div>
+				<tr>
+					<td>
+						<span
+						style="background-color: #ff80bf; line-height: 27px; border-radius: 10px;"><font
+						color="#ffffff" size="2">태그</font></span>
+					</td>
+				</tr>
 
-								<div>온도:${pb.temperature }</div>
-								<div>소분류:${pb.smallcategory_name }</div>
-							</div>
+				<tr>
+					<td id="goodsName"><font size="5"
+						style="box-sizing: border-box; position: relative;">${fn:substringAfter(pb.product_name,'/') }</font></td>
+				</tr>
+
+				<tr>
+					<td><font size="3">브랜드 : ${fn:substringBefore(pb.product_name,'/') }</font></td>
+				</tr>
+
+				<tr>
+					<td></td>
+				</tr>
+
+				<tr>
+					<td id="price"
+						style="font-weight: 600px; font-Size: 24px; line-height: 42px;">
+						<fmt:formatNumber value="${pb.price }" pattern="#,###" />원
+					</td>
+				</tr>
+			</table>
+
+			<table>
+				<tr>
+					<td>
+						<hr style="border-top: 1px solid #bbb;" width=500px>
+					<td>
+				</tr>
+			</table>
+
+			<br>
+
+			<table>
+				<tr class="option_section">
+					<td width="100px"><font size="3">배송비</font></td>
+					<td><font size="3">선불4,000원(50,000원 이상 무료배송)</font></td>
+				</tr>
+			</table>
+
+			<table>
+				<tr class="option_section">
+					<td width="100px"><font size="3">배송종류</font></td>
+					<td><font size="3">국내배송</font></td>
+				</tr>
+			</table>
+
+			<br>
+			<br>
+
+			<div id="item_option">
+				<table>
+					<tr>
+						<td>
+						<select id="selsize" name="size">
+							<option value="">옵션선택</option>
+							<option value="s_stock"
+								<c:if test="${pb.s_stock == 0}"> disabled </c:if>>
+								S
+								<c:if test="${pb.s_stock == 0}">(품절)</c:if><c:if
+									test="${1<=pb.s_stock and 5>=pb.s_stock}"> [${pb.s_stock }개 남음]</c:if>
+							</option>
+							<option value="m_stock"
+								<c:if test="${pb.m_stock == 0}"> disabled </c:if>>
+								M
+								<c:if test="${pb.m_stock == 0}">(품절)</c:if><c:if
+									test="${1<=pb.m_stock and 5>=pb.m_stock}"> [${pb.m_stock }개 남음]</c:if>
+							</option>
+							<option value="l_stock"
+								<c:if test="${pb.l_stock == 0}"> disabled </c:if>>
+								L
+								<c:if test="${pb.l_stock == 0}">(품절)</c:if><c:if
+									test="${1<=pb.l_stock and 5>=pb.l_stock}"> [${pb.l_stock }개 남음]</c:if>
+							</option>
+							<option value="xl_stock"
+								<c:if test="${pb.xl_stock == 0}"> disabled </c:if>>
+								XL
+								<c:if test="${pb.xl_stock == 0}">(품절)</c:if><c:if
+									test="${1<=pb.xl_stock and 5>=pb.xl_stock}"> [${pb.xl_stock }개 남음]</c:if>
+							</option>
+						</select>
+						<div class="selSize">
+							<!-- 수량선택 -->
+						</div>
+						</td>
+					</tr>
+
+					<tr>
+						<td></td>
+					</tr>
+				</table>
+			</div>
+
+			<!-- <form id="frm" name="frm" method="post">
+
+				<div>
+					<table style="border:1px;" id="dynamicTable">
+						<thead>
+						</thead>
+
+						<tbody id="dynamicTbody">
+
+						</tbody>
+						
+					</table>
+				</div>
+
+			</form> -->
+			
+			<div class="totals-item totals-item-total" style="float:left; margin-left:200px;">
+	      		<label class="total_price">총상품금액</label>&nbsp;&nbsp;
+	     		 <div class="total_price" style="float:right;">원</div>
+	      		<div class="totals-value" id="cart-total" style="float:right;">0</div>
+	   	    </div>
+			<br><br>
+			
+			<table>
+				<tr>
+					<td><hr style="border-top: 1px solid #bbb;" width=500px>
+					<td>
+				</tr>
+			</table>
+
+			<button type="button" style="width: 150px; margin-left:100px; height: 40px;"
+				class="btn btn-dark" id="insertBasket">장바구니</button>
+			<button type="button" style="width: 150px; height: 40px;"
+				class="btn btn-dark" id="goodsOrder">구매하기</button>
+			<br>
+
+			<!-- <button id="update" onclick="fn_update()">수정하기</button> -->
+		
+		</div>
+	</div>
 						</div> 
 					</div>
 				</form>
@@ -268,11 +417,10 @@
 
 
 
-			</div>
-
+ 
 		</div>
 
-		<div class="col-lg-2 mt-5 px-5">
+		<div class="col-lg-2 mt-5 px-5"> 
 			<div class="bs-component">
 				<div class="card mb-3">
 					<h3 class="card-header">오늘의 날씨 정보</h3>

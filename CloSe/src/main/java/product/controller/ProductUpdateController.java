@@ -24,16 +24,14 @@ import product.model.ProductBean;
 import product.model.ProductDao;
 
 @Controller
-public class ProductRegisterController {
+public class ProductUpdateController {
 
-	private final String command = "/register.product";
-	private final String viewPage = "productRegisterForm";
-	private final String gotoPage = "";
+	private final String command = "/update.product";
+	private final String viewPage = "productUpdateForm";
+	private final String gotoPage = "redirect:/detail.product";
 
 	@Autowired
 	ServletContext servletContext;
-
-
 
 	@Autowired
 	ProductDao productDao;
@@ -42,9 +40,13 @@ public class ProductRegisterController {
 	CategoryDao categoryDao;
 
 	@RequestMapping(value=command, method=RequestMethod.GET)
-	public String registerForm(Model model) {
+	public String updateForm(@RequestParam("product_number") String product_number,Model model) {
+		
+		ProductBean pb = productDao.getOneProduct(product_number);
 		List<CategoryBean> clists = categoryDao.getAllCategory(); 
 		model.addAttribute("clists", clists);
+		
+		model.addAttribute("productBean", pb);
 		return viewPage;
 	}
 
@@ -61,8 +63,8 @@ public class ProductRegisterController {
 			pb.setImage(prevImage);
 		}
 		
-		System.out.println("����������:"+prevContent);
-		System.out.println("����������:"+pb.getContent());
+		System.out.println(prevContent);
+		System.out.println(pb.getContent());
 		
 
 		String uploadPath = servletContext.getRealPath("/resources/product/image"); 
@@ -77,7 +79,7 @@ public class ProductRegisterController {
 		MultipartFile multi = pb.getpImage();
 		MultipartFile multi2 = pb.getpContent();
 		try {
-			//������ ���̺� �ִ��� Ȯ��	 
+				 
 			boolean existsPImage = false;
 			for(int i=0;i<plists.size();i++) {
 				ProductBean pb0 = plists.get(i);
@@ -90,7 +92,7 @@ public class ProductRegisterController {
 					destination0.delete();
 				}
 			}
-			//������ ���̺� �ִ��� Ȯ��	 
+
 			boolean existsPContent = false;
 			for(int i=0;i<plists.size();i++) {
 				ProductBean pb0 = plists.get(i);
@@ -104,14 +106,6 @@ public class ProductRegisterController {
 				}
 			}
 			
-			
-			
-			
-			
-			
-			
-			
-			// ������ ������ �� �̹��� ���ε�
 			if(!destination.exists()) {
 				multi.transferTo(destination);
 			}
@@ -119,24 +113,24 @@ public class ProductRegisterController {
 				multi2.transferTo(destination2);
 			}
 
-			// ������ ������ ���� �̹��� ����
 			//destination2.delete();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
 
-		if(bresult.hasErrors()) { //��ȿ���˻�
+		if(bresult.hasErrors()) { 
 			return viewPage;
 		}
-		for(int i=0;i<plists.size();i++) { //�̸� �ߺ� �˻�
+		for(int i=0;i<plists.size();i++) { 
 			ProductBean pb0 = plists.get(i);
 			if(pb0.getProduct_name().equals(pb.getProduct_name())) {
 				return viewPage;
 			}
 		}
 		System.out.println(pb.getImage());
-		productDao.insertProduct(pb);
-		return gotoPage;
+		productDao.updateProduct(pb);
+		return gotoPage+"?product_number="+pb.getProduct_number();
+		
 	}
 
 
