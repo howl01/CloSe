@@ -40,13 +40,13 @@ public class UpdateController {
 			session.setAttribute("kakaoLoginInfo", memberBean);
 			memberDao.memberUpdate(memberBean);
 			
-			out.println("<script>alert('È¸¿øÁ¤º¸°¡ ¼öÁ¤µÇ¾ú½À´Ï´Ù.'); location.href='" + request.getContextPath() + "/mypage.member';</script>");
+			out.println("<script>alert('íšŒì›ì •ë³´ê°€ ìˆ˜ì •ë˜ì—ˆìŠµë‹ˆë‹¤.'); location.href='" + request.getContextPath() + "/mypage.member';</script>");
 			out.flush();
 		}else {
 			session.setAttribute("loginInfo", memberBean);
 			memberDao.memberUpdate(memberBean);
 			
-			out.println("<script>alert('È¸¿øÁ¤º¸°¡ ¼öÁ¤µÇ¾ú½À´Ï´Ù.'); location.href='" + request.getContextPath() + "/mypage.member';</script>");
+			out.println("<script>alert('íšŒì›ì •ë³´ê°€ ìˆ˜ì •ë˜ì—ˆìŠµë‹ˆë‹¤.'); location.href='" + request.getContextPath() + "/mypage.member';</script>");
 			out.flush();
 		}
 		

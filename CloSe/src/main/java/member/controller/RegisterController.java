@@ -24,7 +24,6 @@ public class RegisterController {
 
 	private final String command = "/register.member";
 	private final String viewPage = "registerForm";
-	private final String gotoPage = "redirect:login.member";
 
 	@Autowired
 	private MemberDao memberDao;
@@ -48,7 +47,7 @@ public class RegisterController {
 		}
 
 		memberDao.memberRegister(mb);
-		out.println("<script>alert('È¸¿ø°¡ÀÔ µÇ¾ú½À´Ï´Ù.'); location.href='" + request.getContextPath()
+		out.println("<script>alert('íšŒì›ê°€ì…ì´ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.'); location.href='" + request.getContextPath()
 				+ "/login.member';</script>");
 		out.flush();
 

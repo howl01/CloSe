@@ -41,21 +41,21 @@ public class FindPwController {
 		return viewPage;
 	}
 	
-	//ºñ¹Ğ¹øÈ£ Ã£±â ÀÌ¸ŞÀÏ ¹ß¼Û
+	//ë¹„ë°€ë²ˆí˜¸ ì°¾ê¸° ì´ë©”ì¼ ë°œì†¡
 	@RequestMapping("/sendEmail.member")
 	public void sendEmail(@RequestParam("mempassword") String mempassword,
             			  @RequestParam("email") String email,
             			  HttpServletRequest request, HttpServletResponse response) throws AddressException, MessagingException, IOException {
-		//¸ŞÀÏ °ü·Ã Á¤º¸
+		//ë©”ì¼ ê´€ë ¨ ì •ë³´
 		String host = "smtp.naver.com";
 		final String username = "ksg980105";
-		final String password = "ºñ¹Ğ¹øÈ£";
-		int port=465; //³×ÀÌ¹ö STMP Æ÷Æ® ¹øÈ£
+		final String password = "ë¹„ë°€ë²ˆí˜¸";
+		int port=465; //ë„¤ì´ë²„ STMP í¬íŠ¸ ë²ˆí˜¸
 		
-		//¸ŞÀÏ ³»¿ë
-		String recipient = email; //¸ŞÀÏÀ» ¹ß¼ÛÇÒ ÀÌ¸ŞÀÏ ÁÖ¼Ò
-		String subject = "[¿Êºñ¼­, ³ª¸¸ÀÇ ½ºÅ¸ÀÏ¸®½ºÆ®] ºñ¹Ğ¹øÈ£ ¾Ë¸² ¸ŞÀÏ"; //¸ŞÀÏ ¹ß¼Û½Ã Á¦¸ñ
-		String body = "È¸¿ø´ÔÀÇ ºñ¹Ğ¹øÈ£´Â " + mempassword + "ÀÔ´Ï´Ù."; //¸ŞÀÏ ¹ß¼Û½Ã ³»¿ë
+		//ë©”ì¼ ë‚´ìš©
+		String recipient = email; //ë©”ì¼ì„ ë°œì†¡í•  ì´ë©”ì¼ ì£¼ì†Œ
+		String subject = "[ì˜·ë¹„ì„œ, ë‚˜ë§Œì˜ ìŠ¤íƒ€ì¼ë¦¬ìŠ¤íŠ¸] ë¹„ë°€ë²ˆí˜¸ ì•Œë¦¼ ë©”ì¼"; //ë©”ì¼ ë°œì†¡ì‹œ ì œëª©
+		String body = "íšŒì›ë‹˜ì˜ ë¹„ë°€ë²ˆí˜¸ëŠ” \" + mempassword + \"ì…ë‹ˆë‹¤."; //ë©”ì¼ ë°œì†¡ì‹œ ë‚´ìš©
 		
 		Properties props = System.getProperties();
 		
@@ -83,7 +83,7 @@ public class FindPwController {
 		
 		PrintWriter out = response.getWriter();
 	    response.setContentType("text/html; charset=UTF-8");
-	    out.println("<script>alert('ÀÌ¸ŞÀÏ·Î ºñ¹Ğ¹øÈ£°¡ Àü¼ÛµÇ¾ú½À´Ï´Ù.'); location.href='" + request.getContextPath() + "/" + gotoPage + "';</script>");
+	    out.println("<script>alert('ì´ë©”ì¼ë¡œ ë¹„ë°€ë²ˆí˜¸ê°€ ì „ì†¡ë˜ì—ˆìŠµë‹ˆë‹¤.'); location.href='" + request.getContextPath() + "/" + gotoPage + "';</script>");
 	    out.flush();
 	    
 	}
@@ -103,29 +103,29 @@ public class FindPwController {
 		
 		MemberBean memberBean = memberDao.findwithId(member_id);
 		
-		if(memberBean == null) { //È¸¿øÁ¤º¸°¡ ¾øÀ»¶§
-			out.println("<script>alert('È¸¿øÁ¤º¸°¡ ¾ø½À´Ï´Ù.')</script>");
+		if(memberBean == null) { //íšŒì›ì •ë³´ê°€ ì—†ì„ë•Œ
+			out.println("<script>alert('íšŒì›ì •ë³´ê°€ ì—†ìŠµë‹ˆë‹¤.')</script>");
 			out.flush();
 			mav.setViewName(viewPage);
 			return mav;
 		
-		}else { //È¸¿øÁ¤º¸°¡ ÀÖÀ»¶§
-			if(phone.equals(memberBean.getPhone())) { //ÀüÈ­¹øÈ£°¡ ÀÏÄ¡ÇÒ¶§
-				if(email.equals(memberBean.getEmail())) { //ÀÌ¸ŞÀÏÁÖ¼Ò°¡ ÀÏÄ¡ÇÒ¶§
+		}else { //íšŒì›ì •ë³´ê°€ ìˆì„ë•Œ
+			if(phone.equals(memberBean.getPhone())) { //ì „í™”ë²ˆí˜¸ê°€ ì¼ì¹˜í• ë•Œ
+				if(email.equals(memberBean.getEmail())) { //ì´ë©”ì¼ì£¼ì†Œê°€ ì¼ì¹˜í• ë•Œ
 					String mempassword = memberBean.getPassword();
 					
 					response.sendRedirect("sendEmail.member?mempassword=" + mempassword + "&email=" + email);
 					return null;
 					
 				}else { 
-					out.println("<script>alert('ÀÌ¸ŞÀÏÁÖ¼Ò°¡ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.')</script>");
+					out.println("<script>alert('ì´ë©”ì¼ì£¼ì†Œê°€ ì¼ì¹˜í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.')</script>");
 					out.flush();
 					mav.setViewName(viewPage);
 					return mav;
 				}
 				
-			}else { //ÀüÈ­¹øÈ£ ÀÏÄ¡ ¾ÈÇÒ¶§
-				out.println("<script>alert('ÈŞ´ëÆù¹øÈ£°¡ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.')</script>");
+			}else { //ì „í™”ë²ˆí˜¸ ì¼ì¹˜ ì•ˆí• ë•Œ
+				out.println("<script>alert('íœ´ëŒ€í°ë²ˆí˜¸ê°€ ì¼ì¹˜í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.')</script>");
 				out.flush();
 				mav.setViewName(viewPage);
 				return mav;

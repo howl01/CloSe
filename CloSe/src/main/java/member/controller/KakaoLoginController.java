@@ -33,15 +33,15 @@ public class KakaoLoginController {
 		PrintWriter out = response.getWriter();
 	    response.setContentType("text/html; charset=UTF-8");
 	    
-	    MemberBean memberBean = memberDao.findwithId(member_id);//°¡ÀÔÇÑ ¾ÆÀÌµğ°¡ ÀÖ´ÂÁö È®ÀÎ
+	    MemberBean memberBean = memberDao.findwithId(member_id);//ê°€ì…í•œ ì•„ì´ë””ê°€ ìˆëŠ”ì§€ í™•ì¸
 		
 		if(memberBean == null) {
-			out.println("<script>alert('µî·ÏµÈ Á¤º¸°¡¾ø¾î È¸¿ø°¡ÀÔÆäÀÌÁö·Î ÀÌµ¿ÇÕ´Ï´Ù.'); location.href='" + request.getContextPath() + "/kakaoRegister.member';</script>");
+			out.println("<script>alert('ë“±ë¡ëœ ì •ë³´ê°€ì—†ì–´ íšŒì›ê°€ì…í˜ì´ì§€ë¡œ ì´ë™í•©ë‹ˆë‹¤.'); location.href='" + request.getContextPath() + "/kakaoRegister.member';</script>");
 			out.flush();
 		    
 		}else {
 			session.setAttribute("kakaoLoginInfo", memberBean);
-			out.println("<script>alert('·Î±×ÀÎ µÇ¾ú½À´Ï´Ù.'); location.href='" + request.getContextPath() + "/view.main';</script>");
+			out.println("<script>alert('ë¡œê·¸ì¸ ë˜ì—ˆìŠµë‹ˆë‹¤.'); location.href='" + request.getContextPath() + "/view.main';</script>");
 			out.flush();
 		}
 		

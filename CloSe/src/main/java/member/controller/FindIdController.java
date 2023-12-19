@@ -50,21 +50,21 @@ public class FindIdController {
 		MemberBean memberBean = memberDao.findwithNameAndPhone(params);
 		
 		if(memberBean == null) {
-			out.println("<script>alert('È¸¿øÁ¤º¸°¡ ¾ø½À´Ï´Ù.')</script>");
+			out.println("<script>alert('íšŒì›ì •ë³´ê°€ ì—†ìŠµë‹ˆë‹¤.')</script>");
 			out.flush();
 			mav.setViewName(viewPage);
 			return mav;
 		}else {
 			if(phone.equals(memberBean.getPhone())) {
 				if(memberBean.getSocial().equals("kakao")) {
-					out.println("<script>alert('Ä«Ä«¿À È¸¿øÀÔ´Ï´Ù. Ä«Ä«¿ÀÅå ·Î±×ÀÎÀ» ÀÌ¿ëÇØÁÖ¼¼¿ä.')</script>");
+					out.println("<script>alert('ì¹´ì¹´ì˜¤ íšŒì›ì…ë‹ˆë‹¤. ì¹´ì¹´ì˜¤í†¡ ë¡œê·¸ì¸ì„ ì´ìš©í•´ì£¼ì„¸ìš”.')</script>");
 					out.flush();
 					mav.setViewName(viewPage);
 					return mav;
 					
 				}else {
 					String memberId = memberBean.getMember_id();
-					String alertMessage = "¾ÆÀÌµğ´Â [" + memberId + "] ÀÔ´Ï´Ù.";
+					String alertMessage = "ì•„ì´ë””ëŠ” [" + memberId + "] ì…ë‹ˆë‹¤.";
 					
 					out.println("<script>alert('" + alertMessage + "')</script>");
 					out.flush();
@@ -73,7 +73,7 @@ public class FindIdController {
 				}
 				
 			}else {
-				out.println("<script>alert('ÈŞ´ëÆù ¹øÈ£°¡ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.')</script>");
+				out.println("<script>alert('íœ´ëŒ€í° ë²ˆí˜¸ê°€ ì¼ì¹˜í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.')</script>");
 				out.flush();
 				mav.setViewName(viewPage);
 				return mav;

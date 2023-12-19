@@ -8,51 +8,54 @@ import java.time.LocalDate;
 import org.hibernate.validator.constraints.NotEmpty;
 
 public class MemberBean {
-	@NotEmpty(message = "¾ÆÀÌµğ¸¦ ÀÔ·ÂÇÏ¼¼¿ä")
-	@Size(max = 10, message = "10±ÛÀÚÀÌÇÏ·Î ÀÔ·ÂÇÏ¼¼¿ä")
+	@NotEmpty(message = "ì•„ì´ë””ë¥¼ ì…ë ¥í•˜ì„¸ìš”")
+	@Size(max = 10, message = "10ê¸€ìì´í•˜ë¡œ ì…ë ¥í•˜ì„¸ìš”")
 	private String member_id;
-
-	@NotEmpty(message = "ºñ¹Ğ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä")
+	
+	@NotEmpty(message = "ë¹„ë°€ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”")
 	private String password;
-
+	
 	private String passwordcheck;
-
-	@NotEmpty(message = "ÀÌ¸§À» ÀÔ·ÂÇÏ¼¼¿ä")
-	@Size(max = 3, message = "3±ÛÀÚÀÌÇÏ·Î ÀÔ·ÂÇÏ¼¼¿ä")
+	 
+	@NotEmpty(message = "ì´ë¦„ì„ ì…ë ¥í•˜ì„¸ìš”")
+	@Size(max = 3, message = "3ê¸€ìì´í•˜ë¡œ ì…ë ¥í•˜ì„¸ìš”")
 	private String name;
-
-	@NotEmpty(message = "ÀüÈ­¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä")
-	@Pattern(regexp = "^[0-9]+$", message = "¼ıÀÚ¸¸ ÀÔ·Â°¡´É")
+	
+	@NotEmpty(message = "ì „í™”ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”")
+	@Pattern(regexp = "^[0-9]+$", message = "ìˆ«ìë§Œ ì…ë ¥ê°€ëŠ¥")
 	private String phone;
-	@NotEmpty(message = "ÀÌ¸ŞÀÏÀ» ÀÔ·ÂÇÏ¼¼¿ä")
+	
+	@NotEmpty(message = "ì´ë©”ì¼ì„ ì…ë ¥í•˜ì„¸ìš”")
 	private String email;
+	
+	@NotEmpty(message = "ì£¼ì†Œë¥¼ ì…ë ¥í•˜ì„¸ìš”")
 	private String address1;
-
-	@NotEmpty(message = "»ó¼¼ÁÖ¼Ò¸¦ ÀÔ·ÂÇÏ¼¼¿ä")
+	
+	@NotEmpty(message = "ìƒì„¸ì£¼ì†Œë¥¼ ì…ë ¥í•˜ì„¸ìš”")
 	private String address2;
-
-	@NotEmpty(message = "»ı³â¿ùÀÏÀ» ÀÔ·ÂÇÏ¼¼¿ä")
+	
+	@NotEmpty(message = "ìƒë…„ì›”ì¼ì„ ì…ë ¥í•˜ì„¸ìš”")
 	private String birth;
-
-	@NotNull(message = "¼ºº°À» ¼±ÅÃÇÏ¼¼¿ä")
+	
+	@NotNull(message = "ì„±ë³„ì„ ì„ íƒí•˜ì„¸ìš”")
 	private String gender;
-
-	@NotEmpty(message = "´Ğ³×ÀÓÀ» ÀÔ·ÂÇÏ¼¼¿ä")
-	@Size(max = 6, message = "6±ÛÀÚÀÌÇÏ·Î ÀÔ·ÂÇÏ¼¼¿ä")
+	
+	@NotEmpty(message = "ë‹‰ë„¤ì„ì„ ì…ë ¥í•˜ì„¸ìš”")
+	@Size(max = 6, message = "6ê¸€ìì´í•˜ë¡œ ì…ë ¥í•˜ì„¸ìš”")
 	private String nickname;
-
-	@NotNull(message = "ÀÎÁõ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä")
-	@Size(min = 4, message = "ÀÎÁõ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä")
+	
+	@NotNull(message = "ì¸ì¦ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”")
+	@Size(min = 4, message = "ì¸ì¦ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”")
 	private String verificationCode;
-
-	@NotEmpty(message = "Å° ÀÔ·Â")
-	@Pattern(regexp = "^[0-9]+$", message = "¼ıÀÚ¸¸ ÀÔ·Â°¡´É")
+	
+	@NotEmpty(message = "í‚¤ ì…ë ¥")
+	@Pattern(regexp = "^[0-9]+$", message = "ìˆ«ìë§Œ ì…ë ¥ê°€ëŠ¥")
 	private String height;
-
-	@NotEmpty(message = "¸ö¹«°Ô ÀÔ·Â")
-	@Pattern(regexp = "^[0-9]+$", message = "¼ıÀÚ¸¸ ÀÔ·Â°¡´É")
+	
+	@NotEmpty(message = "ëª¸ë¬´ê²Œ ì…ë ¥")
+	@Pattern(regexp = "^[0-9]+$", message = "ìˆ«ìë§Œ ì…ë ¥ê°€ëŠ¥")
 	private String weight;
-
+	
 	private String social;
 
 	private int ban_count;

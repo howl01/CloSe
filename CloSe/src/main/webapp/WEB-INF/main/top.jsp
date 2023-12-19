@@ -273,14 +273,23 @@
                     <img src="resources/icon/person.svg" class="bi d-block mx-auto mb-1" width="30" height="30"> 
                     <font size="2">마이페이지</font>
                 </a>
-            </c:if>
+            	</c:if>
             </li>
             
             <li>
-               <a href="javascript:goLogin()" class="nav-link text-black"> 
-                  <img src="resources/icon/cart.svg" class="bi d-block mx-auto mb-1" width="30" height="30" style="margin-top: 1px;"> 
-                  <font size="2">장바구니</font>
-               </a>
+            	<c:if test="${empty loginInfo and empty kakaoLoginInfo}">
+	               <a href="javascript:goLogin()" class="nav-link text-black"> 
+	                  <img src="resources/icon/cart.svg" class="bi d-block mx-auto mb-1" width="30" height="30" style="margin-top: 1px;"> 
+	                  <font size="2">장바구니</font>
+	               </a>
+                </c:if>
+                
+                <c:if test="${not empty loginInfo or not empty kakaoLoginInfo}">
+	               <a href="javascript:goLogin()" class="nav-link text-black"> 
+	                  <img src="resources/icon/cart.svg" class="bi d-block mx-auto mb-1" width="30" height="30" style="margin-top: 1px;"> 
+	                  <font size="2">장바구니</font>
+	               </a>
+                </c:if>
             </li>
             
             <li>
