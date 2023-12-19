@@ -151,43 +151,43 @@
                   </div>
 
                   <div class="col" align="center">
-                     <a><img class="bd-placeholder-img card-img-top" src="/pimages/" width="100%" height="120"
+                     <a><img class="bd-placeholder-img card-img-top" src="resources/img/man.webp" width="100%" height="120"
                            style="border-radius: 20%;"></a>
                      남자 코디
                   </div>
 
                   <div class="col" align="center">
-                     <a><img class="bd-placeholder-img card-img-top" src="/pimages/" width="100%" height="120"
+                     <a><img class="bd-placeholder-img card-img-top" src="resources/img/girl.gif" width="100%" height="120"
                            style="border-radius: 20%;"></a>
                      여자 코디
                   </div>
 
                   <div class="col" align="center">
-                     <a><img class="bd-placeholder-img card-img-top" src="/pimages/" width="100%" height="120"
+                     <a><img class="bd-placeholder-img card-img-top" src="resources/img/weather.jpg" width="100%" height="120"
                            style="border-radius: 20%;"></a>
                      계절별 코디
                   </div>
 
                   <div class="col" align="center">
-                     <a><img class="bd-placeholder-img card-img-top" src="/pimages/" width="100%" height="120"
+                     <a><img class="bd-placeholder-img card-img-top" src="resources/img/outer.avif" width="100%" height="120"
                            style="border-radius: 20%;" onclick="productList('아우터')"></a>
                      아우터
                   </div>
 
                   <div class="col" align="center">
-                     <a><img class="bd-placeholder-img card-img-top" src="/pimages/" width="100%" height="120"
+                     <a><img class="bd-placeholder-img card-img-top" src="resources/img/top.gif" width="100%" height="120"
                            style="border-radius: 20%;" onclick="productList('상의')"></a>
                      상의
                   </div>
 
                   <div class="col" align="center">
-                     <a><img class="bd-placeholder-img card-img-top" src="/pimages/" width="100%" height="120"
+                     <a><img class="bd-placeholder-img card-img-top" src="resources/img/bottom.gif" width="100%" height="120"
                            style="border-radius: 20%;" onclick="productList('하의')"></a>
                      하의
                   </div>
 
                   <div class="col" align="center">
-                     <a><img class="bd-placeholder-img card-img-top" src="/pimages/" width="100%" height="120"
+                     <a><img class="bd-placeholder-img card-img-top" src="resources/img/shoes.jpg" width="100%" height="120"
                            style="border-radius: 20%;" onclick="productList('신발')"></a>
                      신발
                   </div>
