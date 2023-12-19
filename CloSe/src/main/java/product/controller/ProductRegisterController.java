@@ -61,9 +61,6 @@ public class ProductRegisterController {
 			pb.setImage(prevImage);
 		}
 		
-		System.out.println("����������:"+prevContent);
-		System.out.println("����������:"+pb.getContent());
-		
 
 		String uploadPath = servletContext.getRealPath("/resources/product/image"); 
 		String uploadPath2 = servletContext.getRealPath("/resources/product/content"); 
@@ -77,7 +74,7 @@ public class ProductRegisterController {
 		MultipartFile multi = pb.getpImage();
 		MultipartFile multi2 = pb.getpContent();
 		try {
-			//������ ���̺� �ִ��� Ȯ��	 
+			
 			boolean existsPImage = false;
 			for(int i=0;i<plists.size();i++) {
 				ProductBean pb0 = plists.get(i);
@@ -90,7 +87,7 @@ public class ProductRegisterController {
 					destination0.delete();
 				}
 			}
-			//������ ���̺� �ִ��� Ȯ��	 
+			
 			boolean existsPContent = false;
 			for(int i=0;i<plists.size();i++) {
 				ProductBean pb0 = plists.get(i);
@@ -111,7 +108,7 @@ public class ProductRegisterController {
 			
 			
 			
-			// ������ ������ �� �̹��� ���ε�
+			
 			if(!destination.exists()) {
 				multi.transferTo(destination);
 			}
@@ -119,16 +116,15 @@ public class ProductRegisterController {
 				multi2.transferTo(destination2);
 			}
 
-			// ������ ������ ���� �̹��� ����
-			//destination2.delete();
+			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
 
-		if(bresult.hasErrors()) { //��ȿ���˻�
+		if(bresult.hasErrors()) { 
 			return viewPage;
 		}
-		for(int i=0;i<plists.size();i++) { //�̸� �ߺ� �˻�
+		for(int i=0;i<plists.size();i++) { 
 			ProductBean pb0 = plists.get(i);
 			if(pb0.getProduct_name().equals(pb.getProduct_name())) {
 				return viewPage;

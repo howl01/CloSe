@@ -51,10 +51,9 @@ public class StyleDetailController {
 
 		String path = servletContext.getRealPath("/resources/styleImage");
 		
-		// 폴더가 없으면 생성
 	    File directory = new File(path);
 	    if (!directory.exists()) {
-	        directory.mkdirs(); // 디렉토리 생성
+	        directory.mkdirs(); //
 	    }
 		
 		List<MultipartFile> images = styleBean.getImages();
