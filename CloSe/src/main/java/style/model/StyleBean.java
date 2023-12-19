@@ -30,7 +30,17 @@ public class StyleBean {
 	private MultipartFile MImage3;
 	private MultipartFile MImage4;
 	private MultipartFile MImage5;
-	
+
+	private double avg_temperature;
+
+	public double getAvg_temperature() {
+		return avg_temperature;
+	}
+
+	public void setAvg_temperature(double avg_temperature) {
+		this.avg_temperature = avg_temperature;
+	}
+
 	public MultipartFile getMImage1() {
 		return MImage1;
 	}
@@ -110,24 +120,24 @@ public class StyleBean {
 		for (int i = 1; i < images.size() + 1; i++) {
 			switch (i) {
 			case 1:
-				setImage1(uuid.toString()+images.get(i - 1).getOriginalFilename());
-				setMImage1(images.get(i-1));
+				setImage1(uuid.toString() + images.get(i - 1).getOriginalFilename());
+				setMImage1(images.get(i - 1));
 				break;
 			case 2:
-				setImage2(uuid.toString()+images.get(i - 1).getOriginalFilename());
-				setMImage2(images.get(i-1));
+				setImage2(uuid.toString() + images.get(i - 1).getOriginalFilename());
+				setMImage2(images.get(i - 1));
 				break;
 			case 3:
-				setImage3(uuid.toString()+images.get(i - 1).getOriginalFilename());
-				setMImage3(images.get(i-1));
+				setImage3(uuid.toString() + images.get(i - 1).getOriginalFilename());
+				setMImage3(images.get(i - 1));
 				break;
 			case 4:
-				setImage4(uuid.toString()+images.get(i - 1).getOriginalFilename());
-				setMImage4(images.get(i-1));
+				setImage4(uuid.toString() + images.get(i - 1).getOriginalFilename());
+				setMImage4(images.get(i - 1));
 				break;
 			case 5:
-				setImage5(uuid.toString()+images.get(i - 1).getOriginalFilename());
-				setMImage5(images.get(i-1));
+				setImage5(uuid.toString() + images.get(i - 1).getOriginalFilename());
+				setMImage5(images.get(i - 1));
 				break;
 			default:
 				break;

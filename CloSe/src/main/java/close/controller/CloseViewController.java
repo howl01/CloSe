@@ -9,6 +9,7 @@ import java.net.URLEncoder;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -18,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import style.model.StyleBean;
 import style.model.StyleDao;
 
 @Controller
@@ -137,6 +139,8 @@ public class CloseViewController {
        }else if(avg > 27.0) {
     	   season = "summer";
        }
+       
+       List<StyleBean> lists = styleDao.getTemperatureAvgByStyle();
        
        return viewPage;
    }

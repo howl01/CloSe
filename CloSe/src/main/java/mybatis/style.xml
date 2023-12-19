@@ -16,4 +16,14 @@
 		select * from style
 		where style_number = #{style_number}
 	</select>
+	
+	<select id="getTemperatureAvgByStyle" resultType="StyleBean">
+		select style_number, avg(temperature) avg_temperature from
+		style join product
+		on product_number1 = product_number
+		or product_number2 = product_number
+		or product_number3 = product_number
+		or product_number4 = product_number
+		group by style_number
+	</select>
 </mapper>

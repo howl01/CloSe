@@ -31,4 +31,8 @@ public class StyleDao {
 		return sqlSessionTemplate.selectOne(namespace + ".getStyleByStyleNumber", style_number);
 	}
 
+	public List<StyleBean> getTemperatureAvgByStyle() {
+		return sqlSessionTemplate.selectList(namespace+".getTemperatureAvgByStyle");
+	}
+
 }

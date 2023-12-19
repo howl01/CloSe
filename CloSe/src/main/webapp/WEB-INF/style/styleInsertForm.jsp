@@ -192,7 +192,6 @@ $(document).ready(function () {
         var price = jsonArray[itemIndex].price;
         var productName = jsonArray[itemIndex].product_name;
     
-        alert(isProductNumberAlreadySet(productNumber));
      	// 중복 체크
         if (isProductNumberAlreadySet(productNumber)) {
             alert("이미 선택된 제품입니다.");
@@ -206,7 +205,6 @@ $(document).ready(function () {
             if (!isSet && $(inputId).val() === "") {
                 $(inputId).val(productNumber);
                 $("#displayList2").hide(); // 예시에 따라 displayList1, displayList2, ... 가려주기
-                alert(productNumber);
                 isSet = true; // 값을 설정한 경우 isSet을 true로 변경
                 
              // Assuming you have a container div with id 'tagImage'
@@ -343,10 +341,9 @@ $(document).ready(function () {
 	
 	<div class="row d-flex justify-content-center">
 		<div class="col-lg-2"></div>
-      
 		<div class="col-lg-6">
 		<form:form name="f" commandName="styleBean" action="insert.style" method="post" enctype="multipart/form-data">
-			<input type="hidden" name="member_id" value="kim">
+			<input type="hidden" name="member_id" <c:if test="${not empty loginInfo}">value="${loginInfo.member_id }"</c:if> <c:if test="${not empty kakaoLoginInfo}">value="${kakaoLoginInfo.member_id}"</c:if>>
 			<input type="hidden" name="product_number1" id="product_number1" value="${styleBean.product_number1}">
 			<input type="hidden" name="product_number2" id="product_number2" value="${styleBean.product_number2}">
 			<input type="hidden" name="product_number3" id="product_number3" value="${styleBean.product_number3}">
