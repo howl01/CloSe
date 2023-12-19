@@ -14,7 +14,6 @@
 		<property name="suffix" value=".jsp"></property>
 	</bean>
 
-<<<<<<< HEAD
 	<context:component-scan base-package="main" />
 	<context:component-scan base-package="close" />
 	<context:component-scan base-package="category" />
@@ -27,8 +26,3 @@
 	<context:component-scan base-package="cart" />
 	
 </beans>
-=======
-	<context:component-scan base-package="cart" />
-	
-</beans>
->>>>>>> refs/remotes/origin/howl
