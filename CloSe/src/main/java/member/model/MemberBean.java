@@ -1,54 +1,73 @@
 package member.model;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 import org.hibernate.validator.constraints.NotEmpty;
 
 public class MemberBean {
 	@NotEmpty(message = "아이디를 입력하세요")
+	@Size(max = 10, message = "10글자이하로 입력하세요")
 	private String member_id;
 	
-	@NotEmpty(message = "입력하세요")
+	@NotEmpty(message = "비밀번호를 입력하세요")
 	private String password;
+	
+	private String passwordcheck;
 	 
-	@NotEmpty(message = "입력하세요")
+	@NotEmpty(message = "이름을 입력하세요")
+	@Size(max = 3, message = "3글자이하로 입력하세요")
 	private String name;
 	
-	@NotEmpty(message = "입력하세요")
-	private String hp1;
+	@NotEmpty(message = "전화번호를 입력하세요")
+	@Pattern(regexp = "^[0-9]+$", message = "숫자만 입력가능")
+	private String phone;
 	
-	@NotEmpty(message = "입력하세요")
-	private String hp2;
+	@NotEmpty(message = "이메일을 입력하세요")
+	private String email;
 	
-	@NotEmpty(message = "입력하세요")
-	private String hp3;
-	
-	@NotEmpty(message = "입력하세요")
+	@NotEmpty(message = "주소를 입력하세요")
 	private String address1;
 	
-	@NotEmpty(message = "입력하세요")
+	@NotEmpty(message = "상세주소를 입력하세요")
 	private String address2;
 	
+	@NotEmpty(message = "생년월일을 입력하세요")
 	private String birth;
 	
-	
+	@NotNull(message = "성별을 선택하세요")
 	private String gender;
 	
 	@NotEmpty(message = "닉네임을 입력하세요")
+	@Size(max = 6, message = "6글자이하로 입력하세요")
 	private String nickname;
-	private int height;
-	private int weight;
+	
+	@NotNull(message = "인증번호를 입력하세요")
+	@Size(min = 4, message = "인증번호를 입력하세요")
+	private String verificationCode;
+	
+	@NotEmpty(message = "키 입력")
+	@Pattern(regexp = "^[0-9]+$", message = "숫자만 입력가능")
+	private String height;
+	
+	@NotEmpty(message = "몸무게 입력")
+	@Pattern(regexp = "^[0-9]+$", message = "숫자만 입력가능")
+	private String weight;
+	
+	private String social;
 	
 	public MemberBean() {
 		super();
 	}
-	public MemberBean(String member_id, String password, String name, String hp1, String hp2, String hp3,
-			String address1, String address2, String birth, String gender, String nickname, int height, int weight) {
+	public MemberBean(String member_id, String password, String name, String phone, String email,
+			String address1, String address2, String birth, String gender, String nickname, String height, String weight, String social) {
 		super();
 		this.member_id = member_id;
 		this.password = password;
 		this.name = name;
-		this.hp1 = hp1;
-		this.hp2 = hp2;
-		this.hp3 = hp3;
+		this.phone = phone;
+		this.email = email;
 		this.address1 = address1;
 		this.address2 = address2;
 		this.birth = birth;
@@ -56,6 +75,32 @@ public class MemberBean {
 		this.nickname = nickname;
 		this.height = height;
 		this.weight = weight;
+		this.social = social;
+	}
+	
+	public String getSocial() {
+		return social;
+	}
+	public void setSocial(String social) {
+		this.social = social;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getPasswordcheck() {
+		return passwordcheck;
+	}
+	public void setPasswordcheck(String passwordcheck) {
+		this.passwordcheck = passwordcheck;
+	}
+	public String getVerificationCode() {
+		return verificationCode;
+	}
+	public void setVerificationCode(String verificationCode) {
+		this.verificationCode = verificationCode;
 	}
 	public String getMember_id() {
 		return member_id;
@@ -75,23 +120,11 @@ public class MemberBean {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getHp1() {
-		return hp1;
+	public String getPhone() {
+		return phone;
 	}
-	public void setHp1(String hp1) {
-		this.hp1 = hp1;
-	}
-	public String getHp2() {
-		return hp2;
-	}
-	public void setHp2(String hp2) {
-		this.hp2 = hp2;
-	}
-	public String getHp3() {
-		return hp3;
-	}
-	public void setHp3(String hp3) {
-		this.hp3 = hp3;
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 	public String getAddress1() {
 		return address1;
@@ -123,16 +156,16 @@ public class MemberBean {
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
-	public int getHeight() {
+	public String getHeight() {
 		return height;
 	}
-	public void setHeight(int height) {
+	public void setHeight(String height) {
 		this.height = height;
 	}
-	public int getWeight() {
+	public String getWeight() {
 		return weight;
 	}
-	public void setWeight(int weight) {
+	public void setWeight(String weight) {
 		this.weight = weight;
 	}
 	

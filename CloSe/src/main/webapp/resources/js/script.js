@@ -7,10 +7,6 @@ var isCheck = false;
 var use;
 var pwuse;
 
-function go() {
-	alert(1);
-}
-
 $(function(){
 	$("input[name=id]").keydown(function(){
 		$("#idmessage").css('display','none');
@@ -27,77 +23,6 @@ function searchAddress(){
     }).open();
 }
 
-function writeSave(){ // submit(가입하기)
-	// alert(1);
-	if($("input[name=id]").val()==""){
-		alert("아이디를 입력해 주세요.");
-		$("input[name=id]").focus();
-		isBlank = true;
-		return false;
-	}else if(use == "impossible"){
-		alert("이미 사용중인 아이디입니다.");
-		return false;
-	}
-	else if(isCheck == false){
-		alert("중복체크 확인해 주세요.");
-		return false;
-	}
-	
-	if($("input[name=password]").val() == ""){
-		alert("비밀번호를 입력해 주세요.");
-		$("input[name=password]").focus();
-		return false;
-	}
-	
-	if($("input[name=passwordcheck]").val() == ""){
-		alert("비밀번호 확인을 입력해 주세요.");
-		$("input[name=passwordcheck]").focus();
-		return false;
-	}
-	
-	if(pwuse == "nosame"){
-		alert("비밀번호가 일치하지 않습니다.");
-		return false;
-	}
-	
-	if(pwerror == "error"){
-		alert("영문 대/소문자, 숫자 조합이 아닙니다.");
-		return false;
-	}
-	
-}//writeSave
-
-function duplicate(){ // 중복체크
-	// alert('duplicate');
-	isCheck = true;
-	
-	if($("input[name=id]").val()==""){
-		alert("아이디를 입력해 주세요.");
-		$("input[name=id]").focus();
-		isBlank = true;
-		return;
-	}
-	
-	$.ajax({
-			url : "id_check_pro.jsp",
-			data : ({
-				userid : $("input[name=id]").val() // userid=kim
-			}),
-			success : function(data){
-				if($.trim(data) == "YES"){
-					$("#idmessage").html("<font color=blue>사용 가능한 아이디입니다.</font>")
-					$("#idmessage").show();
-					use = "possible";
-				}else{
-					$("#idmessage").html("<font color=red>중복된 아이디입니다.</font>")
-					$("#idmessage").show();
-					use = "impossible";
-				}
-			} // success
-		}); // ajax
-			
-}//duplicate
-
 function repassword_keyup(){
 	//alert(1);
 	if($("input[name=password]").val() == $("input[name=passwordcheck]").val()){
@@ -112,7 +37,7 @@ function repassword_keyup(){
 function pwcheck(){ // 영문 소문자/숫자 조합 8~16자
 	pvalue = $("input[name=password").val();
 	
-	var regexp = /^[a-zA-Z0-9]{8,16}$/;
+	var regexp = /^[a-z0-9]{8,16}$/;
 	
 	if(pvalue.search(regexp) == -1){
 		alert("길이는 8~16 사이어야 합니다.");
@@ -126,7 +51,7 @@ function pwcheck(){ // 영문 소문자/숫자 조합 8~16자
 	var chk_eng = pvalue.search(/[a-z]/i); // i는 대소문자 구분하지 않는다 즉, [a-z]/i = [a-zA-Z]
 	var chk_num = pvalue.search(/[0-9]/);
 	if(chk_eng<0 || chk_num<0){
-		alert("영문 대/소문자, 숫자 조합이 아닙니다.");
+		alert("영문 소문자, 숫자 조합이 아닙니다.");
 		pwerror = "error";
 		setTimeout(function(){               
 			f.password.select();             
@@ -138,41 +63,100 @@ function pwcheck(){ // 영문 소문자/숫자 조합 8~16자
 	
 }
 
-function hp2check(){
-	//alert(f.hp2.value);
-	if(isNaN(f.hp2.value)){
-		alert("휴대폰 번호는 숫자로 입력해 주세요.");
-		setTimeout(function(){               
-			f.hp2.select();             
-		}, 10);
-	}
-}
 
-function hp3check(){
-	//alert(f.hp3.value);
-	if(isNaN(f.hp3.value)){
-		alert("휴대폰 번호는 숫자로 입력해 주세요.");
-		setTimeout(function(){               
-			f.hp3.select();             
-		}, 10);
+function idformcheck(){
+	if(f.name.value == ""){
+		alert('이름을 입력하세요.');
+		return false;
 	}
-}
 
-function hpcheck(){
-	//alert(f.hp.value);
-	if(isNaN(f.hp.value)){
+	if(isNaN(f.phone.value)){
 		alert("휴대폰 번호는 숫자로 입력해 주세요.");
 		setTimeout(function(){               
-			f.hp2.select();             
+			f.phone.select();             
 		}, 10);
-		return;
+		return false;
 	}
 	
-	if(f.hp.value.length<11){
+	if(f.phone.value.length<11){
 		alert("휴대폰 번호를 전부 입력해 주세요.");
 		setTimeout(function(){               
-			f.hp.focus();             
+			f.phone.focus();             
 		}, 10);
-		return;
+		return false;
+	}
+}
+
+function pwformcheck(){
+	
+	if(f.member_id.value == ""){
+		alert('아이디를 입력하세요.');
+		return false;
+	}
+
+	if(isNaN(f.phone.value)){
+		alert("휴대폰 번호는 숫자로 입력해 주세요.");
+		return false;
+	}
+	
+	if(f.phone.value.length<11){
+		alert("휴대폰 번호를 전부 입력해 주세요.");
+		return false;
+	}
+	
+	if (f.email.value.trim() == "") {
+        alert('이메일을 입력하세요.');
+        return false;
+    }
+	
+    var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+    if (!emailPattern.test(f.email.value)) {
+        alert('올바른 이메일 형식이 아닙니다.');
+        return false;
+    }
+}
+
+function updatecheck(){
+	if(f.nickname.value == ""){
+		alert('닉네임을 입력하세요.');
+		return false;
+	}
+	
+	if(f.password.value == ""){
+		alert('비밀번호를 입력하세요.');
+		return false;
+	}
+	
+	if(f.address1.value == ""){
+		alert('도로명주소를 입력하세요.');
+		return false;
+	}
+	
+	if(f.address2.value == ""){
+		alert('상세주소를 입력하세요.');
+		return false;
+	}
+	
+	if (f.email.value.trim() == "") {
+        alert('이메일을 입력하세요.');
+        return false;
+    }
+	
+    var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+    if (!emailPattern.test(f.email.value)) {
+        alert('올바른 이메일 형식이 아닙니다.');
+        return false;
+    }
+    
+    if(f.height.value == ""){
+		alert('키를 입력하세요.');
+		return false;
+	}
+	
+	if(f.weight.value == ""){
+		alert('몸무게를 입력하세요.');
+		return false;
 	}
 }

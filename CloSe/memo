@@ -15,19 +15,19 @@ DROP SEQUENCE order_seq;
 DROP SEQUENCE cart_seq;
 
 CREATE TABLE member (
-	member_id	varchar2(15)	PRIMARY KEY,
+	member_id	varchar2(30)	PRIMARY KEY,
 	password	varchar2(20)	NOT NULL,
-	name	varchar2(15)	NOT NULL,
-	hp1	varchar2(10)	NOT NULL,
-	hp2	varchar2(10)	NOT NULL,
-	hp3	varchar2(10)	NOT NULL,
+	name	varchar2(10)	NOT NULL,
+	phone	varchar2(20)	NOT NULL,
+	email	varchar2(20)	NOT NULL,
 	address1	varchar2(100)	NOT NULL,
 	address2	varchar2(100)	NOT NULL,
 	birth	Date,
 	gender	varchar2(10),
 	nickname	varchar2(30)	NOT NULL,
 	height	number	NULL,
-	weight	number	NULL
+	weight	number	NULL,
+	social varchar2(20)
 );
 
 CREATE SEQUENCE member_seq;

@@ -18,10 +18,10 @@ import member.model.MemberBean;
 import member.model.MemberDao;
 
 @Controller
-public class RegisterController {
+public class KakaoRegisterController {
 
-	private final String command = "/register.member";
-	private final String viewPage = "registerForm";
+	private final String command = "/kakaoRegister.member";
+	private final String viewPage = "kakaoRegisterForm";
 	private final String gotoPage = "redirect:login.member";
 
 	@Autowired
@@ -35,7 +35,6 @@ public class RegisterController {
 
 	@RequestMapping(value = command, method = RequestMethod.POST)
 	public String registerPost(@Valid MemberBean mb, BindingResult bresult, HttpServletResponse response, HttpServletRequest request, Model model) throws IOException{
-		
 		PrintWriter out;
 		out = response.getWriter();
 		response.setContentType("text/html; charset=UTF-8");
@@ -43,11 +42,14 @@ public class RegisterController {
 		if(bresult.hasErrors()) {
 			return viewPage;
 		}
-
-		memberDao.memberRegister(mb);
+		
+		model.addAttribute("memberBean", mb);
+		memberDao.kakaoRegister(mb);
 		out.println("<script>alert('회원가입 되었습니다.'); location.href='" + request.getContextPath() + "/login.member';</script>");
 		out.flush();
 
 		return null;
+
+
 	}
 }
