@@ -6,6 +6,7 @@ public class CategoryBean {
 	
 	public CategoryBean() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
 	public CategoryBean(String smallcategory_name, String bigcategory_name) {
 		super();
@@ -23,7 +24,8 @@ public class CategoryBean {
 	}
 	public void setBigcategory_name(String bigcategory_name) {
 		this.bigcategory_name = bigcategory_name;
-	} 
+	}
+	
 	
 	
 }

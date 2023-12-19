@@ -14,11 +14,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import category.model.CategoryDao;
 import member.model.MemberBean;
 import member.model.MemberDao;
 
 @Controller
 public class RegisterController {
+<<<<<<< HEAD
 
 	private final String command = "/register.member";
 	private final String viewPage = "registerForm";
@@ -50,4 +52,29 @@ public class RegisterController {
 
 		return null;
 	}
+=======
+   
+   private final String command = "/register.member";
+   private final String viewPage = "register";
+   private final String gotoPage = "main";
+   
+   @Autowired
+   CategoryDao categoryDao;
+   
+   @RequestMapping(value = command, method = RequestMethod.GET)
+   public String registerGet() {
+      
+      return viewPage;
+   }
+   
+   @RequestMapping(value = command, method = RequestMethod.POST)
+   public String registerPost(@Valid MemberBean mb, BindingResult bresult) {
+      
+      if(bresult.hasErrors()) {
+         return viewPage;
+      }
+      
+      return gotoPage;
+   }
+>>>>>>> refs/remotes/origin/wook
 }

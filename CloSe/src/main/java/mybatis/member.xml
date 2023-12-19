@@ -44,4 +44,9 @@
 	<delete id="memberDelete">
 		delete from member where member_id=#{member_id}
 	</delete>
+	
+	<select id="getMember" resultType="MemberBean">
+		select * from member
+		where member_id = #{member_id}
+	</select>
 </mapper>

@@ -1,4 +1,4 @@
--- 기존 테이블 드롭
+
 DROP TABLE cart cascade constraints;
 DROP TABLE orders cascade constraints;
 DROP TABLE qna cascade constraints;
@@ -6,7 +6,7 @@ DROP TABLE style cascade constraints;
 DROP TABLE category cascade constraints;
 DROP TABLE product cascade constraints;
 drop table member cascade constraints;
--- 시퀀스 드롭
+
 DROP SEQUENCE member_seq;
 DROP SEQUENCE product_seq;
 DROP SEQUENCE style_seq;
@@ -27,7 +27,23 @@ CREATE TABLE member (
 	nickname	varchar2(30)	NOT NULL,
 	height	number	NULL,
 	weight	number	NULL,
-	social varchar2(20)
+	social varchar2(20),
+	ban_count number default 0,
+	ban_expiration date
+);
+
+CREATE TABLE report (
+    report_number number PRIMARY KEY,
+    report_category varchar2(30),
+    content varchar2(4000),
+    image varchar2(50),
+    reporter_id varchar2(15),
+    reported_user_id varchar2(15),
+    style_number number,
+    write_date date,
+    FOREIGN KEY (reporter_id) REFERENCES member(member_id),
+    FOREIGN KEY (reported_user_id) REFERENCES member(member_id),
+    FOREIGN KEY (style_number) REFERENCES style(style_number)
 );
 
 CREATE SEQUENCE member_seq;
@@ -66,47 +82,63 @@ CREATE TABLE style (
 	ip	varchar2(20),
 	product_number	number	NOT NULL,
 	member_id	varchar2(15)	NOT NULL,
-	FOREIGN KEY (product_number) REFERENCES product(product_number)
+	FOREIGN KEY (product_number) REFERENCES product(product_number),
+  	FOREIGN KEY (member_id) REFERENCES member(member_id)
 );
 
 CREATE SEQUENCE style_seq;
 
 CREATE TABLE qna (
 	qna_number	number	primary key,
-	image	varchar2(30)	NULL,
+	image	varchar2(30) default null,
 	title	varchar2(50)	NOT NULL,
 	content	varchar2(4000)	NOT NULL,
-	read_count	number,
-	recommend_count	number,
 	write_date	Date,
+	secret varchar2(10) default 'NO',
 	ref	number,
-	re_step	number,
 	re_level	number,
-	ip	varchar2(20),
-	member_id	varchar2(15)	NOT NULL
+	answer number default 0,
+	qna_category varchar2(20),
+  	member_id varchar2(15),
+	FOREIGN KEY (member_id) REFERENCES member(member_id)
 );
 
 CREATE SEQUENCE qna_seq;
 
-CREATE TABLE orders (
-	orders_number	number	primary key,
-	orders_date	Date	NULL,
-	amount	number	NULL,
-	qty	number	NULL,
-	product_number	number	NOT NULL,
-	member_id	varchar2(15)	NOT NULL,
-	cart_number	number	NOT NULL
+CREATE TABLE notice (
+	notice_number number primary key,
+	image varchar2(30),
+	title	varchar2(50)	NOT NULL,
+	content	varchar2(4000)	NOT NULL,
+	write_date	Date
 );
 
-CREATE SEQUENCE order_seq;
+CREATE SEQUENCE notice_seq;
 
 CREATE TABLE cart (
 	cart_number	number	primary key,
 	product_number	number	NOT NULL,
 	qty	number	NOT NULL,
 	member_id	varchar2(15)	NOT NULL,
-    	FOREIGN KEY (product_number) REFERENCES product(product_number),
-    	FOREIGN KEY (member_id) REFERENCES member(member_id)
+  FOREIGN KEY (product_number) REFERENCES product(product_number),
+  FOREIGN KEY (member_id) REFERENCES member(member_id)
 );
 
 CREATE SEQUENCE cart_seq;
+
+CREATE TABLE orders (
+	orders_number	number	primary key,
+	orders_date	Date	NULL,
+	amount	number	NULL,
+	qty	number	NULL,
+  	member_id varchar2(15),
+	product_number	number	NOT NULL,
+  	cart_number number,
+	FOREIGN KEY (member_id) REFERENCES member(member_id),
+  	FOREIGN KEY (product_number) REFERENCES product(product_number),
+	FOREIGN KEY (cart_number) REFERENCES cart(cart_number)
+);
+
+
+
+CREATE SEQUENCE order_seq;

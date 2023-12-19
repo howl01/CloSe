@@ -1,36 +1,73 @@
 package member.model;
 
+<<<<<<< HEAD
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+=======
+import java.time.LocalDate;
+>>>>>>> refs/remotes/origin/wook
 
 import org.hibernate.validator.constraints.NotEmpty;
 
 public class MemberBean {
+<<<<<<< HEAD
 	@NotEmpty(message = "¾ÆÀÌµð¸¦ ÀÔ·ÂÇÏ¼¼¿ä")
 	@Size(max = 10, message = "10±ÛÀÚÀÌÇÏ·Î ÀÔ·ÂÇÏ¼¼¿ä")
+=======
+	@NotEmpty(message = "ï¿½ï¿½ï¿½Ìµï¿½ ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½")
+>>>>>>> refs/remotes/origin/wook
 	private String member_id;
 	
+<<<<<<< HEAD
 	@NotEmpty(message = "ºñ¹Ð¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä")
+=======
+	@NotEmpty(message = "ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½")
+>>>>>>> refs/remotes/origin/wook
 	private String password;
 	
 	private String passwordcheck;
 	 
+<<<<<<< HEAD
 	@NotEmpty(message = "ÀÌ¸§À» ÀÔ·ÂÇÏ¼¼¿ä")
 	@Size(max = 3, message = "3±ÛÀÚÀÌÇÏ·Î ÀÔ·ÂÇÏ¼¼¿ä")
+=======
+	@NotEmpty(message = "ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½")
+>>>>>>> refs/remotes/origin/wook
 	private String name;
 	
+<<<<<<< HEAD
 	@NotEmpty(message = "ÀüÈ­¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä")
 	@Pattern(regexp = "^[0-9]+$", message = "¼ýÀÚ¸¸ ÀÔ·Â°¡´É")
 	private String phone;
+=======
+	@NotEmpty(message = "ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½")
+	private String hp1;
+>>>>>>> refs/remotes/origin/wook
 	
+<<<<<<< HEAD
 	@NotEmpty(message = "ÀÌ¸ÞÀÏÀ» ÀÔ·ÂÇÏ¼¼¿ä")
 	private String email;
+=======
+	@NotEmpty(message = "ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½")
+	private String hp2;
+>>>>>>> refs/remotes/origin/wook
 	
+<<<<<<< HEAD
 	@NotEmpty(message = "ÁÖ¼Ò¸¦ ÀÔ·ÂÇÏ¼¼¿ä")
+=======
+	@NotEmpty(message = "ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½")
+	private String hp3;
+	
+	@NotEmpty(message = "ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½")
+>>>>>>> refs/remotes/origin/wook
 	private String address1;
 	
+<<<<<<< HEAD
 	@NotEmpty(message = "»ó¼¼ÁÖ¼Ò¸¦ ÀÔ·ÂÇÏ¼¼¿ä")
+=======
+	@NotEmpty(message = "ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½")
+>>>>>>> refs/remotes/origin/wook
 	private String address2;
 	
 	@NotEmpty(message = "»ý³â¿ùÀÏÀ» ÀÔ·ÂÇÏ¼¼¿ä")
@@ -39,8 +76,12 @@ public class MemberBean {
 	@NotNull(message = "¼ºº°À» ¼±ÅÃÇÏ¼¼¿ä")
 	private String gender;
 	
+<<<<<<< HEAD
 	@NotEmpty(message = "´Ð³×ÀÓÀ» ÀÔ·ÂÇÏ¼¼¿ä")
 	@Size(max = 6, message = "6±ÛÀÚÀÌÇÏ·Î ÀÔ·ÂÇÏ¼¼¿ä")
+=======
+	@NotEmpty(message = "ï¿½Ð³ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½")
+>>>>>>> refs/remotes/origin/wook
 	private String nickname;
 	
 	@NotNull(message = "ÀÎÁõ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä")
@@ -57,11 +98,21 @@ public class MemberBean {
 	
 	private String social;
 	
+	private int ban_count;
+	private LocalDate ban_expiration;
+	
 	public MemberBean() {
 		super();
 	}
+<<<<<<< HEAD
 	public MemberBean(String member_id, String password, String name, String phone, String email,
 			String address1, String address2, String birth, String gender, String nickname, String height, String weight, String social) {
+=======
+
+	public MemberBean(String member_id, String password, String name, String hp1, String hp2, String hp3,
+			String address1, String address2, String birth, String gender, String nickname, int height, int weight,
+			int ban_count, LocalDate ban_expiration) {
+>>>>>>> refs/remotes/origin/wook
 		super();
 		this.member_id = member_id;
 		this.password = password;
@@ -75,6 +126,7 @@ public class MemberBean {
 		this.nickname = nickname;
 		this.height = height;
 		this.weight = weight;
+<<<<<<< HEAD
 		this.social = social;
 	}
 	
@@ -101,6 +153,23 @@ public class MemberBean {
 	}
 	public void setVerificationCode(String verificationCode) {
 		this.verificationCode = verificationCode;
+=======
+		this.ban_count = ban_count;
+		this.ban_expiration = ban_expiration;
+	}
+
+	public int getBan_count() {
+		return ban_count;
+	}
+	public void setBan_count(int ban_count) {
+		this.ban_count = ban_count;
+	}
+	public LocalDate getBan_expiration() {
+		return ban_expiration;
+	}
+	public void setBan_expiration(LocalDate ban_expiration) {
+		this.ban_expiration = ban_expiration;
+>>>>>>> refs/remotes/origin/wook
 	}
 	public String getMember_id() {
 		return member_id;
