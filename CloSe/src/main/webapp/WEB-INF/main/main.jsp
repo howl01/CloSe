@@ -140,57 +140,73 @@
    <div class="row">
       <div class="col-lg-2"></div>
       <div class="col-lg-8">
-         <div class="album py-5 bg-body-tertiary">
+         <div class="album py-5">
             <div class="container">
                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
 
-                  <div class="col" align="center">
-                     <a href="view.close"><img class="bd-placeholder-img card-img-top" width="100%" height="120"
-                           style="border-radius: 20%;" id="par" src="resources/img/abc.jpeg"></a>
-                     오늘의 옷비서
-                  </div>
+				  <a href="view.close" class="link-dark link-underline-opacity-0">
+	                  <div class="col" align="center">
+	                     <img class="bd-placeholder-img card-img-top" width="100%" height="120"
+	                           style="border-radius: 20%;" id="par" src="resources/img/close.png">
+	                     오늘의 옷비서
+	                  </div>
+                  </a>
 
-                  <div class="col" align="center">
-                     <a><img class="bd-placeholder-img card-img-top" src="resources/img/man.webp" width="100%" height="120"
-                           style="border-radius: 20%;"></a>
-                     남자 코디
-                  </div>
+				  <a href="#" class="link-dark link-underline-opacity-0">
+	                  <div class="col" align="center">
+	                     <img class="bd-placeholder-img card-img-top" src="resources/img/man.png" width="100%" height="120"
+	                           style="border-radius: 20%;">
+	                     남자 코디
+	                  </div>
+                  </a>
 
-                  <div class="col" align="center">
-                     <a><img class="bd-placeholder-img card-img-top" src="resources/img/girl.gif" width="100%" height="120"
-                           style="border-radius: 20%;"></a>
-                     여자 코디
-                  </div>
+				  <a href="#" class="link-dark link-underline-opacity-0">
+	                  <div class="col" align="center">
+	                     <img class="bd-placeholder-img card-img-top" src="resources/img/woman.png" width="100%" height="120"
+	                           style="border-radius: 20%;">
+	                     여자 코디
+	                  </div>
+                  </a>
 
-                  <div class="col" align="center">
-                     <a><img class="bd-placeholder-img card-img-top" src="resources/img/weather.jpg" width="100%" height="120"
-                           style="border-radius: 20%;"></a>
-                     계절별 코디
-                  </div>
+				  <a href="#" class="link-dark link-underline-opacity-0">
+	                  <div class="col" align="center">
+	                     <img class="bd-placeholder-img card-img-top" src="resources/img/weather.jpg" width="100%" height="120"
+	                           style="border-radius: 20%;">
+	                     계절별 코디
+	                  </div>
+                  </a>
 
-                  <div class="col" align="center">
-                     <a><img class="bd-placeholder-img card-img-top" src="resources/img/outer.avif" width="100%" height="120"
-                           style="border-radius: 20%;" onclick="productList('아우터')"></a>
-                     아우터
-                  </div>
-
-                  <div class="col" align="center">
-                     <a><img class="bd-placeholder-img card-img-top" src="resources/img/top.gif" width="100%" height="120"
-                           style="border-radius: 20%;" onclick="productList('상의')"></a>
-                     상의
-                  </div>
-
-                  <div class="col" align="center">
-                     <a><img class="bd-placeholder-img card-img-top" src="resources/img/bottom.gif" width="100%" height="120"
-                           style="border-radius: 20%;" onclick="productList('하의')"></a>
-                     하의
-                  </div>
-
-                  <div class="col" align="center">
-                     <a><img class="bd-placeholder-img card-img-top" src="resources/img/shoes.jpg" width="100%" height="120"
-                           style="border-radius: 20%;" onclick="productList('신발')"></a>
-                     신발
-                  </div>
+				  <a href="#" class="link-dark link-underline-opacity-0">
+	                  <div class="col" align="center">
+	                     <img class="bd-placeholder-img card-img-top" src="resources/img/outer.avif" width="100%" height="120"
+	                           style="border-radius: 20%;" onclick="productList('아우터')">
+	                     아우터
+	                  </div>
+                  </a>
+					
+				  <a href="#" class="link-dark link-underline-opacity-0">
+	                  <div class="col" align="center">
+	                     <img class="bd-placeholder-img card-img-top" src="resources/img/top.png" width="100%" height="120"
+	                           style="border-radius: 20%;" onclick="productList('상의')">
+	                     상의
+	                  </div>
+                  </a>
+                  
+				  <a href="#" class="link-dark link-underline-opacity-0">
+	                  <div class="col" align="center">
+	                     <img class="bd-placeholder-img card-img-top" src="resources/img/bottom.png" width="100%" height="120"
+	                           style="border-radius: 20%;" onclick="productList('하의')">
+	                     하의
+	                  </div>
+                  </a>
+                  
+				  <a href="#" class="link-dark link-underline-opacity-0">
+	                  <div class="col" align="center">
+	                     <img class="bd-placeholder-img card-img-top" src="resources/img/shoes.png" width="100%" height="120"
+	                           style="border-radius: 20%;" onclick="productList('신발')">
+	                     신발
+	                  </div>
+                  </a>
 
                </div>
             </div>
@@ -204,7 +220,7 @@
             Most Popular <br>
             인기 상품 <br>
          </div>
-         <div class="album py-5 bg-body-tertiary">
+         <div class="album py-5">
             <div class="container">
                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
 
