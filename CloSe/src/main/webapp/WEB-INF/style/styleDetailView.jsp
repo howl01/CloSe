@@ -15,6 +15,7 @@
 		    font-weight: 700;
 		    padding-top: 3px;
 		}
+        
         #photo-container {
             position: relative;
             width: 30%;
@@ -114,6 +115,10 @@
 			height:11vh;
 			margin: auto;
 		}
+		
+		.custom-height{
+			height: 70vw;
+		}
         
     </style>
     
@@ -201,30 +206,30 @@
 		    
 		    <div class="carousel-inner" id="carouselInner">
 		    	<div class="carousel-item active">
-			      <img src="<%=request.getContextPath()%>/resources/styleImage/${styleBean.image1}" class="d-block w-100" alt="...">
+			      <img src="<%=request.getContextPath()%>/resources/styleImage/${styleBean.image1}" class="d-block w-100 custom-height" alt="...">
 			    </div>
 				
 				<c:if test="${not empty styleBean.image2}">
 					<div class="carousel-item">
-				      <img src="<%=request.getContextPath()%>/resources/styleImage/${styleBean.image2}" class="d-block w-100" alt="...">
+				      <img src="<%=request.getContextPath()%>/resources/styleImage/${styleBean.image2}" class="d-block w-100 custom-height" alt="...">
 				    </div>
 				</c:if>
 				
 				<c:if test="${not empty styleBean.image3}">
 					<div class="carousel-item">
-				      <img src="<%=request.getContextPath()%>/resources/styleImage/${styleBean.image3}" class="d-block w-100" alt="...">
+				      <img src="<%=request.getContextPath()%>/resources/styleImage/${styleBean.image3}" class="d-block w-100 custom-height" alt="...">
 				    </div>
 				</c:if>
 				
 				<c:if test="${not empty styleBean.image4}">
 					<div class="carousel-item">
-				      <img src="<%=request.getContextPath()%>/resources/styleImage/${styleBean.image4}" class="d-block w-100" alt="...">
+				      <img src="<%=request.getContextPath()%>/resources/styleImage/${styleBean.image4}" class="d-block w-100 custom-height" alt="...">
 				    </div>
 				</c:if>
 				
 				<c:if test="${not empty styleBean.image5}">
 					<div class="carousel-item">
-				      <img src="<%=request.getContextPath()%>/resources/styleImage/${styleBean.image3}" class="d-block w-100" alt="...">
+				      <img src="<%=request.getContextPath()%>/resources/styleImage/${styleBean.image3}" class="d-block w-100 custom-height" alt="...">
 				    </div>
 				</c:if>
 		    </div>

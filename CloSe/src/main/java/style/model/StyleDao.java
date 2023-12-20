@@ -39,4 +39,8 @@ public class StyleDao {
 		sqlSessionTemplate.update(namespace + ".updateReadCount", style_number);
 	}
 
+	public void deleteByStyleNumber(int style_number) {
+		sqlSessionTemplate.delete(namespace + ".deleteByStyleNumber", style_number);
+	}
+
 }
