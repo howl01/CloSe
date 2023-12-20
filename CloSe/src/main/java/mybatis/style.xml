@@ -1,19 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-	
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
 <mapper namespace = "style.StyleBean">
-	<insert id="insertStyle">
-		insert into style values
-		(style_seq.nextval, #{image1}, #{image2, jdbcType=VARCHAR}, #{image3, jdbcType=VARCHAR}, #{image4, jdbcType=VARCHAR}, #{image5, jdbcType=VARCHAR}, #{title, jdbcType=VARCHAR}, #{content}, #{style}, 0, 0, sysdate, #{product_number1, jdbcType=VARCHAR}, #{product_number2, jdbcType=VARCHAR}, #{product_number3, jdbcType=VARCHAR}, #{product_number4, jdbcType=VARCHAR}, #{member_id})
-	</insert>
-	
-	<select id="getStyleList" resultType="StyleBean">
-		select * from style
-	</select>
-	
-	<select id="getStyleByStyleNumber" resultType="StyleBean">
-		select * from style
-		where style_number = #{style_number}
-	</select>
+   <insert id="insertStyle">
+      insert into style values
+      (style_seq.nextval, #{image1}, #{image2, jdbcType=VARCHAR}, #{image3, jdbcType=VARCHAR}, #{image4, jdbcType=VARCHAR}, #{image5, jdbcType=VARCHAR}, #{title, jdbcType=VARCHAR}, #{content}, #{style}, 0, 0, sysdate, #{product_number1, jdbcType=VARCHAR}, #{product_number2, jdbcType=VARCHAR}, #{product_number3, jdbcType=VARCHAR}, #{product_number4, jdbcType=VARCHAR}, #{member_id})
+   </insert>
+   
+   <select id="getStyleList" resultType="StyleBean">
+      select * from style
+   </select>
+   
+   <select id="getStyleByStyleNumber" resultType="StyleBean">
+      select * from style
+      where style_number = #{style_number}
+   </select>
+   
+   <select id="getTemperatureAvgByStyle" resultType="StyleBean">
+      select style_number, avg(temperature) avg_temperature from
+      style join product
+      on product_number1 = product_number
+      or product_number2 = product_number
+      or product_number3 = product_number
+      or product_number4 = product_number
+      group by style_number
+   </select>
+   
 </mapper>

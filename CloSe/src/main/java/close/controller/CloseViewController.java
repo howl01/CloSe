@@ -9,6 +9,10 @@ import java.net.URLEncoder;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -18,6 +22,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import style.model.StyleBean;
 import style.model.StyleDao;
 
 @Controller
@@ -90,25 +95,32 @@ public class CloseViewController {
            String fcstDate = item.getString("fcstDate");
            String fcstTime = item.getString("fcstTime");
            if("TMN".equals(category) && formattedDate.equals(fcstDate)) {
-        	   String fcstValue = item.getString("fcstValue");
-        	   sum = sum + Double.parseDouble(fcstValue);
-        	   System.out.println("최저 기온 (TMN): " + fcstValue);
-        	   model.addAttribute("TMNValue", fcstValue);
+              String fcstValue = item.getString("fcstValue");
+              sum = sum + Double.parseDouble(fcstValue);
+              System.out.println("최저 기온 (TMN): " + fcstValue);
+              model.addAttribute("TMNValue", fcstValue);
            }else if("TMX".equals(category) && formattedDate.equals(fcstDate)) {
-        	   String fcstValue = item.getString("fcstValue");
-        	   sum = sum + Double.parseDouble(fcstValue);
-    		   System.out.println("최고 기온 (TMX): " + fcstValue);
+              String fcstValue = item.getString("fcstValue");
+              sum = sum + Double.parseDouble(fcstValue);
+             System.out.println("최고 기온 (TMX): " + fcstValue);
                model.addAttribute("TMXValue", fcstValue);
            }else if("SKY".equals(category) && formattedDate.equals(fcstDate) && formattedTime.equals(fcstTime)) {
               String fcstValue = item.getString("fcstValue");
               if(fcstValue.equals("1")) {
                  System.out.println("현재 날씨 : 맑음");
+                 fcstValue = "맑음";
+                 model.addAttribute("weather",fcstValue);
               }else if(fcstValue.equals("2")){
                  System.out.println("현재 날씨 : 비");
+                 fcstValue = "비";
+                 model.addAttribute("weather",fcstValue);
               }else if(fcstValue.equals("3")) {
                  System.out.println("현재 날씨 : 구름 많음");
+                 fcstValue = "구름 많음";
+                 model.addAttribute("weather",fcstValue);
               }else if(fcstValue.equals("4")) {
-                 System.out.println("현재 날씨 : 흐림");
+                 fcstValue = "흐림";
+                 model.addAttribute("weather",fcstValue);
               }
               
            }
@@ -118,26 +130,33 @@ public class CloseViewController {
        
        double avg = (sum / 2);
        
-       String season;
+       String season = null;
+       StyleBean styleBean;
        
-       if(avg <= 4.0) {
-    	   season = "winter";
-       }else if(avg > 4.0 && avg <= 8.0) {
-    	   season = "earlyWinter";
-       }else if(avg > 8.0 && avg <= 12.0) {
-    	   season = "fall";
-       }else if(avg > 12.0 && avg <= 16.0) {
-    	   season = "earlySpring";
-       }else if(avg > 16.0 && avg <= 19.0) {
-    	   season = "earlyFall";
-       }else if(avg > 19.0 && avg <= 22.0) {
-    	   season = "Spring";
-       }else if(avg > 22.0 && avg <= 27.0) {
-    	   season = "earlySummer";
-       }else if(avg > 27.0) {
-    	   season = "summer";
+       List<StyleBean> lists = styleDao.getTemperatureAvgByStyle();
+       List<StyleBean> avgList = new ArrayList<StyleBean>();
+       for(int i=0;i<lists.size();i++) {
+          if(avg <= 4.0 && lists.get(i).getAvg_temperature() <= 4.0) {
+             avgList.add(lists.get(i));
+          }else if((avg > 4.0 && avg <= 8.0) && ((lists.get(i).getAvg_temperature() > 4.0 && lists.get(i).getAvg_temperature() <= 8.0))) {
+             avgList.add(lists.get(i));
+          }else if((avg > 12.0 && avg <= 16.0) && ((lists.get(i).getAvg_temperature() > 12.0 && lists.get(i).getAvg_temperature() <= 16.0))) {
+             avgList.add(lists.get(i));
+          }else if((avg > 16.0 && avg <= 19.0) && ((lists.get(i).getAvg_temperature() > 16.0 && lists.get(i).getAvg_temperature() <= 19.0))) {
+             avgList.add(lists.get(i));
+          }else if((avg > 19.0 && avg <= 22.0) && ((lists.get(i).getAvg_temperature() > 19.0 && lists.get(i).getAvg_temperature() <= 22.0))) {
+             avgList.add(lists.get(i));
+          }else if((avg > 22.0 && avg <= 27.0) && ((lists.get(i).getAvg_temperature() > 22.0 && lists.get(i).getAvg_temperature() <= 27.0))) {
+             avgList.add(lists.get(i));
+          }else if(avg > 27.0 && lists.get(i).getAvg_temperature() > 27.0) {
+             avgList.add(lists.get(i));
+          }
        }
        
+       model.addAttribute("avgList", avgList);
+       model.addAttribute("avg", avg);
+       model.addAttribute("today", formattedDate);
+       model.addAttribute("season", season);
        return viewPage;
    }
    
