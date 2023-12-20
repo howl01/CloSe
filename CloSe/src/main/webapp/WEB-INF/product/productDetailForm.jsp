@@ -122,13 +122,7 @@
                 var addToCart = confirm("상품을 장바구니에 추가했습니다. 장바구니로 이동하시겠습니까?");
         	    
         	    if (addToCart) {
-        	    	if("${not empty loginInfo}"){
-        				alert("카카오${kakaoLoginInfo.member_id}")
-        				alert('${loginInfo.member_id}');
-        				location.href = "cartAdd.cart?member_id=${loginInfo.member_id}";
-        			} else if("${not empty kakaoLoginInfo}"){
-        				location.href = "cartAdd.cart?member_id=${kakaoLoginInfo.member_id}";
-        			}
+        				location.href = "cartAdd.cart";
         	    } else{
         	    	return;
         	    }
@@ -140,10 +134,11 @@
 		$('#insertBasket').click(function () {
 			alert("장바구니버튼");
 			 
-			if(${empty loginInfo or empty kakaoLoginInfo}){
-				   alert("로그인이 필요한 서비스입니다.");
-				   location.href = "login.member";
-			}
+			<c:if test="${empty loginInfo and empty kakaoLoginInfo}">
+				alert("로그인이 필요한 서비스입니다.");
+				window.location.href = 'login.member';
+				return;
+			</c:if>
 
 			if ($('.quantity-selection').length === 0) {
 	            alert("사이즈를 선택해주세요.");
@@ -156,21 +151,17 @@
 		$('#goodsOrder').click(function () { 
 			alert("구매하기버튼");
 			
-			if("${empty loginInfo or empty kakaoLoginInfo}"){
-				   alert("로그인이 필요한 서비스입니다.");
-				   location.href = "login.member";
-			}
+			<c:if test="${empty loginInfo and empty kakaoLoginInfo}">
+				alert("로그인이 필요한 서비스입니다.");
+				window.location.href = 'login.member';
+				return;
+			</c:if>
 			
 		  	if ($('.quantity-selection').length === 0) {
             	alert("사이즈를 선택해주세요.");
            	 	return;
         	}
-		  	if("${not empty loginInfo}"){
-		  		$("#buyForm").attr("action", "details2.orders?member_id='${loginInfo.member_id}'");
-		  	} else if("${not empty kakaoLoginInfo}"){
-		  		$("#buyForm").attr("action", "details2.orders?member_id='${kakaoLoginInfo.member_id}'");
-			}
-		  	
+		  	$("#buyForm").attr("action", "details2.orders");
 		  	$("#buyForm").submit();
 		});
 		
@@ -248,14 +239,8 @@
 	<div class="row">
 		<div class="col-lg-2"></div>
 		<div class="col-lg-8">
-
-
-
-
-
 				<form method="post" id="buyForm">
 					<input type="hidden" name="product_number" value="${pb.product_number }"> 
-					<input type="hidden" name="member_id" value="kim"> 
 					<div class="row">
 						<div class="col-lg-1"></div>
 						<div class="col-lg-10 row">

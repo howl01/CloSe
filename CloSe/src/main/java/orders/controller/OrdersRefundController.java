@@ -45,7 +45,9 @@ public class OrdersRefundController {
     PaymentService paymentService;
     
 	@RequestMapping(command)
-	public String refund(@RequestParam("orders_id")String orders_id) throws IOException {
+	public String refund(@RequestParam("pageNumber")String pageNumber,
+						@RequestParam("orders_id")String orders_id) throws IOException {
+		
 		System.out.println(orders_id);
 		String token = paymentService.getToken();
 		System.out.println(token);

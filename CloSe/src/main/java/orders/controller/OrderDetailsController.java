@@ -2,6 +2,8 @@ package orders.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,11 +30,15 @@ public class OrderDetailsController {
 	
 	@RequestMapping(value=command)
 	public String orderDetails(@RequestParam("orders_id")String orders_id,
-								Model model) {
+								HttpServletRequest request,Model model) {
+		
+		String referer = request.getHeader("Referer");
+		System.out.println(referer);
 		
 		List<OrderItem> olists = ordersDetailDao.getOrderDetailsByOrder_id(orders_id);
 		
 		model.addAttribute("olists", olists);
+		model.addAttribute("referer", referer);
 		return viewPage;
 	}
 }

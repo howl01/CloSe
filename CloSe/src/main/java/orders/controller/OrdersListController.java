@@ -27,6 +27,7 @@ import utility.Paging_orderDetail;
 public class OrdersListController {
 	
 	private final String command = "/list.orders";
+	private final String command2 = "/list2.orders";
 	private final String viewPage = "ordersList";
 	private final String gotoPage = "";
 	
@@ -34,28 +35,41 @@ public class OrdersListController {
 	OrdersDao ordersDao;
 	
 	@Autowired
-	OrdersDetailDao ordersDetailDao;
-	
-	@Autowired
-	CartDao cartDao;
-	
-	@Autowired
 	MemberDao memberDao;
-	
-	@Autowired
-	ProductDao productDao;
 	
 	@RequestMapping(value=command)
 	public String ordersDetailForm(@RequestParam(value="startDate", required = false) String startDate,
 									@RequestParam(value="endDate", required = false) String endDate,
 									@RequestParam(value="pageNumber", required = false) String pageNumber,
+									@RequestParam(value="referer", required = false) String referer,
+									HttpSession session,
 									HttpServletRequest request,
 									Model model) {
 		
-		System.out.println("시작일자:"+startDate);
-		System.out.println("끝일자:"+endDate);
+		if(referer != null) {
+			return "redirect:"+ referer;
+		}
 		
-		String member_id = "kim";
+		if(startDate != null) {
+			if(startDate.equals("null")) {
+				startDate = "";
+			}
+		}
+		if(endDate != null) {
+			if(endDate.equals("null")) {
+				endDate = "";
+			}
+		}
+		String member_id ="";
+		if(session.getAttribute("loginInfo") != null) {
+			MemberBean mb = (MemberBean) session.getAttribute("loginInfo");
+			member_id = mb.getMember_id();
+		} else if(session.getAttribute("kakaoLoginInfo") != null) {
+			MemberBean mb = (MemberBean) session.getAttribute("kakaoLoginInfo");
+			member_id = mb.getMember_id();
+		}
+		
+		
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("member_id", member_id);
 		map.put("startDate", startDate);
@@ -66,7 +80,7 @@ public class OrdersListController {
 		
 		System.out.println("totalCount개수"+totalCount);
 		
-		Paging_orderDetail pageInfo = new Paging_orderDetail(pageNumber, "10", totalCount, url, startDate, endDate);
+		Paging_orderDetail pageInfo = new Paging_orderDetail(pageNumber, "2", totalCount, url, startDate, endDate);
 		map.put("begin", String.valueOf(pageInfo.getBeginRow()));
 		map.put("end", String.valueOf(pageInfo.getEndRow()));
 		
@@ -79,10 +93,16 @@ public class OrdersListController {
 		model.addAttribute("olists", olists);
 		model.addAttribute("pageInfo", pageInfo);
 		
-		
-		
-		
 		return viewPage;
 	}
+	
+	@RequestMapping(value=command2)
+	public String ordersDetailForm(HttpServletRequest request) {
+		
+		String referer = request.getHeader("Referer");
+		return "redirect:"+ referer;
+	}
+	
+	
 	
 }

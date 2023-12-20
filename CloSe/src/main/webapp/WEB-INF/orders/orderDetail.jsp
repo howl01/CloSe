@@ -67,6 +67,7 @@
 				<table class="table">
 					<tbody>
 						<c:forEach var="oi" items="${olists}" begin="0" end="0" varStatus="status">
+						<c:set var="order_id" value="${oi.orders_id }"/>
 						<tr>
 							<td>주문자</td>
 							<td>${oi.name }</td>
@@ -132,6 +133,10 @@
 						</tr>
 					</tbody>
 				</table>
+				<a href="${referer }">
+					<button type="button">목록보기</button>
+				</a>
+				<button type="button" onclick="location.href='refund.orders?order_id=${order_id}&pageNumber=${pageNumber }'">환불하기</button>
 				 
 			</div>
 		</div>

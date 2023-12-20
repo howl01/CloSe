@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import cart.model.CartBean;
 import cart.model.CartDao;
 import cart.model.CartInfoBean;
+import member.model.MemberBean;
 import product.model.ProductDao;
 
 @Controller
@@ -34,12 +35,20 @@ public class CartAddController {
 	@ResponseBody
 	@RequestMapping(value=command,method=RequestMethod.POST)
 	public String cartAdd( @RequestParam("product_number")int product_number,
-							@RequestParam("member_id")String member_id,
 							@RequestParam(value="s_stock", required = false)String s_stock,
 							@RequestParam(value="m_stock", required = false)String m_stock,
 							@RequestParam(value="l_stock", required = false)String l_stock,
 							@RequestParam(value="xl_stock", required = false)String xl_stock,
 							HttpSession session) {
+		String member_id ="";
+		if(session.getAttribute("loginInfo") != null) {
+			MemberBean mb = (MemberBean) session.getAttribute("loginInfo");
+			member_id = mb.getMember_id();
+		} else if(session.getAttribute("kakaoLoginInfo") != null) {
+			MemberBean mb = (MemberBean) session.getAttribute("kakaoLoginInfo");
+			member_id = mb.getMember_id();
+		}
+		
 		String[] size = {"S","M","L","XL"}; 
 		String[] size_stock = {s_stock,m_stock,l_stock,xl_stock};
 		CartBean cb = null;
@@ -76,8 +85,15 @@ public class CartAddController {
 	}
 	
 	@RequestMapping(value=command,method=RequestMethod.GET)
-	public String cartForm(@RequestParam("member_id")String member_id,
-							Model model) {
+	public String cartForm(HttpSession session, Model model) {
+		String member_id = "";
+		if(session.getAttribute("loginInfo") != null) {
+			MemberBean mb = (MemberBean) session.getAttribute("loginInfo");
+			member_id = mb.getMember_id();
+		} else if(session.getAttribute("kakaoLoginInfo") != null) {
+			MemberBean mb = (MemberBean) session.getAttribute("kakaoLoginInfo");
+			member_id = mb.getMember_id();
+		}
 		List<CartInfoBean> cartInfoLists = cartDao.getAllCartInfoByMember_Id(member_id);
 		model.addAttribute("cartInfoLists", cartInfoLists);
 		return viewPage;

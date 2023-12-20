@@ -43,9 +43,16 @@ public class OrdersDetailController {
 	@RequestMapping(value=command) //선택구매
 	public String ordersDetailForm(@RequestParam(value="cnum",required = false)String cnum,
 									@RequestParam(value="cnums",required = false)String[] cnums,
-									@RequestParam(value="member_id")String member_id,
 									Model model,HttpSession session) {
-		System.out.println(member_id);
+		
+		String member_id = "";
+		if(session.getAttribute("loginInfo") != null) {
+			MemberBean mb = (MemberBean) session.getAttribute("loginInfo");
+			member_id = mb.getMember_id();
+		} else if(session.getAttribute("kakaoLoginInfo") != null) {
+			MemberBean mb = (MemberBean) session.getAttribute("kakaoLoginInfo");
+			member_id = mb.getMember_id();
+		}
 		MemberBean mb = memberDao.getMember(member_id);
 		model.addAttribute("mb", mb);
 		
@@ -66,12 +73,19 @@ public class OrdersDetailController {
 	
 	@RequestMapping(value=command2) //바로구매
 	public String orderDetailForm(@RequestParam("product_number")String product_number,
-								@RequestParam("member_id")String member_id,
 								@RequestParam(value="s_stock", required = false)String s_stock,
 								@RequestParam(value="m_stock", required = false)String m_stock,
 								@RequestParam(value="l_stock", required = false)String l_stock,
 								@RequestParam(value="xl_stock", required = false)String xl_stock,
 								Model model, HttpSession session) {
+		String member_id = "";
+		if(session.getAttribute("loginInfo") != null) {
+			MemberBean mb = (MemberBean) session.getAttribute("loginInfo");
+			member_id = mb.getMember_id();
+		} else if(session.getAttribute("kakaoLoginInfo") != null) {
+			MemberBean mb = (MemberBean) session.getAttribute("kakaoLoginInfo");
+			member_id = mb.getMember_id();
+		}
 		MemberBean mb = memberDao.getMember(member_id);
 		model.addAttribute("mb", mb);
 		

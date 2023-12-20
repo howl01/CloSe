@@ -177,14 +177,7 @@
 	} 
 	
 	function buyNow(cnum){ //바로구매
-		if("${not empty loginInfo}"){
-			alert("일반로그인");
-			location.href="details.orders?member_id=${loginInfo.member_id}&cnum="+cnum;
-		} else if("${not empty kakaoLoginInfo}"){
-			alert("카카오로그인");
-			alert('${kakaoLoginInfo.member_id}');
-			location.href="details.orders?member_id=${kakaoLoginInfo.member_id}&cnum="+cnum;
-		}
+			location.href="details.orders?cnum="+cnum;
 	}
 </script>
 
@@ -217,12 +210,6 @@
     
     <c:otherwise>
             <form method="post" name="myform">
-            <c:if test="${not empty loginInfo }">
-				<input type="hidden" name="member_id" value="${loginInfo.member_id}">
-			</c:if>
-			<c:if test="${not empty kakaoLoginInfo }">
-				<input type="hidden" name="member_id" value="${kakaoLoginInfo.member_id}">
-			</c:if>
             <table class="table">
                                 <thead>
                                     <tr>

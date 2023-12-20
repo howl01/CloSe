@@ -35,6 +35,7 @@ public class OrdersDao {
 	}
 
 	public int getTotalCount(Map<String, String> map) {
+		
 		return sqlSessionTemplate.selectOne(namespace+".getTotalCount", map);
 	}
 	

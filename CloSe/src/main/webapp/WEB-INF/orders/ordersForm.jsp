@@ -31,11 +31,7 @@ window.onload = function () {
 
 
 function goCart() {
-	if("${not empty loginInfo}"){
-		location.href = "cartAdd.cart?member_id='${loginInfo.member_id}'";
-	} else if("${not empty kakaoLoginInfo}"){
-		location.href = "cartAdd.cart?member_id='${kakaoLoginInfo.member_id}'";
-	}
+		location.href = "cartAdd.cart";
 }
 
 function allCheck(all) { //전체체크박스를 눌렀을때
