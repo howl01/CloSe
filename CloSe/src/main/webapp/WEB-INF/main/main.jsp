@@ -114,16 +114,8 @@
 	   	 $.ajax({
 	         type: 'POST',
 	         url: 'view.close',
-	         data: {latitude: latitude, longitude: longitude},
-	         success: function(response) {
-	             console.log(response);
-	         },
-	         error: function(error) {
-	             console.error(error);
-	             
-	         }
+	         data: {latitude: latitude, longitude: longitude}
 	     });
-   	    
    	});
 </script>
 

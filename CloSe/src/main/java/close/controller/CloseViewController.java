@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import style.model.StyleBean;
@@ -29,19 +30,32 @@ public class CloseViewController {
    private final String command = "/view.close";
    private final String viewPage = "close";
    
+   public String latString = "";
+   public String longString = "";
+   
    @Autowired
    StyleDao styleDao;
    
-   @RequestMapping(value = command)
-   public String close(Model model, @RequestParam double latitude, @RequestParam double longitude) throws IOException {
+   @RequestMapping(value = command, method = RequestMethod.POST)
+   public void temp(@RequestParam("latitude") double latitude, @RequestParam("longitude") double longitude) {
+	   System.out.println("Latitude: " + latitude);
+       System.out.println("Longitude: " + longitude);
+       
+       int lat = (int)latitude;
+       int lon = (int)longitude;
+       
+       String latString = String.valueOf(lat);
+       String longString = String.valueOf(lon);
+       
+       this.latString = latString;
+       this.longString = longString;
+   }
+   
+   @RequestMapping(value = command, method = RequestMethod.GET)
+   public String close(Model model) throws IOException {
 	   
-	   int lat = (int)latitude;
-	   String latString = String.valueOf(lat);
-	   System.out.println("위도:"+latString);
-	   
-	   int longi = (int)longitude;
-	   String longString = String.valueOf(longi);
-	   System.out.println("경도:"+longString);
+	   System.out.println("latString: " + latString);
+       System.out.println("longString: " + longString);
 	   
        // 오늘 날짜 가져오기
        LocalDate today = LocalDate.now();
@@ -125,6 +139,8 @@ public class CloseViewController {
                  fcstValue = "구름 많음";
                  model.addAttribute("weather",fcstValue);
               }else if(fcstValue.equals("4")) {
+            	 System.out.println("현재 날씨 : 흐림");
+            	 System.out.println("현재시간:" + fcstTime);
                  fcstValue = "흐림";
                  model.addAttribute("weather",fcstValue);
               }
