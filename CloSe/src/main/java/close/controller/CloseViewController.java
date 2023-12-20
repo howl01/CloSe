@@ -10,9 +10,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -20,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import style.model.StyleBean;
 import style.model.StyleDao;
@@ -34,13 +32,22 @@ public class CloseViewController {
    @Autowired
    StyleDao styleDao;
    
-   @RequestMapping(value = command, method = RequestMethod.GET)
-   public String close(Model model) throws IOException {
-      
-      // 오늘 날짜 가져오기
+   @RequestMapping(value = command)
+   public String close(Model model, @RequestParam double latitude, @RequestParam double longitude) throws IOException {
+	   
+	   int lat = (int)latitude;
+	   String latString = String.valueOf(lat);
+	   System.out.println("위도:"+latString);
+	   
+	   int longi = (int)longitude;
+	   String longString = String.valueOf(longi);
+	   System.out.println("경도:"+longString);
+	   
+       // 오늘 날짜 가져오기
        LocalDate today = LocalDate.now();
        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
        String formattedDate = today.format(formatter);
+       
        //현재 시간 가져오기
        LocalTime now = LocalTime.now();
        DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("HH00");
@@ -55,8 +62,8 @@ public class CloseViewController {
        urlBuilder.append("&" + URLEncoder.encode("dataType","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); /*요청자료형식(XML/JSON) Default: XML*/
        urlBuilder.append("&" + URLEncoder.encode("base_date","UTF-8") + "=" + URLEncoder.encode(formattedDate, "UTF-8")); /*‘21년 6월 28일발표*/
        urlBuilder.append("&" + URLEncoder.encode("base_time","UTF-8") + "=" + URLEncoder.encode("0200", "UTF-8")); /*02시 발표*/
-       urlBuilder.append("&" + URLEncoder.encode("nx","UTF-8") + "=" + URLEncoder.encode("55", "UTF-8")); /*예보지점의 X 좌표값*/
-       urlBuilder.append("&" + URLEncoder.encode("ny","UTF-8") + "=" + URLEncoder.encode("127", "UTF-8")); /*예보지점의 Y 좌표값*/
+       urlBuilder.append("&" + URLEncoder.encode("nx","UTF-8") + "=" + URLEncoder.encode(latString, "UTF-8")); /*예보지점의 X 좌표값*/
+       urlBuilder.append("&" + URLEncoder.encode("ny","UTF-8") + "=" + URLEncoder.encode(longString, "UTF-8")); /*예보지점의 Y 좌표값*/
        URL url = new URL(urlBuilder.toString());
        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
        conn.setRequestMethod("GET");
@@ -78,8 +85,7 @@ public class CloseViewController {
        String data= sb.toString();
        
        System.out.println(data);
-       
-    // JSON 데이터 파싱
+       // JSON 데이터 파싱
        JSONObject jsonData = new JSONObject(data);
        JSONObject response = jsonData.getJSONObject("response");
        JSONObject body = response.getJSONObject("body");
@@ -102,8 +108,8 @@ public class CloseViewController {
            }else if("TMX".equals(category) && formattedDate.equals(fcstDate)) {
               String fcstValue = item.getString("fcstValue");
               sum = sum + Double.parseDouble(fcstValue);
-             System.out.println("최고 기온 (TMX): " + fcstValue);
-               model.addAttribute("TMXValue", fcstValue);
+              System.out.println("최고 기온 (TMX): " + fcstValue);
+              model.addAttribute("TMXValue", fcstValue);
            }else if("SKY".equals(category) && formattedDate.equals(fcstDate) && formattedTime.equals(fcstTime)) {
               String fcstValue = item.getString("fcstValue");
               if(fcstValue.equals("1")) {

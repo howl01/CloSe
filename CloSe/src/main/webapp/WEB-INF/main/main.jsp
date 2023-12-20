@@ -106,6 +106,25 @@
    		 alert(bigcate);
    		 location.href="list.product?bigcategory_name="+bigcate;
    	 }
+   	 
+   	window.navigator.geolocation.getCurrentPosition(function(pos) {
+   	    var latitude = pos.coords.latitude;
+   	    var longitude = pos.coords.longitude;
+   	    
+	   	 $.ajax({
+	         type: 'POST',
+	         url: 'view.close',
+	         data: {latitude: latitude, longitude: longitude},
+	         success: function(response) {
+	             console.log(response);
+	         },
+	         error: function(error) {
+	             console.error(error);
+	             
+	         }
+	     });
+   	    
+   	});
 </script>
 
 <div class="body">
