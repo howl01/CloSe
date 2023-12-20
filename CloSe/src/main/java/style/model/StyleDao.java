@@ -35,4 +35,8 @@ public class StyleDao {
 		return sqlSessionTemplate.selectList(namespace+".getTemperatureAvgByStyle");
 	}
 
+	public void updateReadCount(int style_number) {
+		sqlSessionTemplate.update(namespace + ".updateReadCount", style_number);
+	}
+
 }

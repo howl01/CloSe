@@ -12,22 +12,20 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import style.model.StyleBean;
 import style.model.StyleDao;
 
 @Controller
-public class StyleDetailController {
+public class StyleDeleteController {
 
-	private final String command = "detail.style";
-	private final String viewPage = "styleDetailView";
+	private final String command = "delete.style";
+	private final String viewPage = "styleDeleteForm";
 	private final String gotoPage = "redirect:/mainView.style";
 
 	@Autowired
@@ -36,25 +34,19 @@ public class StyleDetailController {
 	@Autowired
 	private StyleDao styleDao;
 
-	@RequestMapping(value = command, method = RequestMethod.GET)
-	public String insertForm(HttpSession session, @RequestParam("style_number") int style_number, Model model) {
-		styleDao.updateReadCount(style_number);
-		model.addAttribute("styleBean", styleDao.getStyleByStyleNumber(style_number));
+	@RequestMapping(value = command, method = RequestMethod.POST)
+	public String deleteForm() {
+		styleDao.deleteByStyleNumber();
 		return viewPage;
 	}
 
 	@RequestMapping(value = command, method = RequestMethod.POST)
-	public String insert(@Valid StyleBean styleBean, BindingResult result, HttpServletResponse response, HttpServletRequest request) {
-		response.setContentType("text/html; charset=UTF-8");
-		if (result.hasErrors()) {
-			return viewPage;
-		}
-
+	public String insert(StyleBean styleBean) {
 		String path = servletContext.getRealPath("/resources/styleImage");
 		
 	    File directory = new File(path);
 	    if (!directory.exists()) {
-	        directory.mkdirs(); //
+	        directory.mkdirs();
 	    }
 		
 		List<MultipartFile> images = styleBean.getImages();

@@ -9,12 +9,42 @@
 	</insert>
 	
 	<select id="getStyleList" resultType="StyleBean">
-		select * from style
+		 select s.*, nickname
+	    from style s
+	    left join
+	      member m ON s.member_id = m.member_id
 	</select>
 	
 	<select id="getStyleByStyleNumber" resultType="StyleBean">
-		select * from style
-		where style_number = #{style_number}
+		SELECT
+		    s.*,
+		    m.nickname AS nickname,
+		    p1.product_name AS product_name1,
+		    p1.price AS price1,
+		    p1.image AS pimage1,
+		    p2.product_name AS product_name2,
+		    p2.price AS price2,
+		    p2.image AS pimage2,
+		    p3.product_name AS product_name3,
+		    p3.price AS price3,
+		    p3.image AS pimage3,
+		    p4.product_name AS product_name4,
+		    p4.price AS price4,
+		    p4.image AS pimage4
+		FROM
+		    style s
+		LEFT JOIN
+		    product p1 ON s.product_number1 = p1.product_number
+		LEFT JOIN
+		    product p2 ON s.product_number2 = p2.product_number
+		LEFT JOIN
+		    product p3 ON s.product_number3 = p3.product_number
+		LEFT JOIN
+		    product p4 ON s.product_number4 = p4.product_number
+		LEFT JOIN
+		    member m ON s.member_id = m.member_id
+		WHERE
+		    s.style_number = #{style_number}
 	</select>
 	
 	<select id="getTemperatureAvgByStyle" resultType="StyleBean">
@@ -26,4 +56,9 @@
 		or product_number4 = product_number
 		group by style_number
 	</select>
+	
+	<update id="updateReadCount">
+		update style set read_count = read_count + 1
+		where style_number = #{style_number}
+	</update>
 </mapper>

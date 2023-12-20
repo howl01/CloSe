@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file= "../main/top.jsp" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -9,6 +10,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Photo Tagging</title>
     <style>
+    	#styleNav {
+		    font-size: 15pt;
+		    font-weight: 700;
+		    padding-top: 3px;
+		}
         #photo-container {
             position: relative;
             width: 30%;
@@ -72,6 +78,42 @@
 		    width: 30%; /* 원하는 너비로 조절할 수 있습니다. */
 		    cursor: pointer;
 		}
+		
+		.carousel-indicators [data-bs-target] {
+			background-color: black;
+			width: 7px;
+	  		height: 7px;
+			border-radius:50%;
+		}
+		
+		.carousel-indicators {
+		    position: absolute;
+		    transform: translateY(45px);
+		}
+		
+		.carousel-indicators [data-bs-target] {
+			background-color: black;
+			width: 7px;
+	  		height: 7px;
+			border-radius:50%;
+		}
+		
+		.carousel-control-prev-icon, .carousel-control-next-icon {
+		  width: 30px; /* 아이콘 크기 지정 */
+		  height: 30px; /* 아이콘 크기 지정 */
+		  background-color: gray; /* 배경색 지정 */
+		  border-radius: 50%;
+		}
+		
+		#carouselExampleIndicators {
+		   width: 100%; /* 최대 너비 설정 */
+		}
+		
+		#pimage{
+			width:7vw;
+			height:11vh;
+			margin: auto;
+		}
         
     </style>
     
@@ -84,26 +126,53 @@
     		var overlay2 = document.getElementById('overlay2');
     		overlay2.style.display = 'none';
 	 	 }
+    	function goLogin2() {
+			alert("로그인 후에 이용 가능합니다.");
+			location.href="login.member";
+		}
+    	function showDeleteConfirmation(style_number) {
+            // 확인창을 띄우고 사용자의 선택 결과를 확인
+            var isConfirmed = confirm("정말로 삭제하시겠습니까?");
+
+            // 사용자가 확인을 선택했을 때
+            if (isConfirmed) {
+                location.href="delete.style?style_number="+style_number;
+            } else {
+                alert("삭제가 취소되었습니다.");
+            }
+        }
     </script>
 </head>
 <body>
 	
 	<div id="overlay2" class="overlay2" onclick="javascript:hideOverlay2();">
 		<ol class="list-group" style="cursor: pointer;">
-			<li class="list-group-item d-flex justify-content-center" onclick="alert('신고');"><font color="red">유저 신고</font></li>
+			<c:if test="${loginInfo.member_id == styleBean.member_id or kakaoLoginInfo.member_id == styleBean.member_id}">
+				<li class="list-group-item d-flex justify-content-center" onclick="location.href='update.style?style_number=${styleBean.style_number}'">게시물 수정</li>
+			</c:if>
+			<c:if test="${loginInfo.member_id == styleBean.member_id or kakaoLoginInfo.member_id == styleBean.member_id}">
+				<li class="list-group-item d-flex justify-content-center" onclick="javascript:showDeleteConfirmation('${styleBean.style_number}');"><font color="blue">게시물 삭제</font></li>
+			</c:if>
+			<li class="list-group-item d-flex justify-content-center" <c:if test="${not empty loginInfo and empty kakaoLoginInfo}">onclick="location.href='styleReport.report?style_number=${styleBean.style_number}'"</c:if>
+			<c:if test="${empty loginInfo and empty kakaoLoginInfo}">onclick="javascript:goLogin2()"</c:if>><font color="red">유저 신고</font></li>
 	        <li class="list-group-item d-flex justify-content-center" onclick="javascript:hideOverlay2()">취소</li>
 	    </ol>
 	</div>
 	
 	<div id="styleDetailContainer">
-	    <div class="d-flex justify-content-between">
-	    	<div>
+	    <div class="row" style="margin-bottom: 10px;">
+	    	<div class="col-1">
 	    		<img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='50' height='50' fill='gray' class='bi bi-person-circle' viewBox='0 0 16 16'%3E%3Cpath d='M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z'/%3E%3Cpath fill-rule='evenodd' d='M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z'/%3E%3C/svg%3E" alt="Person Icon">
-	            ${styleBean.member_id}
-	            <fmt:parseDate var="write_date" value="${styleBean.write_date}" pattern="yyyy-MM-dd"/>
-	            <fmt:formatDate value="${write_date}" pattern="yyyy-MM-dd"/>
+	        </div>
+	        <div class="col-3" style="padding-left: 15px;">
+	            <b>${styleBean.nickname}</b>
+	            <c:set var="write_date" value="${styleBean.write_date}" />
+	            <br>
+	            <font color="gray" size="2.5rem">
+					<fmt:formatDate value="${write_date}" pattern="yyyy년 MM월 dd일" />
+				</font>
 	    	</div>
-	    	<div>
+	    	<div class="col-8" style="text-align:right; align-self: center;">
 	    		<button type="button" class="btn" onclick="javascript:search2()">
 	    			<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
 					  <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
@@ -111,13 +180,136 @@
 	    		</button>
 	    	</div>
 	    </div>
-	        <a href="detail.style?style_number=${styleBean.style_number}" class="link-dark link-underline-opacity-0">
-	            <img src="<%=request.getContextPath()%>/resources/styleImage/${styleBean.image1}" class="card-img-top">
-	            <div class="card-body">
-	                
-	                <p class="card-text">${styleBean.content}</p>
-	            </div>
-	        </a>
+		    
+        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+		    <div class="carousel-indicators" id="carouselIndicators">
+		    	<c:if test="${not empty styleBean.image2}">
+					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+   					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+				</c:if>
+				<c:if test="${not empty styleBean.image3}">
+					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+				</c:if>
+				<c:if test="${not empty styleBean.image4}">
+					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
+				</c:if>
+				
+				<c:if test="${not empty styleBean.image5}">
+					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4" aria-label="Slide 5"></button>
+				</c:if>
+		    </div>
+		    
+		    <div class="carousel-inner" id="carouselInner">
+		    	<div class="carousel-item active">
+			      <img src="<%=request.getContextPath()%>/resources/styleImage/${styleBean.image1}" class="d-block w-100" alt="...">
+			    </div>
+				
+				<c:if test="${not empty styleBean.image2}">
+					<div class="carousel-item">
+				      <img src="<%=request.getContextPath()%>/resources/styleImage/${styleBean.image2}" class="d-block w-100" alt="...">
+				    </div>
+				</c:if>
+				
+				<c:if test="${not empty styleBean.image3}">
+					<div class="carousel-item">
+				      <img src="<%=request.getContextPath()%>/resources/styleImage/${styleBean.image3}" class="d-block w-100" alt="...">
+				    </div>
+				</c:if>
+				
+				<c:if test="${not empty styleBean.image4}">
+					<div class="carousel-item">
+				      <img src="<%=request.getContextPath()%>/resources/styleImage/${styleBean.image4}" class="d-block w-100" alt="...">
+				    </div>
+				</c:if>
+				
+				<c:if test="${not empty styleBean.image5}">
+					<div class="carousel-item">
+				      <img src="<%=request.getContextPath()%>/resources/styleImage/${styleBean.image3}" class="d-block w-100" alt="...">
+				    </div>
+				</c:if>
+		    </div>
+		    
+		    <c:if test="${not empty styleBean.image2}">
+			    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+			        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+			        <span class="visually-hidden">이전</span>
+			    </button>
+			    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+			        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+			        <span class="visually-hidden">다음</span>
+			    </button>
+			</c:if>
+		</div>
+		
+		<div class="my-4">
+			<c:choose>
+				<c:when test="${not empty styleBean.product_number4}">
+					상품 태그 <b>4</b>개
+				</c:when>
+				<c:when test="${not empty styleBean.product_number3}">
+					상품 태그 <b>3</b>개
+				</c:when>
+				<c:when test="${not empty styleBean.product_number2}">
+					상품 태그 <b>2</b>개
+				</c:when>
+				<c:when test="${not empty styleBean.product_number1}">
+					상품 태그 <b>1</b>개
+				</c:when>
+				<c:otherwise>
+					상품 태그 <b>없음</b>
+				</c:otherwise>
+			</c:choose>
+		</div>
+		
+		<div class="d-flex justify-content-start">
+		<ol class="list-group list-group-horizontal" style="cursor: pointer; width:100%;">
+		<c:if test="${not empty styleBean.product_number1}">
+			<li class="list-group-item me-3" style="width:25%; border-radius: 10%; padding: 5px; align-self: center;" onclick="location.href='detail.product?product_number=${styleBean.product_number1}'">
+   			   	<div style="text-align: center;"><img src="<%=request.getContextPath()%>/resources/productImage/${styleBean.pimage1}" id="pimage"></div>
+   			    <div class="ms-2 me-auto my-auto" style="text-align: center;">
+	   			    <div>${fn:substringBefore(styleBean.product_name1,'/') }<br>${fn:substringAfter(styleBean.product_name1,'/') }</div>
+	   			    <div class="fw-bold">
+	   			    <fmt:formatNumber value="${styleBean.price1}" pattern="###,###원" />
+	   			    </div>
+   			    </div>
+			</li>
+		</c:if>
+		<c:if test="${not empty styleBean.product_number2}">
+			<li class="list-group-item me-3" style="width:25%; border-left: 1px solid #dee2e6; border-radius: 10%; padding: 5px; align-self: center;" onclick="location.href='detail.product?product_number=${styleBean.product_number2}'">
+   			   	<div style="text-align: center;"><img src="<%=request.getContextPath()%>/resources/productImage/${styleBean.pimage2}" id="pimage"></div>
+   			    <div class="ms-2 me-auto my-auto" style="text-align: center;">
+	   			    <div>${fn:substringBefore(styleBean.product_name2,'/') }<br>${fn:substringAfter(styleBean.product_name2,'/') }</div>
+	   			    <div class="fw-bold">
+	   			    	<fmt:formatNumber value="${styleBean.price2}" pattern="###,###원" />
+	   			    </div>
+   			    </div>
+			</li>
+		</c:if>
+		<c:if test="${not empty styleBean.product_number3}">
+			<li class="list-group-item me-3" style="width:25%; border-left: 1px solid #dee2e6; border-radius: 10%; padding: 5px; align-self: center;" onclick="location.href='detail.product?product_number=${styleBean.product_number3}'">
+   			   	<div style="text-align: center;"><img src="<%=request.getContextPath()%>/resources/productImage/${styleBean.pimage3}" id="pimage"></div>
+   			    <div class="ms-2 me-auto my-auto" style="text-align: center;">
+	   			    <div>${fn:substringBefore(styleBean.product_name3,'/') }<br>${fn:substringAfter(styleBean.product_name3,'/') }</div>
+	   			    <div class="fw-bold">
+	   			    	<fmt:formatNumber value="${styleBean.price3}" pattern="###,###원" />
+	   			    </div>
+   			    </div>
+			</li>
+		</c:if>
+		<c:if test="${not empty styleBean.product_number4}">
+			<li class="list-group-item me-3" style="width:25%; border-left: 1px solid #dee2e6; border-radius: 10%; padding: 5px; align-self: center;" onclick="location.href='detail.product?product_number=${styleBean.product_number4}'">
+   			   	<div style="text-align: center;"><img src="<%=request.getContextPath()%>/resources/productImage/${styleBean.pimage4}" id="pimage"></div>
+   			    <div class="ms-2 me-auto my-auto" style="text-align: center;">
+	   			    <div>${fn:substringBefore(styleBean.product_name4,'/') }<br>${fn:substringAfter(styleBean.product_name4,'/') }</div>
+	   			    <div class="fw-bold">
+						<fmt:formatNumber value="${styleBean.price4}" pattern="###,###원" />
+					</div>
+   			    </div>
+			</li>
+		</c:if>	
+		</ol>		
+		</div>
+			
 	</div>
 	
 </body>

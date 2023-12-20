@@ -263,6 +263,7 @@ $(document).ready(function () {
             var img = document.createElement('img');
             img.src = URL.createObjectURL(files[0]);
             img.className = 'preview-image';
+            
             previewContainer.appendChild(img);
             
             previewContainer.style.margin = 'auto';

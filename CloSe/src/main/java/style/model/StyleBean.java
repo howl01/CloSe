@@ -1,9 +1,9 @@
 package style.model;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.web.multipart.MultipartFile;
 
 public class StyleBean {
@@ -18,7 +18,7 @@ public class StyleBean {
 	private String style;
 	private int read_count;
 	private int recommend_count;
-	private String write_date;
+	private Date write_date;
 	private Integer product_number1;
 	private Integer product_number2;
 	private Integer product_number3;
@@ -30,6 +30,127 @@ public class StyleBean {
 	private MultipartFile MImage3;
 	private MultipartFile MImage4;
 	private MultipartFile MImage5;
+
+	private String nickname;
+
+	private String product_name1;
+	private String product_name2;
+	private String product_name3;
+	private String product_name4;
+
+	private String price1;
+	private String price2;
+	private String price3;
+	private String price4;
+
+	private String pimage1;
+	private String pimage2;
+	private String pimage3;
+	private String pimage4;
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
+	public String getProduct_name1() {
+		return product_name1;
+	}
+
+	public void setProduct_name1(String product_name1) {
+		this.product_name1 = product_name1;
+	}
+
+	public String getProduct_name2() {
+		return product_name2;
+	}
+
+	public void setProduct_name2(String product_name2) {
+		this.product_name2 = product_name2;
+	}
+
+	public String getProduct_name3() {
+		return product_name3;
+	}
+
+	public void setProduct_name3(String product_name3) {
+		this.product_name3 = product_name3;
+	}
+
+	public String getProduct_name4() {
+		return product_name4;
+	}
+
+	public void setProduct_name4(String product_name4) {
+		this.product_name4 = product_name4;
+	}
+
+	public String getPrice1() {
+		return price1;
+	}
+
+	public void setPrice1(String price1) {
+		this.price1 = price1;
+	}
+
+	public String getPrice2() {
+		return price2;
+	}
+
+	public void setPrice2(String price2) {
+		this.price2 = price2;
+	}
+
+	public String getPrice3() {
+		return price3;
+	}
+
+	public void setPrice3(String price3) {
+		this.price3 = price3;
+	}
+
+	public String getPrice4() {
+		return price4;
+	}
+
+	public void setPrice4(String price4) {
+		this.price4 = price4;
+	}
+
+	public String getPimage1() {
+		return pimage1;
+	}
+
+	public void setPimage1(String pimage1) {
+		this.pimage1 = pimage1;
+	}
+
+	public String getPimage2() {
+		return pimage2;
+	}
+
+	public void setPimage2(String pimage2) {
+		this.pimage2 = pimage2;
+	}
+
+	public String getPimage3() {
+		return pimage3;
+	}
+
+	public void setPimage3(String pimage3) {
+		this.pimage3 = pimage3;
+	}
+
+	public String getPimage4() {
+		return pimage4;
+	}
+
+	public void setPimage4(String pimage4) {
+		this.pimage4 = pimage4;
+	}
 
 	private double avg_temperature;
 
@@ -86,7 +207,7 @@ public class StyleBean {
 	}
 
 	StyleBean(int style_number, String image1, String image2, String image3, String image4, String image5, String title,
-			String content, String style, int read_count, int recommend_count, String write_date,
+			String content, String style, int read_count, int recommend_count, Date write_date,
 			Integer product_number1, Integer product_number2, Integer product_number3, Integer product_number4,
 			String member_id, List<MultipartFile> images) {
 		super();
@@ -233,11 +354,11 @@ public class StyleBean {
 		this.recommend_count = recommend_count;
 	}
 
-	public String getWrite_date() {
+	public Date getWrite_date() {
 		return write_date;
 	}
 
-	public void setWrite_date(String write_date) {
+	public void setWrite_date(Date write_date) {
 		this.write_date = write_date;
 	}
 
