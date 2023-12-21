@@ -18,25 +18,22 @@ import member.model.MemberBean;
 public class MyPageController {
 	
 	private final String command = "/mypage.member";
-	private final String viewPage = "mypage";
 	
 	@Autowired
     private EventDao eventDao;
 	
 	@RequestMapping(value = command, method = RequestMethod.GET)
-	public String mypage(HttpSession session) {
+	public void mypage(HttpSession session) {
 		
 		MemberBean mb = (MemberBean) session.getAttribute("loginInfo");
-		MemberBean kmb = (MemberBean) session.getAttribute("kakaoLoginInfo");
-		
 		List<EventBean> lists = eventDao.selectCoupon(mb.getMember_id());
-		if(lists == null) {
+		System.out.println(lists.size());
+		if(lists.size() == 0) {
 			System.out.println("쿠폰이 없습니다.");
 		}else {
-			System.out.println(lists.get(0));
+			session.setAttribute("loginLists", lists);
 		}
 		
-		return viewPage;
 	}
 	
 }

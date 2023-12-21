@@ -66,10 +66,10 @@
 
             if (getCookie(cookieName) !== "true") {
                 alert("생일 축하합니다!");
-                location.href = "coupon.event?memberId=" + memberId + "&name=생일기념 쿠폰&discount=40";
+                location.href = "coupon.member?memberId=" + memberId + "&name=생일기념 쿠폰&discount=40";
 
                 // 쿠폰을 받은 상태를 쿠키에 저장
-                setCookie(cookieName, "true", 365);
+                setCookie(cookieName, "true", 1);
             } else {
                 alert('이미 쿠폰을 발급받았습니다.');
             }

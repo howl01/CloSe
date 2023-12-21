@@ -323,26 +323,35 @@
 				           <th>보유쿠폰</th>
 				           <th>할인률</th>
 				        </tr>
-				        <tr>
-				           <td>
-				           	  <c:if test="${not empty loginInfo}">
-				           	  	${loginInfo.nickname}
-				           	  </c:if>
-				           	  <c:if test="${not empty kakaoLoginInfo}">
-				           	  	${kakaoLoginInfo.nickname}
-				           	  </c:if>
-				           </td>
-				           <td>
-				           	  <c:if test="${not empty loginInfo}">
-				           	  	${loginLists.coupon_name}
-				           	  </c:if>
-				           </td>
-				           <td>
-				           	  <c:if test="${not empty loginInfo}">
-				           	  	${loginLists.coupon_discount}
-				           	  </c:if>
-				           </td>
-				        </tr>
+				        <c:forEach var="loginList" items="${loginLists}">
+					        <tr>
+					            <td>
+					                <c:if test="${not empty loginInfo}">
+					                    ${loginInfo.nickname}
+					                </c:if>
+					                <c:if test="${not empty kakaoLoginInfo}">
+					                    ${kakaoLoginInfo.nickname}
+					                </c:if>
+					            </td>
+					            <td>
+					                <c:if test="${not empty loginInfo}">
+					                    ${loginList.coupon_name}
+					                </c:if>
+					            </td>
+					            <td>
+					                <c:if test="${not empty loginInfo}">
+					                    ${loginList.coupon_discount}
+					                </c:if>
+					            </td>
+					        </tr>
+					    </c:forEach>
+			        </c:if>
+			        <c:if test="${empty loginLists and empty kakaoLoginLists}">
+			        	<tr>
+			        		<td colspan="3" align="center">
+			        			사용가능한 쿠폰이 없습니다.
+			        		</td>
+			        	</tr>
 			        </c:if>
 		        </table>
 			</div>
