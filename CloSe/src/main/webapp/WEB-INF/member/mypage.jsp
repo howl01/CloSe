@@ -11,7 +11,7 @@
 		text-align: center;
 	}
 	th{
-		text-align: right;
+		text-align: center;
 	}
 </style>
 
@@ -329,9 +329,6 @@
 					                <c:if test="${not empty loginInfo}">
 					                    ${loginInfo.nickname}
 					                </c:if>
-					                <c:if test="${not empty kakaoLoginInfo}">
-					                    ${kakaoLoginInfo.nickname}
-					                </c:if>
 					            </td>
 					            <td>
 					                <c:if test="${not empty loginInfo}">
@@ -341,6 +338,25 @@
 					            <td>
 					                <c:if test="${not empty loginInfo}">
 					                    ${loginList.coupon_discount}
+					                </c:if>
+					            </td>
+					        </tr>
+					    </c:forEach>
+					    <c:forEach var="kakaoLoginList" items="${kakaoLoginLists}">
+					        <tr>
+					            <td>
+					                <c:if test="${not empty kakaoLoginInfo}">
+					                    ${kakaoLoginInfo.nickname}
+					                </c:if>
+					            </td>
+					            <td>
+					                <c:if test="${not empty kakaoLoginInfo}">
+					                    ${kakaoLoginList.coupon_name}
+					                </c:if>
+					            </td>
+					            <td>
+					                <c:if test="${not empty kakaoLoginInfo}">
+					                    ${kakaoLoginList.coupon_discount}
 					                </c:if>
 					            </td>
 					        </tr>

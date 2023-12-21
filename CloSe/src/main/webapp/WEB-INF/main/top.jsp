@@ -328,10 +328,10 @@
       </ul>
       <ul class="nav">
       	<c:if test="${not empty loginInfo}">
-      		<li class="nav-item" style="margin-top: 4px;"><font size="2" color="green">${loginInfo.name} 님 환영합니다.</font> &nbsp;</li>
+      		<li class="nav-item" style="margin-top: 4px;"><font size="2" color="green">${loginInfo.nickname} 님 환영합니다.</font> &nbsp;</li>
       	</c:if>
       	<c:if test="${not empty kakaoLoginInfo}">
-      		<li class="nav-item" style="margin-top: 4px;"><font size="2" color="green">${kakaoLoginInfo.name} 님 환영합니다.</font> &nbsp;</li>
+      		<li class="nav-item" style="margin-top: 4px;"><font size="2" color="green">${kakaoLoginInfo.nickname} 님 환영합니다.</font> &nbsp;</li>
       	</c:if>
         <li class="nav-item"><a href="javascript:goAdmin()" class="nav-link link-body-emphasis px-2"><font size="2">관리자모드</font></a></li>
       	<li class="nav-item"><a href="javascript:goNotice()" class="nav-link link-body-emphasis px-2"><font size="2">공지사항</font></a></li>
