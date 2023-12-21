@@ -31,6 +31,8 @@ public class StyleBean {
 	private MultipartFile MImage4;
 	private MultipartFile MImage5;
 
+	
+	
 	private String nickname;
 
 	private String product_name1;

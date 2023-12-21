@@ -200,10 +200,8 @@ public class Paging {
 		String added_param = "&whatColumn=" + whatColumn + "&keyword=" + keyword;
 
 		if (this.beginPage != 1) {
-			result += "&nbsp;<a href='" + url + "?pageNumber=" + (1) + "&pageSize=" + this.pageSize + added_param
-					+ "'>맨 처음</a>&nbsp;";
-			result += "&nbsp;<a href='" + url + "?pageNumber=" + (this.beginPage - 1) + "&pageSize=" + this.pageSize
-					+ added_param + "'>이전</a>&nbsp;";
+			result += "<nav aria-label='Page navigation example'><ul class='pagination'><li class='page-item'><a class='page-link' href='" + url + "?pageNumber=" + (1) + "&pageSize=" + this.pageSize + added_param + "' aria-label='Previous'><span aria-hidden='true'>&laquo;</span></a></li>";
+			result += "<li class='page-item'><a class='page-link' href='" + url + "?pageNumber=" + (this.beginPage - 1) + "&pageSize=" + this.pageSize + added_param + "' aria-label='Next'><span aria-hidden='true'>&raquo;</span></a></li></ul></nav>";
 		}
 
 		// 가운데

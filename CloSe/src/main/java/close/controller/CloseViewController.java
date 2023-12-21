@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import style.model.StyleBean;
 import style.model.StyleDao;
@@ -32,8 +33,12 @@ public class CloseViewController {
    StyleDao styleDao;
    
    @RequestMapping(value = command, method = RequestMethod.GET)
-   public String close(Model model) throws IOException {
+   public String close(Model model, @RequestParam ("feel") String feel, @RequestParam ("ctemp") String ctemp,
+		   @RequestParam ("wiconUrl") String wiconUrl) throws IOException {
       
+	   System.out.println("feel:"+feel);
+	   System.out.println("ctemp:"+ctemp);
+	   System.out.println("wiconUrl:"+wiconUrl);
       // 오늘 날짜 가져오기
        LocalDate today = LocalDate.now();
        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");

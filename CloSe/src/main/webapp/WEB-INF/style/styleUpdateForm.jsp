@@ -79,6 +79,15 @@
 	  background-repeat: no-repeat;
 	}
 	
+  	#pimage{
+		width:6vw;
+		height:9vh;
+		margin: auto;
+	}
+	
+	ol{
+		font-size: 8pt;
+	}
 </style>
 
 <script type="text/javascript">
@@ -95,6 +104,21 @@ function isProductNumberAlreadySet(productNumber) {
     }
     return false; // 중복이 아닌 경우 false 반환
 }
+
+function removeTagImage(productNumberIndex) {
+    var tagImageDiv = document.getElementById('tagImage' + productNumberIndex);
+    if (tagImageDiv) {
+      // Remove the tagImage div
+      tagImageDiv.parentNode.removeChild(tagImageDiv);
+
+      // Reset the input value
+      var inputElement = document.getElementById('product_number' + productNumberIndex);
+      if (inputElement) {
+        inputElement.value = ''; // You can set it to any default value if needed
+      }
+    }
+  }
+
 
 $(document).ready(function () {
 	// 이미지 업로드, 내용 입력, 스타일 선택 여부에 따라 submit 버튼 활성화/비활성화
@@ -183,7 +207,7 @@ $(document).ready(function () {
         }
     });
 
-    $(document).on('click', ".list-group-item", function () {
+    $(document).on('click', ".list-group-item d-flex", function () {
         var word = $(this).text();
         var jsonArray = $(document).data('jsonArray');
         var itemIndex = $(this).index(); // 클릭된 항목의 인덱스 가져오기
@@ -214,13 +238,16 @@ $(document).ready(function () {
                 var imageElement = $("<img>").attr("src", image);
                 var productNameElement = $("<div>").text(productName);
                 var priceElement = $("<div>").text(price);
-                var deleteButton = $("<button>").text("Delete").click(function() {
-                    // Remove the image and its related information
-                    $(this).parent().remove();
-                    
-                    // Remove the associated product_number
-                    $(inputId).val("");
-                });
+                var deleteButton = $("<button>").addClass("deleteButton").click(function() {
+                	  // Remove the image and its related information
+                	  $(this).parent().remove();
+
+                	  // Remove the associated product_number
+                	  $(inputId).val("");
+                	});
+
+                	// 이미지를 버튼에 추가
+                	deleteButton.append('<img src="data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'16\' height=\'16\' fill=\'currentColor\' class=\'bi bi-x-square\' viewBox=\'0 0 16 16\'%3E%3Cpath d=\'M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z\'/%3E%3Cpath d=\'M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z\'/%3E%3C/svg%3E" alt="Close Icon">');
 
                 // Append the elements to the container
                 tagImageContainer.append(imageElement, productNameElement, priceElement, deleteButton);
@@ -353,10 +380,6 @@ $(document).ready(function () {
 		<div class="col-lg-6">
 		<form:form name="f" commandName="styleBean" action="update.style" method="post" enctype="multipart/form-data">
 			<input type="hidden" name="member_id" <c:if test="${not empty loginInfo}">value="${loginInfo.member_id }"</c:if> <c:if test="${not empty kakaoLoginInfo}">value="${kakaoLoginInfo.member_id}"</c:if>>
-			<input type="hidden" name="product_number1" id="product_number1" value="${styleBean.product_number1}">
-			<input type="hidden" name="product_number2" id="product_number2" value="${styleBean.product_number2}">
-			<input type="hidden" name="product_number3" id="product_number3" value="${styleBean.product_number3}">
-			<input type="hidden" name="product_number4" id="product_number4" value="${styleBean.product_number4}">
 			
 			<h3 style="padding: 22 0 22 0">Style Write</h3>
 		
@@ -388,42 +411,83 @@ $(document).ready(function () {
 				<div class="col-7 align-self-center" id="drop_the_text">
 					<div><input type="text" class="form-control mb-1" id="searchWord2" name="searchWord2" autocomplete= 'off' placeholder="브랜드, 상품명을 검색하세요." ></div>
 					<div id="displayList2" style="overflow: auto; border-top: 0px; margin-top: -4px;"></div>
-					<div class="d-flex justify-content-start" id="tagImage">
+					<div class="d-flex justify-content-start mt-3" id="tagImage">
+						<ol class="list-group list-group-horizontal" style="width:100%;">
 						<c:if test="${not empty styleBean.product_number1}">
-							<div class="tagImage">
-				                <img src="<%=request.getContextPath()%>/resources/productImage/${styleBean.pimage1}">
-				                <div>${styleBean.product_name1}</div>
-				                <div>${styleBean.price1}</div>
-				                <button class="deleteButton">Delete</button>
-				            </div>
-			           	</c:if>
-			           	<c:if test="${not empty styleBean.product_number2}">
-							<div class="tagImage">
-				                <img src="<%=request.getContextPath()%>/resources/productImage/${styleBean.pimage2}">
-				                <div>${styleBean.product_name2}</div>
-				                <div>${styleBean.price2}</div>
-				                <button class="deleteButton">Delete</button>
-				            </div>
-			           	</c:if>
-			           	<c:if test="${not empty styleBean.product_number3}">
-							<div class="tagImage">
-				                <img src="<%=request.getContextPath()%>/resources/productImage/${styleBean.pimage3}">
-				                <div>${styleBean.product_name3}</div>
-				                <div>${styleBean.price3}</div>
-				                <button class="deleteButton">Delete</button>
-				            </div>
-			           	</c:if>
-			           	<c:if test="${not empty styleBean.product_number4}">
-							<div class="tagImage">
-				                <img src="<%=request.getContextPath()%>/resources/productImage/${styleBean.pimage4}">
-				                <div>${styleBean.product_name4}</div>
-				                <div>${styleBean.price4}</div>
-				                <button class="deleteButton">Delete</button>
-				            </div>
-			           	</c:if>
-			           	
+							<li class="list-group-item me-3" id="tagimage1" style="width:25%; border-radius: 10%; padding: 5px; align-self: center;">
+				   			   	<input type="hidden" name="product_number1" id="product_number1" value="${styleBean.product_number1}">
+				   			   	<a href="javascript:removeTagImage(1)" style="float: right;">
+					   			    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-x-square" viewBox="0 0 16 16">
+									  <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+									  <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+									</svg>
+								</a>
+				   			   	<div style="text-align: center;"><img src="<%=request.getContextPath()%>/resources/productImage/${styleBean.pimage1}" id="pimage"></div>
+				   			    <div class="ms-2 me-auto my-auto" style="text-align: center;">
+					   			    <div>${fn:substringBefore(styleBean.product_name1,'/') }<br>${fn:substringAfter(styleBean.product_name1,'/') }</div>
+					   			    <div class="fw-bold">
+					   			    <fmt:formatNumber value="${styleBean.price1}" pattern="###,###원" />
+					   			    </div>
+				   			    </div>
+							</li>
+						</c:if>
+						<c:if test="${not empty styleBean.product_number2}">
+							<li class="list-group-item me-3" id="tagimage2" style="width:25%; border-left: 1px solid #dee2e6; border-radius: 10%; padding: 5px; align-self: center;">
+				   			   	<input type="hidden" name="product_number2" id="product_number2" value="${styleBean.product_number2}">
+				   			   	<a href="javascript:removeTagImage(2)" style="float: right;">
+					   			    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-x-square" viewBox="0 0 16 16">
+									  <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+									  <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+									</svg>
+								</a>
+				   			   	<div style="text-align: center;"><img src="<%=request.getContextPath()%>/resources/productImage/${styleBean.pimage2}" id="pimage"></div>
+				   			    <div class="ms-2 me-auto my-auto" style="text-align: center;">
+					   			    <div>${fn:substringBefore(styleBean.product_name2,'/') }<br>${fn:substringAfter(styleBean.product_name2,'/') }</div>
+					   			    <div class="fw-bold">
+					   			    	<fmt:formatNumber value="${styleBean.price2}" pattern="###,###원" />
+					   			    </div>
+				   			    </div>
+							</li>
+						</c:if>
+						<c:if test="${not empty styleBean.product_number3}">
+							<li class="list-group-item me-3" id="tagimage3" style="width:25%; border-left: 1px solid #dee2e6; border-radius: 10%; padding: 5px; align-self: center;">
+				   			   	<input type="hidden" name="product_number3" id="product_number3" value="${styleBean.product_number3}">
+				   			   	<a href="javascript:removeTagImage(3)" style="float: right;">
+					   			    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-x-square" viewBox="0 0 16 16">
+									  <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+									  <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+									</svg>
+								</a>
+				   			   	<div style="text-align: center;"><img src="<%=request.getContextPath()%>/resources/productImage/${styleBean.pimage3}" id="pimage"></div>
+				   			    <div class="ms-2 me-auto my-auto" style="text-align: center;">
+					   			    <div>${fn:substringBefore(styleBean.product_name3,'/') }<br>${fn:substringAfter(styleBean.product_name3,'/') }</div>
+					   			    <div class="fw-bold">
+					   			    	<fmt:formatNumber value="${styleBean.price3}" pattern="###,###원" />
+					   			    </div>
+				   			    </div>
+							</li>
+						</c:if>
+						<c:if test="${not empty styleBean.product_number4}">
+							<li class="list-group-item me-3" id="tagimage4" style="width:25%; border-left: 1px solid #dee2e6; border-radius: 10%; padding: 5px; align-self: center;">
+			   			   		<input type="hidden" name="product_number4" id="product_number4" value="${styleBean.product_number4}">
+			   			   		<a href="javascript:removeTagImage(4)" style="float: right;">
+					   			    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-x-square" viewBox="0 0 16 16">
+									  <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+									  <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+									</svg>
+								</a>
+			   			   		<div style="text-align: center;"><img src="<%=request.getContextPath()%>/resources/productImage/${styleBean.pimage4}" id="pimage"></div>
+				   			    <div class="ms-2 me-auto my-auto" style="text-align: center;">
+					   			    <div>${fn:substringBefore(styleBean.product_name4,'/') }<br>${fn:substringAfter(styleBean.product_name4,'/') }</div>
+					   			    <div class="fw-bold">
+										<fmt:formatNumber value="${styleBean.price4}" pattern="###,###원" />
+									</div>
+				   			    </div>
+							</li>
+						</c:if>	
+						</ol>		
+						</div>
 					</div>
-				</div>
 				<div class="col-2"></div>
 			</div>
 
