@@ -48,6 +48,12 @@ CREATE TABLE member (
    ban_expiration date
 );
 
+CREATE TABLE coupon (
+	member_id	varchar2(30),
+	coupon_name	varchar2(30),
+	coupon_discount number
+);
+
 CREATE TABLE category (
 	smallcategory_name	varchar2(20)	PRIMARY KEY,
 	bigcategory_name	varchar2(15)	NOT NULL

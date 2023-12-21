@@ -109,6 +109,9 @@
 	    <a class="nav-link" data-bs-toggle="tab" href="bb" aria-selected="false" role="tab" tabindex="-1">구매 상품</a>
 	  </li>
 	  <li class="nav-item" role="presentation">
+	    <a class="nav-link" data-bs-toggle="tab" href="#coupon" aria-selected="false" role="tab" tabindex="-1">보유쿠폰</a>
+	  </li>
+	  <li class="nav-item" role="presentation">
 	    <a class="nav-link" data-bs-toggle="tab" href="#delete" aria-selected="false" role="tab" tabindex="-1">회원탈퇴</a>
 	  </li>
 	</ul>
@@ -311,6 +314,41 @@
 		</div>
 		
 		<!-- 네번째 탭 -->
+		<div class="tab-pane fade" id="coupon" role="tabpanel">
+			<div class="row">
+				<table class="table" id="article-table">
+		        	<c:if test="${not empty loginInfo or not empty kakaoLoginInfo}">
+				        <tr>
+				           <th>닉네임</th>
+				           <th>보유쿠폰</th>
+				           <th>할인률</th>
+				        </tr>
+				        <tr>
+				           <td>
+				           	  <c:if test="${not empty loginInfo}">
+				           	  	${loginInfo.nickname}
+				           	  </c:if>
+				           	  <c:if test="${not empty kakaoLoginInfo}">
+				           	  	${kakaoLoginInfo.nickname}
+				           	  </c:if>
+				           </td>
+				           <td>
+				           	  <c:if test="${not empty loginInfo}">
+				           	  	${loginLists.coupon_name}
+				           	  </c:if>
+				           </td>
+				           <td>
+				           	  <c:if test="${not empty loginInfo}">
+				           	  	${loginLists.coupon_discount}
+				           	  </c:if>
+				           </td>
+				        </tr>
+			        </c:if>
+		        </table>
+			</div>
+		</div>
+		
+		<!-- 다섯번째 탭 -->
 		<div class="tab-pane fade" id="delete" role="tabpanel">
 			<div class="row">
 		        <table class="table" id="article-table">
