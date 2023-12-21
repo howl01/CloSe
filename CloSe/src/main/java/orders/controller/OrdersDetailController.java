@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import cart.model.CartBean;
 import cart.model.CartDao;
 import cart.model.CartInfoBean;
+import member.model.EventBean;
+import member.model.EventDao;
 import member.model.MemberBean;
 import member.model.MemberDao;
 import orders.model.OrdersDao;
@@ -39,6 +41,9 @@ public class OrdersDetailController {
 	
 	@Autowired
 	ProductDao productDao;
+	
+	@Autowired
+	EventDao eventDao;
 	
 	@RequestMapping(value=command) //선택구매
 	public String ordersDetailForm(@RequestParam(value="cnum",required = false)String cnum,
@@ -67,6 +72,10 @@ public class OrdersDetailController {
 			model.addAttribute("clists", clists);
 			System.out.println("clists다"+clists);
 		}
+		
+		List<EventBean> couponList = eventDao.selectCoupon(member_id);
+		model.addAttribute("couponList", couponList);
+		System.out.println(couponList.size());
 		session.removeAttribute("clists"); 
 		return viewPage;
 	}
@@ -111,6 +120,10 @@ public class OrdersDetailController {
 				nLists.add(cib);
 			}
 		}
+		
+		List<EventBean> couponList = eventDao.selectCoupon(member_id);
+		model.addAttribute("couponList", couponList);
+		System.out.println(couponList.size());
 		session.setAttribute("clists", nLists);
 		return viewPage;
 	}

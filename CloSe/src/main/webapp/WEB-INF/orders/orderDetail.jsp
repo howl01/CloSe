@@ -17,7 +17,6 @@ function openReviewFormWindow(orderDetailNumber) {
 	alert(orderDetailNumber);
     // 새 창을 열기
     window.open("reviewRegister.jsp?orderDetailNumber="+orderDetailNumber, "reviewWindow", "_blank", "menubar=no, toolbar=no");
-    
 }
 
 </script>

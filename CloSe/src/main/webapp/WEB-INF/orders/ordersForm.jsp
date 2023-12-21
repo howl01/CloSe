@@ -25,6 +25,21 @@ function updatePrices() {
     document.getElementById('totalAmount').value = total;
 }
 
+/* document.getElementById('couponSelect').addEventListener('change', updateTotalAmount());
+function updateTotalAmount() {
+    var totalPrice = parseInt(document.getElementById('totalPrice').innerText);
+    var deliveryPrice = parseInt(document.getElementById('deliveryPrice').innerText);
+    var selectedCouponDiscount = document.getElementById('couponSelect').value;
+    
+    // 쿠폰 할인 적용
+    var discountAmount = (totalPrice * selectedCouponDiscount) / 100;
+    var totalAmount = totalPrice + deliveryPrice - discountAmount;
+    
+    // 화면 업데이트
+    document.getElementById('total').innerText = totalAmount;
+    document.getElementById('totalAmount').value = totalAmount;
+} */
+
 window.onload = function () {
     updatePrices();
 };
@@ -252,12 +267,23 @@ function pay() {
                 	</tr>
                  </tbody>
                 </table>
-               </form>
                
+               <h4>3.결제정보</h4>
                <table class="table">
                	<tr>
                  <td>
                   상품금액:<span id="totalPrice">${totalPrice }</span>원 <br>
+                  <select id="couponSelect">
+                  	<c:if test="${empty couponList }">
+	                  	<option value="" disabled>보유 중인 쿠폰이 없습니다.</option>
+                  	</c:if>
+                  	<c:if test="${not empty couponList }">
+                  		<option value="">쿠폰선택</option>
+                  	<c:forEach var="coupon" items="${couponList }">
+                  		<option value="${coupon.coupon_discount}">${coupon.coupon_name }/${coupon.coupon_discount }% 할인</option>
+                  	</c:forEach>
+                  	</c:if>
+                  </select>
                  </td>
                  <td>
                   배송비:<span id="deliveryPrice"></span>원
@@ -267,7 +293,7 @@ function pay() {
                  </td>
                 </tr>
                </table>
-               
+               </form>
                
                <input type="checkbox" id="selectAll" onclick="allCheck(this)"> 전체 동의
 				<br>

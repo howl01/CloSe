@@ -516,6 +516,12 @@ window.addEventListener('scroll', function() {
 	        <h2>상품리뷰</h2>
 	        <hr>
 	        <table width="100%" style="border-collapse: collapse;">
+	        	<c:if test="${empty rlists }">
+	        		<tr>
+	        			<td align="center" height="200px;">등록된 리뷰이 없습니다.</td>
+	        		</tr>
+	        	</c:if>
+	        	<c:if test="${not empty rlists }">
 	        	<c:forEach var="ri" items="${rlists }">
 	        		<tr>
 	        			<td>
@@ -537,7 +543,8 @@ window.addEventListener('scroll', function() {
 	        		<tr style="border-bottom: 0.5px solid rgba(0, 0, 0, .1);"> 
 	        			<td>${ri.text }
 	        		</tr>
-	        	</c:forEach>  
+	        	</c:forEach>
+	        	</c:if>  
 	        </table>
 	    </div>
 	

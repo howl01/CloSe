@@ -19,7 +19,7 @@ import cart.model.CartInfoBean;
 import member.model.MemberBean;
 import product.model.ProductDao;
 
-
+@Controller
 public class CartAddController {
 
 	private final String command = "/cartAdd.cart";
