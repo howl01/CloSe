@@ -15,6 +15,9 @@ import category.model.CategoryBean;
 import category.model.CategoryDao;
 import product.model.ProductBean;
 import product.model.ProductDao;
+import review.model.ReviewBean;
+import review.model.ReviewDao;
+import review.model.ReviewItem;
 
 @Controller
 public class ProductDetailController {
@@ -26,9 +29,15 @@ public class ProductDetailController {
 	@Autowired
 	ProductDao productDao;
 
+	@Autowired
+	ReviewDao reviewDao;
+	
 	@RequestMapping(value=command, method=RequestMethod.GET)
 	public String detailForm(@RequestParam("product_number") String product_number ,Model model) {
 		ProductBean pb = productDao.getOneProduct(product_number);
+		List<ReviewItem> rlists = reviewDao.getReviewByProduct_number(product_number);
+
+		model.addAttribute("rlists", rlists);
 		model.addAttribute("pb", pb);
 		return viewPage;
 	}

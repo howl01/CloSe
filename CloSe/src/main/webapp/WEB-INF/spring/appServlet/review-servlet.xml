@@ -10,7 +10,7 @@
 	<mvc:annotation-driven /> <!-- 유효성검사 -->
 
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix" value="/WEB-INF/admin/"></property>
+		<property name="prefix" value="/WEB-INF/review/"></property>
 		<property name="suffix" value=".jsp"></property>
 	</bean>
 

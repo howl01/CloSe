@@ -63,47 +63,21 @@
     padding-left: 12px;
     text-align: right;
 }
-.section-01,.section-02,.section-03,.section-04  { position: relative;}
-
-.fixed-menu {
-  position: fixed;
-  top: 142;
-  left: 0;
-  width: 100%;
-  z-index: 1000;
-  background-color: #fff; /* 배경색을 지정해주면 메뉴가 스크롤되는 내내 보일 것입니다. */
-  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1); /* 그림자 효과를 추가할 수 있습니다. */
-}
-
-fieldset {
-        display: inline-block;
-        direction: rtl;
-        border:0;
-}
-#star {
-        font-size: 1em;
-        color: transparent;
-        text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
-} 
-#gstar{
-    font-size: 1em;
-    color: transparent;
-    text-shadow: 0 0 0 #f0f0f0;
-}
 </style>
 <script type="text/javascript">
-window.addEventListener('scroll', function() {
-    var floatingMenu = document.querySelector('.floating-menu');
-    var scrollPosition = window.scrollY;
+	function fnMove(seq) { 
+		// 모든 <li> 안의 <a> 태그에서 'active' 클래스 제거
+		$('ul.nav-tabs li a').removeClass('nav-link active');
+		// 클릭한 <li> 안의 <a> 태그에 'active' 클래스 추가
+		$('#tab' + seq + ' a').addClass('nav-link active');
+		updateTabContent(seq);
+	}
 
-    if (scrollPosition > 600) { // Adjust this value based on when you want the menu to become fixed
-      floatingMenu.classList.add('fixed-menu');
-    } else {
-      floatingMenu.classList.remove('fixed-menu');
-    }
-  });
-
-
+	
+	function updateTabContent(seq) {
+		$('#tab-content').html('<p>This is the content for tab ' + seq + '</p>');
+	}
+	
 	function fnCalCount(type, size) {
         // size를 사용하여 적절한 선택자를 찾도록 수정
         var $input = $("input[name='" + size + "']");
@@ -231,48 +205,7 @@ window.addEventListener('scroll', function() {
 		    $('#cart-total').html(totalSum);
 	    });
 		
-		//=-==================================================
-	    var $menu     = $('.floating-menu li.m'),
-	        $contents = $('.scroll'),
-	        $doc      = $('html, body');
-	    $(function () {
-	        // 해당 섹션으로 스크롤 이동
-	        $menu.on('click','a', function(e){
-	            var $target = $(this).parent(),
-	                idx     = $target.index(),
-	                section = $contents.eq(idx),
-	                offsetTop = section.offset().top-200;
-	            $doc.stop()
-	                    .animate({
-	                        scrollTop :offsetTop
-	                    }, 1);
-	            return false;
-	        });
-	    });
-
-	    // menu class 추가
-	    $(window).scroll(function(){
-	        var scltop = $(window).scrollTop();
-	        $.each($contents, function(idx, item){
-	            var $target   = $contents.eq(idx),
-	                i         = $target.index(),
-	                targetTop = $target.offset().top;
-
-	            if (targetTop <= scltop) {
-	                $menu.removeClass('on');
-	                $menu.eq(idx).addClass('on');
-	            }
-	            if (!(200 <= scltop)) {
-	                $menu.removeClass('on');
-	            }
-	        })
-
-	    });
-	    
-	    
-	    
-	    
-	    
+		
 	});
 	
 	
@@ -471,7 +404,7 @@ window.addEventListener('scroll', function() {
 
 
 				<div> <!-- 메뉴바 -->
-					<div class="floating-menu" style="text-align: center;">
+					<div align="center">
 						<!-- <ul class="nav nav-tabs" id="myTab" role="tablist"
 							style="width: 90%">
 							<li class="nav-item" id="tab1" style="width: 25%"
@@ -484,69 +417,52 @@ window.addEventListener('scroll', function() {
 							<li class="nav-item" id="tab4" style="width: 25%"
 								onClick="fnMove(4)"><a class="ptab" id="" href="#">쇼핑가이드</a></li>
 						</ul> -->
-						<ul class="nav nav-tabs" role="tablist" style="width: 100%">
-						  <li class="nav-item m" role="presentation" style="width: 25%">
-						    <a class="nav-link menu-01 active" data-bs-toggle="tab" href="#section-01" aria-selected="true" role="tab">상품상세</a>
+						<ul class="nav nav-tabs" role="tablist"  style="width: 90%">
+						  <li class="nav-item" role="presentation" style="width: 25%">
+						    <a class="nav-link active" data-bs-toggle="tab" href="#mypage" aria-selected="true" role="tab">내 정보</a>
 						  </li>
-						  <li class="nav-item m" role="presentation" style="width: 25%">
-						    <a class="nav-link menu-02" data-bs-toggle="tab" href="#section-02" aria-selected="false" role="tab" tabindex="-1">상품리뷰</a>
+						  <li class="nav-item" role="presentation" style="width: 25%">
+						    <a class="nav-link" data-bs-toggle="tab" href="aa" aria-selected="false" role="tab" tabindex="-1">내 코디</a>
 						  </li>
-						  <li class="nav-item m" role="presentation" style="width: 25%">
-						    <a class="nav-link menu-03" data-bs-toggle="tab" href="#section-03" aria-selected="false" role="tab" tabindex="-1">코디</a>
+						  <li class="nav-item" role="presentation" style="width: 25%">
+						    <a class="nav-link" data-bs-toggle="tab" href="bb" aria-selected="false" role="tab" tabindex="-1">구매 상품</a>
 						  </li>
-						  <li class="nav-item m" role="presentation" style="width: 25%">
-						    <a class="nav-link menu-04" data-bs-toggle="tab" href="#section-04" aria-selected="false" role="tab" tabindex="-1">쇼핑가이드</a>
+						  <li class="nav-item" role="presentation" style="width: 25%">
+						    <a class="nav-link" data-bs-toggle="tab" href="#delete" aria-selected="false" role="tab" tabindex="-1">회원탈퇴</a>
 						  </li>
 						</ul>
-						
 					</div>
 				</div>
 
-	<div style="margin-top: 30px">
-		<div class="section-01 scroll">
-	        <h2>상품상세</h2>
-	        <hr>
-	        <div>
-	        	<img id="preview" width="100%"
-						src='<c:url value='/resources/product/content/'/>${pb.content }' />
+	<div id="myTabContent" class="tab-content">
+		<!-- 첫번째 탭 -->
+		<div class="tab-pane fade active show" id="mypage" role="tabpanel">
+			<div class="row">
+				11111
+		    </div>  
+		</div>
+		
+		<!-- 두번째 탭 -->
+		<div class="tab-pane fade" id="aa" role="tabpanel">
+			<div class="row">
+			22222
+			</div>
+		</div>
+		
+		<!-- 세번째 탭 -->
+		<div class="tab-pane fade" id="bb" role="tabpanel">
+			<div class="row">
+			333
+			</div>
+		</div>
+		
+		<!-- 네번째 탭 -->
+		<div class="tab-pane fade" id="delete" role="tabpanel">
+			<div class="row">
+		        4444
 	        </div>
-	    </div>
-	
-	    <div class="section-02 scroll">
-	        <h2>상품리뷰</h2>
-	        <hr>
-	        <table width="100%" style="border-collapse: collapse;">
-	        	<c:forEach var="ri" items="${rlists }">
-	        		<tr>
-	        			<td>
-	        				<fieldset>
-	        					<c:forEach begin="1" end="${5-ri.rating }">
-   									<label id="gstar">★</label>
-	        					</c:forEach>
-	        					<c:forEach begin="1" end="${ri.rating }">
-            						<label id="star">★</label>
-	        					</c:forEach>
-   							</fieldset>
-	        			</td>
-	        			<td> | ${ri.write_date }</td>
-	        			<td> | ${ri.member_id }</td>
-	        		</tr>
-	        		<tr>
-	        			<td><b>선택한옵션:${ri.product_size }</b></td>
-	        		</tr>
-	        		<tr style="border-bottom: 0.5px solid rgba(0, 0, 0, .1);"> 
-	        			<td>${ri.text }
-	        		</tr>
-	        	</c:forEach>  
-	        </table>
-	    </div>
-	
-	    <div class="section-03 scroll">
-	        <h2>섹션 3</h2>
-	    </div>
-	    <div class="section-04 scroll">
-	        <h2>섹션 4</h2>
-	    </div>
+		</div>
+		
 	</div>
 
 

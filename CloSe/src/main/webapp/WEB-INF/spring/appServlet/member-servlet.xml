@@ -25,5 +25,6 @@
 	<context:component-scan base-package="style" />
 	<context:component-scan base-package="cart" />
 	<context:component-scan base-package="orderdetail" />
+	<context:component-scan base-package="review" />
 
 </beans>

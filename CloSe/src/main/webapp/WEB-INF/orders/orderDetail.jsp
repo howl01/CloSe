@@ -6,9 +6,20 @@
 
 <%@ include file="../main/top.jsp"%>
 
-<style type="text/css">
+<style>
+#myform{
+	display: none;
+}
 </style>
+
 <script type="text/javascript">
+function openReviewFormWindow(orderDetailNumber) {
+	alert(orderDetailNumber);
+    // 새 창을 열기
+    window.open("reviewRegister.jsp?orderDetailNumber="+orderDetailNumber, "reviewWindow", "_blank", "menubar=no, toolbar=no");
+    
+}
+
 </script>
 
 <div class="body">
@@ -55,6 +66,7 @@
                                 </td>
                                 <td>
                                 	${oi.price*oi.qty}원
+                                	<button type="button" onclick="openReviewFormWindow('${oi.orderdetail_number}')">리뷰작성</button>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -165,6 +177,26 @@
 
 	</div>
 </div>
+
+<form id="myform" method="post" enctype="multipart/form-data">
+    <textarea id="reviewText" name="text" cols="20" rows="2"></textarea><br>
+    평점:
+    <fieldset>
+    <div style="caret-color: transparent;">
+		<input type="radio" name="rating" value="5" id="rate1"><label
+			for="rate1">★</label>
+		<input type="radio" name="rating" value="4" id="rate2"><label
+			for="rate2">★</label>
+		<input type="radio" name="rating" value="3" id="rate3"><label
+			for="rate3">★</label>
+		<input type="radio" name="rating" value="2" id="rate4"><label
+			for="rate4">★</label>
+		<input type="radio" name="rating" value="1" id="rate5"><label
+			for="rate5">★</label>
+	</div>
+	</fieldset><br>
+    <button type="button" onclick="submitReview()">리뷰 등록</button>
+</form>
 
 <button onclick="location.href='view.main'">이동</button>
 <%@ include file="../main/bottom.jsp"%>
