@@ -15,7 +15,7 @@
 	      member m ON s.member_id = m.member_id
 	</select>
 	
-	<select id="getStyleByStyleNumber" resultType="StyleBean">
+	<select id="getStyleByStyleNumber"  resultType="StyleBean">
 		SELECT
 		    s.*,
 		    m.nickname AS nickname,

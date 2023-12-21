@@ -1,3 +1,4 @@
+<%@page import="style.model.StyleBean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file= "../main/top.jsp" %>
 
@@ -106,7 +107,10 @@ function isProductNumberAlreadySet(productNumber) {
 }
 
 function removeTagImage(productNumberIndex) {
-    var tagImageDiv = document.getElementById('tagImage' + productNumberIndex);
+	alert(productNumberIndex);
+    var tagImageDiv = document.getElementById('tagimage'+productNumberIndex);
+    alert(tagImageDiv);
+    
     if (tagImageDiv) {
       // Remove the tagImage div
       tagImageDiv.parentNode.removeChild(tagImageDiv);
@@ -118,6 +122,8 @@ function removeTagImage(productNumberIndex) {
       }
     }
   }
+  
+  
 
 
 $(document).ready(function () {
@@ -207,20 +213,22 @@ $(document).ready(function () {
         }
     });
 
-    $(document).on('click', ".list-group-item d-flex", function () {
-        var word = $(this).text();
+    $(document).on('click', ".list-group-item", function () {
         var jsonArray = $(document).data('jsonArray');
         var itemIndex = $(this).index(); // 클릭된 항목의 인덱스 가져오기
         var productNumber = jsonArray[itemIndex].product_number;
         var image = contextPath + "/resources/productImage/" + jsonArray[itemIndex].image;
         var price = jsonArray[itemIndex].price;
         var productName = jsonArray[itemIndex].product_name;
-    
+        
      	// 중복 체크
         if (isProductNumberAlreadySet(productNumber)) {
             alert("이미 선택된 제품입니다.");
             return; // 중복이면 추가 작업을 수행하지 않고 함수 종료
         }
+     	
+
+        // 사용 예시
 
         // 최대 4개까지의 hidden input에 값을 설정
         var isSet = false;
@@ -231,30 +239,44 @@ $(document).ready(function () {
                 $("#displayList2").hide(); // 예시에 따라 displayList1, displayList2, ... 가려주기
                 isSet = true; // 값을 설정한 경우 isSet을 true로 변경
                 
-             // Assuming you have a container div with id 'tagImage'
-                var tagImageContainer = $("#tagImage");
+             // Create a new list item for the clicked product
+                var newItem = $("<li>").addClass("list-group-item me-3").attr("id", "tagimage" + i).css({
+                    "width": "25%",
+                    "border-left": "1px solid #dee2e6",
+                    "border-radius": "10%",
+                    "padding": "5px",
+                    "align-self": "center"
+                });
 
-                // Create HTML elements for image, product_name, and price
-                var imageElement = $("<img>").attr("src", image);
-                var productNameElement = $("<div>").text(productName);
-                var priceElement = $("<div>").text(price);
-                var deleteButton = $("<button>").addClass("deleteButton").click(function() {
-                	  // Remove the image and its related information
-                	  $(this).parent().remove();
+                // Create elements for the new list item
+                var removeLink = $("<a>").attr("href", "javascript:removeTagImage(" + i + ")").css("float", "right");
+                removeLink.append('<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-x-square" viewBox="0 0 16 16"><path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/><path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/></svg>');
+                
+                var imageDiv = $("<div>").css("text-align", "center").append($("<img>").attr({
+                    "src": image,
+                    "id": "pimage"
+                }));
+                
+                var infoDiv = $("<div>").addClass("ms-2 me-auto my-auto").css("text-align", "center");
+                infoDiv.append($("<div>").html(`${fn:substringBefore(productName, '/') }<br>${fn:substringAfter(productName, '/') }`));
+                var customPattern = "###,###";
+                var formattedNumber = formatNumber(price, customPattern);
+                
+                function formatNumber(number, pattern) {
+                    return pattern.replace(/#/g, function (match) {
+                    	return number.toString();
+                    });
+                }
+                infoDiv.append($("<div>").addClass("fw-bold").text(formattedNumber));
 
-                	  // Remove the associated product_number
-                	  $(inputId).val("");
-                	});
+                // Append elements to the new list item
+                newItem.append(removeLink, imageDiv, infoDiv);
 
-                	// 이미지를 버튼에 추가
-                	deleteButton.append('<img src="data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'16\' height=\'16\' fill=\'currentColor\' class=\'bi bi-x-square\' viewBox=\'0 0 16 16\'%3E%3Cpath d=\'M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z\'/%3E%3Cpath d=\'M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z\'/%3E%3C/svg%3E" alt="Close Icon">');
-
-                // Append the elements to the container
-                tagImageContainer.append(imageElement, productNameElement, priceElement, deleteButton);
-                alert(inputId);
+                // Append the new list item to the container
+                $("#tagImageOl").append(newItem);
             }
         }
-
+        
         // 4개 이상 클릭 시 알림 띄우기
         if (!isSet) {
             alert("최대 4개까지만 선택할 수 있습니다.");
@@ -380,7 +402,10 @@ $(document).ready(function () {
 		<div class="col-lg-6">
 		<form:form name="f" commandName="styleBean" action="update.style" method="post" enctype="multipart/form-data">
 			<input type="hidden" name="member_id" <c:if test="${not empty loginInfo}">value="${loginInfo.member_id }"</c:if> <c:if test="${not empty kakaoLoginInfo}">value="${kakaoLoginInfo.member_id}"</c:if>>
-			
+			<input type="hidden" name="product_number1" id="product_number1" value="${styleBean.product_number1}">
+			<input type="hidden" name="product_number2" id="product_number2" value="${styleBean.product_number2}">
+			<input type="hidden" name="product_number3" id="product_number3" value="${styleBean.product_number3}">
+			<input type="hidden" name="product_number4" id="product_number4" value="${styleBean.product_number4}">
 			<h3 style="padding: 22 0 22 0">Style Write</h3>
 		
 			<div class="row productrow" style="border-top: 3px solid;"> 
@@ -412,10 +437,9 @@ $(document).ready(function () {
 					<div><input type="text" class="form-control mb-1" id="searchWord2" name="searchWord2" autocomplete= 'off' placeholder="브랜드, 상품명을 검색하세요." ></div>
 					<div id="displayList2" style="overflow: auto; border-top: 0px; margin-top: -4px;"></div>
 					<div class="d-flex justify-content-start mt-3" id="tagImage">
-						<ol class="list-group list-group-horizontal" style="width:100%;">
+						<ol class="list-group list-group-horizontal" style="width:100%;" id="tagImageOl">
 						<c:if test="${not empty styleBean.product_number1}">
 							<li class="list-group-item me-3" id="tagimage1" style="width:25%; border-radius: 10%; padding: 5px; align-self: center;">
-				   			   	<input type="hidden" name="product_number1" id="product_number1" value="${styleBean.product_number1}">
 				   			   	<a href="javascript:removeTagImage(1)" style="float: right;">
 					   			    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-x-square" viewBox="0 0 16 16">
 									  <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
@@ -433,7 +457,6 @@ $(document).ready(function () {
 						</c:if>
 						<c:if test="${not empty styleBean.product_number2}">
 							<li class="list-group-item me-3" id="tagimage2" style="width:25%; border-left: 1px solid #dee2e6; border-radius: 10%; padding: 5px; align-self: center;">
-				   			   	<input type="hidden" name="product_number2" id="product_number2" value="${styleBean.product_number2}">
 				   			   	<a href="javascript:removeTagImage(2)" style="float: right;">
 					   			    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-x-square" viewBox="0 0 16 16">
 									  <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
@@ -451,7 +474,6 @@ $(document).ready(function () {
 						</c:if>
 						<c:if test="${not empty styleBean.product_number3}">
 							<li class="list-group-item me-3" id="tagimage3" style="width:25%; border-left: 1px solid #dee2e6; border-radius: 10%; padding: 5px; align-self: center;">
-				   			   	<input type="hidden" name="product_number3" id="product_number3" value="${styleBean.product_number3}">
 				   			   	<a href="javascript:removeTagImage(3)" style="float: right;">
 					   			    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-x-square" viewBox="0 0 16 16">
 									  <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
@@ -469,7 +491,6 @@ $(document).ready(function () {
 						</c:if>
 						<c:if test="${not empty styleBean.product_number4}">
 							<li class="list-group-item me-3" id="tagimage4" style="width:25%; border-left: 1px solid #dee2e6; border-radius: 10%; padding: 5px; align-self: center;">
-			   			   		<input type="hidden" name="product_number4" id="product_number4" value="${styleBean.product_number4}">
 			   			   		<a href="javascript:removeTagImage(4)" style="float: right;">
 					   			    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-x-square" viewBox="0 0 16 16">
 									  <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
