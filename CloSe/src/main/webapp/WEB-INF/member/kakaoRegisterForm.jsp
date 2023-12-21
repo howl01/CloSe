@@ -9,14 +9,8 @@
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript" src="resources/js/jquery.js"></script>
 <script type="text/javascript">
-<<<<<<< HEAD
-=======
-var registercheck = false; //인증번호 확인 여부를 저장할 변수
-alert(registercheck);
->>>>>>> refs/remotes/origin/howl
 var cert = false;
 
-<<<<<<< HEAD
 function sendSMS(phone) {
     alert('인증번호를 요청했습니다.');
     // Ajax 요청
@@ -65,9 +59,6 @@ function verify() {
 
 $(document).ready(function() {
 	
-=======
-$(document).ready(function() {
->>>>>>> refs/remotes/origin/howl
 	$('#nickname').keyup(function(){ // 닉네임 중복체크
 
         $.ajax({
@@ -87,34 +78,8 @@ $(document).ready(function() {
                 }
             }
         });
-	
-        /* $('#sub').click(function(){ // submit 클릭
-            if(use == "impossible"){
-                alert('이미 사용중인 아이디입니다.');
-                return false;
-                
-            } else if(nickuse == "impossible"){
-            	alert('이미 사용중인 닉네임입니다.');
-            	return false;
-            	
-            }else if(pwuse == "nosame"){
-            	alert('비밀번호가 일치하지 않습니다');
-            	return false;
-            	
-            }else if(!cert){
-            	alert('인증번호를 받으세요');
-            	return false;
-            	
-            }else if(!registercheck){
-            	alert('인증번호를 확인하세요');
-            	return false;
-            }
-
-            f.submit();
-        }); */
     });
 
-<<<<<<< HEAD
     $('#sub').click(function(event){ // submit 클릭
     	
         if(use == "impossible"){
@@ -135,14 +100,6 @@ $(document).ready(function() {
         	
         }
     });
-=======
-    $("input[name='member_id']").keydown(function(){
-        use="";
-        $('#idmessage').css('display','none');
-    });
-
-    
->>>>>>> refs/remotes/origin/howl
     
     $('#email').keyup(function () {
         var enteredEmail = $(this).val();
@@ -157,62 +114,6 @@ $(document).ready(function() {
     
 });
 
-<<<<<<< HEAD
-=======
-function sendSMS(phone) {
-    alert('인증번호를 요청했습니다.');
-    // Ajax 요청
-    $.ajax({
-        type: "GET",
-        url: "sendSms.member?phone="+phone,
-        data: { phone: phone },
-        success: function(response) {
-            // 서버에서 받은 응답(response)을 처리
-            console.log(response);
-
-            // 이 부분에서 필요한 로직을 추가하여 처리 결과를 사용자에게 보여줄 수 있습니다.
-            // 예: 인증번호 입력 창을 보이게 한다거나, 메시지를 표시한다 등.
-            document.getElementById('verificationSection').style.display = 'flex';
-            cert = true;
-            // 받은 랜덤 값(response)을 전역 변수에 저장
-            window.randomValue = response;
-        },
-        error: function(error) {
-            console.error(error);
-            // 에러가 발생했을 경우에 대한 처리를 추가할 수 있습니다.
-            cert = false;
-            alert('전화번호가 일치하지 않습니다.');
-        }
-    });
-}
-
-function verify() {
-    var verificationCode = document.getElementById('verificationCode').value;
-    // 인증번호가 비어 있으면 알림창을 띄우고 함수를 종료
-    if (verificationCode.trim() == '') {
-        alert('인증번호를 입력하세요.');
-        return;
-    }
-
-    // 사용자가 입력한 값
-    var userInput = document.getElementById('verificationCode').value;
-
-    // 전역 변수에 저장된 랜덤 값과 사용자가 입력한 값 비교
-    if (userInput === window.randomValue) {
-        // 일치할 경우, 여기에 원하는 동작 추가
-        alert('인증 성공!');
-        registercheck = true;
-        location.reload();
-    } else {
-        // 불일치할 경우, 여기에 원하는 동작 추가
-        alert('인증번호가 일치하지 않습니다. 다시 시도하세요.');
-        // 여기에 추가로 원하는 동작을 넣으면 됩니다.
-    }
-}
-
-
-
->>>>>>> refs/remotes/origin/howl
 function isValidEmail(email) {
     var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
@@ -220,20 +121,6 @@ function isValidEmail(email) {
 	
 function goLogin(){
 	location.href="login.member";
-}
-
-function confirm() {
-	if(!registercheck || registercheck == null){
-		f.submit();
-	} else if(registercheck){
-		if(!cert){
-			var phoneInput = document.getElementById('phone');
-			var phoneValue = phoneInput.value;
-			sendsms(phoneValue);
-		} else if(cert){
-			f.submit();
-		}
-	}
 }
 
 </script>
@@ -372,7 +259,7 @@ function confirm() {
 
           <hr class="my-4">
          <div class="d-grid gap-2 d-md-block" align = "center">
-          <input type="button" id="sub" class="btn btn-dark btn-md" value="인증요청" onclick="confirm()"/>
+          <input type="submit" id="sub" class="btn btn-dark btn-md" value="회원가입"/>
           <input type="button" class="btn btn-dark btn-md" value="취소" onclick="goLogin()">
          </div>
         </form:form>

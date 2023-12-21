@@ -22,7 +22,6 @@ public class KakaoRegisterController {
 
 	private final String command = "/kakaoRegister.member";
 	private final String viewPage = "kakaoRegisterForm";
-	private final String gotoPage = "redirect:login.member";
 
 	@Autowired
 	private MemberDao memberDao;
@@ -45,7 +44,7 @@ public class KakaoRegisterController {
 		
 		model.addAttribute("memberBean", mb);
 		memberDao.kakaoRegister(mb);
-		out.println("<script>alert('ȸ������ �Ǿ����ϴ�.'); location.href='" + request.getContextPath() + "/login.member';</script>");
+		out.println("<script>alert('카카오 회원가입이 완료되었습니다 로그인페이지로 이동합니다.'); location.href='" + request.getContextPath() + "/login.member';</script>");
 		out.flush();
 
 		return null;

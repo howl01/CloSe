@@ -73,6 +73,27 @@
 	border: 1px solid #e6e4e9;
 	border-radius: 8px;
 }
+
+.page-link {
+  color: #000; 
+  background-color: #fff;
+  border: 1px solid #ccc; 
+}
+
+.page-item.active .page-link {
+ z-index: 1;
+ color: #555;
+ font-weight:bold;
+ background-color: #f1f1f1;
+ border-color: #ccc;
+ 
+}
+
+.page-link:focus, .page-link:hover {
+  color: #000;
+  background-color: #fafafa; 
+  border-color: #ccc;
+}
 </style>
 
 <div class="row">
@@ -146,21 +167,9 @@
 	</table>
 </div>
 
-<div class="row">
-	<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-		<c:if test="${ member_id == 'admin' }">
 			<input type="button" class="btn btn-dark me-md-2" value="글쓰기" onClick="location.href='insert.notice'">
 			<input type="button" class="btn btn-dark me-md-2" value="선택하기" onClick="location.href='delete.notice?pageNumber=${ pageInfo.pageNumber }'">
-		</c:if>
-	</div>
-</div>
 
-<div class="row">
-	<nav id="pagination" aria-label="Page navigation">
-		<ul class="pagination justify-content-center">
-			<li class="page-item"><a class="page-link" href="#">Previous</a></li>
-			<li class="page-item"><a class="page-link" href="#">1</a></li>
-			<li class="page-item"><a class="page-link" href="#">Next</a></li>
-		</ul>
-	</nav>
-</div>
+<center>
+${ pageInfo.pagingHtml }
+</center>

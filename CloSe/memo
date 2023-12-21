@@ -45,7 +45,7 @@ CREATE TABLE member (
    weight   number   NULL,
    social varchar2(20),
    ban_count number default 0,
-	ban_expiration date
+   ban_expiration date
 );
 
 CREATE TABLE category (
@@ -70,18 +70,18 @@ CREATE TABLE product (
 
 CREATE TABLE style (
    style_number   number   PRIMARY KEY,
-   image1   varchar2(50) not null,
-  image2   varchar2(50),
-  image3   varchar2(50),
-  image4   varchar2(50),
-  image5   varchar2(50),
+   image1   varchar2(100) not null,
+  image2   varchar2(100),
+  image3   varchar2(100),
+  image4   varchar2(100),
+  image5   varchar2(100),
    title   varchar2(100),
    content   varchar2(4000)   NOT NULL,
   style varchar2(200) not null,
    read_count   number,
    recommend_count   number,
    write_date   Date,
-  product_number1   number,
+   product_number1   number,
   product_number2   number,
   product_number3   number,
   product_number4   number,
@@ -128,7 +128,7 @@ CREATE TABLE cart (
 
 CREATE TABLE report (
     report_number number PRIMARY KEY,
-    report_category varchar2(30),
+    report_category varchar2(50),
     content varchar2(4000),
     image varchar2(50),
     reporter_id varchar2(15),
@@ -173,3 +173,78 @@ select * from cart;
 select * from report;
 select * from qna;
 select * from notice;
+
+insert into category values
+('긴소매 티셔츠','상의');
+insert into category values
+('반소매 티셔츠','상의');
+insert into category values
+('맨투맨','상의');
+insert into category values
+('니트','상의');
+insert into category values
+('셔츠','상의');
+insert into category values
+('후드 티셔츠','상의');
+insert into category values
+('스포츠','상의');
+insert into category values
+('민소매 티셔츠','상의');
+
+
+insert into category values
+('슬랙스','하의');
+insert into category values
+('데님','하의');
+insert into category values
+('코튼','하의');
+insert into category values
+('숏','하의');
+insert into category values
+('레깅스','하의');
+insert into category values
+('트레이닝','하의');
+insert into category values
+('미니스커트','하의');
+insert into category values
+('롱스커트','하의');
+insert into category values
+('미디스커트','하의');
+
+insert into category values
+('재킷','아우터');
+insert into category values
+('코트','아우터');
+insert into category values
+('숏패딩','아우터');
+insert into category values
+('롱패딩','아우터');
+
+insert into product values
+(product_seq.nextval,'스파오/니트1','니트1.jpg',29000,'니트c1.jpg','5',100,100,100,100,'니트');
+insert into product values
+(product_seq.nextval,'나이키/니트2','니트2.jpg',39000,'니트c2.jpg','5',100,100,100,100,'니트');
+insert into product values
+(product_seq.nextval,'나이키/데님1','데님1.jpg',59000,'데님c1.jpg','5',100,100,100,100,'데님');
+insert into product values
+(product_seq.nextval,'노스페이스/롱패딩1','롱패딩1.jpg',199000,'롱패딩c1.jpg','0',100,100,100,100,'롱패딩');
+insert into product values
+(product_seq.nextval,'아이앱/맨투맨1','맨투맨1.jpg',30000,'맨투맨c1.jpg','10',100,100,100,100,'맨투맨');
+insert into product values
+(product_seq.nextval,'아디다스/반소매티1','반소매티1.jpg',4900,'반소매티c1.jpg','10',100,100,100,100,'반소매 티셔츠');
+insert into product values
+(product_seq.nextval,'아디다스/숏패딩1','숏패딩1.jpg',99000,'숏패딩c1.jpg','0',100,100,100,100,'숏패딩');
+insert into product values
+(product_seq.nextval,'슈프림/슬랙스1','슬랙스1.jpg',49000,'슬랙스c1.jpg','15',100,100,100,100,'슬랙스');
+insert into product values
+(product_seq.nextval,'슈프림/재킷1','재킷1.jpg',249000,'재킷c1.jpg','10',100,100,100,100,'재킷');
+insert into product values
+(product_seq.nextval,'슈프림/코트1','코트1.jpg',249000,'코트c1.jpg','10',100,100,100,100,'코트');
+insert into product values
+(product_seq.nextval,'반스/트레이닝바지1','트레이닝바지1.jpg',24000,'트레이닝바지c1.jpg','15',100,100,100,100,'트레이닝');
+insert into product values
+(product_seq.nextval,'반스/후드티1','후드티1.jpg',49000,'후드티c1.jpg','15',100,100,100,100,'후드 티셔츠');
+insert into product values
+(product_seq.nextval,'반스/롱스커트1','롱스커트1.jpg',79000,'롱스커트c1.jpg','10',100,100,100,100,'롱스커트');
+
+commit;

@@ -8,51 +8,55 @@ import java.time.LocalDate;
 import org.hibernate.validator.constraints.NotEmpty;
 
 public class MemberBean {
-	@NotEmpty(message = "���̵� �Է��ϼ���")
-	@Size(max = 10, message = "10�������Ϸ� �Է��ϼ���")
+	@NotEmpty(message = "아이디를 입력하세요")
+	@Size(max = 10, message = "10글자이하로 입력하세요")
 	private String member_id;
-
-	@NotEmpty(message = "��й�ȣ�� �Է��ϼ���")
+	@NotEmpty(message = "비밀번호를 입력하세요")
 	private String password;
-
+	
 	private String passwordcheck;
 
-	@NotEmpty(message = "�̸��� �Է��ϼ���")
-	@Size(max = 3, message = "3�������Ϸ� �Է��ϼ���")
+	@NotEmpty(message = "이름을 입력하세요")
+	@Size(max = 3, message = "3글자이하로 입력하세요")
 	private String name;
-
-	@NotEmpty(message = "��ȭ��ȣ�� �Է��ϼ���")
-	@Pattern(regexp = "^[0-9]+$", message = "���ڸ� �Է°���")
+	
+	@NotEmpty(message = "전화번호를 입력하세요")
+	@Pattern(regexp = "^[0-9]+$", message = "숫자만 입력가능")
 	private String phone;
-	@NotEmpty(message = "�̸����� �Է��ϼ���")
+	
+	@NotEmpty(message = "이메일을 입력하세요")
 	private String email;
+	
+	@NotEmpty(message = "주소를 입력하세요")
 	private String address1;
-
-	@NotEmpty(message = "���ּҸ� �Է��ϼ���")
+	
+	@NotEmpty(message = "상세주소를 입력하세요")
 	private String address2;
 
-	@NotEmpty(message = "��������� �Է��ϼ���")
+	
+	@NotEmpty(message = "생년월일을 입력하세요")
 	private String birth;
 
-	@NotNull(message = "������ �����ϼ���")
+	
+	@NotNull(message = "성별을 선택하세요")
 	private String gender;
-
-	@NotEmpty(message = "�г����� �Է��ϼ���")
-	@Size(max = 6, message = "6�������Ϸ� �Է��ϼ���")
+	
+	@NotEmpty(message = "닉네임을 입력하세요")
+	@Size(max = 6, message = "6글자이하로 입력하세요")
 	private String nickname;
-
-	@NotNull(message = "������ȣ�� �Է��ϼ���")
-	@Size(min = 4, message = "������ȣ�� �Է��ϼ���")
+	
+	@NotNull(message = "인증번호를 입력하세요")
+	@Size(min = 4, message = "인증번호를 입력하세요")
 	private String verificationCode;
-
-	@NotEmpty(message = "Ű �Է�")
-	@Pattern(regexp = "^[0-9]+$", message = "���ڸ� �Է°���")
+	
+	@NotEmpty(message = "키 입력")
+	@Pattern(regexp = "^[0-9]+$", message = "숫자만 입력가능")
 	private String height;
-
-	@NotEmpty(message = "������ �Է�")
-	@Pattern(regexp = "^[0-9]+$", message = "���ڸ� �Է°���")
+	
+	@NotEmpty(message = "몸무게 입력")
+	@Pattern(regexp = "^[0-9]+$", message = "숫자만 입력가능")
 	private String weight;
-
+	
 	private String social;
 
 	private int ban_count;

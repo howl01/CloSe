@@ -41,7 +41,7 @@ public class ProductRegisterController {
 
 	@RequestMapping(value=command, method=RequestMethod.GET)
 	public String registerForm(Model model) {
-		List<CategoryBean> clists = categoryDao.getAllCategory(); //ī�װ� insert�� ����
+		List<CategoryBean> clists = categoryDao.getAllCategory(); 
 		model.addAttribute("clists", clists);
 		return viewPage;
 	}
@@ -52,30 +52,24 @@ public class ProductRegisterController {
 			@RequestParam(value = "prevContent", required = false) String prevContent,
 			Model model) {
 		List<ProductBean> plists = productDao.getAllProduct();
-		List<CategoryBean> clists = categoryDao.getAllCategory(); //ī�װ� insert�� ����
+		List<CategoryBean> clists = categoryDao.getAllCategory(); 
 		model.addAttribute("clists", clists);
 		
 		if(pb.getImage().equals("")) {
 			pb.setImage(prevImage);
 		}
-		
-		System.out.println("����������:"+prevContent);
-		System.out.println("����������:"+pb.getContent());
-		
-
 		String uploadPath = servletContext.getRealPath("/resources/product/image"); 
 		String uploadPath2 = servletContext.getRealPath("/resources/product/content"); 
 
-		File destination0 = new File(uploadPath+File.separator+prevImage); //�����̹���
-		File destination = new File(uploadPath+File.separator+pb.getImage()); //�����̹���
-		
-		File destination1 = new File(uploadPath2+File.separator+prevContent); //����������
-		File destination2 = new File(uploadPath2+File.separator+pb.getContent()); //����������
+		File destination0 = new File(uploadPath+File.separator+prevImage); 
+		File destination = new File(uploadPath+File.separator+pb.getImage());
+		File destination1 = new File(uploadPath2+File.separator+prevContent); 
+		File destination2 = new File(uploadPath2+File.separator+pb.getContent()); 
 
 		MultipartFile multi = pb.getpImage();
 		MultipartFile multi2 = pb.getpContent();
 		try {
-			//������ ���̺� �ִ��� Ȯ��	 
+			
 			boolean existsPImage = false;
 			for(int i=0;i<plists.size();i++) {
 				ProductBean pb0 = plists.get(i);
@@ -88,7 +82,7 @@ public class ProductRegisterController {
 					destination0.delete();
 				}
 			}
-			//������ ���̺� �ִ��� Ȯ��	 
+			
 			boolean existsPContent = false;
 			for(int i=0;i<plists.size();i++) {
 				ProductBean pb0 = plists.get(i);
@@ -101,25 +95,20 @@ public class ProductRegisterController {
 					destination1.delete();
 				}
 			}
-			
-			// ������ ������ �� �̹��� ���ε�
 			if(!destination.exists()) {
 				multi.transferTo(destination);
 			}
 			if(!destination2.exists()) {
 				multi2.transferTo(destination2);
 			}
-
-			// ������ ������ ���� �̹��� ����
-			//destination2.delete();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
 
-		if(bresult.hasErrors()) { //��ȿ���˻�
+		if(bresult.hasErrors()) { 
 			return viewPage;
 		}
-		for(int i=0;i<plists.size();i++) { //�̸� �ߺ� �˻�
+		for(int i=0;i<plists.size();i++) { 
 			ProductBean pb0 = plists.get(i);
 			if(pb0.getProduct_name().equals(pb.getProduct_name())) {
 				return viewPage;

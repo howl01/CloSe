@@ -13,20 +13,36 @@
 	<select id="getOneProduct" resultType="ProductBean">
 		select * from product where product_number = #{product_number}
 	</select>
-	
 	<select id="getProductByBigcategory" resultType="ProductBean">
 		SELECT * FROM product p 
 		INNER JOIN category c ON p.smallcategory_name = c.smallcategory_name
 		WHERE c.bigcategory_name = #{bigcategory_name} 
-		and p.s_stock>0 and p.M_STOCK>0 and p.L_STOCK>0 and p.XL_STOCK>0
+		and (p.s_stock>0 or p.M_STOCK>0 or p.L_STOCK>0 or p.XL_STOCK>0)
 	</select> 
+	
+	<update id="updateStock">
+		update product 
+		set s_stock=s_stock-#{s_stock},m_stock=m_stock-#{m_stock},l_stock=l_stock-#{l_stock},xl_stock=xl_stock-#{xl_stock}
+		where product_number=#{product_number}
+	</update>
+	
+	<delete id="deleteProduct">
+		delete product where product_number=#{product_number}
+	</delete>
+	
+	<update id="updateProduct">
+		update product 
+		set product_name=#{product_name}, image=#{image}, price=#{price}, content=#{content}, temperature=#{temperature},
+		s_stock=#{s_stock}, m_stock=#{m_stock}, l_stock=#{l_stock}, xl_stock=#{xl_stock}, smallcategory_name=#{smallcategory_name}
+		where product_number=#{product_number}
+	</update>
 	
 	<select id="findProductNames" resultType="String">
         SELECT product_name
         FROM product
         WHERE product_name LIKE '%' || #{searchWord} || '%'
         ORDER BY product_name
-        FETCH FIRST 10 ROWS ONLY
+        FETCH FIRST 5 ROWS ONLY
     </select>
     
     <select id="findProductNames2" resultType="ProductBean">
@@ -34,6 +50,6 @@
         FROM product
         WHERE product_name LIKE '%' || #{searchWord2} || '%'
         ORDER BY product_name
-        FETCH FIRST 10 ROWS ONLY
+        FETCH FIRST 5 ROWS ONLY
     </select>
 </mapper>

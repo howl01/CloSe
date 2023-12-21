@@ -4,11 +4,19 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -17,6 +25,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import style.model.StyleBean;
 import style.model.StyleDao;
@@ -27,121 +36,173 @@ public class CloseViewController {
    private final String command = "/view.close";
    private final String viewPage = "close";
    
+   public String latString = "";
+   public String longString = "";
+   
    @Autowired
    StyleDao styleDao;
    
-   @RequestMapping(value = command, method = RequestMethod.GET)
-   public String close(Model model) throws IOException {
-      
-      // 오늘 날짜 가져오기
-       LocalDate today = LocalDate.now();
-       DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-       String formattedDate = today.format(formatter);
-       //현재 시간 가져오기
-       LocalTime now = LocalTime.now();
-       DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("HH00");
-       String formattedTime = now.format(formatter2);
+ //현재 위치좌표 받아오기
+   @RequestMapping(value = command, method = RequestMethod.POST)
+   public void temp(@RequestParam("latitude") double latitude, @RequestParam("longitude") double longitude) {
+      System.out.println("Latitude: " + latitude);
+       System.out.println("Longitude: " + longitude);
        
-       System.out.println("formattedDate : " + formattedDate);
-
-      StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst"); /*URL*/
-       urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=LXEf5efL3eVwUeG%2FfsUPd%2Bzm5GefA3q09J2myi5bIisYdACpRWqvMdvB8xQjRacuAFJpp6l1EqjgXb%2BvGOA1ZA%3D%3D"); /*Service Key*/
-       urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지번호*/
-       urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("1000", "UTF-8")); /*한 페이지 결과 수*/
-       urlBuilder.append("&" + URLEncoder.encode("dataType","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); /*요청자료형식(XML/JSON) Default: XML*/
-       urlBuilder.append("&" + URLEncoder.encode("base_date","UTF-8") + "=" + URLEncoder.encode(formattedDate, "UTF-8")); /*‘21년 6월 28일발표*/
-       urlBuilder.append("&" + URLEncoder.encode("base_time","UTF-8") + "=" + URLEncoder.encode("0200", "UTF-8")); /*02시 발표*/
-       urlBuilder.append("&" + URLEncoder.encode("nx","UTF-8") + "=" + URLEncoder.encode("55", "UTF-8")); /*예보지점의 X 좌표값*/
-       urlBuilder.append("&" + URLEncoder.encode("ny","UTF-8") + "=" + URLEncoder.encode("127", "UTF-8")); /*예보지점의 Y 좌표값*/
-       URL url = new URL(urlBuilder.toString());
-       HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-       conn.setRequestMethod("GET");
-       conn.setRequestProperty("Content-type", "application/json");
-       System.out.println("Response code: " + conn.getResponseCode());
-       BufferedReader rd;
-       if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-           rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-       } else {
-           rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
-       }
-       StringBuilder sb = new StringBuilder();
-       String line;
-       while ((line = rd.readLine()) != null) {
-           sb.append(line);
-       }
-       rd.close();
-       conn.disconnect();
-       String data= sb.toString();
+       String latString = String.valueOf(latitude);
+       String longString = String.valueOf(longitude);
        
-       System.out.println(data);
-       
-    // JSON 데이터 파싱
-       JSONObject jsonData = new JSONObject(data);
-       JSONObject response = jsonData.getJSONObject("response");
-       JSONObject body = response.getJSONObject("body");
-       JSONObject items = body.getJSONObject("items");
-       JSONArray itemList = items.getJSONArray("item");
-
-       double sum = 0;
-       
-       // 아이템을 순회하며 TMN 및 TMX 값을 찾기
-       for (int i = 0; i < itemList.length(); i++) {
-           JSONObject item = itemList.getJSONObject(i);
-           String category = item.getString("category");
-           String fcstDate = item.getString("fcstDate");
-           String fcstTime = item.getString("fcstTime");
-           if("TMN".equals(category) && formattedDate.equals(fcstDate)) {
-        	   String fcstValue = item.getString("fcstValue");
-        	   sum = sum + Double.parseDouble(fcstValue);
-        	   System.out.println("최저 기온 (TMN): " + fcstValue);
-        	   model.addAttribute("TMNValue", fcstValue);
-           }else if("TMX".equals(category) && formattedDate.equals(fcstDate)) {
-        	   String fcstValue = item.getString("fcstValue");
-        	   sum = sum + Double.parseDouble(fcstValue);
-    		   System.out.println("최고 기온 (TMX): " + fcstValue);
-               model.addAttribute("TMXValue", fcstValue);
-           }else if("SKY".equals(category) && formattedDate.equals(fcstDate) && formattedTime.equals(fcstTime)) {
-              String fcstValue = item.getString("fcstValue");
-              if(fcstValue.equals("1")) {
-                 System.out.println("현재 날씨 : 맑음");
-              }else if(fcstValue.equals("2")){
-                 System.out.println("현재 날씨 : 비");
-              }else if(fcstValue.equals("3")) {
-                 System.out.println("현재 날씨 : 구름 많음");
-              }else if(fcstValue.equals("4")) {
-                 System.out.println("현재 날씨 : 흐림");
-              }
-              
-           }
-       }
-
-       System.out.println("sum : " + sum);
-       
-       double avg = (sum / 2);
-       
-       String season;
-       
-       if(avg <= 4.0) {
-    	   season = "winter";
-       }else if(avg > 4.0 && avg <= 8.0) {
-    	   season = "earlyWinter";
-       }else if(avg > 8.0 && avg <= 12.0) {
-    	   season = "fall";
-       }else if(avg > 12.0 && avg <= 16.0) {
-    	   season = "earlySpring";
-       }else if(avg > 16.0 && avg <= 19.0) {
-    	   season = "earlyFall";
-       }else if(avg > 19.0 && avg <= 22.0) {
-    	   season = "Spring";
-       }else if(avg > 22.0 && avg <= 27.0) {
-    	   season = "earlySummer";
-       }else if(avg > 27.0) {
-    	   season = "summer";
-       }
-       
-       StyleBean styleBean = styleDao.selectManStyle();
-       
-       return viewPage;
+       this.latString = latString;
+       this.longString = longString;
    }
+
    
+   @RequestMapping(value = command, method = RequestMethod.GET)
+   public String close(Model model){
+      
+      System.out.println("latString: " + latString);
+       System.out.println("longString: " + longString);
+      
+       if(latString == null || longString == null) {
+    	   try {
+           // OpenWeatherMap API 요청
+    		   String apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=Seoul&appid=27f0e2dcc40e953d16644b55e897423d&units=metric";
+    		   URL url = new URL(apiUrl);
+    		   HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+    		   connection.setRequestMethod("GET");
+    		   
+    		   System.out.println("apiUrl : " + apiUrl);
+
+               BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+               StringBuilder response = new StringBuilder();
+               String line;
+               while ((line = reader.readLine()) != null) {
+                   response.append(line);
+               }
+               reader.close();
+               connection.disconnect();
+               // JSON 데이터 파싱
+               JSONObject result = new JSONObject(response.toString());
+            // 날씨 정보 출력
+               double temperature = result.getJSONObject("main").getDouble("temp");
+               double feelTemperature = result.getJSONObject("main").getDouble("feels_like");
+               long dt = result.getLong("dt");
+               
+               Date ot = new Date(dt * 1000);
+               SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 기준");
+               String currentTime = sdf.format(ot);
+               
+               System.out.println("Temperature : " + temperature + "°C");
+               System.out.println("feelTemperature : " + feelTemperature + "°C");
+               System.out.println("currentTime : " + currentTime );
+               model.addAttribute("temperature", temperature);
+               model.addAttribute("feelTemperature", feelTemperature);
+               model.addAttribute("currentTime", currentTime);
+               
+               // 추가: 이미지 URL 및 설명을 모델에 추가
+               String wiconUrl = "http://openweathermap.org/img/wn/" + result.getJSONArray("weather").getJSONObject(0).getString("icon") + ".png";
+               String description = result.getJSONArray("weather").getJSONObject(0).getString("description");
+               
+               model.addAttribute("wiconUrl", wiconUrl);
+               model.addAttribute("description", description);
+               
+                List<StyleBean> lists = styleDao.getTemperatureByStyle(temperature);
+               
+               System.out.println("전체 lists 크기: " + lists.size());
+               
+            	// 전체 lists 크기 출력
+               
+               model.addAttribute("lists", lists);
+
+               // 클릭 이벤트 처리 및 AJAX 호출
+               String closeApiUrl = "/view.close?openWeatherTemperature=" + temperature;
+               System.out.println("Click Event: " + closeApiUrl);
+               // 여기서 AJAX 호출로 대체할 부분을 구현하면 됩니다.
+               
+           } catch (IOException e) {
+               e.printStackTrace();
+           }
+    	   }else {
+    		   try {
+    	           // OpenWeatherMap API 요청	
+    		   String apiUrl = "https://api.openweathermap.org/data/2.5/weather?lat="+latString+"&lon="+longString+"&appid=27f0e2dcc40e953d16644b55e897423d&units=metric";
+    		   URL url = new URL(apiUrl);
+    		   HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+    		   connection.setRequestMethod("GET");
+
+               BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+               StringBuilder response = new StringBuilder();
+               String line;
+               while ((line = reader.readLine()) != null) {
+                   response.append(line);
+               }
+               reader.close();
+               connection.disconnect();
+               // JSON 데이터 파싱
+               JSONObject result = new JSONObject(response.toString());
+            // 날씨 정보 출력
+               double temperature = result.getJSONObject("main").getDouble("temp");
+               double feelTemperature = result.getJSONObject("main").getDouble("feels_like");
+               long dt = result.getLong("dt");
+               
+               Date ot = new Date(dt * 1000);
+               SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 기준");
+               String currentTime = sdf.format(ot);
+               
+               System.out.println("Temperature : " + temperature + "°C");
+               System.out.println("feelTemperature : " + feelTemperature + "°C");
+               System.out.println("currentTime : " + currentTime );
+               model.addAttribute("temperature", temperature);
+               model.addAttribute("feelTemperature", feelTemperature);
+               model.addAttribute("currentTime", currentTime);
+               
+               // 추가: 이미지 URL 및 설명을 모델에 추가
+               String wiconUrl = "http://openweathermap.org/img/wn/" + result.getJSONArray("weather").getJSONObject(0).getString("icon") + ".png";
+               String description = result.getJSONArray("weather").getJSONObject(0).getString("description");
+               
+               model.addAttribute("wiconUrl", wiconUrl);
+               model.addAttribute("description", description);
+               
+               List<StyleBean> lists = styleDao.getTemperatureByStyle(temperature);
+               
+//               List<StyleBean> tempLists = new ArrayList<StyleBean>();
+//               for (StyleBean styleBean : lists) {
+//            	    double avgTemperature = styleBean.getAvg_temperature();
+//
+//            	    // temperature의 값이 4.0도와 같거나 작고, avgTemperature의 값이 4.0도와 같거나 작은 경우를 확인
+//            	    if (temperature <= 4.0 && avgTemperature <= 4.0) {
+//            	        tempLists.add(styleBean);
+//            	    } else if (temperature > 4.0 && temperature <= 8.0 && avgTemperature > 4.0 && avgTemperature <= 8.0) {
+//            	        tempLists.add(styleBean);
+//            	    } else if (temperature > 8.0 && temperature <= 12.0 && avgTemperature > 8.0 && avgTemperature <= 12.0) {
+//            	        tempLists.add(styleBean);
+//            	    } else if (temperature > 12.0 && temperature <= 16.0 && avgTemperature > 12.0 && avgTemperature <= 16.0) {
+//            	        tempLists.add(styleBean);
+//            	    } else if (temperature > 16.0 && temperature <= 19.0 && avgTemperature > 16.0 && avgTemperature <= 19.0) {
+//            	        tempLists.add(styleBean);
+//            	    } else if (temperature > 19.0 && temperature <= 22.0 && avgTemperature > 19.0 && avgTemperature <= 22.0) {
+//            	        tempLists.add(styleBean);
+//            	    } else if (temperature > 22.0 && temperature <= 27.0 && avgTemperature > 22.0 && avgTemperature <= 27.0) {
+//            	        tempLists.add(styleBean);
+//            	    } else if (temperature > 27.0 && avgTemperature > 27.0) {
+//            	        tempLists.add(styleBean);
+//            	    }
+//            	}
+
+            	// 전체 lists 크기 출력
+            	System.out.println("전체 lists 크기: " + lists.size());
+               
+               model.addAttribute("lists", lists);
+
+               // 클릭 이벤트 처리 및 AJAX 호출
+               String closeApiUrl = "/view.close?openWeatherTemperature=" + temperature;
+               System.out.println("Click Event: " + closeApiUrl);
+               // 여기서 AJAX 호출로 대체할 부분을 구현하면 됩니다.
+    	   } catch (IOException e) {
+    		   e.printStackTrace();
+    	   }
+    	   }
+
+    return viewPage;
+	   
+   }
 }

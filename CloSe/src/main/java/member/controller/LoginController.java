@@ -57,15 +57,15 @@ public class LoginController {
 					if(now.isBefore(expirationDate)) {
 						out.println("<script>alert('규칙 위반으로 계정 이용 정지 기간입니다.')</script>");
 						out.flush();
-						mav.setViewName(gotoPage);
+						mav.setViewName(viewPage);
 						return mav;
-					}else if(now.isAfter(expirationDate)) {
-						session.setAttribute("loginInfo", memberBean); //DB에서 가져온 레코드를 loginInfo로 설정
-						out.println("<script>alert('로그인 되었습니다.')</script>");
-						out.flush();
-						mav.setViewName(gotoPage);
-						return mav;
-					}
+				}
+				} else {
+					out.println("<script>alert('로그인 되었습니다.')</script>");
+					out.flush();
+					mav.setViewName(gotoPage);
+					session.setAttribute("loginInfo", memberBean); //DB에서 가져온 레코드를 loginInfo로 설정
+					return mav;
 				}
 			}else { //비번이 일치안함
 				out.println("<script>alert('비번이 잘못되었습니다.')</script>");

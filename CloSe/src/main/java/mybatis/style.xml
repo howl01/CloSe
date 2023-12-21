@@ -16,4 +16,71 @@
 		select * from style
 		where style_number = #{style_number}
 	</select>
+	
+	<select id="selectMember" resultType="String">
+		select member_id from style
+		where style_number = #{style_number}
+	</select>
+	
+	<select id="getTemperatureByStyle" resultType="StyleBean">
+	    select 
+	        s.style_number, 
+	        avg(p.temperature) as avg_temperature,
+	        s.image1,
+	        s.title,
+	        s.style,
+	        m.member_id as member_id,
+	        m.nickname as nickname,
+	        m.birth as birth,
+	        m.gender as gender,
+	        m.height as height,
+	        m.weight as weight
+	    from 
+	        style s
+	    join 
+	        product p on s.product_number1 = p.product_number
+	                 or s.product_number2 = p.product_number
+	                 or s.product_number3 = p.product_number
+	                 or s.product_number4 = p.product_number
+	    join 
+	        member m on s.member_id = m.member_id
+	        
+	    group by 
+	        s.style_number,
+		    s.image1,
+		    s.title,
+		    s.style,
+		    m.member_id,
+		    m.nickname,
+		    m.birth,
+		    m.gender,
+		    m.height,
+		    m.weight
+	    having
+	    	<if test="#{temperature} &lt;= 4.0">
+			    avg(p.temperature) &lt;= 4.0
+			</if>
+	        <if test="#{temperature} &gt; 4.0 and #{temperature} &lt;= 8.0">
+	            avg(p.temperature) &gt; 4.0 and avg(p.temperature) &lt;= 8.0
+	        </if>
+	        <if test="#{temperature} &gt; 8.0 and #{temperature} &lt;= 12.0">
+	            avg(p.temperature) &gt; 8.0 and avg(p.temperature) &lt;= 12.0
+	        </if>
+	        <if test="#{temperature} &gt; 12.0 and #{temperature} &lt;= 16.0">
+	            avg(p.temperature) &gt; 12.0 and avg(p.temperature) &lt;= 16.0
+	        </if>
+	        <if test="#{temperature} &gt; 16.0 and #{temperature} &lt;= 19.0">
+	            avg(p.temperature) &gt; 16.0 and avg(p.temperature) &lt;= 19.0
+	        </if>
+	        <if test="#{temperature} &gt; 19.0 and #{temperature} &lt;= 22.0">
+	            avg(p.temperature) &gt; 19.0 and avg(p.temperature) &lt;= 22.0
+	        </if>
+	        <if test="#{temperature} &gt; 22.0 and #{temperature} &lt;= 27.0">
+	            avg(p.temperature) &gt; 22.0 and avg(p.temperature) &lt;= 27.0
+	        </if>
+	        <if test="#{temperature} &gt; 27.0">
+	            avg(p.temperature) &gt; 27.0
+	        </if>
+	</select>
+   
 </mapper>

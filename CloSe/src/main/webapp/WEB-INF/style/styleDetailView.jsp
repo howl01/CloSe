@@ -90,7 +90,7 @@
 	
 	<div id="overlay2" class="overlay2" onclick="javascript:hideOverlay2();">
 		<ol class="list-group" style="cursor: pointer;">
-			<li class="list-group-item d-flex justify-content-center" onclick="alert('신고');"><font color="red">유저 신고</font></li>
+			<li class="list-group-item d-flex justify-content-center" onclick="location.href='styleReport.report?style_number=${ styleBean.style_number }'"><font color="red">유저 신고</font></li>
 	        <li class="list-group-item d-flex justify-content-center" onclick="javascript:hideOverlay2()">취소</li>
 	    </ol>
 	</div>

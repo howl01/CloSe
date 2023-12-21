@@ -20,7 +20,6 @@ public class ProductListController {
 
 	private final String command = "/list.product";
 	private final String viewPage = "productList";
-	private final String gotoPage = "";
 	
 	@Autowired
 	ProductDao productDao; 
@@ -42,7 +41,6 @@ public class ProductListController {
 		if(bigcategory_name != null) {
 			plists = productDao.getProductByBigcategory(bigcategory_name);
 		}
-		
 		model.addAttribute("plists", plists);
 		return viewPage;
 	}

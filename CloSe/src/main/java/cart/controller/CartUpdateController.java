@@ -20,9 +20,6 @@ public class CartUpdateController {
 	@Autowired
 	CartDao cartDao;
 	
-	@Autowired
-	ProductDao productDao;
-	
 	@RequestMapping(command)
 	public String qtyUpdate(@RequestParam("cart_number")String cart_number,
 							@RequestParam("qty")String qty) {

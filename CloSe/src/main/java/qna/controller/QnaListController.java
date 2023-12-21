@@ -53,13 +53,9 @@ public class QnaListController {
 		 
 		 List<QnaBean> lists = qnaDao.getAllQna(map, pageInfo);
 		 
-		 String member_id = "abc"; // 테스트용 지워야됨
-		 
 		 model.addAttribute("lists", lists);
 		 model.addAttribute("pageInfo", pageInfo);
 		 model.addAttribute("number", number);
-		 session.setAttribute("member_id", member_id);
-		 System.out.println("member_id : " + member_id);
 		 
 		return viewPage;
 	}

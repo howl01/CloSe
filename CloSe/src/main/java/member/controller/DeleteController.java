@@ -31,7 +31,7 @@ public class DeleteController {
 		
 		memberDao.memberDelete(member_id);
 		
-		out.println("<script>alert('È¸¿øÅ»Åğ µÇ¾ú½À´Ï´Ù.'); location.href='" + request.getContextPath() + "/logout.jsp';</script>");
+		out.println("<script>alert('íƒˆí‡´ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.'); location.href='" + request.getContextPath() + "/logout.jsp';</script>");
 		out.flush();
 	}
 }

@@ -80,5 +80,5 @@
 	</div>
 </div>
 
-<button onclick="location.href='view2.main'">이동</button>
+<button onclick="location.href='view.main'">이동</button>
 <%@ include file="../main/bottom.jsp"%>

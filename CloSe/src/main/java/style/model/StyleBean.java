@@ -30,7 +30,73 @@ public class StyleBean {
 	private MultipartFile MImage3;
 	private MultipartFile MImage4;
 	private MultipartFile MImage5;
-	
+
+	private double avg_temperature;
+
+	private String nickname;
+	private String gender;
+	private String height;
+	private String weight;
+	private String birth;
+
+	private Double temperature;
+
+	public Double getTemperature() {
+		return temperature;
+	}
+
+	public void setTemperature(Double temperature) {
+		this.temperature = temperature;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
+	public String getHeight() {
+		return height;
+	}
+
+	public void setHeight(String height) {
+		this.height = height;
+	}
+
+	public String getWeight() {
+		return weight;
+	}
+
+	public void setWeight(String weight) {
+		this.weight = weight;
+	}
+
+	public String getBirth() {
+		return birth;
+	}
+
+	public void setBirth(String birth) {
+		this.birth = birth;
+	}
+
+	public double getAvg_temperature() {
+		return avg_temperature;
+	}
+
+	public void setAvg_temperature(double avg_temperature) {
+		this.avg_temperature = avg_temperature;
+	}
+
 	public MultipartFile getMImage1() {
 		return MImage1;
 	}
@@ -110,24 +176,24 @@ public class StyleBean {
 		for (int i = 1; i < images.size() + 1; i++) {
 			switch (i) {
 			case 1:
-				setImage1(uuid.toString()+images.get(i - 1).getOriginalFilename());
-				setMImage1(images.get(i-1));
+				setImage1(uuid.toString() + images.get(i - 1).getOriginalFilename());
+				setMImage1(images.get(i - 1));
 				break;
 			case 2:
-				setImage2(uuid.toString()+images.get(i - 1).getOriginalFilename());
-				setMImage2(images.get(i-1));
+				setImage2(uuid.toString() + images.get(i - 1).getOriginalFilename());
+				setMImage2(images.get(i - 1));
 				break;
 			case 3:
-				setImage3(uuid.toString()+images.get(i - 1).getOriginalFilename());
-				setMImage3(images.get(i-1));
+				setImage3(uuid.toString() + images.get(i - 1).getOriginalFilename());
+				setMImage3(images.get(i - 1));
 				break;
 			case 4:
-				setImage4(uuid.toString()+images.get(i - 1).getOriginalFilename());
-				setMImage4(images.get(i-1));
+				setImage4(uuid.toString() + images.get(i - 1).getOriginalFilename());
+				setMImage4(images.get(i - 1));
 				break;
 			case 5:
-				setImage5(uuid.toString()+images.get(i - 1).getOriginalFilename());
-				setMImage5(images.get(i-1));
+				setImage5(uuid.toString() + images.get(i - 1).getOriginalFilename());
+				setMImage5(images.get(i - 1));
 				break;
 			default:
 				break;
