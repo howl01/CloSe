@@ -356,7 +356,7 @@
 					            </td>
 					            <td>
 					                <c:if test="${not empty kakaoLoginInfo}">
-					                    ${kakaoLoginList.coupon_discount}
+					                    ${kakaoLoginList.coupon_discount} %
 					                </c:if>
 					            </td>
 					        </tr>

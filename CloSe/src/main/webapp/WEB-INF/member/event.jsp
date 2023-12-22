@@ -5,12 +5,17 @@
 
 <style>
 	table{
-		width: 800px;
+		width: 1050px;
 		margin: auto;
-		height: 130px;
+		height: 1000px;
 	}
-	td{
-		position: relative; top: 30; left: 700;
+	#birth{
+		position: relative; top: 430; left: 375;
+		opacity: 0;
+	}
+	#new{
+		position: relative; top: 430; left: 830;
+		opacity: 0;
 	}
 </style>
 
@@ -102,34 +107,33 @@
 
 
 
-<img src="resources/img/coupon.png" style="width: 500px; padding-bottom: 20px;">
-<table style="background-image: url('resources/img/birthday.jpg'); margin-bottom: 35px;">
+<table style="background-image: url('resources/img/newRegi.png'); margin-bottom: 35px;">
 	<tr>
-		<td>
+		<td id="birth">
 			<c:if test="${empty loginInfo and empty kakaoLoginInfo}">
-				<input type="button" class="btn btn-dark btn-md" value="쿠폰 받기" onclick="goLogin()">
+				<input type="button" style="width: 330px; height: 65px;" onclick="goLogin()">
 			</c:if>
 			<c:if test="${not empty loginInfo}">
-				<input type="button" class="btn btn-dark btn-md" value="쿠폰 받기" onclick="birthdayCoupon('${loginInfo.member_id}','${loginInfo.birth}')">
+				<input type="button" style="width: 330px; height: 65px;" onclick="newRegisterCoupon('${loginInfo.member_id}')">
 			</c:if>
 			<c:if test="${not empty kakaoLoginInfo}">
-				<input type="button" class="btn btn-dark btn-md" value="쿠폰 받기" onclick="birthdayCoupon('${kakaoLoginInfo.member_id}','${kakaoLoginInfo.birth}')">
+				<input type="button" style="width: 330px; height: 65px;" onclick="newRegisterCoupon('${kakaoLoginInfo.member_id}')">
 			</c:if>
 		</td>
 	</tr>
 </table>
 
-<table style="background-image: url('resources/img/new.png');">
+<table id="birthdayTable" style="background-image: url('resources/img/birthday.png');">
 	<tr>
-		<td>
+		<td id="new">
 			<c:if test="${empty loginInfo and empty kakaoLoginInfo}">
-				<input type="button" class="btn btn-dark btn-md" value="쿠폰 받기" onclick="goLogin()">
+				<input type="button" style="width: 125px; height: 32px;" onclick="goLogin()">
 			</c:if>
 			<c:if test="${not empty loginInfo}">
-				<input type="button" class="btn btn-dark btn-md" value="쿠폰 받기" onclick="newRegisterCoupon('${loginInfo.member_id}')">
+				<input type="button" style="width: 125px; height: 32px;" onclick="birthdayCoupon('${loginInfo.member_id}','${loginInfo.birth}')">
 			</c:if>
 			<c:if test="${not empty kakaoLoginInfo}">
-				<input type="button" class="btn btn-dark btn-md" value="쿠폰 받기" onclick="newRegisterCoupon('${kakaoLoginInfo.member_id}')">
+				<input type="button" style="width: 125px; height: 32px;" onclick="birthdayCoupon('${kakaoLoginInfo.member_id}','${kakaoLoginInfo.birth}')">
 			</c:if>
 		</td>
 	</tr>
