@@ -25,5 +25,9 @@ public class EventDao {
       List<EventBean> lists= sqlSessionTemplate.selectList(namespace+".selectCoupon",member_id);
       return lists;
    }
+
+	public void useCoupon(String coupon_number) {
+		sqlSessionTemplate.delete(namespace+".useCoupon", coupon_number);
+	}
    
 }

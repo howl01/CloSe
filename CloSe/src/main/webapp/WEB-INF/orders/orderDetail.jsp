@@ -131,6 +131,10 @@ function openReviewFormWindow(orderDetailNumber) {
 							<td>${totalPrice }</td>
 						</tr>
 						<tr>
+							<td>할인</td>
+							<td>${totalPrice-olists[0].totalamount }</td>
+						</tr>
+						<tr>
 							<td>배송비</td>
 							<td>
 								${totalPrice > 50000 ? '0' : '4000'}
@@ -140,7 +144,7 @@ function openReviewFormWindow(orderDetailNumber) {
 						</tr>
 						<tr>
 							<td>총 주문금액</td>
-							<td>${totalPrice+delivery }</td>
+							<td>${olists[0].totalamount }</td>
 						</tr>
 					</tbody>
 				</table>

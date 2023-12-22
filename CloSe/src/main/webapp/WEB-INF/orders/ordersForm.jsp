@@ -25,12 +25,13 @@ function updatePrices() {
     document.getElementById('totalAmount').value = total;
 }
 
-/* document.getElementById('couponSelect').addEventListener('change', updateTotalAmount());
 function updateTotalAmount() {
+	alert(1);
     var totalPrice = parseInt(document.getElementById('totalPrice').innerText);
     var deliveryPrice = parseInt(document.getElementById('deliveryPrice').innerText);
-    var selectedCouponDiscount = document.getElementById('couponSelect').value;
+    var selectedCouponOption = document.getElementById('couponSelect');
     
+    var selectedCouponDiscount = selectedCouponOption.options[selectedCouponOption.selectedIndex].getAttribute('data-discount');
     // 쿠폰 할인 적용
     var discountAmount = (totalPrice * selectedCouponDiscount) / 100;
     var totalAmount = totalPrice + deliveryPrice - discountAmount;
@@ -38,7 +39,7 @@ function updateTotalAmount() {
     // 화면 업데이트
     document.getElementById('total').innerText = totalAmount;
     document.getElementById('totalAmount').value = totalAmount;
-} */
+}
 
 window.onload = function () {
     updatePrices();
@@ -273,14 +274,14 @@ function pay() {
                	<tr>
                  <td>
                   상품금액:<span id="totalPrice">${totalPrice }</span>원 <br>
-                  <select id="couponSelect">
+                  <select id="couponSelect" onchange="updateTotalAmount()" name="coupon_number">
                   	<c:if test="${empty couponList }">
 	                  	<option value="" disabled>보유 중인 쿠폰이 없습니다.</option>
                   	</c:if>
                   	<c:if test="${not empty couponList }">
                   		<option value="">쿠폰선택</option>
                   	<c:forEach var="coupon" items="${couponList }">
-                  		<option value="${coupon.coupon_discount}">${coupon.coupon_name }/${coupon.coupon_discount }% 할인</option>
+                  		<option value="${coupon.coupon_number}"  data-discount="${coupon.coupon_discount}">${coupon.coupon_name }/${coupon.coupon_discount }% 할인</option>
                   	</c:forEach>
                   	</c:if>
                   </select>

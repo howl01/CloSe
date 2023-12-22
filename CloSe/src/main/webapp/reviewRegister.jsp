@@ -50,7 +50,12 @@
                     data: formData,
                     async: false,
                     success: function (data) {
-                        alert("리뷰가 성공적으로 등록되었습니다.");
+                    	if(data=="o"){
+	                        alert("리뷰가 성공적으로 등록되었습니다.");
+                    	} else if(data=="x"){
+                    		alert("이미 리뷰을 등록한 주문입니다.");
+                    	}
+                    	
                         window.close();
                     },
                     error: function (error) {

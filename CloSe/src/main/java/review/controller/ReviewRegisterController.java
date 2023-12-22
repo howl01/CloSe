@@ -26,7 +26,7 @@ public class ReviewRegisterController {
 	
 	@ResponseBody
 	@RequestMapping(value=command,method=RequestMethod.POST)
-	public boolean reviewRegister(ReviewBean rb,HttpSession session) {
+	public String reviewRegister(ReviewBean rb,HttpSession session) {
 		String member_id = "";
 		if(session.getAttribute("loginInfo") != null) {
 			MemberBean mb = (MemberBean) session.getAttribute("loginInfo");
@@ -47,10 +47,10 @@ public class ReviewRegisterController {
 		for(int i=0;i<rlists.size();i++) {
 			ReviewBean rb0 = rlists.get(i);
 			if(rb0.getOrderdetail_number() == rb.getOrderdetail_number()) {
-				return false;
+				return "x";
 			}
 		}
 		reviewDao.registerReview(rb);
-		return true;
+		return "o";
 	}
 }

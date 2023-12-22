@@ -90,6 +90,26 @@ fieldset {
     color: transparent;
     text-shadow: 0 0 0 #f0f0f0;
 }
+.off-screen {
+	display: none;
+}
+#nav {
+	width: 500px;
+	text-align: center;
+}
+#nav a {
+	display: inline-block;
+	padding: 3px 5px;
+	margin-right: 10px;
+	font-family:Tahoma;
+	background: #ccc;
+	color: #000;
+	text-decoration: none;
+}
+#nav a.active {
+	background: #333;
+	color: #fff;
+}
 </style>
 <script type="text/javascript">
 window.addEventListener('scroll', function() {
@@ -133,6 +153,7 @@ window.addEventListener('scroll', function() {
 		location.href="delete.product?product_number="+pnum;
 	}
 	function updateProduct(pnum){
+		alert(1);
 		location.href="update.product?product_number="+pnum;
 	}
 	
@@ -229,6 +250,13 @@ window.addEventListener('scroll', function() {
 		    });
 
 		    $('#cart-total').html(totalSum);
+		    
+		    
+		    
+		    
+		    
+		    
+		    
 	    });
 		
 		//=-==================================================
@@ -270,6 +298,99 @@ window.addEventListener('scroll', function() {
 	    });
 	    
 	    
+	    //============================================
+	    var $setRows = $('#setRows');
+
+	    $setRows.submit(function (e) {
+	    	alert('${fn:length(rlists)}');
+	    	e.preventDefault();
+	    	var rowPerPage = 15;
+	    	
+	    	if('${fn:length(rlists)}' != 0){
+		    	$('#nav').remove();
+		    	var $review = $('#review');
+	
+		    	$review.after('<div id="nav">');
+		    	
+		    	var $tr = $($review).find('tbody tr');
+		    	var rowTotals = $tr.length;
+		    	var pageTotal = Math.ceil(rowTotals/ rowPerPage);
+		    	var i = 0;
+	
+		    	for (; i < pageTotal; i++) {
+		    		$('<a href="#"></a>')
+		    				.attr('rel', i)
+		    				.html(i + 1)
+		    				.appendTo('#nav');
+		    	}
+	
+		    	$tr.addClass('off-screen')
+		    			.slice(0, rowPerPage)
+		    			.removeClass('off-screen');
+	
+		    	var $pagingLink = $('#nav a');
+		    	
+		    	//
+		    	if ($pagingLink.length > 5) {
+		            $pagingLink.filter(':first').before('<a href="#" class="prev">이전</a>');
+		            $pagingLink.filter(':last').after('<a href="#" class="next">다음</a>');
+		        }
+		    	
+		    	$pagingLink.on('click', function (evt) {
+		    		evt.preventDefault();
+		    		var $this = $(this);
+		    		if ($this.hasClass('active')) {
+		    			return;
+		    		}
+		    		$pagingLink.removeClass('active');
+		    		$this.addClass('active');
+	
+		    		// 0 => 0(0*4), 4(0*4+4)
+		    		// 1 => 4(1*4), 8(1*4+4)
+		    		// 2 => 8(2*4), 12(2*4+4)
+		    		// 시작 행 = 페이지 번호 * 페이지당 행수
+		    		// 끝 행 = 시작 행 + 페이지당 행수
+	
+		    		var currPage = $this.attr('rel');
+		    		var startItem = currPage * rowPerPage;
+		    		var endItem = startItem + rowPerPage;
+	
+		    		$tr.css('opacity', '0.0')
+		    				.addClass('off-screen')
+		    				.slice(startItem, endItem)
+		    				.removeClass('off-screen')
+		    				.animate({opacity: 1}, 300);
+		    	
+
+	    		});
+		    	
+		    	// 추가된 부분: 이전 링크 클릭 시
+		        $('.prev').on('click', function (evt) {
+		            evt.preventDefault();
+		            var $current = $pagingLink.filter('.active');
+		            var $prev = $current.prev('a');
+		            if ($prev.length > 0) {
+		                $prev.trigger('click');
+		            }
+		        });
+
+		        // 추가된 부분: 다음 링크 클릭 시
+		        $('.next').on('click', function (evt) {
+		            evt.preventDefault();
+		            var $current = $pagingLink.filter('.active');
+		            var $next = $current.next('a');
+		            if ($next.length > 0) {
+		                $next.trigger('click');
+		            }
+		        });
+		    	
+	    		$pagingLink.filter(':first').addClass('active');
+	    	}
+
+	    });
+
+
+	    $setRows.submit();
 	    
 	    
 	    
@@ -461,7 +582,7 @@ window.addEventListener('scroll', function() {
 				class="btn btn-dark" id="goodsOrder">구매하기</button>
 			<br>
 
-			<!-- <button id="update" onclick="fn_update()">수정하기</button> -->
+			<button type="button" onclick="updateProduct('${pb.product_number}')">수정하기</button>
 		
 		</div>
 	</div>
@@ -515,7 +636,13 @@ window.addEventListener('scroll', function() {
 	    <div class="section-02 scroll">
 	        <h2>상품리뷰</h2>
 	        <hr>
-	        <table width="100%" style="border-collapse: collapse;">
+	        
+	        
+	        <table id="review" width="100%" style="border-collapse: collapse;">
+	        <form action="" id="setRows">
+				<input type="hidden" name="rowPerPage" value="3">
+			</form>
+	       	 <tbody>
 	        	<c:if test="${empty rlists }">
 	        		<tr>
 	        			<td align="center" height="200px;">등록된 리뷰이 없습니다.</td>
@@ -523,6 +650,7 @@ window.addEventListener('scroll', function() {
 	        	</c:if>
 	        	<c:if test="${not empty rlists }">
 	        	<c:forEach var="ri" items="${rlists }">
+	        	  
 	        		<tr>
 	        			<td>
 	        				<fieldset>
@@ -545,7 +673,12 @@ window.addEventListener('scroll', function() {
 	        		</tr>
 	        	</c:forEach>
 	        	</c:if>  
+	         </tbody>
 	        </table>
+	        
+	        
+	        
+	        <%-- ${pageInfo.pagingHtml } --%>
 	    </div>
 	
 	    <div class="section-03 scroll">
