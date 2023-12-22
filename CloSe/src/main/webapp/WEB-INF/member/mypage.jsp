@@ -123,6 +123,29 @@
 				<form>
 			        <table class="table" id="article-table">
 			        	<c:if test="${not empty loginInfo or not empty kakaoLoginInfo}">
+			        		<tr>
+							    <th>프로필사진</th>
+							    <td>
+							        <c:choose>
+							            <c:when test="${not empty kakaoLoginInfo}">
+							                <img id="imgThumb" src="${kakaoLoginInfo.member_image}" width="100" height="100">
+							            </c:when>
+							            <c:when test="${not empty loginInfo}">
+							                <c:choose>
+							                    <c:when test="${not empty loginInfo.member_image}">
+							                        <img src="<%=request.getContextPath()%>/resources/memberImage/${loginInfo.member_image}" width="100" height="100">
+							                    </c:when>
+							                    <c:otherwise>
+							                        <div class="profile_photo">
+							                            <img id="imgThumb" src="https://static.nid.naver.com/images/web/user/default.png" width="100" height="100">
+							                            <span class="mask"></span>
+							                        </div>
+							                    </c:otherwise>
+							                </c:choose>
+							            </c:when>
+							        </c:choose>
+							    </td>
+							</tr>
 					        <tr>
 					           <th>아이디</th>
 					           <td>

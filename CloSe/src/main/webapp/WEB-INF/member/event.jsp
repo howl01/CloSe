@@ -17,6 +17,7 @@
 		position: relative; top: 430; left: 830;
 		opacity: 0;
 	}
+	
 </style>
 
 <script type="text/javascript" src="resources/js/jquery.js"></script>

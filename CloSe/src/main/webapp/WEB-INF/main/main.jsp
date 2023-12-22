@@ -10,6 +10,7 @@
    .body {
       width: 100%;
       margin: auto;
+      overflow-x: hidden;
    }
 
    #par {
@@ -329,7 +330,7 @@
          </div>
       </div>
 
-      <div class="col-lg-2 mt-5 px-5">
+      <div class="col-lg-2 mt-3 px-4">
          <div class="bs-component">
             <div class="card mb-3">
                <h3 class="card-header" align="center">오늘의 날씨</h3>

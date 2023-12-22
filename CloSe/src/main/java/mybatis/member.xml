@@ -12,8 +12,8 @@
 	</select>
 	
 	<insert id="memberRegister">
-		insert into member(member_id, password, name, phone, email, address1, address2, birth, gender, nickname, height, weight, social)
-		values(#{member_id},#{password},#{name},#{phone},#{email},#{address1},#{address2},#{birth},#{gender},#{nickname},#{height},#{weight},'general')
+		insert into member(member_id, member_image, password, name, phone, email, address1, address2, birth, gender, nickname, height, weight, social)
+		values(#{member_id},#{member_image},#{password},#{name},#{phone},#{email},#{address1},#{address2},#{birth},#{gender},#{nickname},#{height},#{weight},'general')
 	</insert>
 	
 	<insert id="kakaoRegister">

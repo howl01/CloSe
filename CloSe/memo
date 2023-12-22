@@ -34,6 +34,7 @@ create SEQUENCE notice_seq;
 create SEQUENCE coupon_seq;
 
 CREATE TABLE member (
+   member_image   varchar2(100),
    member_id   varchar2(30)   PRIMARY KEY,
    password   varchar2(20)   NOT NULL,
    name   varchar2(10)   NOT NULL,
