@@ -31,8 +31,6 @@ public class StyleBean {
 	private MultipartFile MImage4;
 	private MultipartFile MImage5;
 
-	
-	
 	private String nickname;
 
 	private String product_name1;
@@ -49,14 +47,7 @@ public class StyleBean {
 	private String pimage2;
 	private String pimage3;
 	private String pimage4;
-
-	public String getNickname() {
-		return nickname;
-	}
-
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
-	}
+	
 
 	public String getProduct_name1() {
 		return product_name1;
@@ -155,6 +146,62 @@ public class StyleBean {
 	}
 
 	private double avg_temperature;
+
+	private String gender;
+	private String height;
+	private String weight;
+	private String birth;
+
+	private Double temperature;
+
+
+	public Double getTemperature() {
+		return temperature;
+	}
+
+	public void setTemperature(Double temperature) {
+		this.temperature = temperature;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
+	public String getHeight() {
+		return height;
+	}
+
+	public void setHeight(String height) {
+		this.height = height;
+	}
+
+	public String getWeight() {
+		return weight;
+	}
+
+	public void setWeight(String weight) {
+		this.weight = weight;
+	}
+
+	public String getBirth() {
+		return birth;
+	}
+
+	public void setBirth(String birth) {
+		this.birth = birth;
+	}
 
 	public double getAvg_temperature() {
 		return avg_temperature;

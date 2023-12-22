@@ -3,6 +3,7 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
 <mapper namespace = "orders.OrdersBean">
+
 	<select id="getTotalCount" resultType="int">
 		select count(*) from orders
 		where MEMBER_ID=#{member_id} 
@@ -17,7 +18,6 @@
 		</if>
 		order by ORDERS_DATE desc
 	</select>
-	
 
 	<insert id="insertOrders">
 		insert into orders values
@@ -46,5 +46,28 @@
 		</if>
 		order by ORDERS_DATE desc
 	</select> 
+	
+	<select id="getAdminTotalCount" resultType="int">
+		select count(*) from orders
+		<if test='startDate != null and startDate != ""'>
+			and orders_date &gt; #{startDate}
+		</if>
+		<if test='endDate != null and endDate != ""'>
+			and orders_date &lt; #{endDate}
+		</if>
+		<if test='(startDate != null and startDate != "") and (startDate != null and startDate != "")'>
+			and orders_date &gt; #{startDate} and orders_date &lt; #{endDate}
+		</if>
+		order by ORDERS_DATE desc
+	</select>
+	
+	<select id="getOrderList" resultType="OrdersBean">
+		select * from orders
+	</select>
+	
+	<select id="selectOrderByMember" resultType="OrdersBean">
+		select * from orders
+		where member_id = #{member_id}
+	</select>
 	
 </mapper>

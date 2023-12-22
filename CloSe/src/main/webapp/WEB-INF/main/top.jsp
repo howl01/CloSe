@@ -7,8 +7,10 @@
 
 <script src="resources/js/bootstrap.bundle.min.js"></script>
 <script src="resources/js/jquery.js"></script>
+<script src="resources/js/sidebars.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <link href="resources/css/bootstrap.min.css" rel="stylesheet">
+<link href="resources/css/sidebars.css" rel="stylesheet">
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script type="text/javascript">
    function goLogin() {
@@ -66,7 +68,7 @@
 	function goMyPage(){
 		location.href="mypage.member";
 	}
-	   
+	
 	   	function search() {
 	       var overlay = document.getElementById('overlay');
 	       overlay.style.display = 'block';
@@ -269,10 +271,18 @@
             
             <li>
                <c:if test="${not empty loginInfo or not empty kakaoLoginInfo}">
+               <c:if test="${ loginInfo.member_id != 'admin' }">
                 <a href="javascript:goMyPage()" class="nav-link text-black"> 
                     <img src="resources/icon/person.svg" class="bi d-block mx-auto mb-1" width="30" height="30"> 
                     <font size="2">마이페이지</font>
                 </a>
+               </c:if>
+               <c:if test="${ loginInfo.member_id == 'admin' }">
+                <a href="adminPage.member" class="nav-link text-black"> 
+                    <img src="resources/icon/person.svg" class="bi d-block mx-auto mb-1" width="30" height="30"> 
+                    <font size="2">관리자페이지</font>
+                </a>
+               </c:if>
             	</c:if>
             </li>
             
@@ -311,8 +321,8 @@
       	<c:if test="${empty loginInfo and empty kakaoLoginInfo}">
 	        <li class="nav-item"><a href="javscript:goLogin()" onclick="goLogin()" class="nav-link link-body-emphasis px-2">HOME</a></li>
 	        <li class="nav-item"><a href="javscript:void(0);" onclick="goLogin()" class="nav-link link-body-emphasis px-2">오늘의 옷비서</a></li>
-	        <li class="nav-item"><a href="mainView.style" class="nav-link link-body-emphasis px-2" id="styleNav">STYLE</a></li>
-	        <li class="nav-item"><a href="javscript:void(0)" onclick="goLogin()" class="nav-link link-body-emphasis px-2">SHOP</a></li>
+	        <li class="nav-item"><a href="mainView.style" class="nav-link link-body-emphasis px-2">STYLE</a></li>
+	        <li class="nav-item"><a href="list.product" class="nav-link link-body-emphasis px-2">SHOP</a></li>
 	        <li class="nav-item"><a href="javscript:void(0)" onclick="goLogin()" class="nav-link link-body-emphasis px-2">EVENT</a></li>
       	</c:if>
       	<c:if test="${not empty loginInfo or not empty kakaoLoginInfo}">
@@ -330,7 +340,6 @@
       	<c:if test="${not empty kakaoLoginInfo}">
       		<li class="nav-item" style="margin-top: 4px;"><font size="2" color="green">${kakaoLoginInfo.name} 님 환영합니다.</font> &nbsp;</li>
       	</c:if>
-        <li class="nav-item"><a href="javascript:goAdmin()" class="nav-link link-body-emphasis px-2"><font size="2">관리자모드</font></a></li>
       	<li class="nav-item"><a href="javascript:goNotice()" class="nav-link link-body-emphasis px-2"><font size="2">공지사항</font></a></li>
         <li class="nav-item"><a href="javascript:goQna()" class="nav-link link-body-emphasis px-2"><font size="2">고객센터</font></a></li>
       </ul>

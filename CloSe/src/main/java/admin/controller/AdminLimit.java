@@ -1,9 +1,10 @@
-package member.controller;
+package admin.controller;
 
 import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,13 +16,14 @@ import member.model.MemberDao;
 public class AdminLimit {
 
 	private final String command = "limit.member";
-	private final String gotoPage = "adminPage";
+	private final String viewPage = "adminDetail";
 	
 	@Autowired
 	MemberDao memberDao;
 	
 	@RequestMapping(value = command, method = RequestMethod.POST)
-	public String limit(@RequestParam("member_id") String member_id) {
+	public String limit(@RequestParam("member_id") String member_id,
+						Model model) {
 		
 		MemberBean memberBean = memberDao.getMember(member_id);
 		
@@ -49,6 +51,7 @@ public class AdminLimit {
 			System.out.println("update memberBan 성공" );
 		}
 		
-		return gotoPage;
+		model.addAttribute("member_id", member_id);
+		return viewPage;
 	}
 }

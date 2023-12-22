@@ -97,7 +97,7 @@
 	   </a>
       <h2>마이페이지</h2>
     </div>
- 
+ 	
 	<ul class="nav nav-tabs" role="tablist">
 	  <li class="nav-item" role="presentation">
 	    <a class="nav-link active" data-bs-toggle="tab" href="#mypage" aria-selected="true" role="tab">내 정보</a>
@@ -364,13 +364,7 @@
 	        </div>
 		</div>
 	</div>
-
-
-
-
-
-    
-
+	
 	<footer class="my-5 pt-5 text-body-secondary text-center text-small">
 	  <p class="mb-1">© 2023 Minhyeok, Byeon</p>
 	</footer>

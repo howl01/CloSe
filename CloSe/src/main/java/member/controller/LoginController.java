@@ -2,6 +2,7 @@ package member.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -43,12 +44,20 @@ public class LoginController {
 		response.setContentType("text/html; charset=UTF-8");
 
 		MemberBean memberBean = memberDao.getDetail(mb.getMember_id());
+<<<<<<< HEAD
 
 		if (memberBean == null) {
+=======
+		
+		LocalDate now = LocalDate.now();
+		
+		if(memberBean == null) {
+>>>>>>> branch 'wook' of https://github.com/howl01/CloSe.git
 			out.println("<script>alert('가입하지 않은 회원입니다.')</script>");
 			out.flush();
 			mav.setViewName(viewPage);
 			return mav;
+<<<<<<< HEAD
 		} else { // 아이디 존재함
 			if (memberBean.getPassword().equals(mb.getPassword())) { // 비번이 일치함
 				session.setAttribute("loginInfo", memberBean); // DB에서 가져온 레코드를 loginInfo로 설정
@@ -66,11 +75,32 @@ public class LoginController {
 					return mav;
 				}
 			} else { // 비번이 일치안함
+=======
+		}else { //아이디 존재함
+			if(memberBean.getPassword().equals(mb.getPassword())) {	//비번이 일치함
+				if(memberBean.getBan_count() > 0 && memberBean.getBan_expiration() != null) {
+					LocalDate expirationDate = memberBean.getBan_expiration();
+					if(now.isBefore(expirationDate)) {
+						out.println("<script>alert('규칙 위반으로 계정 이용 정지 기간입니다.')</script>");
+						out.flush();
+						mav.setViewName(viewPage);
+						return mav;
+				}
+				} else {
+					out.println("<script>alert('로그인 되었습니다.')</script>");
+					out.flush();
+					mav.setViewName(gotoPage);
+					session.setAttribute("loginInfo", memberBean); //DB에서 가져온 레코드를 loginInfo로 설정
+					return mav;
+				}
+			}else { //비번이 일치안함
+>>>>>>> branch 'wook' of https://github.com/howl01/CloSe.git
 				out.println("<script>alert('비번이 잘못되었습니다.')</script>");
 				out.flush();
 				mav.setViewName(viewPage);
 				return mav;
 			}
 		}
+		return mav;
 	}
 }

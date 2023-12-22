@@ -128,7 +128,7 @@ CREATE TABLE cart (
 
 CREATE TABLE report (
     report_number number PRIMARY KEY,
-    report_category varchar2(30),
+    report_category varchar2(50),
     content varchar2(4000),
     image varchar2(50),
     reporter_id varchar2(15),

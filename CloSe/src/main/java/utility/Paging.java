@@ -150,7 +150,7 @@ public class Paging {
 		this.pageNumber = Integer.parseInt(_pageNumber);
 
 		if (_pageSize == null || _pageSize.equals("null") || _pageSize.equals("")) {
-			_pageSize = "5";
+			_pageSize = "3";
 		}
 		this.pageSize = Integer.parseInt(_pageSize);
 
@@ -194,42 +194,50 @@ public class Paging {
 	}
 
 	private String getPagingHtml(String url) { // 페이징 문자열을 만든다.
-		System.out.println("getPagingHtml url:" + url);
+	    System.out.println("getPagingHtml url:" + url);
 
-		String result = "";
-		String added_param = "&whatColumn=" + whatColumn + "&keyword=" + keyword;
+	    String result = "";
+	    String added_param = "&whatColumn=" + whatColumn + "&keyword=" + keyword;
 
+<<<<<<< HEAD
 		if (this.beginPage != 1) {
 			result += "<nav aria-label='Page navigation example'><ul class='pagination'><li class='page-item'><a class='page-link' href='" + url + "?pageNumber=" + (1) + "&pageSize=" + this.pageSize + added_param + "' aria-label='Previous'><span aria-hidden='true'>&laquo;</span></a></li>";
 			result += "<li class='page-item'><a class='page-link' href='" + url + "?pageNumber=" + (this.beginPage - 1) + "&pageSize=" + this.pageSize + added_param + "' aria-label='Next'><span aria-hidden='true'>&raquo;</span></a></li></ul></nav>";
 		}
+=======
+	    if (this.beginPage != 1) {
+	        result += "&nbsp;<li class='page-item'><a class='page-link' href='" + url + "?pageNumber=" + (1) + "&pageSize=" + this.pageSize + added_param
+	                + "'>&laquo;</a></li>&nbsp;";
+	        result += "&nbsp;<li class='page-item'><a class='page-link' href='" + url + "?pageNumber=" + (this.beginPage - 1) + "&pageSize=" + this.pageSize
+	                + added_param + "'>&lt;</a></li>&nbsp;";
+	    }
+>>>>>>> branch 'wook' of https://github.com/howl01/CloSe.git
 
-		// 가운데
-		for (int i = this.beginPage; i <= this.endPage; i++) {
-			if (i == this.pageNumber) {
-				result += "&nbsp;<font color='red'>" + i + "</font>&nbsp;";
+	    // 가운데
+	    for (int i = this.beginPage; i <= this.endPage; i++) {
+	        if (i == this.pageNumber) {
+	            result += "&nbsp;<li class='page-item active'><span class='page-link'>" + i + "</span></li>&nbsp;";
 
-			} else {
-				result += "&nbsp;<a href='" + url + "?pageNumber=" + i + "&pageSize=" + this.pageSize + added_param
-						+ "'>" + i + "</a>&nbsp;";
+	        } else {
+	            result += "&nbsp;<li class='page-item'><a class='page-link' href='" + url + "?pageNumber=" + i + "&pageSize=" + this.pageSize + added_param
+	                    + "'>" + i + "</a></li>&nbsp;";
 
-			}
-		}
+	        }
+	    }
 
-		System.out.println("result:" + result);
-		System.out.println();
+	    System.out.println("result:" + result);
+	    System.out.println();
 
-		if (this.endPage != this.totalPage) {
+	    if (this.endPage != this.totalPage) {
+	        result += "&nbsp;<li class='page-item'><a class='page-link' href='" + url + "?pageNumber=" + (this.endPage + 1) + "&pageSize=" + this.pageSize
+	                + added_param + "'>&gt;</a></li>&nbsp;";
 
-			result += "&nbsp;<a href='" + url + "?pageNumber=" + (this.endPage + 1) + "&pageSize=" + this.pageSize
-					+ added_param + "'>다음</a>&nbsp;";
+	        result += "&nbsp;<li class='page-item'><a class='page-link' href='" + url + "?pageNumber=" + (this.totalPage) + "&pageSize=" + this.pageSize
+	                + added_param + "'>&raquo;</a></li>&nbsp;";
+	    }
+	    System.out.println("result2:" + result);
 
-			result += "&nbsp;<a href='" + url + "?pageNumber=" + (this.totalPage) + "&pageSize=" + this.pageSize
-					+ added_param + "'>맨 끝</a>&nbsp;";
-		}
-		System.out.println("result2:" + result);
-
-		return result;
+	    return "<nav aria-label='Page navigation example'><ul class='pagination'>" + result + "</ul></nav>";
 	}
 
 }

@@ -74,7 +74,10 @@
   border-radius: 8px;
 }
 
-</style>
+.err{
+	color: red;
+}
+    </style>
     
 <script type="text/javascript">
 	// textarea에 입력할 때마다 호출되는 함수
@@ -93,40 +96,35 @@
 	
 </script>
 
-<form:form action="insert.qna" method="post" commandName="qnaBean" enctype="multipart/form-data">
-<input type="hidden" name="member_id" value="${ member_id }">
+<form:form action="styleReport.report" method="post" commandName="reportBean" enctype="multipart/form-data">
+<input type="hidden" name="reporter_id" value="${ loginInfo.member_id }">
+<input type="hidden" name="reported_user_id" value="${ reported_user_id }">
+<input type="hidden" name="style_number" value="${ style_number }">
   <div class="row">
-        <table class="table" id="article-table" style="width: 70%; margin: auto;">
-            <tr>
+        <table class="table" id="article-table" style="width: 60%; margin: auto;">
+    <tr>
 		<th>문의유형</th>
 		<td colspan="2">
-			<% String[] qna_categoryList = {"사이즈", "배송", "재입고", "상품상세","교환/환불/취소"};  %>
-			<c:forEach var="qna_category" items="<%= qna_categoryList %>">
-				<input type="radio" style="accent-color: black;" name="qna_category" value="${ qna_category }" <c:if test="${ qnaBean.qna_category == qna_category }">checked</c:if>>${ qna_category }
-			</c:forEach>
-			<br><form:errors cssClass="err" path="qna_category" />
-		</td>
-	</tr>
-	<tr>
-		<th>제목</th>
-		<td>
-			<input type="text" name="title" value="${ qnaBean.title }">
-			<input type="checkbox" style="accent-color: black;" name="secret" value="YES" <c:if test="${ qnaBean.secret == 'YES' }">checked</c:if>>비밀글
-			<form:errors cssClass="err" path="title" />
+			<% String[] categories = {"스팸홍보/도배글입니다.", "음란물입니다.", "욕설/혐오/차별적 표현입니다.", "불법정보를 포함하고 있습니다."};  %>
+			<select name="report_category">
+				<c:forEach var="report_category" items="<%= categories %>">
+					<option value="${ report_category }" <c:if test="${ report_category == reportBean.report_category }">selected</c:if>>${ report_category }
+				</c:forEach>
+			</select>
 		</td>
 	</tr>
 	<tr>
 		<th>내용</th>
 		<td colspan="2">
-			<textarea id="myTextarea" oninput="updateCharCount()" name="content" cols="50" rows="10"  style="resize: none;">${ qnaBean.content }</textarea>
-			<p>글자수:( <span id="charCount">0</span>/1000자)</p>
+			<textarea id="myTextarea" name="content" cols="70" rows="10"  style="resize: none;" placeholder="커뮤니티 가이드라인을 위반하는 스타일탭의 콘텐츠를 신고합니다." oninput="updateCharCount()"></textarea>
+			<p>글자수: (<span id="charCount">0</span>/1000)</p>
 			<br><form:errors cssClass="err" path="content" />
 		</td>
 	</tr>
 	<tr>
 		<th>사진첨부</th>
 		<td colspan="2">
-			<input type="file" class="form-control" name="upload" value="${ qnaBean.image }">
+			<input type="file" class="form-control" name="upload" value="${ reportBean.image }">
 		</td>
 	</tr>
 	<tr>

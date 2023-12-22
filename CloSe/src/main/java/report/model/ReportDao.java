@@ -36,6 +36,17 @@ public class ReportDao {
 		ReportBean reportBean = sqlSessionTemplate.selectOne(namespace+".getDetailReport", report_number);
 		return reportBean;
 	}
+
+	public int insertReport(ReportBean reportBean) {
+		int cnt = -1;
+		try {
+			cnt = sqlSessionTemplate.insert(namespace+".insertReport", reportBean);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("insertReport cnt : " + cnt);
+		return cnt;
+	}
 	
 	
 	
