@@ -46,6 +46,7 @@
         return null;
     }
 
+    //생일쿠폰 받기
     function birthdayCoupon(memberId, birthday) {
         var formattedBirthday = formatBirthday(birthday);
 
@@ -62,19 +63,34 @@
         // 두 날짜 비교
         if (todayMonth === birthdayMonth && todayDay === birthdayDay) {
             // memberId와 연관된 쿠키 이름 생성
-            var cookieName = "couponReceived_" + memberId;
+            var birthdayCookie = "couponReceived_" + memberId;
 
-            if (getCookie(cookieName) !== "true") {
+            if (getCookie(birthdayCookie) !== "true") {
                 alert("쿠폰이 발급되었습니다.");
                 location.href = "coupon.member?memberId=" + memberId + "&name=생일기념 쿠폰&discount=40";
 
                 // 쿠폰을 받은 상태를 쿠키에 저장
-                setCookie(cookieName, "true", 1);
+                setCookie(birthdayCookie, "true", 1);
             } else {
                 alert('이미 쿠폰을 발급받았습니다.');
             }
         } else {
             alert("생일이 아닙니다.");
+        }
+    }
+    
+    //신규가입 쿠폰 
+    function newRegisterCoupon(memberId){
+    	var newCookie = "couponReceived" + memberId;
+
+        if (getCookie(newCookie) !== "true") {
+            alert("쿠폰이 발급되었습니다.");
+            location.href = "coupon.member?memberId=" + memberId + "&name=신규가입 쿠폰&discount=30";
+
+            // 쿠폰을 받은 상태를 쿠키에 저장
+            setCookie(newCookie, "true", 1);
+        } else {
+            alert('이미 쿠폰을 발급받았습니다.');
         }
     }
 
@@ -86,8 +102,8 @@
 
 
 
-<img src="resources/img/coupon.png" style="margin-left: 450px; width: 500px; padding-bottom: 20px;">
-<table style="background-image: url('resources/img/birthday.jpg');">
+<img src="resources/img/coupon.png" style="width: 500px; padding-bottom: 20px;">
+<table style="background-image: url('resources/img/birthday.jpg'); margin-bottom: 35px;">
 	<tr>
 		<td>
 			<c:if test="${empty loginInfo and empty kakaoLoginInfo}">
@@ -98,6 +114,22 @@
 			</c:if>
 			<c:if test="${not empty kakaoLoginInfo}">
 				<input type="button" class="btn btn-dark btn-md" value="쿠폰 받기" onclick="birthdayCoupon('${kakaoLoginInfo.member_id}','${kakaoLoginInfo.birth}')">
+			</c:if>
+		</td>
+	</tr>
+</table>
+
+<table style="background-image: url('resources/img/new.png');">
+	<tr>
+		<td>
+			<c:if test="${empty loginInfo and empty kakaoLoginInfo}">
+				<input type="button" class="btn btn-dark btn-md" value="쿠폰 받기" onclick="goLogin()">
+			</c:if>
+			<c:if test="${not empty loginInfo}">
+				<input type="button" class="btn btn-dark btn-md" value="쿠폰 받기" onclick="newRegisterCoupon('${loginInfo.member_id}')">
+			</c:if>
+			<c:if test="${not empty kakaoLoginInfo}">
+				<input type="button" class="btn btn-dark btn-md" value="쿠폰 받기" onclick="newRegisterCoupon('${kakaoLoginInfo.member_id}')">
 			</c:if>
 		</td>
 	</tr>
