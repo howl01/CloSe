@@ -8,6 +8,7 @@ DROP TABLE cart cascade constraints;
 DROP TABLE report cascade constraints;
 DROP TABLE qna cascade constraints;
 DROP TABLE notice cascade constraints;
+DROP TABLE coupon cascade constraints;
 
 
 DROP SEQUENCE category_seq;
@@ -19,6 +20,7 @@ DROP SEQUENCE cart_seq;
 DROP SEQUENCE report_seq;
 DROP SEQUENCE qna_seq;
 DROP SEQUENCE notice_seq;
+DROP SEQUENCE coupon_seq;
 
 create SEQUENCE category_seq;
 create SEQUENCE product_seq;
@@ -29,6 +31,7 @@ create SEQUENCE cart_seq;
 create SEQUENCE report_seq;
 create SEQUENCE qna_seq;
 create SEQUENCE notice_seq;
+create SEQUENCE coupon_seq;
 
 CREATE TABLE member (
    member_id   varchar2(30)   PRIMARY KEY,
@@ -49,6 +52,7 @@ CREATE TABLE member (
 );
 
 CREATE TABLE coupon (
+	coupon_num	number	PRIMARY KEY,
 	member_id	varchar2(30),
 	coupon_name	varchar2(30),
 	coupon_discount number

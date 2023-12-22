@@ -4,7 +4,7 @@
 	
 <mapper namespace = "event.EventBean">
 	<insert id="insertCoupon">
-		insert into coupon values(#{member_id},#{coupon_name},#{coupon_discount})
+		insert into coupon values(coupon_seq.nextval,#{member_id},#{coupon_name},#{coupon_discount})
 	</insert>
 	
 	<select id="selectCoupon" resultType="EventBean">
