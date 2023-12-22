@@ -31,7 +31,6 @@ public class NoticeListController {
 						@RequestParam(value = "keyword", required = false) String keyword,
 						@RequestParam(value = "pageNumber", required = false) String pageNumber,
 						HttpServletRequest request,
-						HttpSession session,
 						Model model) {
 		
 		Map<String, String> map = new HashMap<String, String>();

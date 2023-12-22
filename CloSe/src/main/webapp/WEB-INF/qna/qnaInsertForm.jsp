@@ -119,6 +119,7 @@
 		<th>내용</th>
 		<td colspan="2">
 			<textarea id="myTextarea" oninput="updateCharCount()" name="content" cols="50" rows="10"  style="resize: none;">${ qnaBean.content }</textarea>
+			<p>글자수:( <span id="charCount">0</span>/1000자)</p>
 			<br><form:errors cssClass="err" path="content" />
 		</td>
 	</tr>

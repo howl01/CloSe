@@ -1,6 +1,7 @@
 package style.model;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +32,8 @@ public class StyleDao {
 		return sqlSessionTemplate.selectOne(namespace + ".getStyleByStyleNumber", style_number);
 	}
 
-	public List<StyleBean> getTemperatureByStyle(double temperature) {
-		 List<StyleBean> lists = sqlSessionTemplate.selectList(namespace+".getTemperatureByStyle", temperature);
+	public List<StyleBean> getTemperatureByStyle(Map<String, Double> map) {
+		 List<StyleBean> lists = sqlSessionTemplate.selectList(namespace+".getTemperatureByStyle", map);
 		 System.out.println("lists size : " + lists.size());
 	     return lists;
 	   }
@@ -48,5 +49,10 @@ public class StyleDao {
 		return tempLists;
 	}
 
+	public List<StyleBean> styleFilter(Map<String, Object> map) {
+		List<StyleBean> lists = sqlSessionTemplate.selectList(namespace+".styleFilter", map);
+		return lists;
+	}
+	
 	
 }

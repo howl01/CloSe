@@ -107,8 +107,9 @@
 					<div style="width: 300px;">
 						<input type="file" class="form-control" name="upload" value="${ noticeBean.image }">
 					</div>
+					<input type="hidden" name="upload1" value="${ noticeBean.image }">
 					<input type="hidden" name="upload2" value="${ noticeBean.image }">
-					<br><form:errors cssClass="err" path="content" />
+					<br><form:errors cssClass="err" path="image" />
 				</td>
 			</tr>
 			<tr>

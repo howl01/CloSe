@@ -41,6 +41,7 @@ public class StyleBean {
 
 	private Double temperature;
 
+
 	public Double getTemperature() {
 		return temperature;
 	}

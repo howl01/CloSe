@@ -56,31 +56,61 @@
 		    m.gender,
 		    m.height,
 		    m.weight
-	    having
-	    	<if test="#{temperature} &lt;= 4.0">
-			    avg(p.temperature) &lt;= 4.0
-			</if>
-	        <if test="#{temperature} &gt; 4.0 and #{temperature} &lt;= 8.0">
+	     having
+	    	<if test="temp &lt;= 4.0">
+             avg(p.temperature) &lt;= 4.0
+         	</if>
+	        <if test="temp &gt; 4.0 and temp &lt;= 8.0">
 	            avg(p.temperature) &gt; 4.0 and avg(p.temperature) &lt;= 8.0
 	        </if>
-	        <if test="#{temperature} &gt; 8.0 and #{temperature} &lt;= 12.0">
+	        <if test="temp &gt; 8.0 and temp &lt;= 12.0">
 	            avg(p.temperature) &gt; 8.0 and avg(p.temperature) &lt;= 12.0
 	        </if>
-	        <if test="#{temperature} &gt; 12.0 and #{temperature} &lt;= 16.0">
+	        <if test="temp &gt; 12.0 and temp &lt;= 16.0">
 	            avg(p.temperature) &gt; 12.0 and avg(p.temperature) &lt;= 16.0
 	        </if>
-	        <if test="#{temperature} &gt; 16.0 and #{temperature} &lt;= 19.0">
+	        <if test="temp &gt; 16.0 and temp &lt;= 19.0">
 	            avg(p.temperature) &gt; 16.0 and avg(p.temperature) &lt;= 19.0
 	        </if>
-	        <if test="#{temperature} &gt; 19.0 and #{temperature} &lt;= 22.0">
+	        <if test="temp &gt; 19.0 and temp &lt;= 22.0">
 	            avg(p.temperature) &gt; 19.0 and avg(p.temperature) &lt;= 22.0
 	        </if>
-	        <if test="#{temperature} &gt; 22.0 and #{temperature} &lt;= 27.0">
+	        <if test="temp &gt; 22.0 and temp &lt;= 27.0">
 	            avg(p.temperature) &gt; 22.0 and avg(p.temperature) &lt;= 27.0
 	        </if>
-	        <if test="#{temperature} &gt; 27.0">
+	        <if test="temp &gt; 27.0">
 	            avg(p.temperature) &gt; 27.0
 	        </if>
+	</select>
+	
+	<select id="styleFilter" resultType="StyleBean">
+		select s.style_number as style_number, avg(p.temperature) as avg_temperature, s.image1 as image1, s.title as title, s.style as style, m.member_id as member_id, m.nickname as nickname, m.gener as gender
+		from style s join member s on s.member_id = m.member_id
+		group by s.style_number, s.image, s.title, s.style, m.member_id, m.nickname, m.gender
+		having 1=1
+			<if test="seasonList != null">
+				<if test="seasonLists == 'Winter'">
+					and avg(p.temperature) &lt;= 8.0
+				</if>
+				<if test="seasonLists == 'Fall'">
+					and (avg(p.temperature) &gt; 8.0 and avg(p.temperature) &lt;= 12.0) and (avg(p.temperature) &gt; 16.0 and avg(p.temperature) &lt;= 19.0)
+				</if>
+				<if test="seasonLists == 'Spring'">
+					and (avg(p.temperature) &gt; 12.0 and avg(p.temperature) &lt;= 16.0) and (avg(p.temperature) &gt; 19.0 and avg(p.temperature) &lt;= 22.0)
+				</if>
+				<if test="seasonLists == 'Summer'">
+					and avg(p.temperature) &gt; 27.0
+				</if>
+			</if>
+			<if test="genderLists != null">
+				and m.gender = #{ genderLists }
+			</if>
+			<if test="styleLists != null">
+				and s.style in
+				<foreach item="style" collection="styleLists">
+					#{ style }
+				</foreach>
+			</if>
 	</select>
    
 </mapper>

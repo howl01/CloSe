@@ -96,18 +96,19 @@
 }
 </style>
 
+
 <div class="row">
-	<div class="card card-margin search-form">
+	<h1 style="margin-left: 220px;">공지사항</h1>
+	<div class="card search-form mb-3" style="width: 30%; height: 60px; margin-left: auto; margin-right: 220px;">
 		<div class="card-body p-0">
-			<form action="list.qna" method="get">
+			<form action="list.notice" method="get">
 				<div class="row">
 					<div class="col-12">
 						<div class="row no-gutters">
 							<div class="col-lg-3 col-md-3 col-sm-12 p-0">
-								<label for="search-type" hidden>검색 유형</label> <select
-									class="form-control" id="search-type" name="whatColumn">
+								<label for="search-type" hidden>검색 유형</label> 
+								<select class="form-control" id="search-type" name="whatColumn">
 									<option value="all">전체
-									<option value="nickname">작성자
 									<option value="title">제목
 								</select>
 							</div>
@@ -118,16 +119,12 @@
 									name="keyword">
 							</div>
 							<div class="col-lg-1 col-md-3 col-sm-12 p-0">
-								<button type="submit" class="btn btn-base">
-									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-										viewBox="0 0 24 24" fill="none" stroke="currentColor"
-										stroke-width="2" stroke-linecap="round"
-										stroke-linejoin="round" class="feather feather-search">
-                                            <circle cx="11" cy="11"
-											r="8"></circle>
-                                            <line x1="21" y1="21"
-											x2="16.65" y2="16.65"></line>
-                                        </svg>
+								<button type="submit" class="btn btn-base ml-auto">
+									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" 
+										stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+	                                    <circle cx="11" cy="11" r="8"></circle>
+	                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                    </svg>
 								</button>
 							</div>
 						</div>
@@ -138,9 +135,8 @@
 	</div>
 </div>
 
-<h2 style="width: 60%; margin: auto;">공지사항</h2> <br>
 <div class="row">
-	<table class="table" id="article-table" style="width: 60%; margin: auto;">
+	<table class="table" id="article-table" style="width: 70%; margin: auto;">
 		<thead>
 			<tr>
 				<th class="title col-8"><a>제목</a></th>
@@ -166,10 +162,22 @@
 		</tbody>
 	</table>
 </div>
-
+<br>
+	<div class="row">
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+		<c:if test="${ loginInfo.member_id == 'admin'  }">
 			<input type="button" class="btn btn-dark me-md-2" value="글쓰기" onClick="location.href='insert.notice'">
-			<input type="button" class="btn btn-dark me-md-2" value="선택하기" onClick="location.href='delete.notice?pageNumber=${ pageInfo.pageNumber }'">
+			<input type="button" class="btn btn-dark me-md-2" value="삭제하기" onClick="location.href='delete.notice?pageNumber=${ pageInfo.pageNumber }'">
+		</c:if>   
+		</div>
+    </div>
 
-<center>
-${ pageInfo.pagingHtml }
-</center>
+<br><br>
+
+<div class="row">
+    <div class="col-lg-12 text-center">
+        <div class="d-flex justify-content-center">
+            ${pageInfo.pagingHtml}
+        </div>
+    </div>
+</div>

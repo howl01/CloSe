@@ -8,19 +8,7 @@
 
 <style type="text/css">
    .body {
-      width: 100%;
       margin: auto;
-   }
-
-   #par {
-      position: relative;
-   }
-
-   #chi {
-      position: absolute;
-      left: 0px;
-      top: 0px;
-      opacity: 0.4;
    }
 
    #carouselExampleAutoplaying {
@@ -38,7 +26,7 @@ window.navigator.geolocation.getCurrentPosition(function(pos) {
     
     $.ajax({
       type: 'POST',
-      url: 'view.close',
+      url: 'view.style',
       data: {latitude: latitude, longitude: longitude}
   });
 });
@@ -154,7 +142,7 @@ window.navigator.geolocation.getCurrentPosition(function(pos) {
                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
 
                   <div class="col" align="center">
-                     <a href="view.close"><img class="bd-placeholder-img card-img-top" width="100%" height="120"
+                     <a href="view.style"><img class="bd-placeholder-img card-img-top" width="100%" height="120"
                            style="border-radius: 20%;" id="par" src="resources/img/abc.jpeg"></a>
                      오늘의 옷비서
                   </div>
@@ -312,12 +300,12 @@ window.navigator.geolocation.getCurrentPosition(function(pos) {
       </div>
       
 
-	<div class="col-lg-2 mt-5 px-5">
+	<div class="col-lg-2 mt-5 ps-4 pe-0">
 	         <div class="bs-component">
 	            <div class="card mb-3">
-	               <h3 class="card-header" align="center">오늘의 날씨</h3>
+	               <h4 class="card-header" align="center">오늘의 날씨</h4>
 	               <div class="card-body">
-	                  <h5 class="card-title time">Special title treatment</h5>
+	                  <h6 class="card-title time"></h6>
 	                  <p class="card-text">현재 온도 : <span id="ctemp"></span></p>
 	                  <p class="card-text">체감 온도 : <span id="feel"></span></p>
 	                  <p class="card-text">날씨 : <span id="description"></span></p>
@@ -328,13 +316,6 @@ window.navigator.geolocation.getCurrentPosition(function(pos) {
 	      </div>
       
    </div>
-
-   <div class="col-lg-2">
-   		<button onclick="location.href='register.product'">상등</button>
-   		<button onclick="location.href='detail.product?product_number=1'">상품상세</button>
-   		<button onclick="orderdetails('kim')">주문내역</button>
-   </div>
-
 
  </div> 
 

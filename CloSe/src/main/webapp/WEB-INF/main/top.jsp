@@ -7,8 +7,10 @@
 
 <script src="resources/js/bootstrap.bundle.min.js"></script>
 <script src="resources/js/jquery.js"></script>
+<script src="resources/js/sidebars.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <link href="resources/css/bootstrap.min.css" rel="stylesheet">
+<link href="resources/css/sidebars.css" rel="stylesheet">
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script type="text/javascript">
    function goLogin() {
