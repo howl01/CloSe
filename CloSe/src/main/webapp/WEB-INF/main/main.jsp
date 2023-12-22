@@ -9,6 +9,7 @@
 <style type="text/css">
    .body {
       width: 100%;
+      overflow-x: hidden;
       margin: auto;
    }
 

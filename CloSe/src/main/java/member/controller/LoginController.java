@@ -3,6 +3,7 @@ package member.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -20,42 +21,51 @@ public class LoginController {
 
 	private final String command = "/login.member";
 	private final String viewPage = "loginForm";
-	private final String gotoPage = "../main/main";
-	
+	private final String gotoPage = "redirect:view.main";
+
 	@Autowired
 	private MemberDao memberDao;
-	
+
 	@RequestMapping(value = command, method = RequestMethod.GET)
-	public String login() {
-		
+	public String login(HttpSession session, HttpServletRequest request) {
+		session.setAttribute("prevPage", request.getHeader("Referer"));
+		System.out.println("request.getHeader:" + request.getHeader("Referer"));
 		return viewPage;
 	}
-	
+
 	@RequestMapping(value = command, method = RequestMethod.POST)
 	public ModelAndView login(MemberBean mb, HttpServletResponse response, HttpSession session) throws IOException {
-		
+		String prevPage = (String) session.getAttribute("prevPage");
 		ModelAndView mav = new ModelAndView();
-		
+
 		PrintWriter out;
 		out = response.getWriter();
 		response.setContentType("text/html; charset=UTF-8");
-		
+
 		MemberBean memberBean = memberDao.getDetail(mb.getMember_id());
-		
-		if(memberBean == null) {
+
+		if (memberBean == null) {
 			out.println("<script>alert('가입하지 않은 회원입니다.')</script>");
 			out.flush();
 			mav.setViewName(viewPage);
 			return mav;
-		}else { //아이디 존재함
-			if(memberBean.getPassword().equals(mb.getPassword())) {	//비번이 일치함
-				session.setAttribute("loginInfo", memberBean); //DB에서 가져온 레코드를 loginInfo로 설정
-				out.println("<script>alert('로그인 되었습니다.')</script>");
-				out.flush();
-				mav.setViewName(gotoPage);
-				return mav;
-				
-			}else { //비번이 일치안함
+		} else { // 아이디 존재함
+			if (memberBean.getPassword().equals(mb.getPassword())) { // 비번이 일치함
+				session.setAttribute("loginInfo", memberBean); // DB에서 가져온 레코드를 loginInfo로 설정
+				if (prevPage != null && !prevPage.isEmpty()
+						&& !prevPage.equals("http://localhost:8080/ex/register.member")) {
+					// 이전 페이지의 URL을 세션에서 제거
+					session.removeAttribute("prevPage");
+					out.println("<script>alert('로그인 되었습니다.'); location.href='" + prevPage + "';</script>");
+					out.flush();
+					return mav;
+				} else {
+					// 이전 페이지의 URL이 없으면 기본적으로 메인 페이지로 리다이렉트
+					out.println("<script>alert('로그인 되었습니다.'); location.href='" + gotoPage + "';</script>");
+					out.flush();
+					return mav;
+				}
+			} else { // 비번이 일치안함
 				out.println("<script>alert('비번이 잘못되었습니다.')</script>");
 				out.flush();
 				mav.setViewName(viewPage);

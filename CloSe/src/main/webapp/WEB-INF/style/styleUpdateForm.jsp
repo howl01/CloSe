@@ -89,6 +89,11 @@
 	ol{
 		font-size: 8pt;
 	}
+	
+	.custom-height{
+		70vw;	
+	}
+	
 </style>
 
 <script type="text/javascript">
@@ -122,20 +127,17 @@ function removeTagImage(productNumberIndex) {
       }
     }
   }
-  
-  
-
 
 $(document).ready(function () {
 	// 이미지 업로드, 내용 입력, 스타일 선택 여부에 따라 submit 버튼 활성화/비활성화
     function updateSubmitButton() {
-        var imagesInput = $('input[name="images"]');
+        var imagesInput = $('input[name="prevImage1"]');
         var contentTextarea = $('textarea[name="content"]');
         var styleCheckboxes = $('input[name="style"]');
         var submitButton = $('button[type="submit"]');
 
         // 이미지 업로드, 내용 입력, 스타일 선택 여부 확인
-        var isImagesSelected = imagesInput[0].files.length > 0;
+        var isImagesSelected = imagesInput.val().length > 0;
         var isContentValid = contentTextarea.val().trim().length > 0;
         var isStyleSelected = styleCheckboxes.filter(':checked').length > 0;
 
@@ -191,7 +193,7 @@ $(document).ready(function () {
                         var jsonArray = JSON.parse(json);
                         $(document).data('jsonArray', jsonArray);
                         $.each(jsonArray, function (index, item) {
-                        	html += '<li class="list-group-item d-flex justify-content-between align-items-start">';
+                        	html += '<li id="scpro" class="list-group-item d-flex justify-content-between align-items-start">';
               			   	html += '<div><img id="displayList2_img" src="' + contextPath +"/resources/productImage/"+ item.image + '"></div>';
               			    html += '<div class="ms-2 me-auto my-auto">';
               			    html += '<div class="fw-bold">'+item.product_name+'</div>₩ '+item.price+'</div>';
@@ -213,7 +215,7 @@ $(document).ready(function () {
         }
     });
 
-    $(document).on('click', ".list-group-item", function () {
+    $(document).on('click', "#scpro", function () {
         var jsonArray = $(document).data('jsonArray');
         var itemIndex = $(this).index(); // 클릭된 항목의 인덱스 가져오기
         var productNumber = jsonArray[itemIndex].product_number;
@@ -258,16 +260,9 @@ $(document).ready(function () {
                 }));
                 
                 var infoDiv = $("<div>").addClass("ms-2 me-auto my-auto").css("text-align", "center");
-                infoDiv.append($("<div>").html(`${fn:substringBefore(productName, '/') }<br>${fn:substringAfter(productName, '/') }`));
-                var customPattern = "###,###";
-                var formattedNumber = formatNumber(price, customPattern);
-                
-                function formatNumber(number, pattern) {
-                    return pattern.replace(/#/g, function (match) {
-                    	return number.toString();
-                    });
-                }
-                infoDiv.append($("<div>").addClass("fw-bold").text(formattedNumber));
+                infoDiv.append($("<div>").html(productName.split('/').join('<br>')));
+                var customFormattedPrice = price.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + " 원";
+                infoDiv.append($("<div>").addClass("fw-bold").text(customFormattedPrice));
 
                 // Append elements to the new list item
                 newItem.append(removeLink, imageDiv, infoDiv);
@@ -291,6 +286,8 @@ $(document).ready(function () {
 	function updatePreview() {
 	    var fileInput = document.querySelector('input[type=file]');
 	    var files = fileInput.files;
+	    alert(fileInput);
+	    alert(files[0].name);
 	    
 	    if (files.length > 5) {
             alert('최대 5개의 파일까지만 선택할 수 있습니다.');
@@ -383,6 +380,7 @@ $(document).ready(function () {
 	        previewContainer.style.margin = '';
 	        previewContainer.style.marginTop = '';
 	        previewContainer.style.marginBottom = '';
+	        $("input[type=hidden][name^=prevImage]").val("");
 	    }
 	 	// 추가: form:errors가 발생하면 다시 보이도록 설정
 	    var errors = document.querySelectorAll('.err');
@@ -406,6 +404,11 @@ $(document).ready(function () {
 			<input type="hidden" name="product_number2" id="product_number2" value="${styleBean.product_number2}">
 			<input type="hidden" name="product_number3" id="product_number3" value="${styleBean.product_number3}">
 			<input type="hidden" name="product_number4" id="product_number4" value="${styleBean.product_number4}">
+			<input type="hidden" name="prevImage1" value="${styleBean.image1}">
+       		<input type="hidden" name="prevImage2" value="${styleBean.image2}">
+       		<input type="hidden" name="prevImage3" value="${styleBean.image3}">
+       		<input type="hidden" name="prevImage4" value="${styleBean.image4}">
+       		<input type="hidden" name="prevImage5" value="${styleBean.image5}">
 			<h3 style="padding: 22 0 22 0">Style Write</h3>
 		
 			<div class="row productrow" style="border-top: 3px solid;"> 
@@ -415,12 +418,67 @@ $(document).ready(function () {
 				<div class="col-2"></div>
 				<div class="col-7 align-self-center">
 		        	<div id="imgInput" >
+		        		<img src="<%=request.getContextPath()%>/resources/styleImage/${styleBean.image1}" class="d-none">
 		        		<input class="form-control" type="file" name="images" multiple accept="image/*" onchange="updatePreview()">
 	        		</div>
 			    <div class="preview-container"></div>
-			    <div id="carouselExampleIndicators" class="carousel carousel-dark slide">
-			    	<div class="carousel-indicators"></div>
-			        <div class="carousel-inner"></div>
+			    <div id="carouselExampleIndicators" class="carousel carousel-dark slide" style="margin-top: 20px; margin-bottom: 10px;">
+			    	<div class="carousel-indicators">
+			    		<c:if test="${not empty styleBean.image2}">
+							<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+		   					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+						</c:if>
+						<c:if test="${not empty styleBean.image3}">
+							<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+						</c:if>
+						<c:if test="${not empty styleBean.image4}">
+							<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
+						</c:if>
+						
+						<c:if test="${not empty styleBean.image5}">
+							<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4" aria-label="Slide 5"></button>
+						</c:if>
+			    	</div>
+			        <div class="carousel-inner">
+			        	<div class="carousel-item active">
+					      <img src="<%=request.getContextPath()%>/resources/styleImage/${styleBean.image1}" class="d-block w-100 custom-height" alt="...">
+					    </div>
+						
+						<c:if test="${not empty styleBean.image2}">
+							<div class="carousel-item">
+						      <img src="<%=request.getContextPath()%>/resources/styleImage/${styleBean.image2}" class="d-block w-100 custom-height" alt="...">
+						    </div>
+						</c:if>
+						
+						<c:if test="${not empty styleBean.image3}">
+							<div class="carousel-item">
+						      <img src="<%=request.getContextPath()%>/resources/styleImage/${styleBean.image3}" class="d-block w-100 custom-height" alt="...">
+						    </div>
+						</c:if>
+						
+						<c:if test="${not empty styleBean.image4}">
+							<div class="carousel-item">
+						      <img src="<%=request.getContextPath()%>/resources/styleImage/${styleBean.image4}" class="d-block w-100 custom-height" alt="...">
+						    </div>
+						</c:if>
+						
+						<c:if test="${not empty styleBean.image5}">
+							<div class="carousel-item">
+						      <img src="<%=request.getContextPath()%>/resources/styleImage/${styleBean.image3}" class="d-block w-100 custom-height" alt="...">
+						    </div>
+						</c:if>
+			        </div>
+			        
+			        <c:if test="${not empty styleBean.image2}">
+					    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+					        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+					        <span class="visually-hidden">이전</span>
+					    </button>
+					    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+					        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+					        <span class="visually-hidden">다음</span>
+					    </button>
+					</c:if>
 			    </div>
 				<div>
 			   </div>
