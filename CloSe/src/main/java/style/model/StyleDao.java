@@ -32,7 +32,6 @@ public class StyleDao {
       return sqlSessionTemplate.selectOne(namespace + ".getStyleByStyleNumber", style_number);
    }
 
-<<<<<<< HEAD
 	public List<StyleBean> getTemperatureAvgByStyle() {
 		return sqlSessionTemplate.selectList(namespace+".getTemperatureAvgByStyle");
 	}
@@ -66,15 +65,5 @@ public class StyleDao {
 		List<StyleBean> lists = sqlSessionTemplate.selectList(namespace+".styleFilter", map);
 		return lists;
 	}
-	
-}
-=======
-   public List<StyleBean> getTemperatureAvgByStyle() {
-       List<StyleBean> lists = sqlSessionTemplate.selectList(namespace+".getTemperatureAvgByStyle");
-       System.out.println("lists size : " + lists.size());
-        return lists;
-      }
-
    
 }
->>>>>>> refs/remotes/origin/gyu
