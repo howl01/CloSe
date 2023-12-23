@@ -258,4 +258,4 @@ insert into product values
 insert into product values
 (product_seq.nextval,'반스/롱스커트1','롱스커트1.jpg',79000,'롱스커트c1.jpg','10',100,100,100,100,'롱스커트');
 
-commit;
+commit; 
