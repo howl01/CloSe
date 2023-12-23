@@ -22,6 +22,9 @@
    function goKakaoLogin() {
       location.href = "kakaologin.member";
    }
+   function goMyCart(){
+	   location.href = "cartAdd.cart";
+   }
    
    Kakao.init('2cdf0145ab332ff37556bbc8268b13a1');
    function kakaoLogout() {
@@ -295,11 +298,21 @@
                 </c:if>
                 
                 <c:if test="${not empty loginInfo or not empty kakaoLoginInfo}">
-	               <a href="javascript:goLogin()" class="nav-link text-black"> 
-	                  <img src="resources/icon/cart.svg" class="bi d-block mx-auto mb-1" width="30" height="30" style="margin-top: 1px;"> 
-	                  <font size="2">장바구니</font>
-	               </a>
-                </c:if>
+				    <c:choose>
+				        <c:when test="${not empty loginInfo and loginInfo.member_id eq 'admin'}">
+				            <a href="javascript:goProductRegistration()" class="nav-link text-black">
+				                <img src="resources/icon/patch-plus.svg" class="bi d-block mx-auto mb-1" width="30" height="30" style="margin-top: 1px;"> 
+				                <font size="2">상품등록</font>
+				            </a>
+				        </c:when>
+				        <c:otherwise>
+				            <a href="javascript:goMyCart()" class="nav-link text-black">
+				                <img src="resources/icon/cart.svg" class="bi d-block mx-auto mb-1" width="30" height="30" style="margin-top: 1px;"> 
+				                <font size="2">장바구니</font>
+				            </a>
+				        </c:otherwise>
+				    </c:choose>
+				</c:if>
             </li>
             
             <li>
@@ -319,26 +332,26 @@
     <div class="container d-flex flex-wrap" style="width:66%;">
       <ul class="nav me-auto">
       	<c:if test="${empty loginInfo and empty kakaoLoginInfo}">
-	        <li class="nav-item"><a href="javscript:goLogin()" onclick="goLogin()" class="nav-link link-body-emphasis px-2">HOME</a></li>
-	        <li class="nav-item"><a href="javscript:void(0);" onclick="goLogin()" class="nav-link link-body-emphasis px-2">오늘의 옷비서</a></li>
+	        <li class="nav-item"><a href="view.main" class="nav-link link-body-emphasis px-2">HOME</a></li>
+	        <li class="nav-item"><a href="view.close" class="nav-link link-body-emphasis px-2">오늘의 옷비서</a></li>
 	        <li class="nav-item"><a href="mainView.style" class="nav-link link-body-emphasis px-2">STYLE</a></li>
 	        <li class="nav-item"><a href="list.product" class="nav-link link-body-emphasis px-2">SHOP</a></li>
-	        <li class="nav-item"><a href="javscript:void(0)" onclick="goLogin()" class="nav-link link-body-emphasis px-2">EVENT</a></li>
+	        <li class="nav-item"><a href="event.member" class="nav-link link-body-emphasis px-2">EVENT</a></li>
       	</c:if>
       	<c:if test="${not empty loginInfo or not empty kakaoLoginInfo}">
       		<li class="nav-item"><a href="view.main" class="nav-link link-body-emphasis px-2">HOME</a></li>
-	        <li class="nav-item"><a href="javscript:void(0);" onclick="goLogin()" class="nav-link link-body-emphasis px-2">오늘의 옷비서</a></li>
-	        <li class="nav-item"><a href="mainView.style" class="nav-link link-body-emphasis px-2" id="styleNav">STYLE</a></li>
-	        <li class="nav-item"><a href="javscript:void(0)" onclick="goLogin()" class="nav-link link-body-emphasis px-2">SHOP</a></li>
-	        <li class="nav-item"><a href="javscript:void(0)" onclick="goLogin()" class="nav-link link-body-emphasis px-2">EVENT</a></li>
+	        <li class="nav-item"><a href="view.close" class="nav-link link-body-emphasis px-2">오늘의 옷비서</a></li>
+	        <li class="nav-item"><a href="mainView.style" class="nav-link link-body-emphasis px-2">STYLE</a></li>
+	        <li class="nav-item"><a href="list.product" class="nav-link link-body-emphasis px-2">SHOP</a></li>
+	        <li class="nav-item"><a href="event.member" class="nav-link link-body-emphasis px-2">EVENT</a></li>
       	</c:if>
       </ul>
       <ul class="nav">
       	<c:if test="${not empty loginInfo}">
-      		<li class="nav-item" style="margin-top: 4px;"><font size="2" color="green">${loginInfo.name} 님 환영합니다.</font> &nbsp;</li>
+      		<li class="nav-item" style="margin-top: 4px;"><font size="2" color="green">${loginInfo.nickname} 님 환영합니다.</font> &nbsp;</li>
       	</c:if>
       	<c:if test="${not empty kakaoLoginInfo}">
-      		<li class="nav-item" style="margin-top: 4px;"><font size="2" color="green">${kakaoLoginInfo.name} 님 환영합니다.</font> &nbsp;</li>
+      		<li class="nav-item" style="margin-top: 4px;"><font size="2" color="green">${kakaoLoginInfo.nickname} 님 환영합니다.</font> &nbsp;</li>
       	</c:if>
       	<li class="nav-item"><a href="javascript:goNotice()" class="nav-link link-body-emphasis px-2"><font size="2">공지사항</font></a></li>
         <li class="nav-item"><a href="javascript:goQna()" class="nav-link link-body-emphasis px-2"><font size="2">고객센터</font></a></li>

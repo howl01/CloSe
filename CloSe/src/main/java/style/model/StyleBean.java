@@ -47,10 +47,21 @@ public class StyleBean {
 	private String pimage2;
 	private String pimage3;
 	private String pimage4;
-	
 
 	public String getProduct_name1() {
 		return product_name1;
+	}
+
+	public int getRecommend_count() {
+		return recommend_count;
+	}
+
+	public void setRecommend_count(int recommend_count) {
+		this.recommend_count = recommend_count;
+	}
+
+	public void setMImage5(MultipartFile mImage5) {
+		MImage5 = mImage5;
 	}
 
 	public void setProduct_name1(String product_name1) {
@@ -154,7 +165,6 @@ public class StyleBean {
 
 	private Double temperature;
 
-
 	public Double getTemperature() {
 		return temperature;
 	}
@@ -247,18 +257,10 @@ public class StyleBean {
 		return MImage5;
 	}
 
-	public void setMImage5(MultipartFile mImage5) {
-		MImage5 = mImage5;
-	}
-
-	StyleBean() {
-		super();
-	}
-
 	StyleBean(int style_number, String image1, String image2, String image3, String image4, String image5, String title,
-			String content, String style, int read_count, int recommend_count, Date write_date,
-			Integer product_number1, Integer product_number2, Integer product_number3, Integer product_number4,
-			String member_id, List<MultipartFile> images) {
+			String content, String style, int read_count, int recommend_count, Date write_date, Integer product_number1,
+			Integer product_number2, Integer product_number3, Integer product_number4, String member_id,
+			List<MultipartFile> images) {
 		super();
 		this.style_number = style_number;
 		this.image1 = image1;
@@ -278,6 +280,10 @@ public class StyleBean {
 		this.product_number4 = product_number4;
 		this.member_id = member_id;
 		this.images = images;
+	}
+
+	StyleBean() {
+		super();
 	}
 
 	public List<MultipartFile> getImages() {
@@ -393,14 +399,6 @@ public class StyleBean {
 
 	public void setRead_count(int read_count) {
 		this.read_count = read_count;
-	}
-
-	public int getRecommend_count() {
-		return recommend_count;
-	}
-
-	public void setRecommend_count(int recommend_count) {
-		this.recommend_count = recommend_count;
 	}
 
 	public Date getWrite_date() {

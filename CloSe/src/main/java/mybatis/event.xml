@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace = "event.EventBean">
+	<insert id="insertCoupon">
+		insert into coupon values(coupon_seq.nextval,#{member_id},#{coupon_name},#{coupon_discount})
+	</insert>
+	
+	<select id="selectCoupon" resultType="EventBean">
+		select * from coupon where member_id=#{member_id}
+	</select>
+	
+</mapper>

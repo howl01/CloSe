@@ -374,6 +374,7 @@ $(document).ready(function() {
 				        <tr>
 			               <th>휴대폰번호</th>
 				           <td>
+				           &nbsp;&nbsp;&nbsp;
 				              <c:choose>
 					              <c:when test="${not empty kakaoLoginInfo}">
 					              	${kakaoLoginInfo.phone}
@@ -384,13 +385,13 @@ $(document).ready(function() {
 			                        <input type="hidden" id="phone" name="phone">
 			                      </c:when>
 		                      </c:choose>
-			                  <input type = "button" id="phoneVerificationButton" value = "인증번호 요청" onclick = "sendSMS($('input[name=phone]').val())" style="border-color: black;">
+			                  <input type = "button" id="phoneVerificationButton" value = "인증번호 요청" onclick = "sendSMS($('input[name=phone]').val())">
 				           </td>
 				        </tr>
 				        <tr>
 				        	<th>휴대폰 인증</th>
 				        	<td>
-				              <input type="text" id="verificationCode" name="verificationCode" style="border-color: black;">&nbsp;
+				              <input type="text" id="verificationCode" name="verificationCode" size="7">&nbsp;
 				              <input type="button" value="인증하기" onClick="verify()">
 				        	</td>
 				        </tr>

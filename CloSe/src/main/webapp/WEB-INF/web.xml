@@ -180,6 +180,21 @@
 		<url-pattern>*.main</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>close</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring/appServlet/close-servlet.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+		
+	<servlet-mapping>
+		<servlet-name>close</servlet-name>
+		<url-pattern>*.close</url-pattern>
+	</servlet-mapping>
+	
 	<filter> 
 	    <filter-name>encodingFilter</filter-name> 
 	    <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class> 
