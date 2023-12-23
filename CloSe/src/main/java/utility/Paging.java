@@ -199,19 +199,12 @@ public class Paging {
 	    String result = "";
 	    String added_param = "&whatColumn=" + whatColumn + "&keyword=" + keyword;
 
-<<<<<<< HEAD
-		if (this.beginPage != 1) {
-			result += "<nav aria-label='Page navigation example'><ul class='pagination'><li class='page-item'><a class='page-link' href='" + url + "?pageNumber=" + (1) + "&pageSize=" + this.pageSize + added_param + "' aria-label='Previous'><span aria-hidden='true'>&laquo;</span></a></li>";
-			result += "<li class='page-item'><a class='page-link' href='" + url + "?pageNumber=" + (this.beginPage - 1) + "&pageSize=" + this.pageSize + added_param + "' aria-label='Next'><span aria-hidden='true'>&raquo;</span></a></li></ul></nav>";
-		}
-=======
 	    if (this.beginPage != 1) {
 	        result += "&nbsp;<li class='page-item'><a class='page-link' href='" + url + "?pageNumber=" + (1) + "&pageSize=" + this.pageSize + added_param
 	                + "'>&laquo;</a></li>&nbsp;";
 	        result += "&nbsp;<li class='page-item'><a class='page-link' href='" + url + "?pageNumber=" + (this.beginPage - 1) + "&pageSize=" + this.pageSize
 	                + added_param + "'>&lt;</a></li>&nbsp;";
 	    }
->>>>>>> branch 'wook' of https://github.com/howl01/CloSe.git
 
 	    // 가운데
 	    for (int i = this.beginPage; i <= this.endPage; i++) {
