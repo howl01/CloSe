@@ -54,41 +54,59 @@
 </head>
 
 <script type="text/javascript">
-$(document).ready(function () {
-$('input[type=checkbox]').on('click', function () {
-	var checkboxSeasonValues = [];
-	$("input[name='season']:checked").each(function(i){
-		checkboxSeasonValues.push($(this).val());
-	});
-	
-	var checkboxGenderValues = [];
-	$("input[name='gender']:checked").each(function(i){
-		checkboxGenderValues.push($(this).val());
-	});
-	
-	var checkboxStyleValues = [];
-	$("input[name='style']:checked").each(function(i){
-		checkboxStyleValues.push($(this).val());
-	});
-	
-	var allData = {"seasonArray":checkboxSeasonValues, "genderArray":checkboxGenderValues, "styleArray":checkboxStyleValues};
-	
+    $(document).ready(function () {
+        $('input[type=checkbox]').click(function () {
+            var checkboxSeasonValues = $("input[name='season']:checked").map(function() {
+                return this.value;
+            }).get();
+            
+            var checkboxGenderValues = $("input[name='gender']:checked").map(function() {
+                return this.value;
+            }).get();
+            
+            var checkboxStyleValues = $("input[name='style']:checked").map(function() {
+                return this.value;
+            }).get();
+
+            // 서버에서 받은 tempValue를 사용하는 경우, 아래와 같이 수정하세요.
+            var tempValue = "${temp}"; // 서버 사이드에서 렌더링된 값을 가져옵니다. JSP 혹은 다른 서버 사이드 템플릿에서 처리되어야 합니다.
+
             $.ajax({
                 url: "styleFilter.style",
-                method: "post",
-                data: allData,
-                success: function(data){
-                	alert("완료");
-                	window.opener.location.reload();
+                method: "POST",
+                traditional: true,
+                data: {
+                    "seasonArray": checkboxSeasonValues,
+                    "genderArray": checkboxGenderValues,
+                    "styleArray": checkboxStyleValues,
+                    "temp": tempValue
+                },
+                success: function (response) {
+                    console.log('Success:', response); // 성공 결과를 콘솔에 출력
+                    var parsedData = typeof response === 'string' ? JSON.parse(response) : response;
+                    $('#result').empty(); // 이전 결과를 지우고 새로운 결과를 표시합니다.
+                    $.each(parsedData, function(i, item) {
+                        $('<div></div>').text(item.style_number).appendTo('#result');
+                        $('<div></div>').text(item.avg_temperature).appendTo('#result');
+                        $('<img>').attr('src', item.image1).appendTo('#result');
+                        $('<div></div>').text(item.title).appendTo('#result');
+                        $('<div></div>').text(item.style).appendTo('#result');
+                        $('<div></div>').text(item.member_id).appendTo('#result');
+                        $('<div></div>').text(item.nickname).appendTo('#result');
+                        $('<div></div>').text(item.gender).appendTo('#result');
+                    });
+                    alert("성공"); // 사용자에게 친화적인 방식으로 메시지를 표시하는 것을 고려하세요.
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
-                    console.error("AJAX Error:", textStatus, errorThrown);
-                    alert("검색 중 오류가 발생했습니다. 자세한 내용은 콘솔을 확인하세요.");
+                    console.error('AJAX Error:', textStatus, errorThrown); // 오류를 콘솔에 출력
+                    alert("검색 중 오류가 발생했습니다. 자세한 내용은 콘솔을 확인하세요."); // 사용자에게 친화적인 방식으로 메시지를 표시하는 것을 고려하세요.
                 }
             });
+        });
     });
-});
 </script>
+
+
 
 <div class="d-flex justify-content-start">
 <div class="flex-shrink-0 p-3 bg-white" style="width: 280px;">
@@ -102,8 +120,8 @@ $('input[type=checkbox]').on('click', function () {
           계절
         </button>
         <div class="collapse show" id="home-collapse" style="margin-left: 30px;">
-          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-            <li><input type="checkbox" style="accent-color: black;" id="season" name="season" value="Spring" onClick=""> Spring</li>
+          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small" id="season">
+            <li><input type="checkbox" style="accent-color: black;" id="season" name="season" value="Spring"> Spring</li>
             <li><input type="checkbox" style="accent-color: black;" id="season" name="season" value="Summer"> Summer</li>
             <li><input type="checkbox" style="accent-color: black;" id="season" name="season" value="Fall"> Fall</li>
             <li><input type="checkbox" style="accent-color: black;" id="season" name="season" value="Winter"> Winter</li>
@@ -115,7 +133,7 @@ $('input[type=checkbox]').on('click', function () {
           성별
         </button>
         <div class="collapse" id="dashboard-collapse" style="margin-left: 30px;">
-          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small" id="gender">
             <li><input type="checkbox" style="accent-color: black;" name="gender" value="남자"> 남자</li>
             <li><input type="checkbox" style="accent-color: black;" name="gender" value="여자"> 여자</li>
           </ul>
@@ -126,7 +144,7 @@ $('input[type=checkbox]').on('click', function () {
           스타일
         </button>
         <div class="collapse" id="orders-collapse" style="margin-left: 30px;">
-          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small" id="style">
           	<li><input type="checkbox" style="accent-color: black;" name="style" value="로맨틱"> 로맨틱</li>
             <li><input type="checkbox" style="accent-color: black;" name="style" value="모던"> 모던</li>
             <li><input type="checkbox" style="accent-color: black;" name="style" value="미니멀"> 미니멀</li>
@@ -193,12 +211,8 @@ $('input[type=checkbox]').on('click', function () {
 
 
   <div class="d-flex flex-wrap" id="styleContainer">
+  <div id="result">
     <c:forEach var="styleBean" items="${lists}" varStatus="status">
-        <c:if test="${status.index % 3 == 0}">
-        	<c:if test="${status.index == 0}">
-            	<div class="flex-column" style="width: 25%;">
-            </c:if>
-
 	        <div class="card m-3">
 	            <a href="detail.style?style_number=${styleBean.style_number}" class="link-dark link-underline-opacity-0">
 	                <img src="<%=request.getContextPath()%>/resources/styleImage/${styleBean.image1}" class="card-img-top">
@@ -209,49 +223,12 @@ $('input[type=checkbox]').on('click', function () {
 	                </div>
 	            </a>
 	        </div>
-        </c:if>
     </c:forEach>
 	</div>
-	<c:forEach var="styleBean" items="${lists}" varStatus="status">
-        <c:if test="${status.index % 3 == 1}">
-        	<c:if test="${status.index == 1}">
-            	<div class="flex-column" style="width: 25%;">
-            </c:if>
+ </div>
 
-	        <div class="card m-3">
-	            <a href="detail.style?style_number=${styleBean.style_number}" class="link-dark link-underline-opacity-0">
-	                <img src="<%=request.getContextPath()%>/resources/styleImage/${styleBean.image1}" class="card-img-top">
-	                <div class="card-body">
-	                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='gray' class='bi bi-person-circle' viewBox='0 0 16 16'%3E%3Cpath d='M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z'/%3E%3Cpath fill-rule='evenodd' d='M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z'/%3E%3C/svg%3E" alt="Person Icon">
-	                    ${styleBean.nickname}
-	                    <p class="card-text">${styleBean.title}</p>
-	                </div>
-	            </a>
-	        </div>
-
-        </c:if>
-    </c:forEach>
     </div>
-    <c:forEach var="styleBean" items="${lists}" varStatus="status">
-        <c:if test="${status.index % 3 == 2}">
-        	<c:if test="${status.index == 2}">
-            	<div class="flex-column" style="width: 25%;">
-            </c:if>
-
-	        <div class="card m-3">
-	            <a href="detail.style?style_number=${styleBean.style_number}" class="link-dark link-underline-opacity-0">
-	                <img src="<%=request.getContextPath()%>/resources/styleImage/${styleBean.image1}" class="card-img-top">
-	                <div class="card-body">
-	                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='gray' class='bi bi-person-circle' viewBox='0 0 16 16'%3E%3Cpath d='M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z'/%3E%3Cpath fill-rule='evenodd' d='M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z'/%3E%3C/svg%3E" alt="Person Icon">
-	                    ${styleBean.nickname}
-	                    <p class="card-text">${styleBean.title}</p>
-	                </div>
-	            </a>
-	        </div>
-
-        </c:if>
-    </c:forEach>
     </div>
-	</div>  
-</div>
+    </div>
+    
 <%@ include file="../main/bottom.jsp" %>

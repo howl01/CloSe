@@ -44,38 +44,14 @@ public class LoginController {
 		response.setContentType("text/html; charset=UTF-8");
 
 		MemberBean memberBean = memberDao.getDetail(mb.getMember_id());
-<<<<<<< HEAD
-
-		if (memberBean == null) {
-=======
 		
 		LocalDate now = LocalDate.now();
 		
 		if(memberBean == null) {
->>>>>>> branch 'wook' of https://github.com/howl01/CloSe.git
 			out.println("<script>alert('가입하지 않은 회원입니다.')</script>");
 			out.flush();
 			mav.setViewName(viewPage);
 			return mav;
-<<<<<<< HEAD
-		} else { // 아이디 존재함
-			if (memberBean.getPassword().equals(mb.getPassword())) { // 비번이 일치함
-				session.setAttribute("loginInfo", memberBean); // DB에서 가져온 레코드를 loginInfo로 설정
-				if (prevPage != null && !prevPage.isEmpty()
-						&& !prevPage.equals("http://localhost:8080/ex/register.member")) {
-					// 이전 페이지의 URL을 세션에서 제거
-					session.removeAttribute("prevPage");
-					out.println("<script>alert('로그인 되었습니다.'); location.href='" + prevPage + "';</script>");
-					out.flush();
-					return mav;
-				} else {
-					// 이전 페이지의 URL이 없으면 기본적으로 메인 페이지로 리다이렉트
-					out.println("<script>alert('로그인 되었습니다.'); location.href='" + gotoPage + "';</script>");
-					out.flush();
-					return mav;
-				}
-			} else { // 비번이 일치안함
-=======
 		}else { //아이디 존재함
 			if(memberBean.getPassword().equals(mb.getPassword())) {	//비번이 일치함
 				if(memberBean.getBan_count() > 0 && memberBean.getBan_expiration() != null) {
@@ -94,7 +70,6 @@ public class LoginController {
 					return mav;
 				}
 			}else { //비번이 일치안함
->>>>>>> branch 'wook' of https://github.com/howl01/CloSe.git
 				out.println("<script>alert('비번이 잘못되었습니다.')</script>");
 				out.flush();
 				mav.setViewName(viewPage);
