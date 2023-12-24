@@ -26,6 +26,25 @@
 	   location.href = "cartAdd.cart";
    }
    
+   function goCart() {
+	   if("${empty loginInfo and empty kakaoLoginInfo}"){
+		   alert("로그인이 필요한 서비스입니다.");
+		   goLogin();
+	   }
+	   if("${not empty loginInfo}"){
+		   alert("카카오${kakaoLoginInfo.member_id}")
+		   alert('${loginInfo.member_id}');
+		   location.href = "cartAdd.cart?member_id='${loginInfo.member_id}'";
+	   } else if("${not empty kakaoLoginInfo}"){
+		   location.href = "cartAdd.cart?member_id='${kakaoLoginInfo.member_id}'";
+	   }
+	   
+	}
+   
+   function goEvent(){
+	   location.href="main.event";
+   }
+   
    Kakao.init('2cdf0145ab332ff37556bbc8268b13a1');
    function kakaoLogout() {
 	    if (Kakao.Auth.getAccessToken()) {
@@ -67,7 +86,7 @@
 	function goNotice(){ //공지사항
 	    location.href="list.notice";
 	}
-	
+	 
 	function goMyPage(){
 		location.href="mypage.member";
 	}
@@ -291,7 +310,7 @@
             
             <li>
             	<c:if test="${empty loginInfo and empty kakaoLoginInfo}">
-	               <a href="javascript:goLogin()" class="nav-link text-black"> 
+	               <a href="javascript:goCart()" class="nav-link text-black"> 
 	                  <img src="resources/icon/cart.svg" class="bi d-block mx-auto mb-1" width="30" height="30" style="margin-top: 1px;"> 
 	                  <font size="2">장바구니</font>
 	               </a>
@@ -345,7 +364,7 @@
 	        <li class="nav-item"><a href="list.product" class="nav-link link-body-emphasis px-2">SHOP</a></li>
 	        <li class="nav-item"><a href="event.member" class="nav-link link-body-emphasis px-2">EVENT</a></li>
       	</c:if>
-      </ul>
+      </ul> 
       <ul class="nav">
       	<c:if test="${not empty loginInfo}">
       		<li class="nav-item" style="margin-top: 4px;"><font size="2" color="green">${loginInfo.nickname} 님 환영합니다.</font> &nbsp;</li>

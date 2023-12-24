@@ -6,9 +6,19 @@
 
 <%@ include file="../main/top.jsp"%>
 
-<style type="text/css">
+<style>
+#myform{
+	display: none;
+}
 </style>
+
 <script type="text/javascript">
+function openReviewFormWindow(orderDetailNumber) {
+	alert(orderDetailNumber);
+    // 새 창을 열기
+    window.open("reviewRegister.jsp?orderDetailNumber="+orderDetailNumber, "reviewWindow", "_blank", "menubar=no, toolbar=no");
+}
+
 </script>
 
 <div class="body">
@@ -54,92 +64,97 @@
                                     ${oi.qty }
                                 </td>
                                 <td>
-                                   ${oi.price*oi.qty}원
+                                	${oi.price*oi.qty}원
+                                	<button type="button" onclick="openReviewFormWindow('${oi.orderdetail_number}')">리뷰작성</button>
                                 </td>
                             </tr>
                         </c:forEach>
                     </tbody>
                 </table>
-            
-            <div style="">
-               <h3 style="padding: 22 0 22 0">구매자 정보</h3>
-            </div>
-            <table class="table">
-               <tbody>
-                  <c:forEach var="oi" items="${olists}" begin="0" end="0" varStatus="status">
-                  <c:set var="order_id" value="${oi.orders_id }"/>
-                  <tr>
-                     <td>주문자</td>
-                     <td>${oi.name }</td>
-                  </tr>
-                  <tr>
-                     <td>연락처</td>
-                     <td>${oi.phone }</td>
-                  </tr>
-                  <tr>
-                     <td>이메일</td>
-                     <td>${oi.email }</td>
-                  </tr>
-                  </c:forEach>
-               </tbody>
-            </table>
-            
-            <div style="">
-               <h3 style="padding: 22 0 22 0">배송지 정보</h3>
-            </div>
-            <table class="table">
-               <tbody>
-                  <c:forEach var="oi" items="${olists}" begin="0" end="0" varStatus="status">
-                  <tr>
-                     <td>수령인</td>
-                     <td>${oi.receiver }</td>
-                  </tr>
-                  <tr>
-                     <td>연락처</td>
-                     <td>${oi.receiver_phone }</td>
-                  </tr>
-                  <tr> 
-                     <td>배송지</td>
-                     <td>${oi.address }</td>
-                  </tr>
-                  <tr>
-                     <td>배송메모</td>
-                     <td>${oi.d_message }</td>
-                  </tr>
-                  </c:forEach>
-               </tbody>
-            </table>
-            
-            <div style="">
-               <h3 style="padding: 22 0 22 0">주문 금액 상세</h3>
-            </div>
-            <table class="table">
-               <tbody>
-                  <tr>
-                     <td>상품금액</td>
-                     <td>${totalPrice }</td>
-                  </tr>
-                  <tr>
-                     <td>배송비</td>
-                     <td>
-                        ${totalPrice > 50000 ? '0' : '4000'}
-                        <c:set var="delivery" value="${totalPrice > 50000 ? '0' : '4000'}"/>
-                     </td>
-                     
-                  </tr>
-                  <tr>
-                     <td>총 주문금액</td>
-                     <td>${totalPrice+delivery }</td>
-                  </tr>
-               </tbody>
-            </table>
-            <a href="${referer }">
-               <button type="button">목록보기</button>
-            </a>
-            <button type="button" onclick="location.href='refund.orders?order_id=${order_id}&pageNumber=${pageNumber }'">환불하기</button>
-             
-         </div>
-      </div>
+				
+				<div style="">
+					<h3 style="padding: 22 0 22 0">구매자 정보</h3>
+				</div>
+				<table class="table">
+					<tbody>
+						<c:forEach var="oi" items="${olists}" begin="0" end="0" varStatus="status">
+						<c:set var="order_id" value="${oi.orders_id }"/>
+						<tr>
+							<td>주문자</td>
+							<td>${oi.name }</td>
+						</tr>
+						<tr>
+							<td>연락처</td>
+							<td>${oi.phone }</td>
+						</tr>
+						<tr>
+							<td>이메일</td>
+							<td>${oi.email }</td>
+						</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+				
+				<div style="">
+					<h3 style="padding: 22 0 22 0">배송지 정보</h3>
+				</div>
+				<table class="table">
+					<tbody>
+						<c:forEach var="oi" items="${olists}" begin="0" end="0" varStatus="status">
+						<tr>
+							<td>수령인</td>
+							<td>${oi.receiver }</td>
+						</tr>
+						<tr>
+							<td>연락처</td>
+							<td>${oi.receiver_phone }</td>
+						</tr>
+						<tr> 
+							<td>배송지</td>
+							<td>${oi.address }</td>
+						</tr>
+						<tr>
+							<td>배송메모</td>
+							<td>${oi.d_message }</td>
+						</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+				
+				<div style="">
+					<h3 style="padding: 22 0 22 0">주문 금액 상세</h3>
+				</div>
+				<table class="table">
+					<tbody>
+						<tr>
+							<td>상품금액</td>
+							<td>${totalPrice }</td>
+						</tr>
+						<tr>
+							<td>할인</td>
+							<td>${totalPrice-olists[0].totalamount }</td>
+						</tr>
+						<tr>
+							<td>배송비</td>
+							<td>
+								${totalPrice > 50000 ? '0' : '4000'}
+								<c:set var="delivery" value="${totalPrice > 50000 ? '0' : '4000'}"/>
+							</td>
+							
+						</tr>
+						<tr>
+							<td>총 주문금액</td>
+							<td>${olists[0].totalamount }</td>
+						</tr>
+					</tbody>
+				</table>
+				<a href="${referer }">
+					<button type="button">목록보기</button>
+				</a>
+				<button type="button" onclick="location.href='refund.orders?order_id=${order_id}&pageNumber=${pageNumber }'">환불하기</button>
+				 
+			</div>
+		</div>
 
       <div class="col-lg-2 mt-5 px-5">
          <div class="bs-component">
@@ -165,6 +180,26 @@
 
    </div>
 </div>
+
+<form id="myform" method="post" enctype="multipart/form-data">
+    <textarea id="reviewText" name="text" cols="20" rows="2"></textarea><br>
+    평점:
+    <fieldset>
+    <div style="caret-color: transparent;">
+		<input type="radio" name="rating" value="5" id="rate1"><label
+			for="rate1">★</label>
+		<input type="radio" name="rating" value="4" id="rate2"><label
+			for="rate2">★</label>
+		<input type="radio" name="rating" value="3" id="rate3"><label
+			for="rate3">★</label>
+		<input type="radio" name="rating" value="2" id="rate4"><label
+			for="rate4">★</label>
+		<input type="radio" name="rating" value="1" id="rate5"><label
+			for="rate5">★</label>
+	</div>
+	</fieldset><br>
+    <button type="button" onclick="submitReview()">리뷰 등록</button>
+</form>
 
 <button onclick="location.href='view.main'">이동</button>
 <%@ include file="../main/bottom.jsp"%>

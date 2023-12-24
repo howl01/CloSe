@@ -63,21 +63,67 @@
     padding-left: 12px;
     text-align: right;
 }
+.section-01,.section-02,.section-03,.section-04  { position: relative;}
+
+.fixed-menu {
+  position: fixed;
+  top: 142;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: #fff; /* 배경색을 지정해주면 메뉴가 스크롤되는 내내 보일 것입니다. */
+  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1); /* 그림자 효과를 추가할 수 있습니다. */
+}
+
+fieldset {
+        display: inline-block;
+        direction: rtl;
+        border:0;
+}
+#star {
+        font-size: 1em;
+        color: transparent;
+        text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+} 
+#gstar{
+    font-size: 1em;
+    color: transparent;
+    text-shadow: 0 0 0 #f0f0f0;
+}
+.off-screen {
+	display: none;
+}
+#nav {
+	width: 500px;
+	text-align: center;
+}
+#nav a {
+	display: inline-block;
+	padding: 3px 5px;
+	margin-right: 10px;
+	font-family:Tahoma;
+	background: #ccc;
+	color: #000;
+	text-decoration: none;
+}
+#nav a.active {
+	background: #333;
+	color: #fff;
+}
 </style>
 <script type="text/javascript">
-	function fnMove(seq) { 
-		// 모든 <li> 안의 <a> 태그에서 'active' 클래스 제거
-		$('ul.nav-tabs li a').removeClass('nav-link active');
-		// 클릭한 <li> 안의 <a> 태그에 'active' 클래스 추가
-		$('#tab' + seq + ' a').addClass('nav-link active');
-		updateTabContent(seq);
-	}
+window.addEventListener('scroll', function() {
+    var floatingMenu = document.querySelector('.floating-menu');
+    var scrollPosition = window.scrollY;
 
-	
-	function updateTabContent(seq) {
-		$('#tab-content').html('<p>This is the content for tab ' + seq + '</p>');
-	}
-	
+    if (scrollPosition > 600) { // Adjust this value based on when you want the menu to become fixed
+      floatingMenu.classList.add('fixed-menu');
+    } else {
+      floatingMenu.classList.remove('fixed-menu');
+    }
+  });
+
+
 	function fnCalCount(type, size) {
         // size를 사용하여 적절한 선택자를 찾도록 수정
         var $input = $("input[name='" + size + "']");
@@ -107,39 +153,57 @@
 		location.href="delete.product?product_number="+pnum;
 	}
 	function updateProduct(pnum){
+		alert(1);
 		location.href="update.product?product_number="+pnum;
 	}
+	
+	function addToCart(){
+		var formData = $("#buyForm").serialize();
 
+        $.ajax({
+            type: "POST", // or "GET" depending on your server-side implementation
+            url: "cartAdd.cart", // Specify the URL to your server-side endpoint
+            async : false,
+            data: formData,
+            success: function(response) {
+                var addToCart = confirm("상품을 장바구니에 추가했습니다. 장바구니로 이동하시겠습니까?");
+        	    
+        	    if (addToCart) {
+        				location.href = "cartAdd.cart";
+        	    } else{
+        	    	return;
+        	    }
+            }
+        });
+	}
 	
 	$(document).ready(function() {
 		$('#insertBasket').click(function () {
 			alert("장바구니버튼");
+			 
+			<c:if test="${empty loginInfo and empty kakaoLoginInfo}">
+				alert("로그인이 필요한 서비스입니다.");
+				window.location.href = 'login.member';
+				return;
+			</c:if>
+
 			if ($('.quantity-selection').length === 0) {
 	            alert("사이즈를 선택해주세요.");
 	            return;
 	        }
-			var formData = $("#buyForm").serialize();
-
-	        $.ajax({
-	            type: "POST", // or "GET" depending on your server-side implementation
-	            url: "cartAdd.cart", // Specify the URL to your server-side endpoint
-	            async : false,
-	            data: formData,
-	            success: function(response) {
-	                var addToCart = confirm("상품을 장바구니에 추가했습니다. 장바구니로 이동하시겠습니까?");
-	        	    
-	        	    if (addToCart) {
-	        	        location.href="cartAdd.cart?member_id='kim'";
-	        	    } else{
-	        	    	return;
-	        	    }
-	            }
-	        });
+			addToCart();
 		});
 		
 		
 		$('#goodsOrder').click(function () { 
 			alert("구매하기버튼");
+			
+			<c:if test="${empty loginInfo and empty kakaoLoginInfo}">
+				alert("로그인이 필요한 서비스입니다.");
+				window.location.href = 'login.member';
+				return;
+			</c:if>
+			
 		  	if ($('.quantity-selection').length === 0) {
             	alert("사이즈를 선택해주세요.");
            	 	return;
@@ -186,9 +250,150 @@
 		    });
 
 		    $('#cart-total').html(totalSum);
+		    
+		    
+		    
+		    
+		    
+		    
+		    
 	    });
 		
-		
+		//=-==================================================
+	    var $menu     = $('.floating-menu li.m'),
+	        $contents = $('.scroll'),
+	        $doc      = $('html, body');
+	    $(function () {
+	        // 해당 섹션으로 스크롤 이동
+	        $menu.on('click','a', function(e){
+	            var $target = $(this).parent(),
+	                idx     = $target.index(),
+	                section = $contents.eq(idx),
+	                offsetTop = section.offset().top-200;
+	            $doc.stop()
+	                    .animate({
+	                        scrollTop :offsetTop
+	                    }, 1);
+	            return false;
+	        });
+	    });
+
+	    // menu class 추가
+	    $(window).scroll(function(){
+	        var scltop = $(window).scrollTop();
+	        $.each($contents, function(idx, item){
+	            var $target   = $contents.eq(idx),
+	                i         = $target.index(),
+	                targetTop = $target.offset().top;
+
+	            if (targetTop <= scltop) {
+	                $menu.removeClass('on');
+	                $menu.eq(idx).addClass('on');
+	            }
+	            if (!(200 <= scltop)) {
+	                $menu.removeClass('on');
+	            }
+	        })
+
+	    });
+	    
+	    
+	    //============================================
+	    var $setRows = $('#setRows');
+
+	    $setRows.submit(function (e) {
+	    	alert('${fn:length(rlists)}');
+	    	e.preventDefault();
+	    	var rowPerPage = 15;
+	    	
+	    	if('${fn:length(rlists)}' != 0){
+		    	$('#nav').remove();
+		    	var $review = $('#review');
+	
+		    	$review.after('<div id="nav">');
+		    	
+		    	var $tr = $($review).find('tbody tr');
+		    	var rowTotals = $tr.length;
+		    	var pageTotal = Math.ceil(rowTotals/ rowPerPage);
+		    	var i = 0;
+	
+		    	for (; i < pageTotal; i++) {
+		    		$('<a href="#"></a>')
+		    				.attr('rel', i)
+		    				.html(i + 1)
+		    				.appendTo('#nav');
+		    	}
+	
+		    	$tr.addClass('off-screen')
+		    			.slice(0, rowPerPage)
+		    			.removeClass('off-screen');
+	
+		    	var $pagingLink = $('#nav a');
+		    	
+		    	//
+		    	if ($pagingLink.length > 5) {
+		            $pagingLink.filter(':first').before('<a href="#" class="prev">이전</a>');
+		            $pagingLink.filter(':last').after('<a href="#" class="next">다음</a>');
+		        }
+		    	
+		    	$pagingLink.on('click', function (evt) {
+		    		evt.preventDefault();
+		    		var $this = $(this);
+		    		if ($this.hasClass('active')) {
+		    			return;
+		    		}
+		    		$pagingLink.removeClass('active');
+		    		$this.addClass('active');
+	
+		    		// 0 => 0(0*4), 4(0*4+4)
+		    		// 1 => 4(1*4), 8(1*4+4)
+		    		// 2 => 8(2*4), 12(2*4+4)
+		    		// 시작 행 = 페이지 번호 * 페이지당 행수
+		    		// 끝 행 = 시작 행 + 페이지당 행수
+	
+		    		var currPage = $this.attr('rel');
+		    		var startItem = currPage * rowPerPage;
+		    		var endItem = startItem + rowPerPage;
+	
+		    		$tr.css('opacity', '0.0')
+		    				.addClass('off-screen')
+		    				.slice(startItem, endItem)
+		    				.removeClass('off-screen')
+		    				.animate({opacity: 1}, 300);
+		    	
+
+	    		});
+		    	
+		    	// 추가된 부분: 이전 링크 클릭 시
+		        $('.prev').on('click', function (evt) {
+		            evt.preventDefault();
+		            var $current = $pagingLink.filter('.active');
+		            var $prev = $current.prev('a');
+		            if ($prev.length > 0) {
+		                $prev.trigger('click');
+		            }
+		        });
+
+		        // 추가된 부분: 다음 링크 클릭 시
+		        $('.next').on('click', function (evt) {
+		            evt.preventDefault();
+		            var $current = $pagingLink.filter('.active');
+		            var $next = $current.next('a');
+		            if ($next.length > 0) {
+		                $next.trigger('click');
+		            }
+		        });
+		    	
+	    		$pagingLink.filter(':first').addClass('active');
+	    	}
+
+	    });
+
+
+	    $setRows.submit();
+	    
+	    
+	    
 	});
 	
 	
@@ -222,14 +427,8 @@
 	<div class="row">
 		<div class="col-lg-2"></div>
 		<div class="col-lg-8">
-
-
-
-
-
 				<form method="post" id="buyForm">
 					<input type="hidden" name="product_number" value="${pb.product_number }"> 
-					<input type="hidden" name="member_id" value="kim"> 
 					<div class="row">
 						<div class="col-lg-1"></div>
 						<div class="col-lg-10 row">
@@ -383,7 +582,7 @@
 				class="btn btn-dark" id="goodsOrder">구매하기</button>
 			<br>
 
-			<!-- <button id="update" onclick="fn_update()">수정하기</button> -->
+			<button type="button" onclick="updateProduct('${pb.product_number}')">수정하기</button>
 		
 		</div>
 	</div>
@@ -393,8 +592,8 @@
 
 
 				<div> <!-- 메뉴바 -->
-					<div align="center">
-						<ul class="nav nav-tabs" id="myTab" role="tablist"
+					<div class="floating-menu" style="text-align: center;">
+						<!-- <ul class="nav nav-tabs" id="myTab" role="tablist"
 							style="width: 90%">
 							<li class="nav-item" id="tab1" style="width: 25%"
 								onClick="fnMove(1)"><a class="ptab nav-link active" id=""
@@ -405,20 +604,96 @@
 								onClick="fnMove(3)"><a class="ptab" id="" href="#">코디</a></li>
 							<li class="nav-item" id="tab4" style="width: 25%"
 								onClick="fnMove(4)"><a class="ptab" id="" href="#">쇼핑가이드</a></li>
+						</ul> -->
+						<ul class="nav nav-tabs" role="tablist" style="width: 100%">
+						  <li class="nav-item m" role="presentation" style="width: 25%">
+						    <a class="nav-link menu-01 active" data-bs-toggle="tab" href="#section-01" aria-selected="true" role="tab">상품상세</a>
+						  </li>
+						  <li class="nav-item m" role="presentation" style="width: 25%">
+						    <a class="nav-link menu-02" data-bs-toggle="tab" href="#section-02" aria-selected="false" role="tab" tabindex="-1">상품리뷰</a>
+						  </li>
+						  <li class="nav-item m" role="presentation" style="width: 25%">
+						    <a class="nav-link menu-03" data-bs-toggle="tab" href="#section-03" aria-selected="false" role="tab" tabindex="-1">코디</a>
+						  </li>
+						  <li class="nav-item m" role="presentation" style="width: 25%">
+						    <a class="nav-link menu-04" data-bs-toggle="tab" href="#section-04" aria-selected="false" role="tab" tabindex="-1">쇼핑가이드</a>
+						  </li>
 						</ul>
+						
 					</div>
-
-
-					<div id="tab-content">
-						<%-- <img id="" src='<c:url value='/resources/product/content/'/>${pb.content }' /> --%>
-					</div>
-
 				</div>
+
+	<div style="margin-top: 30px">
+		<div class="section-01 scroll">
+	        <h2>상품상세</h2>
+	        <hr>
+	        <div>
+	        	<img id="preview" width="100%"
+						src='<c:url value='/resources/product/content/'/>${pb.content }' />
+	        </div>
+	    </div>
+	
+	    <div class="section-02 scroll">
+	        <h2>상품리뷰</h2>
+	        <hr>
+	        
+	        
+	        <table id="review" width="100%" style="border-collapse: collapse;">
+	        <form action="" id="setRows">
+				<input type="hidden" name="rowPerPage" value="3">
+			</form>
+	       	 <tbody>
+	        	<c:if test="${empty rlists }">
+	        		<tr>
+	        			<td align="center" height="200px;">등록된 리뷰이 없습니다.</td>
+	        		</tr>
+	        	</c:if>
+	        	<c:if test="${not empty rlists }">
+	        	<c:forEach var="ri" items="${rlists }">
+	        	  
+	        		<tr>
+	        			<td>
+	        				<fieldset>
+	        					<c:forEach begin="1" end="${5-ri.rating }">
+   									<label id="gstar">★</label>
+	        					</c:forEach>
+	        					<c:forEach begin="1" end="${ri.rating }">
+            						<label id="star">★</label>
+	        					</c:forEach>
+   							</fieldset>
+	        			</td>
+	        			<td> | ${ri.write_date }</td>
+	        			<td> | ${ri.member_id }</td>
+	        		</tr>
+	        		<tr>
+	        			<td><b>선택한옵션:${ri.product_size }</b></td>
+	        		</tr>
+	        		<tr style="border-bottom: 0.5px solid rgba(0, 0, 0, .1);"> 
+	        			<td>${ri.text }
+	        		</tr>
+	        	</c:forEach>
+	        	</c:if>  
+	         </tbody>
+	        </table>
+	        
+	        
+	        
+	        <%-- ${pageInfo.pagingHtml } --%>
+	    </div>
+	
+	    <div class="section-03 scroll">
+	        <h2>섹션 3</h2>
+	    </div>
+	    <div class="section-04 scroll">
+	        <h2>섹션 4</h2>
+	    </div>
+	</div>
+
 
 
 
  
-		</div>
+</div>
 
 		<div class="col-lg-2 mt-5 px-5"> 
 			<div class="bs-component">

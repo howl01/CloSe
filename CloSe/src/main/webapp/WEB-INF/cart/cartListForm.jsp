@@ -174,10 +174,10 @@
 	    
 	    document.myform.action = "details.orders?cnums="+selectedValues; // 실제 URL로 업데이트
 	    document.myform.submit();
-	}
+	} 
 	
-	function buyNow(cnum){
-		location.href="details.orders?cnum="+cnum;
+	function buyNow(cnum){ //바로구매
+			location.href="details.orders?cnum="+cnum;
 	}
 </script>
 

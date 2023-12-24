@@ -17,84 +17,84 @@
 
 <script type="text/javascript">
 
-	var cert = false;
-	var registercheck = false;
-	
-	function sendSMS(phone) {
-	    alert('인증번호를 요청했습니다.');
-	    // Ajax 요청
-	    $.ajax({
-	        type: "GET",
-	        url: "sendSms.member?phone="+phone,
-	        data: { phone: phone },
-	        success: function(response) {
-	            // 서버에서 받은 응답(response)을 처리
-	            console.log(response);
-	
-	            // 받은 랜덤 값(response)을 전역 변수에 저장
-	            window.randomValue = response;
-				cert = true;
-	        },
-	        error: function(error) {
-	            console.error(error);
-	            // 에러가 발생했을 경우에 대한 처리를 추가할 수 있습니다.
-	            alert('전화번호가 일치하지 않습니다.');
-	        }
-	    });
-	}
-	
-	function verify() {
-	    var verificationCode = document.getElementById('verificationCode').value;
+   var cert = false;
+   var registercheck = false;
+   
+   function sendSMS(콜) {
+       alert('인증번호를 요청했습니다.');
+       // Ajax 요청
+       $.ajax({
+           type: "GET",
+           url: "sendSms.member?phone="+phone,
+           data: { phone: phone },
+           success: function(response) {
+               // 서버에서 받은 응답(response)을 처리
+               console.log(response);
+   
+               // 받은 랜덤 값(response)을 전역 변수에 저장
+               window.randomValue = response;
+            cert = true;
+           },
+           error: function(error) {
+               console.error(error);
+               // 에러가 발생했을 경우에 대한 처리를 추가할 수 있습니다.
+               alert('전화번호가 일치하지 않습니다.');
+           }
+       });
+   }
+   
+   function verify() {
+       var verificationCode = document.getElementById('verificationCode').value;
 
-	    // 인증번호가 비어 있으면 알림창을 띄우고 함수를 종료
-	    if (verificationCode.trim() === '') {
-	        alert('인증번호를 입력하세요.');
-	        return;
-	    }
+       // 인증번호가 비어 있으면 알림창을 띄우고 함수를 종료
+       if (verificationCode.trim() === '') {
+           alert('인증번호를 입력하세요.');
+           return;
+       }
 
-	    // 사용자가 입력한 값
-	    var userInput = document.getElementById('verificationCode').value;
+       // 사용자가 입력한 값
+       var userInput = document.getElementById('verificationCode').value;
 
-	    // 전역 변수에 저장된 랜덤 값과 사용자가 입력한 값 비교
-	    if (userInput == window.randomValue) {
-	        // 일치할 경우, 여기에 원하는 동작 추가
-	        alert('인증 성공!');
-	        registercheck = true;
-	    } else {
-	        // 불일치할 경우, 여기에 원하는 동작 추가
-	        alert('인증번호가 일치하지 않습니다. 다시 시도하세요.');
-	    }
-	}
+       // 전역 변수에 저장된 랜덤 값과 사용자가 입력한 값 비교
+       if (userInput == window.randomValue) {
+           // 일치할 경우, 여기에 원하는 동작 추가
+           alert('인증 성공!');
+           registercheck = true;
+       } else {
+           // 불일치할 경우, 여기에 원하는 동작 추가
+           alert('인증번호가 일치하지 않습니다. 다시 시도하세요.');
+       }
+   }
 
-	function goMain(){
-		location.href="view.main";
-	}
-	
-	function goUpdate(){
-		location.href="update.member";
-	}
-	
-	function goDelete(member_id) {
-	    if (!cert) {
-	        alert('인증번호를 받으세요');
-	        return;
-	    } else if (!registercheck) {
-	        alert('인증번호를 확인하세요');
-	        return;
-	    }
+   function goMain(){
+      location.href="view.main";
+   }
+   
+   function goUpdate(){
+      location.href="update.member";
+   }
+   
+   function goDelete(member_id) {
+       if (!cert) {
+           alert('인증번호를 받으세요');
+           return;
+       } else if (!registercheck) {
+           alert('인증번호를 확인하세요');
+           return;
+       }
 
-	    // If the conditions are met, proceed with the deletion
-	    location.href = "delete.member?member_id=" + member_id;
-	}
+       // If the conditions are met, proceed with the deletion
+       location.href = "delete.member?member_id=" + member_id;
+   }
 
-	
+   
 </script>
 
 <div class="container">
     <div class="py-5 text-center">
-	   <a href = "view.main">
-	      <img class="d-block mx-auto mb-4" src="resources/img/logo.png" width="500" height="100">
-	   </a>
+      <a href = "view.main">
+         <img class="d-block mx-auto mb-4" src="resources/img/logo.png" width="500" height="100">
+      </a>
       <h2>마이페이지</h2>
     </div>
  	

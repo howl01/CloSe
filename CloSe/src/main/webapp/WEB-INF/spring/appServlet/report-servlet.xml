@@ -32,5 +32,6 @@
 	<context:component-scan base-package="qna" />
 	<context:component-scan base-package="report" />
 	<context:component-scan base-package="style" />
-	
+	<context:component-scan base-package="review" />
+	<context:component-scan base-package="event" />
 </beans>

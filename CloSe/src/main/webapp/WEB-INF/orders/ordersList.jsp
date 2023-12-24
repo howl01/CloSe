@@ -10,7 +10,7 @@
 </style>
 <script type="text/javascript">
 	function orderdetail(orders_id){
-		location.href="detail.orders?orders_id="+orders_id;		
+		location.href="detail.orders?orders_id="+orders_id+"&pageNumber=${pageInfo.pageNumber}";		
 	}
 </script>
 
@@ -21,6 +21,17 @@
 			<div style="padding:20 10 20 10">
 				<div style="">
 					<h3 style="padding: 22 0 22 0">주문내역</h3>
+				</div>
+				<div style="margin-bottom: 20px;">
+				    <form action="list.orders" method="get">
+				        <label for="startDate">시작일:</label>
+				        <input type="date" id="startDate" name="startDate">
+				        
+				        <label for="endDate">종료일:</label>
+				        <input type="date" id="endDate" name="endDate">
+				        
+				        <button type="submit">필터</button>
+				    </form>
 				</div>
 				
 				<table class="table">

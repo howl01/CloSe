@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import cart.model.CartDao;
 import cart.model.CartInfoBean;
+import member.model.EventDao;
 import orderdetail.model.OrdersDetailDao;
 import orders.model.OrdersBean;
 import orders.model.OrdersDao;
@@ -38,11 +39,15 @@ public class OrdersController {
 	@Autowired
 	ProductDao productDao;
 	
+	@Autowired
+	EventDao eventDao;
+	
 	@RequestMapping(value=command)
 	public String order(@RequestParam("address1")String address1,
 						@RequestParam("address2")String address2,
 						@RequestParam(value="cnums",required = false)List<String> cnums,
 						@RequestParam(value="cibs",required = false)List<CartInfoBean> cibs,
+						@RequestParam(value="coupon_number",required = false)String coupon_number,
 						OrdersBean ob, HttpSession session, Model model) {
 		
 		ob.setAddress(address1+" "+address2);
@@ -124,6 +129,8 @@ public class OrdersController {
 				cartDao.deleteCart(cnum);
 			}
 		}
+		System.out.println("쿠폰번호:"+coupon_number);
+		eventDao.useCoupon(coupon_number);
 		
 		OrdersBean orderBean = ordersDao.getOrderById(ob.getOrders_id());
 		
