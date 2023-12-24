@@ -44,7 +44,7 @@ public class KakaoLoginController {
 		}else {
 			session.setAttribute("kakaoLoginInfo", memberBean);
 			if (prevPage != null && !prevPage.isEmpty()
-					&& !prevPage.equals("http://localhost:8080/ex/register.member")) {
+					&& !prevPage.equals("http://localhost:8080/ex/kakaoRegister.member")) {
 				// 이전 페이지의 URL을 세션에서 제거
 				session.removeAttribute("prevPage");
 				out.println("<script>alert('로그인 되었습니다.'); location.href='" + prevPage + "';</script>");

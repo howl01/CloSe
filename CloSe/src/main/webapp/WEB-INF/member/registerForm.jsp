@@ -152,7 +152,7 @@ function goLogin(){
 }
 
 function previewImage() {
-    var input = document.getElementById('member_image');
+    var input = document.getElementById('upload');
     var imgThumb = document.getElementById('imgThumb');
 
     if (input.files && input.files[0]) {
@@ -200,7 +200,7 @@ function previewImage() {
 			        </div>
 			    </div>
 			    <div class="col-5">
-			        <input type="file" class="form-control mb-3" name="upload" value="${memberBean.member_image}" style="border-color: black;" onchange="previewImage()">
+			        <input type="file" class="form-control mb-3" id="upload" name="upload" value="${memberBean.member_image}" style="border-color: black;" onchange="previewImage()">
 			    </div>
 			</div>
 

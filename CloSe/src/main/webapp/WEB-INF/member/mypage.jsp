@@ -20,7 +20,7 @@
    var cert = false;
    var registercheck = false;
    
-   function sendSMS(콜) {
+   function sendSMS(phone) {
        alert('인증번호를 요청했습니다.');
        // Ajax 요청
        $.ajax({
