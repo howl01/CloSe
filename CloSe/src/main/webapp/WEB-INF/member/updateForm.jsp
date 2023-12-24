@@ -15,6 +15,7 @@
 		text-align: right;
 	}
 </style>
+	
 
 <script type="text/javascript">
 var cert = false;
@@ -136,6 +137,7 @@ $(document).ready(function() {
 	        reader.readAsDataURL(input.files[0]);
 	    }
 	}
+
 </script>
 
 <div class="container">
@@ -148,17 +150,9 @@ $(document).ready(function() {
  
 	<ul class="nav nav-tabs" role="tablist">
 	  <li class="nav-item" role="presentation">
-	    <a class="nav-link active" data-bs-toggle="tab" href="#home" aria-selected="true" role="tab">내 정보</a>
+	    <a class="nav-link active" data-bs-toggle="tab" href="#home" aria-selected="true" role="tab">수정하기</a>
 	  </li>
-	  <li class="nav-item" role="presentation">
-	    <a class="nav-link" data-bs-toggle="tab" href="aa" aria-selected="false" role="tab" tabindex="-1">내 코디</a>
-	  </li>
-	  <li class="nav-item" role="presentation">
-	    <a class="nav-link" data-bs-toggle="tab" href="bb" aria-selected="false" role="tab" tabindex="-1">구매 상품</a>
-	  </li>
-	  <li class="nav-item" role="presentation">
-	    <a class="nav-link" data-bs-toggle="tab" href="#delete" aria-selected="false" role="tab" tabindex="-1">회원탈퇴</a>
-	  </li>
+
 	</ul>
 	
 	<div id="myTabContent" class="tab-content">
@@ -173,7 +167,7 @@ $(document).ready(function() {
 					           <td>
 					           	  <c:choose>
 						              <c:when test="${not empty kakaoLoginInfo}">
-						              	<img id="imgThumb" src="<%=request.getContextPath()%>/resources/memberImage/${kakaoLoginInfo.member_image}" width="100" height="100"><br>
+						              	<img id="imgThumb" src="<%=request.getContextPath()%>/resources/memberImage/${kakaoLoginInfo.member_image}" width="100" height="100"><br><br>
 				                        <input type="file" class="form-control mb-3" id="upload" name="upload" value="${kakaoLoginInfo.member_image}" style="border-color: black; width: 250px; margin: auto;" onchange="previewImage()">
 				                      </c:when>
 				                      <c:when test="${not empty loginInfo}">
@@ -365,76 +359,6 @@ $(document).ready(function() {
 		        </form>
 		    </div>  
 		</div>
-		
-		<!-- 두번째 탭 -->
-		<!-- 두번째 탭 -->
-		<div class="tab-pane fade" id="aa" role="tabpanel">
-			<div class="row">
-			
-			</div>
-		</div>
-		
-		<!-- 세번째 탭 -->
-		<div class="tab-pane fade" id="bb" role="tabpanel">
-			<div class="row">
-			
-			</div>
-		</div>
-		
-		<!-- 네번째 탭 -->
-		<div class="tab-pane fade" id="delete" role="tabpanel">
-			<div class="row">
-		        <table class="table" id="article-table">
-		        	<c:if test="${not empty loginInfo or not empty kakaoLoginInfo}">
-		        		<tr>
-					       <th>아이디</th>
-					           <td>
-					           	  <c:choose>
-						              <c:when test="${not empty kakaoLoginInfo}">
-				                        ${kakaoLoginInfo.member_id}
-				                        <input type="hidden" id="member_id" name="member_id" value="${kakaoLoginInfo.member_id}">
-				                      </c:when>
-				                      <c:when test="${not empty loginInfo}">
-				                        ${loginInfo.member_id}
-				                        <input type="hidden" id="member_id" name="member_id" value="${loginInfo.member_id}">
-				                      </c:when>
-			                      </c:choose>
-					           </td>
-					        </tr>
-				        <tr>
-			               <th>휴대폰번호</th>
-				           <td>
-				           &nbsp;&nbsp;&nbsp;
-				              <c:choose>
-					              <c:when test="${not empty kakaoLoginInfo}">
-					              	${kakaoLoginInfo.phone}
-			                        <input type="hidden" id="phone" name="phone">
-			                      </c:when>
-			                      <c:when test="${not empty loginInfo}">
-			                      	${loginInfo.phone}
-			                        <input type="hidden" id="phone" name="phone">
-			                      </c:when>
-		                      </c:choose>
-			                  <input type = "button" id="phoneVerificationButton" value = "인증번호 요청" onclick = "sendSMS($('input[name=phone]').val())">
-				           </td>
-				        </tr>
-				        <tr>
-				        	<th>휴대폰 인증</th>
-				        	<td>
-				              <input type="text" id="verificationCode" name="verificationCode" size="7">&nbsp;
-				              <input type="button" value="인증하기" onClick="verify()">
-				        	</td>
-				        </tr>
-			        </c:if>
-			        <tr>
-				      <td colspan="2">
-				       	<input type="button" id="sub" class="btn btn-dark btn-md" value="회원탈퇴" onclick="goDelete($('#member_id').val())"/>
-				        <input type="button" class="btn btn-dark btn-md" value="취소" onclick="goMain()">
-				      </td>
-				    </tr>
-		        </table>
-	        </div>
-	     </div>
 	</div>
 
 
