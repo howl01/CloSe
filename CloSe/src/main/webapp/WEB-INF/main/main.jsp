@@ -155,7 +155,7 @@ window.navigator.geolocation.getCurrentPosition(function(pos) {
             <div class="container">
                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
 
-				  <a href="view.close" class="link-dark link-underline-opacity-0">
+				  <a href="view.style" class="link-dark link-underline-opacity-0">
 	                  <div class="col" align="center">
 	                     <img class="bd-placeholder-img card-img-top" width="100%" height="120"
 	                           style="border-radius: 20%;" id="par" src="resources/img/close.png">

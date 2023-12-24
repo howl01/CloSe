@@ -121,6 +121,21 @@ $(document).ready(function() {
 	function goMyPage(){
 		location.href="mypage.member";
 	}
+	
+	function previewImage() {
+	    var input = document.getElementById('upload');
+	    var imgThumb = document.getElementById('imgThumb');
+
+	    if (input.files && input.files[0]) {
+	        var reader = new FileReader();
+
+	        reader.onload = function (e) {
+	            imgThumb.src = e.target.result;
+	        };
+
+	        reader.readAsDataURL(input.files[0]);
+	    }
+	}
 </script>
 
 <div class="container">
@@ -150,9 +165,24 @@ $(document).ready(function() {
 		<!-- 첫번째 탭 -->
 		<div class="tab-pane fade active show" id="home" role="tabpanel">
 			<div class="row">
-		        <form name="f" class="needs-validation" action = "update.member" method="post" onsubmit="return updatecheck()">
+		        <form name="f" class="needs-validation" action = "update.member" method="post" onsubmit="return updatecheck()" enctype="multipart/form-data">
 			        <table class="table" id="article-table">
 			        	<c:if test="${not empty loginInfo or not empty kakaoLoginInfo}">
+			        		<tr>
+					           <th>프로필 사진</th>
+					           <td>
+					           	  <c:choose>
+						              <c:when test="${not empty kakaoLoginInfo}">
+						              	<img id="imgThumb" src="<%=request.getContextPath()%>/resources/memberImage/${kakaoLoginInfo.member_image}" width="100" height="100"><br>
+				                        <input type="file" class="form-control mb-3" id="upload" name="upload" value="${kakaoLoginInfo.member_image}" style="border-color: black;" onchange="previewImage()">
+				                      </c:when>
+				                      <c:when test="${not empty loginInfo}">
+				                      	<img id="imgThumb" src="<%=request.getContextPath()%>/resources/memberImage/${loginInfo.member_image}" width="100" height="100"><br>
+				                        <input type="file" class="form-control mb-3" id="upload" name="upload" value="${loginInfo.member_image}" style="border-color: black;" onchange="previewImage()">
+				                      </c:when>
+			                      </c:choose>
+					           </td>
+					        </tr>
 					        <tr>
 					           <th>아이디</th>
 					           <td>

@@ -38,7 +38,7 @@
 	</select>
 	
 	<update id="memberUpdate">
-		update member set nickname=#{nickname}, password=#{password}, gender=#{gender}, address1=#{address1}, address2=#{address2}, email=#{email}, birth=#{birth}, height=#{height}, weight=#{weight} where member_id=#{member_id}
+		update member set member_image=#{member_image}, nickname=#{nickname}, password=#{password}, gender=#{gender}, address1=#{address1}, address2=#{address2}, email=#{email}, birth=#{birth}, height=#{height}, weight=#{weight} where member_id=#{member_id}
 	</update>
 	
 	<delete id="memberDelete">

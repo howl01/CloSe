@@ -352,14 +352,14 @@
       <ul class="nav me-auto">
       	<c:if test="${empty loginInfo and empty kakaoLoginInfo}">
 	        <li class="nav-item"><a href="view.main" class="nav-link link-body-emphasis px-2">HOME</a></li>
-	        <li class="nav-item"><a href="view.close" class="nav-link link-body-emphasis px-2">오늘의 옷비서</a></li>
+	        <li class="nav-item"><a href="login.member" class="nav-link link-body-emphasis px-2">오늘의 옷비서</a></li>
 	        <li class="nav-item"><a href="mainView.style" class="nav-link link-body-emphasis px-2">STYLE</a></li>
 	        <li class="nav-item"><a href="list.product" class="nav-link link-body-emphasis px-2">SHOP</a></li>
 	        <li class="nav-item"><a href="event.member" class="nav-link link-body-emphasis px-2">EVENT</a></li>
       	</c:if>
       	<c:if test="${not empty loginInfo or not empty kakaoLoginInfo}">
       		<li class="nav-item"><a href="view.main" class="nav-link link-body-emphasis px-2">HOME</a></li>
-	        <li class="nav-item"><a href="view.close" class="nav-link link-body-emphasis px-2">오늘의 옷비서</a></li>
+	        <li class="nav-item"><a href="view.style" class="nav-link link-body-emphasis px-2">오늘의 옷비서</a></li>
 	        <li class="nav-item"><a href="mainView.style" class="nav-link link-body-emphasis px-2">STYLE</a></li>
 	        <li class="nav-item"><a href="list.product" class="nav-link link-body-emphasis px-2">SHOP</a></li>
 	        <li class="nav-item"><a href="event.member" class="nav-link link-body-emphasis px-2">EVENT</a></li>
