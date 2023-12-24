@@ -174,11 +174,11 @@ $(document).ready(function() {
 					           	  <c:choose>
 						              <c:when test="${not empty kakaoLoginInfo}">
 						              	<img id="imgThumb" src="<%=request.getContextPath()%>/resources/memberImage/${kakaoLoginInfo.member_image}" width="100" height="100"><br>
-				                        <input type="file" class="form-control mb-3" id="upload" name="upload" value="${kakaoLoginInfo.member_image}" style="border-color: black;" onchange="previewImage()">
+				                        <input type="file" class="form-control mb-3" id="upload" name="upload" value="${kakaoLoginInfo.member_image}" style="border-color: black; width: 250px; margin: auto;" onchange="previewImage()">
 				                      </c:when>
 				                      <c:when test="${not empty loginInfo}">
 				                      	<img id="imgThumb" src="<%=request.getContextPath()%>/resources/memberImage/${loginInfo.member_image}" width="100" height="100"><br>
-				                        <input type="file" class="form-control mb-3" id="upload" name="upload" value="${loginInfo.member_image}" style="border-color: black;" onchange="previewImage()">
+				                        <input type="file" class="form-control mb-3" id="upload" name="upload" value="${loginInfo.member_image}" style="border-color: black; width: 250px; margin: auto;" onchange="previewImage()">
 				                      </c:when>
 			                      </c:choose>
 					           </td>

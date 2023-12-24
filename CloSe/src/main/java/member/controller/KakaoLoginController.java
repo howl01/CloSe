@@ -22,7 +22,7 @@ import member.model.MemberDao;
 public class KakaoLoginController {
 	
 	private final String command = "/kakaologin.member";
-	private final String gotoPage = "redirect:view.main";
+	private final String gotoPage = "view.main";
 	
 	@Autowired
 	private MemberDao memberDao;
