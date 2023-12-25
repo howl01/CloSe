@@ -7,9 +7,50 @@
 <%@ include file="../main/top.jsp"%>
 
 <style type="text/css">
+	.plist{
+		display: flex;
+        flex-direction: row;
+	}
+	.filter .product{
+		float: left;
+	} 
+	.filter{
+		width:150px;
+	}
+	.product{
+		width:700px;
+	}
+	.small-category{
+            display: none; /* 초기에는 하위 항목을 숨김 */
+    }
+    .categories{
+    	list-style: none;
+    }
+    .category{
+    	text-decoration: none;
+    	color:black;
+    }
 </style>
 <script type="text/javascript">
-	
+/* function toggleSmallCategories(bigCategoryName) {
+    var smallCategories = document.querySelectorAll('.small-category');
+
+    smallCategories.forEach(function (smallCategory) {
+        if (smallCategory.id === 'small-' + bigCategoryName) {
+            smallCategory.style.display = (smallCategory.style.display === 'none' || smallCategory.style.display === '') ? 'block' : 'none';
+        } else {
+            smallCategory.style.display = 'none';
+        }
+    });
+} */
+$(document).ready(function(){
+	$(".big-category").click(function(){
+		var bigCategoryId = $(this).attr("id");
+        // Toggle the submenu when the menu item is clicked
+        $(this).siblings("#small-" + bigCategoryId).stop().slideToggle();
+    });
+});
+
 </script>
 
 <div class="body">
@@ -20,37 +61,80 @@
 		<div class="col-lg-8">
 			<div style="padding:20 10 20 10">
 				<div style="">
-					<h3 style="padding: 22 0 22 0">상품등록</h3>
+					<h3 style="padding: 22 0 22 0">상품</h3>
+				</div> 
+				<div class="plist">
+					<div class="filter">
+					
+					
+					
+						<ul class="categories">
+					        <c:set var="previousBigCategory" value="" />
+					        <c:forEach var="category" items="${clists}">
+					            <c:if test="${!category.bigcategory_name.equals(previousBigCategory)}">
+					                <li class="big-category" id="${category.bigcategory_name}">
+					                    <h2 class="bc">${category.bigcategory_name}</h2>
+					                </li>
+					                <li class="small-category" id="small-${category.bigcategory_name}">
+					            		<a class="category" href="list.product?bigcategory_name=${category.bigcategory_name}">전체</a>
+					            	</li>
+					            </c:if>
+					            
+					            	<li class="small-category" id="small-${category.bigcategory_name}">
+					            		<a  class="category" href="list.product?smallcategory_name=${category.smallcategory_name}">${category.smallcategory_name}</a>
+					            	</li>
+					            
+					            <c:set var="previousBigCategory" value="${category.bigcategory_name}" />
+					        </c:forEach>
+					    </ul>
+					    
+					    
+					    
+					    
+					    
+					</div>
+					
+					
+					
+					
+					
+					
+					<div class="product">
+						<table width="100%">
+						  <c:choose>
+						    <c:when test="${empty plists}">
+						      <td align="center" width="300" height="200" style="padding: 10px; font-size: 30px;">
+						        <span class="nog">등록된 제품이 없습니다.</span>
+						      </td>
+						    </c:when>
+						    <c:otherwise>
+						      <c:forEach var="pb" items="${plists}" varStatus="Status">
+						        <c:set var="count" value="${Status.count}" />
+						        <td align="center" valign="top" width="300" height="200" style="padding: 10px">
+						          <div>
+						           <a href="detail.product?product_number=${pb.product_number }">
+						          	<img id="preview" width="70px"
+									src='<c:url value='/resources/product/image/'/>${pb.image }' />
+						           </a>
+						          </div>
+						          
+						          <div>브랜드:${fn:substringBefore(pb.product_name,'/') }</div>
+						          <div>상품명:${fn:substringAfter(pb.product_name,'/') }</div>
+						          <div>가격:${pb.price }원</div>
+						        </td>
+						        <c:if test="${count % 4 == 0}">
+						          </tr><tr>
+						        </c:if>
+						      </c:forEach>
+						    </c:otherwise>
+						  </c:choose>
+						</table>
+					</div>
 				</div>
-				<table width="800">
-				  <c:choose>
-				    <c:when test="${empty plists}">
-				      <td align="center" width="300" height="200" style="padding: 10px; font-size: 30px;">
-				        <span class="nog">등록된 제품이 없습니다.</span>
-				      </td>
-				    </c:when>
-				    <c:otherwise>
-				      <c:forEach var="pb" items="${plists}" varStatus="Status">
-				        <c:set var="count" value="${Status.count}" />
-				        <td align="center" valign="top" width="300" height="200" style="padding: 10px">
-				          <div>
-				           <a href="detail.product?product_number=${pb.product_number }">
-				          	 <img id="preview" width="70px" src='<c:url value='/resources/product/image/'/>${pb.image }' />
-				           </a>
-				          </div>
-				          
-				          <div>브랜드:${fn:substringBefore(pb.product_name,'/') }</div>
-				          <div>상품명:${fn:substringAfter(pb.product_name,'/') }</div>
-				          <div>가격:${pb.price }원</div>
-				        </td>
-				        <c:if test="${count % 4 == 0}">
-				          </tr><tr>
-				        </c:if>
-				      </c:forEach>
-				    </c:otherwise>
-				  </c:choose>
-				</table>
-
+				${pageInfo.pagingHtml }
+				
+				
+				
 			</div>
 		</div>
 

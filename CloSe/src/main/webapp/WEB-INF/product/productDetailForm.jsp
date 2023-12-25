@@ -389,9 +389,8 @@ window.addEventListener('scroll', function() {
 
 	    });
 
-
 	    $setRows.submit();
-	    
+	    //==페이지끝
 	    
 	    
 	});
@@ -650,7 +649,6 @@ window.addEventListener('scroll', function() {
 	        	</c:if>
 	        	<c:if test="${not empty rlists }">
 	        	<c:forEach var="ri" items="${rlists }">
-	        	  
 	        		<tr>
 	        			<td>
 	        				<fieldset>

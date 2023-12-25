@@ -157,13 +157,13 @@ function pay() {
             msg += '상점 거래ID : ' + rsp.merchant_uid;
             msg += '결제 금액 : ' + rsp.paid_amount;
             msg += '카드 승인번호 : ' + rsp.apply_num;
-            document.getElementById('orders_id').value = rsp.imp_uid;
-            document.orderform.submit();
             
         } else {    // 결제가 실패했을 때
             // 결제에 실패했을떄 실패메세지와 실패사유를 출력
             var msg = '결제에 실패하였습니다.';
             msg += '실패 사유 : ' + rsp.error_msg;
+            document.getElementById('orders_id').value = 'merchant_' + new Date().getTime();
+            document.orderform.submit();
         }
         alert(msg);
     });

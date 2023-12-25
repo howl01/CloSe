@@ -15,9 +15,29 @@
 	</select>
 	<select id="getProductByBigcategory" resultType="ProductBean">
 		SELECT * FROM product p 
-		INNER JOIN category c ON p.smallcategory_name = c.smallcategory_name
+		INNER JOIN category c 
+		ON p.smallcategory_name = c.smallcategory_name
 		WHERE c.bigcategory_name = #{bigcategory_name} 
-		and (p.s_stock>0 or p.M_STOCK>0 or p.L_STOCK>0 or p.XL_STOCK>0)
+		and (p.s_stock>0 or p.M_STOCK>0 or p.L_STOCK>0 or p.Xl_STOCK>0)
+	</select> 
+	
+	<select id="getCountByBigcategory" resultType="int">
+		SELECT count(*) FROM product p 
+		INNER JOIN category c 
+		ON p.smallcategory_name = c.smallcategory_name
+		WHERE c.bigcategory_name = #{bigcategory_name} 
+		and (p.s_stock>0 or p.M_STOCK>0 or p.L_STOCK>0 or p.Xl_STOCK>0)
+	</select> 
+	
+	<select id="getProductBySmallcategory" resultType="ProductBean">
+		SELECT * FROM product 
+		WHERE smallcategory_name = #{smallcategory_name} 
+		and (s_stock>0 or M_STOCK>0 or L_STOCK>0 or XL_STOCK>0)
+	</select> 
+	<select id="getCountBySmallcategory" resultType="int">
+		SELECT count(*) FROM product 
+		WHERE smallcategory_name = #{smallcategory_name} 
+		and (s_stock>0 or M_STOCK>0 or L_STOCK>0 or XL_STOCK>0)
 	</select> 
 	
 	<update id="updateStock">
