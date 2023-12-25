@@ -399,6 +399,7 @@ $(document).ready(function () {
 		<div class="col-lg-2"></div>
 		<div class="col-lg-6">
 		<form:form name="f" commandName="styleBean" action="update.style" method="post" enctype="multipart/form-data">
+			<input type="hidden" name="style_number" value="${styleBean.style_number}">
 			<input type="hidden" name="member_id" <c:if test="${not empty loginInfo}">value="${loginInfo.member_id }"</c:if> <c:if test="${not empty kakaoLoginInfo}">value="${kakaoLoginInfo.member_id}"</c:if>>
 			<input type="hidden" name="product_number1" id="product_number1" value="${styleBean.product_number1}">
 			<input type="hidden" name="product_number2" id="product_number2" value="${styleBean.product_number2}">

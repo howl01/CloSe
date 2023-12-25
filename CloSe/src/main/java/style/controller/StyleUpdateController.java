@@ -43,9 +43,7 @@ public class StyleUpdateController {
 	}
 
 	@RequestMapping(value = command, method = RequestMethod.POST)
-	public String update(StyleBean styleBean, @RequestParam("product_number1") int product_number1,
-			@RequestParam("product_number2") int product_number2, @RequestParam("product_number3") int product_number3,
-			@RequestParam("product_number4") int product_number4) {
+	public String update(StyleBean styleBean) {
 
 		String path = servletContext.getRealPath("/resources/styleImage");
 
@@ -54,44 +52,49 @@ public class StyleUpdateController {
 			directory.mkdirs();
 		}
 
-		List<MultipartFile> images = styleBean.getImages();
-		for (int i = 1; i < images.size() + 1; i++) {
-			String imageName = null;
-			MultipartFile image = null;
-			switch (i) {
-			case 1:
-				imageName = styleBean.getImage1();
-				image = styleBean.getMImage1();
-				break;
-			case 2:
-				imageName = styleBean.getImage2();
-				image = styleBean.getMImage2();
-				break;
-			case 3:
-				imageName = styleBean.getImage3();
-				image = styleBean.getMImage3();
-				break;
-			case 4:
-				imageName = styleBean.getImage4();
-				image = styleBean.getMImage4();
-				break;
-			case 5:
-				imageName = styleBean.getImage5();
-				image = styleBean.getMImage5();
-				break;
-			default:
-				break;
-			}
+		if (styleBean.getPrevImage1() == null && styleBean.getPrevImage2() == null && styleBean.getPrevImage3() == null
+				&& styleBean.getPrevImage4() == null && styleBean.getPrevImage5() == null) {
+			List<MultipartFile> images = styleBean.getImages();
+			for (int i = 1; i < images.size() + 1; i++) {
+				String imageName = null;
+				MultipartFile image = null;
+				switch (i) {
+				case 1:
+					imageName = styleBean.getImage1();
+					image = styleBean.getMImage1();
+					break;
+				case 2:
+					imageName = styleBean.getImage2();
+					image = styleBean.getMImage2();
+					break;
+				case 3:
+					imageName = styleBean.getImage3();
+					image = styleBean.getMImage3();
+					break;
+				case 4:
+					imageName = styleBean.getImage4();
+					image = styleBean.getMImage4();
+					break;
+				case 5:
+					imageName = styleBean.getImage5();
+					image = styleBean.getMImage5();
+					break;
+				default:
+					break;
+				}
 
-			File uploadImage = new File(path + File.separator + imageName);
-			try {
-				image.transferTo(uploadImage);
-			} catch (Exception e) {
-				e.printStackTrace();
+				File uploadImage = new File(path + File.separator + imageName);
+				try {
+					image.transferTo(uploadImage);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
+		} else {
+			
 		}
 
-		styleDao.insertStyle(styleBean);
+		styleDao.updateStyle(styleBean);
 		return gotoPage;
 	}
 

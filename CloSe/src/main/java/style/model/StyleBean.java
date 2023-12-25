@@ -57,6 +57,12 @@ public class StyleBean {
 
 	private Double temperature;
 
+	private String prevImage1;
+	private String prevImage2;
+	private String prevImage3;
+	private String prevImage4;
+	private String prevImage5;
+
 	public StyleBean() {
 	}
 
@@ -110,6 +116,46 @@ public class StyleBean {
 		this.weight = weight;
 		this.birth = birth;
 		this.temperature = temperature;
+	}
+
+	public String getPrevImage1() {
+		return prevImage1;
+	}
+
+	public void setPrevImage1(String prevImage1) {
+		this.prevImage1 = prevImage1;
+	}
+
+	public String getPrevImage2() {
+		return prevImage2;
+	}
+
+	public void setPrevImage2(String prevImage2) {
+		this.prevImage2 = prevImage2;
+	}
+
+	public String getPrevImage3() {
+		return prevImage3;
+	}
+
+	public void setPrevImage3(String prevImage3) {
+		this.prevImage3 = prevImage3;
+	}
+
+	public String getPrevImage4() {
+		return prevImage4;
+	}
+
+	public void setPrevImage4(String prevImage4) {
+		this.prevImage4 = prevImage4;
+	}
+
+	public String getPrevImage5() {
+		return prevImage5;
+	}
+
+	public void setPrevImage5(String prevImage5) {
+		this.prevImage5 = prevImage5;
 	}
 
 	public String getProduct_name1() {

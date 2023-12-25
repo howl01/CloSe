@@ -21,7 +21,7 @@ public class LoginController {
 
 	private final String command = "/login.member";
 	private final String viewPage = "loginForm";
-	private final String gotoPage = "redirect:view.main";
+	private final String gotoPage = "view.main";
 
 	@Autowired
 	private MemberDao memberDao;
@@ -34,7 +34,7 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = command, method = RequestMethod.POST)
-	public void login(MemberBean mb, HttpServletResponse response, HttpSession session) throws IOException {
+	public String login(MemberBean mb, HttpServletResponse response, HttpSession session) throws IOException {
 		String prevPage = (String) session.getAttribute("prevPage");
 
 		PrintWriter out;
@@ -46,15 +46,17 @@ public class LoginController {
 		LocalDate now = LocalDate.now();
 
 		if (memberBean == null) {
-			out.println("<script>alert('가입하지 않은 회원입니다.'); location.href='" + viewPage + "';</script>");
+			out.println("<script>alert('가입하지 않은 회원입니다.');</script>");
 			out.flush();
+			return viewPage;
 		} else { // 아이디 존재함
 			if (memberBean.getPassword().equals(mb.getPassword())) { // 비번이 일치함
 				if (memberBean.getBan_count() > 0 && memberBean.getBan_expiration() != null) {
 					LocalDate expirationDate = memberBean.getBan_expiration();
 					if (now.isBefore(expirationDate)) {
-						out.println("<script>alert('규칙 위반으로 계정 이용 정지 기간입니다.'); location.href='" + viewPage + "';</script>");
+						out.println("<script>alert('규칙 위반으로 계정 이용 정지 기간입니다.');</script>");
 						out.flush();
+						return viewPage;
 					}
 				} else {
 					session.setAttribute("loginInfo", memberBean); // DB에서 가져온 레코드를 loginInfo로 설정
@@ -72,5 +74,8 @@ public class LoginController {
 				}
 			}
 		}
+		out.println("<script>alert('비밀번호가 일치하지 않습니다.');</script>");
+		out.flush();
+		return viewPage;
 	}
 }

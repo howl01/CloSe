@@ -5,8 +5,26 @@
 <mapper namespace = "style.StyleBean">
 	<insert id="insertStyle">
 		insert into style values
-		(style_seq.nextval, #{image1}, #{image2, jdbcType=VARCHAR}, #{image3, jdbcType=VARCHAR}, #{image4, jdbcType=VARCHAR}, #{image5, jdbcType=VARCHAR}, #{title, jdbcType=VARCHAR}, #{content}, #{style}, 0, 0, sysdate, #{product_number1, jdbcType=VARCHAR}, #{product_number2, jdbcType=VARCHAR}, #{product_number3, jdbcType=VARCHAR}, #{product_number4, jdbcType=VARCHAR}, #{member_id})
+		(style_seq.nextval, #{image1}, #{image2, jdbcType=VARCHAR}, #{image3, jdbcType=VARCHAR}, #{image4, jdbcType=VARCHAR}, #{image5, jdbcType=VARCHAR}, #{title, jdbcType=VARCHAR}, #{content}, #{style}, 0, 0, SYSDATE, #{product_number1, jdbcType=VARCHAR}, #{product_number2, jdbcType=VARCHAR}, #{product_number3, jdbcType=VARCHAR}, #{product_number4, jdbcType=VARCHAR}, #{member_id})
 	</insert>
+	
+	<update id="updateStyle">
+		update style set
+		image1 = #{image1},
+		image2 = #{image2, jdbcType=VARCHAR},
+		image3 = #{image3, jdbcType=VARCHAR},
+		image4 = #{image4, jdbcType=VARCHAR},
+		image5 = #{image5, jdbcType=VARCHAR},
+		title = #{title, jdbcType=VARCHAR},
+		content = #{content},
+		style = #{style},
+		write_date = SYSDATE,
+		product_number1 = #{product_number1, jdbcType=VARCHAR},
+		product_number2 = #{product_number2, jdbcType=VARCHAR},
+		product_number3 = #{product_number3, jdbcType=VARCHAR},
+		product_number4 = #{product_number4, jdbcType=VARCHAR}
+		where style_number = #{style_number}
+	</update>
 	
 	<select id="getStyleList" resultType="StyleBean">
 		 select s.*, nickname

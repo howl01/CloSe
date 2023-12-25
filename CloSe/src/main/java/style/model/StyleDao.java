@@ -65,5 +65,9 @@ public class StyleDao {
 		List<StyleBean> lists = sqlSessionTemplate.selectList(namespace+".styleFilter", map);
 		return lists;
 	}
+
+	public void updateStyle(StyleBean styleBean) {
+		sqlSessionTemplate.update(namespace + ".updateStyle", styleBean);
+	}
    
 }
