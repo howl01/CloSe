@@ -167,11 +167,21 @@ $(document).ready(function() {
 					           <td>
 					           	  <c:choose>
 						              <c:when test="${not empty kakaoLoginInfo}">
-						              	<img id="imgThumb" src="<%=request.getContextPath()%>/resources/memberImage/${kakaoLoginInfo.member_image}" width="100" height="100"><br><br>
+						              	<c:if test="${kakaoLoginInfo.member_image == null}">
+				                      		<img id="imgThumb" src="https://static.nid.naver.com/images/web/user/default.png" width="100" height="100"><br><br>
+				                      	</c:if>
+				                      	<c:if test="${kakaoLoginInfo.member_image != null}">
+						              		<img id="imgThumb" src="<%=request.getContextPath()%>/resources/memberImage/${kakaoLoginInfo.member_image}" width="100" height="100"><br><br>
+				                        </c:if>
 				                        <input type="file" class="form-control mb-3" id="upload" name="upload" value="${kakaoLoginInfo.member_image}" style="border-color: black; width: 250px; margin: auto;" onchange="previewImage()">
 				                      </c:when>
 				                      <c:when test="${not empty loginInfo}">
-				                      	<img id="imgThumb" src="<%=request.getContextPath()%>/resources/memberImage/${loginInfo.member_image}" width="100" height="100"><br>
+				                      	<c:if test="${loginInfo.member_image == null}">
+				                      		<img id="imgThumb" src="https://static.nid.naver.com/images/web/user/default.png" width="100" height="100"><br><br>
+				                      	</c:if>
+				                      	<c:if test="${loginInfo.member_image != null}">
+					                      	<img id="imgThumb" src="<%=request.getContextPath()%>/resources/memberImage/${loginInfo.member_image}" width="100" height="100"><br><br>
+				                      	</c:if>
 				                        <input type="file" class="form-control mb-3" id="upload" name="upload" value="${loginInfo.member_image}" style="border-color: black; width: 250px; margin: auto;" onchange="previewImage()">
 				                      </c:when>
 			                      </c:choose>
