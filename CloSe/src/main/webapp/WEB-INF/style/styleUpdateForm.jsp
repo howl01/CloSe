@@ -286,8 +286,6 @@ $(document).ready(function () {
 	function updatePreview() {
 	    var fileInput = document.querySelector('input[type=file]');
 	    var files = fileInput.files;
-	    alert(fileInput);
-	    alert(files[0].name);
 	    
 	    if (files.length > 5) {
             alert('최대 5개의 파일까지만 선택할 수 있습니다.');
@@ -381,12 +379,6 @@ $(document).ready(function () {
 	        previewContainer.style.marginTop = '';
 	        previewContainer.style.marginBottom = '';
 	        $("input[type=hidden][name^=prevImage]").val("");
-	    }
-	 	// 추가: form:errors가 발생하면 다시 보이도록 설정
-	    var errors = document.querySelectorAll('.err');
-	    if (errors.length > 0) {
-	        previewContainer.style.display = originalDisplay; // 이전 상태로 복원
-	        carouselContainer.style.display = 'block';
 	    }
 	}
 </script>
