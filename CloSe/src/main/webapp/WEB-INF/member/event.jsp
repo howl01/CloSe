@@ -76,7 +76,7 @@
                 location.href = "coupon.member?memberId=" + memberId + "&name=생일기념 쿠폰&discount=40";
 
                 // 쿠폰을 받은 상태를 쿠키에 저장
-                setCookie(birthdayCookie, "true", 1);
+                setCookie(birthdayCookie, "true", 30);
             } else {
                 alert('이미 쿠폰을 발급받았습니다.');
             }
@@ -94,7 +94,7 @@
             location.href = "coupon.member?memberId=" + memberId + "&name=신규가입 쿠폰&discount=30";
 
             // 쿠폰을 받은 상태를 쿠키에 저장
-            setCookie(newCookie, "true", 1);
+            setCookie(newCookie, "true", 30);
         } else {
             alert('이미 쿠폰을 발급받았습니다.');
         }
