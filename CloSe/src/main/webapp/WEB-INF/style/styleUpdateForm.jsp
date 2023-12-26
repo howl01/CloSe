@@ -129,38 +129,191 @@ function removeTagImage(productNumberIndex) {
   }
 
 $(document).ready(function () {
-	// 이미지 업로드, 내용 입력, 스타일 선택 여부에 따라 submit 버튼 활성화/비활성화
+	var selectedFiles = []; // 이미 선택된 파일들을 저장하는 배열
+
     function updateSubmitButton() {
-        var imagesInput = $('input[name="prevImage1"]');
         var contentTextarea = $('textarea[name="content"]');
         var styleCheckboxes = $('input[name="style"]');
         var submitButton = $('button[type="submit"]');
 
-        // 이미지 업로드, 내용 입력, 스타일 선택 여부 확인
-        var isImagesSelected = imagesInput.val().length > 0;
         var isContentValid = contentTextarea.val().trim().length > 0;
         var isStyleSelected = styleCheckboxes.filter(':checked').length > 0;
 
-        // 모든 조건을 만족하는 경우 submit 버튼 활성화, 그렇지 않으면 비활성화
-        if (isImagesSelected && isContentValid && isStyleSelected) {
+        // 이미 선택된 파일이나 새로 선택한 파일이 있을 때 submit 버튼 활성화
+        if ((selectedFiles.length > 0) && isContentValid && isStyleSelected) {
             submitButton.prop('disabled', false);
         } else {
             submitButton.prop('disabled', true);
         }
     }
 
-    // 이미지, 내용, 스타일 변경 시 활성화/비활성화 여부 업데이트
-    $('input[name="images"], textarea[name="content"], input[name="style"]').on('change', function () {
+    $('input[name="images"]').on('change', function () {
+        var files = this.files;
+
+        // 기존에 선택한 파일들과 새로 선택한 파일들을 합침
+        selectedFiles = selectedFiles.concat(Array.from(files));
+	
+        if (selectedFiles.length > 5) {
+            alert('최대 5개의 파일까지만 선택할 수 있습니다.');
+            selectedFiles.splice(5); // 초과한 파일 제거
+        }
+        
+        // 업로드된 파일 미리보기 업데이트
+        updatePreview();
+        
+     	// 선택된 파일들을 alert 창으로 출력
+        alertSelectedFiles();
+     	
+        var formData = new FormData();
+
+        // 선택한 파일들을 FormData에 추가
+        for (var i = 0; i < selectedFiles.length; i++) {
+            formData.append('images[]', selectedFiles[i]);
+        }
+
+        // 서버로 FormData 전송 (Ajax를 통한 파일 업로드 예시)
+        $.ajax({
+            url: 'updateAjax.style', // 실제 서버 업로드 엔드포인트로 대체해야 합니다.
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                console.log('파일 업로드 성공:', response);
+            },
+            error: function (error) {
+                console.error('파일 업로드 실패:', error);
+            }
+        });
+    });
+
+    $('textarea[name="content"], input[name="style"]').on('change', function () {
         updateSubmitButton();
     });
 
-    // 폼 제출 시에도 한 번 더 업데이트
     $('form[name="f"]').submit(function () {
         updateSubmitButton();
     });
 
-    // 초기 로딩 시에도 업데이트 수행
     updateSubmitButton();
+    
+    function updatePreview() {
+		var fileInput = document.querySelector('input[type=file]');
+        var files = selectedFiles;
+        alert(files);
+	
+	    var previewContainer = document.querySelector('.preview-container');
+	    previewContainer.innerHTML = ""; // Clear previous previews
+		
+	    var originalDisplay = previewContainer.style.display; // 현재 display 상태 저장
+
+	    // Clear previous previews
+	    while (previewContainer.firstChild) {
+	        previewContainer.removeChild(previewContainer.firstChild);
+	    }
+	    
+	    var carouselContainer = document.querySelector('.carousel');
+	    carouselContainer.style.display = 'none'; // Hide carousel initially
+	
+	    var carouselInner = document.querySelector('.carousel-inner');
+	    carouselInner.innerHTML = ""; // Clear previous slides
+	
+	    var carouselIndicators = document.querySelector('.carousel-indicators');
+	    carouselIndicators.innerHTML = ""; // Clear previous indicators
+	    
+	    
+	    var removeLink2Container = document.createElement('div');
+	    var removeLink2 = document.createElement('a');
+	    // removeLink.href = 'javascript:removeTagImage(' + i + ')';
+	    removeLink2.style.float = 'right';
+	    removeLink2.style.position = 'absoulte';
+	    removeLink2.style.transform = 'translateY(17px)';
+	    removeLink2.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-x-square" viewBox="0 0 16 16"><path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/><path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/></svg>';
+	    removeLink2Container.appendChild(removeLink2);
+	    if (files.length === 1) {
+	    	previewContainer.appendChild(removeLink2Container);
+            var img = document.createElement('img');
+            img.src = URL.createObjectURL(files[0]);
+            img.className = 'preview-image';
+            
+            previewContainer.appendChild(img);
+            
+            previewContainer.style.margin = 'auto';
+            previewContainer.style.marginTop = '20px';
+            previewContainer.style.marginBottom = '10px';
+        } else if (files.length > 1) {
+	        for (var i = 0; i < files.length; i++) {
+	        	carouselContainer.appendChild(removeLink2Container);
+	            
+	            var img = document.createElement('img');
+	            img.src = URL.createObjectURL(files[i]);
+	            img.className = 'd-block w-100';
+	
+	            var carouselItem = document.createElement('div');
+	            
+	            carouselItem.className = (i === 0) ? 'carousel-item active' : 'carousel-item';
+	            carouselItem.appendChild(img);
+				
+	            carouselInner.appendChild(carouselItem);
+	
+	            // Add indicator button
+	            var indicatorButton = document.createElement('button');
+	            indicatorButton.type = 'button';
+	            indicatorButton.setAttribute('data-bs-target', '#carouselExampleIndicators');
+	            indicatorButton.setAttribute('data-bs-slide-to', i.toString());
+	            indicatorButton.setAttribute('aria-label', 'Slide ' + (i + 1));
+	
+	            if (i === 0) {
+	                indicatorButton.className = 'active';
+	                indicatorButton.setAttribute('aria-current', 'true');
+	            }
+	
+	            carouselIndicators.appendChild(indicatorButton);
+	        }
+	
+	        // Show Carousel
+	        carouselContainer.style.display = 'block';
+	
+	        // Add previous and next buttons
+	        var prevButton = document.createElement('button');
+	        prevButton.className = 'carousel-control-prev';
+	        prevButton.type = 'button';
+	        prevButton.setAttribute('data-bs-target', '#carouselExampleIndicators');
+	        prevButton.setAttribute('data-bs-slide', 'prev');
+	        prevButton.innerHTML = '<span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Previous</span>';
+	
+	        var nextButton = document.createElement('button');
+	        nextButton.className = 'carousel-control-next';
+	        nextButton.type = 'button';
+	        nextButton.setAttribute('data-bs-target', '#carouselExampleIndicators');
+	        nextButton.setAttribute('data-bs-slide', 'next');
+	        nextButton.innerHTML = '<span class="carousel-control-next-icon" aria-hidden="true"></span><span class="visually-hidden">Next</span>';
+	
+	        carouselContainer.appendChild(prevButton);
+	        carouselContainer.appendChild(nextButton);
+	        
+	        carouselContainer.style.margin = 'auto';
+	        carouselContainer.style.marginTop = '20px';
+	        carouselContainer.style.marginBottom = '10px';
+	    } else {
+	        // No files selected, reset styles
+	        previewContainer.style.width = '';
+	        previewContainer.style.margin = '';
+	        previewContainer.style.marginTop = '';
+	        previewContainer.style.marginBottom = '';
+	        $("input[type=hidden][name^=compareImage]").val("");
+	    }
+	}
+	
+	function alertSelectedFiles() {
+        // alert 창으로 선택된 파일들의 이름을 출력
+        if (selectedFiles.length > 0) {
+            var fileNames = selectedFiles.map(function (file) {
+                return file.name;
+            });
+            alert("선택된 파일들: " + fileNames.join(', '));
+        }
+    }
 	
 	var bsComponent = $(".bs-component");
     var initialPosition = bsComponent.offset().top;
@@ -283,104 +436,6 @@ $(document).ready(function () {
 
 });
 	
-	function updatePreview() {
-	    var fileInput = document.querySelector('input[type=file]');
-	    var files = fileInput.files;
-	    
-	    if (files.length > 5) {
-            alert('최대 5개의 파일까지만 선택할 수 있습니다.');
-            fileInput.value = ''; // 선택된 파일 초기화
-        }
-	
-	    var previewContainer = document.querySelector('.preview-container');
-	    previewContainer.innerHTML = ""; // Clear previous previews
-		
-	    var originalDisplay = previewContainer.style.display; // 현재 display 상태 저장
-
-	    // Clear previous previews
-	    while (previewContainer.firstChild) {
-	        previewContainer.removeChild(previewContainer.firstChild);
-	    }
-	    
-	    var carouselContainer = document.querySelector('.carousel');
-	    carouselContainer.style.display = 'none'; // Hide carousel initially
-	
-	    var carouselInner = document.querySelector('.carousel-inner');
-	    carouselInner.innerHTML = ""; // Clear previous slides
-	
-	    var carouselIndicators = document.querySelector('.carousel-indicators');
-	    carouselIndicators.innerHTML = ""; // Clear previous indicators
-	    
-	    if (files.length === 1) {
-            var img = document.createElement('img');
-            img.src = URL.createObjectURL(files[0]);
-            img.className = 'preview-image';
-            
-            previewContainer.appendChild(img);
-            
-            previewContainer.style.margin = 'auto';
-            previewContainer.style.marginTop = '20px';
-            previewContainer.style.marginBottom = '10px';
-        } else if (files.length > 1) {
-	        for (var i = 0; i < files.length; i++) {
-	            var img = document.createElement('img');
-	            img.src = URL.createObjectURL(files[i]);
-	            img.className = 'd-block w-100';
-	
-	            var carouselItem = document.createElement('div');
-	            carouselItem.className = (i === 0) ? 'carousel-item active' : 'carousel-item';
-	            carouselItem.appendChild(img);
-	
-	            carouselInner.appendChild(carouselItem);
-	
-	            // Add indicator button
-	            var indicatorButton = document.createElement('button');
-	            indicatorButton.type = 'button';
-	            indicatorButton.setAttribute('data-bs-target', '#carouselExampleIndicators');
-	            indicatorButton.setAttribute('data-bs-slide-to', i.toString());
-	            indicatorButton.setAttribute('aria-label', 'Slide ' + (i + 1));
-	
-	            if (i === 0) {
-	                indicatorButton.className = 'active';
-	                indicatorButton.setAttribute('aria-current', 'true');
-	            }
-	
-	            carouselIndicators.appendChild(indicatorButton);
-	        } 
-	
-	        // Show Carousel
-	        carouselContainer.style.display = 'block';
-	
-	        // Add previous and next buttons
-	        var prevButton = document.createElement('button');
-	        prevButton.className = 'carousel-control-prev';
-	        prevButton.type = 'button';
-	        prevButton.setAttribute('data-bs-target', '#carouselExampleIndicators');
-	        prevButton.setAttribute('data-bs-slide', 'prev');
-	        prevButton.innerHTML = '<span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Previous</span>';
-	
-	        var nextButton = document.createElement('button');
-	        nextButton.className = 'carousel-control-next';
-	        nextButton.type = 'button';
-	        nextButton.setAttribute('data-bs-target', '#carouselExampleIndicators');
-	        nextButton.setAttribute('data-bs-slide', 'next');
-	        nextButton.innerHTML = '<span class="carousel-control-next-icon" aria-hidden="true"></span><span class="visually-hidden">Next</span>';
-	
-	        carouselContainer.appendChild(prevButton);
-	        carouselContainer.appendChild(nextButton);
-	        
-	        carouselContainer.style.margin = 'auto';
-	        carouselContainer.style.marginTop = '20px';
-	        carouselContainer.style.marginBottom = '10px';
-	    } else {
-	        // No files selected, reset styles
-	        previewContainer.style.width = '';
-	        previewContainer.style.margin = '';
-	        previewContainer.style.marginTop = '';
-	        previewContainer.style.marginBottom = '';
-	        $("input[type=hidden][name^=prevImage]").val("");
-	    }
-	}
 </script>
 
 
@@ -397,6 +452,11 @@ $(document).ready(function () {
 			<input type="hidden" name="product_number2" id="product_number2" value="${styleBean.product_number2}">
 			<input type="hidden" name="product_number3" id="product_number3" value="${styleBean.product_number3}">
 			<input type="hidden" name="product_number4" id="product_number4" value="${styleBean.product_number4}">
+			<input type="hidden" name="compareImage1" value="${styleBean.image1}">
+       		<input type="hidden" name="compareImage2" value="${styleBean.image2}">
+       		<input type="hidden" name="compareImage3" value="${styleBean.image3}">
+       		<input type="hidden" name="compareImage4" value="${styleBean.image4}">
+       		<input type="hidden" name="compareImage5" value="${styleBean.image5}">
 			<input type="hidden" name="prevImage1" value="${styleBean.image1}">
        		<input type="hidden" name="prevImage2" value="${styleBean.image2}">
        		<input type="hidden" name="prevImage3" value="${styleBean.image3}">
@@ -411,8 +471,7 @@ $(document).ready(function () {
 				<div class="col-2"></div>
 				<div class="col-7 align-self-center">
 		        	<div id="imgInput" >
-		        		<img src="<%=request.getContextPath()%>/resources/styleImage/${styleBean.image1}" class="d-none">
-		        		<input class="form-control" type="file" name="images" multiple accept="image/*" onchange="updatePreview()">
+		        		<input class="form-control" type="file" name="images" multiple accept="image/*">
 	        		</div>
 			    <div class="preview-container"></div>
 			    <div id="carouselExampleIndicators" class="carousel carousel-dark slide" style="margin-top: 20px; margin-bottom: 10px;">

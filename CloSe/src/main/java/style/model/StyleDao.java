@@ -69,5 +69,9 @@ public class StyleDao {
 	public void updateStyle(StyleBean styleBean) {
 		sqlSessionTemplate.update(namespace + ".updateStyle", styleBean);
 	}
+
+	public List<StyleBean> getStyleByMemberId(String id) {
+		return sqlSessionTemplate.selectList(namespace + ".getStyleByMemberId", id);
+	}
    
 }

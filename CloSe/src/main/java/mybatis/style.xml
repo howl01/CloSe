@@ -33,7 +33,20 @@
 	      member m ON s.member_id = m.member_id
 	</select>
 	
-	<select id="getStyleByStyleNumber"  resultType="StyleBean">
+	<select id="getStyleByMemberId" resultType="StyleBean">
+		SELECT
+		    s.*,
+		    m.nickname AS nickname,
+		    m.member_image AS member_image
+		FROM
+		    style s
+		LEFT JOIN
+		    member m ON s.member_id = m.member_id
+		WHERE
+		    s.member_id = #{id}
+	</select>
+	
+	<select id="getStyleByStyleNumber" resultType="StyleBean">
 		SELECT
 		    s.*,
 		    m.nickname AS nickname,

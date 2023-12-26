@@ -7,11 +7,29 @@
 <link href="resources/css/checkout.css" rel="stylesheet">
 
 <style>
+	.body{
+		width: 95vw;
+		margin: auto;
+	}
+	.row{
+		width: 70%;
+		margin: auto;
+	}
 	table{
 		text-align: center;
 	}
 	th{
 		text-align: center;
+	}
+	#profile{
+		border-radius: 100%;
+		border: 1px solid #C0C0C0;
+	}
+	.container{
+		width: 100%;
+	}
+	ul{
+		width: 100%;
 	}
 </style>
 
@@ -90,7 +108,7 @@
    
 </script>
 
-<div class="container">
+<div class="body">
     <div class="py-5 text-center">
       <a href = "view.main">
          <img class="d-block mx-auto mb-4" src="resources/img/logo.png" width="500" height="100">
@@ -98,12 +116,13 @@
       <h2>마이페이지</h2>
     </div>
  	
+ 	<div class="d-flex justify-content-start mb-3" style="width: 70%; margin: auto;">
 	<ul class="nav nav-tabs" role="tablist">
 	  <li class="nav-item" role="presentation">
 	    <a class="nav-link active" data-bs-toggle="tab" href="#mypage" aria-selected="true" role="tab">내 정보</a>
 	  </li>
 	  <li class="nav-item" role="presentation">
-	    <a class="nav-link" data-bs-toggle="tab" href="aa" aria-selected="false" role="tab" tabindex="-1">내 코디</a>
+	    <a class="nav-link" data-bs-toggle="tab" href="#cody" aria-selected="false" role="tab" tabindex="-1">내 코디</a>
 	  </li>
 	  <li class="nav-item" role="presentation">
 	    <a class="nav-link" data-bs-toggle="tab" href="bb" aria-selected="false" role="tab" tabindex="-1">구매 상품</a>
@@ -115,6 +134,7 @@
 	    <a class="nav-link" data-bs-toggle="tab" href="#delete" aria-selected="false" role="tab" tabindex="-1">회원탈퇴</a>
 	  </li>
 	</ul>
+	</div>
 	
 	<div id="myTabContent" class="tab-content">
 		<!-- 첫번째 탭 -->
@@ -333,10 +353,24 @@
 		</div>
 		
 		<!-- 두번째 탭 -->
-		<div class="tab-pane fade" id="aa" role="tabpanel">
-			<div class="row">
-			
-			</div>
+		<div class="tab-pane fade" id="cody" role="tabpanel">
+				<!-- 스타일 컨테이너 -->
+			    <div class="d-flex flex-wrap" id="styleContainer">
+			        <c:forEach var="styleBean" items="${styleList}">
+				        <div class="card m-2 border-0" style="width:23%;">
+				            <a href="detail.style?style_number=${styleBean.style_number}" class="link-dark link-underline-opacity-0">
+				                <div class="card-body p-0">
+					                <img src="<%=request.getContextPath()%>/resources/styleImage/${styleBean.image1}" style="height: 350px;" class="card-img-top" >
+				                	<div class="d-flex align-items-center">
+				                	<img src="<%=request.getContextPath()%>/resources/memberImage/${styleBean.member_image}" id="profile" style="width:3vw; height: 3vw; margin-top: 5px;">
+				                    &nbsp;${styleBean.nickname}
+				                    </div>
+				                    <p class="card-text" style="font-size: 10pt; margin-top: 5px;">${styleBean.content}</p>
+				                </div>
+				            </a>
+				        </div>
+			    	</c:forEach>
+			    </div>
 		</div>
 		
 		<!-- 세번째 탭 -->
