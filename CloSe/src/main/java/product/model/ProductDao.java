@@ -16,6 +16,16 @@ public class ProductDao {
 	private String namespace = "product.ProductBean";
 	
 	public List<ProductBean> getAllProduct() {
+		Integer count = sqlSessionTemplate.selectOne(namespace+".getKeywordCount", "keyword");
+
+        if (count == null) {
+            // 키워드가 존재하지 않으면 추가
+        	sqlSessionTemplate.insert(namespace + ".insertKeyword" , "keyword");
+        } else {
+            // 키워드가 이미 존재하면 카운트 업데이트
+        	sqlSessionTemplate.update(namespace + ".updateKeywordCount" , "keyword");
+        }
+        
 		return sqlSessionTemplate.selectList(namespace+".getAllProduct");
 	}
 
@@ -47,6 +57,10 @@ public class ProductDao {
 	}
 	public List<ProductBean> findProductNames2(String searchWord2) {
 		return sqlSessionTemplate.selectList(namespace + ".findProductNames2", searchWord2);
+	}
+
+	public List<ProductBean> getPop() {
+		return sqlSessionTemplate.selectList(namespace + ".getPop");
 	}
 	
 }

@@ -36,7 +36,7 @@ public class ProductListController {
 		map.put("whatColumn", whatColumn);
 		map.put("keyword", "%"+keyword+"%");
 		
-		
+        
 		List<ProductBean> plists = null;
 		if(bigcategory_name != null) {
 			plists = productDao.getProductByBigcategory(bigcategory_name);

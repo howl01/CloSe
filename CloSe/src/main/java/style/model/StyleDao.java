@@ -70,8 +70,13 @@ public class StyleDao {
 		sqlSessionTemplate.update(namespace + ".updateStyle", styleBean);
 	}
 
+	public void updateStyleNoImageUp(StyleBean styleBean) {
+		sqlSessionTemplate.update(namespace + ".updateStyleNoImageUp", styleBean);
+	}
+	
 	public List<StyleBean> getStyleByMemberId(String id) {
 		return sqlSessionTemplate.selectList(namespace + ".getStyleByMemberId", id);
 	}
+
    
 }

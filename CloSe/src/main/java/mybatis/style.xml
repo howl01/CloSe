@@ -26,6 +26,19 @@
 		where style_number = #{style_number}
 	</update>
 	
+	<update id="updateStyleNoImageUp">
+		update style set
+		title = #{title, jdbcType=VARCHAR},
+		content = #{content},
+		style = #{style},
+		write_date = SYSDATE,
+		product_number1 = #{product_number1, jdbcType=VARCHAR},
+		product_number2 = #{product_number2, jdbcType=VARCHAR},
+		product_number3 = #{product_number3, jdbcType=VARCHAR},
+		product_number4 = #{product_number4, jdbcType=VARCHAR}
+		where style_number = #{style_number}
+	</update>
+	
 	<select id="getStyleList" resultType="StyleBean">
 		 select s.*, nickname
 	    from style s

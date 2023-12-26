@@ -52,4 +52,26 @@
         ORDER BY product_name
         FETCH FIRST 5 ROWS ONLY
     </select>
+    
+    <select id="getPop" resultType="ProductBean">
+    	SELECT keyword, count
+		FROM pop
+		ORDER BY count DESC
+		FETCH FIRST 10 ROWS ONLY
+    </select>
+    
+    <!-- 키워드 조회 -->
+    <select id="getKeywordCount" resultType="java.lang.Integer">
+        SELECT count FROM pop WHERE keyword = #{keyword}
+    </select>
+
+    <!-- 키워드 추가 -->
+    <insert id="insertKeyword">
+        INSERT INTO pop (keyword, count) VALUES (#{keyword}, 0)
+    </insert>
+
+    <!-- 키워드 업데이트 -->
+    <update id="updateKeywordCount">
+        UPDATE your_table_name SET count = count + 1 WHERE keyword = #{keyword}
+    </update>
 </mapper>
