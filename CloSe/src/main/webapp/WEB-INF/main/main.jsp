@@ -334,8 +334,6 @@ window.navigator.geolocation.getCurrentPosition(function(pos) {
 
    <div class="col-lg-2">
    		<button onclick="location.href='insert.category'">상등</button>
-   		<button onclick="location.href='register.product'">상등</button>
-   		<button onclick="orderdetails()">주문내역</button>
    </div>
 
 

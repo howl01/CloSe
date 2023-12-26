@@ -34,6 +34,7 @@ public class ProductListController {
 	public String productList(@RequestParam(value="bigcategory_name",  required = false) String bigcategory_name,
 							@RequestParam(value="smallcategory_name",  required = false) String smallcategory_name,
 							@RequestParam(value="brand",  required = false) String brand,
+							@RequestParam(value="sort",  required = false) String sort,
 							@RequestParam(value="whatColumn", required = false) String whatColumn,
 							@RequestParam(value="keyword", required = false) String keyword,
 							@RequestParam(value="pageNumber", required = false) String pageNumber,
@@ -43,9 +44,21 @@ public class ProductListController {
 		model.addAttribute("blists", blists);
 		model.addAttribute("clists", clists);
 		
+		if(sort != null) {
+			if(sort.equals("null")) {
+				sort = "new";
+			}
+		}
+		if(sort == null) {
+			sort = "new";
+		}
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("whatColumn", whatColumn);
 		map.put("keyword", "%"+keyword+"%");
+		map.put("bigcategory_name", bigcategory_name);
+		map.put("smallcategory_name", smallcategory_name);
+		map.put("brand", "%"+brand+"%");
+		map.put("sort", sort);
 		
 		List<ProductBean> plists = null;
 		int totalCount = 0; 
@@ -54,13 +67,11 @@ public class ProductListController {
 		
 		if(bigcategory_name != null) { 
 			if(!bigcategory_name.equals("null")) {
-				System.out.println("여기들어왔음111111111111111111111111111111111111111");
 				totalCount = productDao.getCountByBigcategory(bigcategory_name);
 			}
 		}
 		if(smallcategory_name != null) {
 			if(!smallcategory_name.equals("null")) {
-				System.out.println("여기들어왔음22222222222222222222222222222222222222222");
 				totalCount = productDao.getCountBySmallcategory(smallcategory_name);
 			}
 		}
@@ -71,38 +82,14 @@ public class ProductListController {
 			}
 		}
 		
-		Paging_productList pageInfo = new Paging_productList(pageNumber, "4", totalCount, url, whatColumn, keyword, bigcategory_name, smallcategory_name, brand);
+		Paging_productList pageInfo = new Paging_productList(pageNumber, "16", totalCount, url, whatColumn, keyword, bigcategory_name, smallcategory_name, brand, sort);
 		
-		if(bigcategory_name != null) {
-			if(!bigcategory_name.equals("null")) {
-				System.out.println("여기들어왔음33333333333333333333333333333333333333333");
-				plists = productDao.getProductByBigcategory(bigcategory_name,pageInfo);
-			}
-		}
-		if(smallcategory_name != null) {
-			if(!smallcategory_name.equals("null")) {
-				System.out.println("여기들어왔음44444444444444444444444444444444444");
-				plists = productDao.getProductBySmallcategory(smallcategory_name,pageInfo);
-			}
-		}
-		if(brand !=null) {
-			if(!brand.equals("null")) {
-				String brand1 = "%"+brand+"%";
-				plists = productDao.getProductByBrand(brand1);
-			}
-		}
+		plists = productDao.getIFProduct(map,pageInfo);
 		
 		System.out.println("bigcategory_name="+bigcategory_name);
 		System.out.println("smallcategory_name="+smallcategory_name);
 		System.out.println("pageNumber="+pageNumber);
 		System.out.println("totalCount="+totalCount);
-		
-		
-		
-		
-		
-		
-		
 		
 		model.addAttribute("pageInfo", pageInfo);
 		model.addAttribute("plists", plists);

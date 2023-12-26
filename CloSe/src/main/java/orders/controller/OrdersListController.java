@@ -37,6 +37,7 @@ public class OrdersListController {
 	public String ordersDetailForm(@RequestParam(value = "startDate", required = false) String startDate,
 			@RequestParam(value = "endDate", required = false) String endDate,
 			@RequestParam(value = "pageNumber", required = false) String pageNumber,
+			@RequestParam(value = "activeTab", required = false) String activeTab,
 			@RequestParam(value = "referer", required = false) String referer, HttpSession session,
 			HttpServletRequest request, Model model) {
 
@@ -73,7 +74,7 @@ public class OrdersListController {
 
 		System.out.println("totalCount개수" + totalCount);
  
-		Paging_orderDetail pageInfo = new Paging_orderDetail(pageNumber, "2", totalCount, url, startDate, endDate);
+		Paging_orderDetail pageInfo = new Paging_orderDetail(pageNumber, "2", totalCount, url, startDate, endDate, activeTab);
 		map.put("begin", String.valueOf(pageInfo.getBeginRow()));
 		map.put("end", String.valueOf(pageInfo.getEndRow()));
 

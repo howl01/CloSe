@@ -334,5 +334,4 @@ function pay() {
 
 
 
-<button onclick="location.href='view.main'">이동</button>
 <%@ include file="../main/bottom.jsp"%>

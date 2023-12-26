@@ -192,8 +192,10 @@
 								placeholder="0" value="${productBean.xl_stock }" oninput="NumerInput('xl_stock')">
 							</div>
 						</div>
-						<div style="padding-top: 15; float: right;">
-							<input class="btn btn-primary btn-md" type="submit" value="등록하기">
+						<br>
+						<div class="col-lg-12 text-center">
+							<input class="btn btn-dark btn-md" type="submit" value="등록하기">
+							<input class="btn btn-dark btn-md" type="button" value="전체목록">
 						</div>
 					</form:form>
 				</div>
@@ -222,8 +224,6 @@
 			</div>
 		</div>
 
-
-<button onclick="location.href='view.main'">이동</button>
 	</div>
 </div>
 
@@ -235,13 +235,11 @@
 		clothingMap.set('${category.smallcategory_name}','${category.bigcategory_name}');
 	</c:forEach>
 	
-	
 	const set1 = new Set();
 	
 	for (const [key, value] of clothingMap) {
 		set1.add(value);
 	} 
-	
 	
 	 const firstSelect = document.getElementById("firstSelect");
      for (const value of set1) {
@@ -255,7 +253,6 @@
     	 updateSecondSelect();
      }
      
-	
      function updateSecondSelect() {
          const firstSelect = document.getElementById("firstSelect");
          const secondSelect = document.getElementById("secondSelect");

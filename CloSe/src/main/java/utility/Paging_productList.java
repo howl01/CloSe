@@ -20,6 +20,7 @@ public class Paging_productList {
 	private String bigcategory_name = "";
 	private String smallcategory_name = "";
 	private String brand = "";
+	private String sort = "";
 	
 	
 	public int getTotalCount() {
@@ -144,6 +145,35 @@ public class Paging_productList {
 	public void setKeyword(String keyword) {
 		this.keyword = keyword;
 	}
+	public String getBigcategory_name() {
+		return bigcategory_name;
+	}
+	public void setBigcategory_name(String bigcategory_name) {
+		this.bigcategory_name = bigcategory_name;
+	}
+	public String getSmallcategory_name() {
+		return smallcategory_name;
+	}
+
+	public void setSmallcategory_name(String smallcategory_name) {
+		this.smallcategory_name = smallcategory_name;
+	}
+
+	public String getBrand() {
+		return brand;
+	}
+
+	public void setBrand(String brand) {
+		this.brand = brand;
+	}
+
+	public String getSort() {
+		return sort;
+	}
+
+	public void setSort(String sort) {
+		this.sort = sort;
+	}
 
 	public Paging_productList
 			(String _pageNumber, 
@@ -152,7 +182,8 @@ public class Paging_productList {
 			String whatColumn, String keyword, 
 			String bigcategory_name, 
 			String smallcategory_name, 
-			String brand) {
+			String brand, 
+			String sort) {
 
 		if (_pageNumber == null || _pageNumber.equals("null") || _pageNumber.equals("")) {
 			_pageNumber = "1";
@@ -160,7 +191,7 @@ public class Paging_productList {
 		this.pageNumber = Integer.parseInt(_pageNumber);
 
 		if (_pageSize == null || _pageSize.equals("null") || _pageSize.equals("")) {
-			_pageSize = "3";
+			_pageSize = "16";
 		}
 		this.pageSize = Integer.parseInt(_pageSize);
 
@@ -198,6 +229,7 @@ public class Paging_productList {
 		this.smallcategory_name = smallcategory_name;
 		this.bigcategory_name = bigcategory_name;
 		this.brand = brand;
+		this.sort = sort;
 		// System.out.println("url2:"+url); //url2:/ex/list.ab
 		this.pagingHtml = getPagingHtml(url);
 
@@ -209,7 +241,7 @@ public class Paging_productList {
 		String result = "";
 		String added_param = "&whatColumn=" + whatColumn + "&keyword=" + keyword 
 							+ "&bigcategory_name=" + bigcategory_name + "&smallcategory_name=" +smallcategory_name
-							+ "&brand="+brand;
+							+ "&brand="+brand+"&sort="+sort;
 
 		if (this.beginPage != 1) {
 			result += "&nbsp;<li class='page-item'><a class='page-link' href='" + url + "?pageNumber=" + (1)

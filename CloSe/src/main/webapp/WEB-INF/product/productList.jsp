@@ -10,15 +10,15 @@
 	.plist{
 		display: flex;
         flex-direction: row;
-        height: 800px;
+        margin-bottom: 50px;
 	} 
-	.filter .product{
+	.filter .product{ 
 		float: left;
 	} 
 	.filter{
 		width:150px;
 	}
-	.product{
+	.product{ 
 	}
 	.small-category{
         display: none; /* 초기에는 하위 항목을 숨김 */
@@ -33,6 +33,31 @@
     	text-decoration: none;
     	color:black;
     }
+    #sort a {
+    	text-decoration: none;
+    	color:black;
+    }  
+    
+    .page-link {
+	  color: #000; 
+	  background-color: #fff;
+	  border: 1px solid #ccc; 
+	}
+	
+	.page-item.active .page-link {
+	 z-index: 1;
+	 color: #555;
+	 font-weight:bold;
+	 background-color: #f1f1f1;
+	 border-color: #ccc;
+	 
+	}
+	
+	.page-link:focus, .page-link:hover {
+	  color: #000;
+	  background-color: #fafafa; 
+	  border-color: #ccc;
+	}
 </style>
 <script type="text/javascript">
 /* function toggleSmallCategories(bigCategoryName) {
@@ -53,7 +78,18 @@ $(document).ready(function(){
         $(this).siblings("#small-" + bigCategoryId).stop().slideToggle();
     });
 });
-
+function sort(sortType){
+	alert(sortType); 
+	
+	var urlParams = new URLSearchParams(window.location.search);
+	var bigcategory = urlParams.get("bigcategory_name");
+	var smallcategory = urlParams.get("smallcategory_name");
+	var brand = urlParams.get("brand");
+	alert(bigcategory);
+	alert(smallcategory);
+	alert(brand);
+	location.href="list.product?bigcategory_name="+bigcategory+"&smallcategory_name="+smallcategory+"&brand="+brand+"&sort="+sortType;
+}
 </script>
 
 <div class="body">
@@ -62,60 +98,64 @@ $(document).ready(function(){
 	<div class="row">
 		<div class="col-lg-2"></div>
 		<div class="col-lg-8">
-			<div style="padding:20 10 20 10">
-				<div style="">
-					<h3 style="padding: 10 0 10 0">상품</h3>
-					<hr width="1280px">
-				</div> 
+			<div style="">
+				<h3 style="padding: 10 0 10 0">상품</h3>
+				<hr width="100%">
+			</div>
+		</div>
+		<div class="col-lg-2"></div>   
+		<div class="col-lg-2">
+			<div class="filter"> 
+				<ul class="categories">
+			        <c:set var="previousBigCategory" value="" />
+			        <c:forEach var="category" items="${clists}">
+			            <c:if test="${!category.bigcategory_name.equals(previousBigCategory)}">
+			                <li class="big-category" id="${category.bigcategory_name}">
+			                    <h2 class="bc">${category.bigcategory_name}</h2>
+			                </li>
+			                <li class="small-category" id="small-${category.bigcategory_name}">
+			            		<a class="category" href="list.product?bigcategory_name=${category.bigcategory_name}">전체</a>
+			            	</li>
+			            </c:if>
+			            
+			            	<li class="small-category" id="small-${category.bigcategory_name}">
+			            		<a  class="category" href="list.product?smallcategory_name=${category.smallcategory_name}">${category.smallcategory_name}</a>
+			            	</li>
+			            
+			            <c:set var="previousBigCategory" value="${category.bigcategory_name}" />
+			        </c:forEach>
+			        
+			        <li class="big-category" id="brand">
+			        	<h2 class="bc">브랜드</h2>
+			        </li>
+			        <c:forEach var="pb" items="${blists }">
+			         <c:if test="${!fn:substringBefore(pb.product_name,'/').equals(previousBrand)}">
+			        	<li id="small-brand">
+			        		<a class="category" href="list.product?brand=${fn:substringBefore(pb.product_name,'/') }">
+			        			${fn:substringBefore(pb.product_name,'/') }
+			        		</a>
+			        	</li>
+			         </c:if>
+			        	<c:set var="previousBrand" value="${fn:substringBefore(pb.product_name,'/') }" />
+			        </c:forEach>
+			    </ul>
+			</div>
+		</div>
+		
+		<div class="col-lg-8">
+			<div style="padding:20 10 5 10">
+					<table id="sort" style="border-collapse: collapse; margin-top: -30px; margin-bottom: 10px;">
+						<tr>
+							<td>
+								<a class="array" onclick="sort('new')">신상품순</a> | 
+								<a class="array" onclick="sort('low')">낮은 가격순</a> | 
+								<a class="array" onclick="sort('high')">높은 가격순</a> | 
+								<a class="array" onclick="sort('sale')">판매순</a> | 
+								<a class="array" onclick="sort('rating')">별점순</a>
+							</td>
+						</tr>
+					</table>
 				<div class="plist">
-					<div class="filter">
-					
-					
-					
-						<ul class="categories">
-					        <c:set var="previousBigCategory" value="" />
-					        <c:forEach var="category" items="${clists}">
-					            <c:if test="${!category.bigcategory_name.equals(previousBigCategory)}">
-					                <li class="big-category" id="${category.bigcategory_name}">
-					                    <h2 class="bc">${category.bigcategory_name}</h2>
-					                </li>
-					                <li class="small-category" id="small-${category.bigcategory_name}">
-					            		<a class="category" href="list.product?bigcategory_name=${category.bigcategory_name}">전체</a>
-					            	</li>
-					            </c:if>
-					            
-					            	<li class="small-category" id="small-${category.bigcategory_name}">
-					            		<a  class="category" href="list.product?smallcategory_name=${category.smallcategory_name}">${category.smallcategory_name}</a>
-					            	</li>
-					            
-					            <c:set var="previousBigCategory" value="${category.bigcategory_name}" />
-					        </c:forEach>
-					        
-					        <li class="big-category" id="brand">
-					        	<h2 class="bc">브랜드</h2>
-					        </li>
-					        <c:forEach var="pb" items="${blists }">
-					         <c:if test="${!fn:substringBefore(pb.product_name,'/').equals(previousBrand)}">
-					        	<li id="small-brand">
-					        		<a class="category" href="list.product?brand=${fn:substringBefore(pb.product_name,'/') }">
-					        			${fn:substringBefore(pb.product_name,'/') }
-					        		</a>
-					        	</li>
-					         </c:if>
-					        	<c:set var="previousBrand" value="${fn:substringBefore(pb.product_name,'/') }" />
-					        </c:forEach>
-					    </ul>
-					    
-					    
-					    
-					    
-					    
-					</div>
-					
-					
-					
-					
-					
 					
 					<div class="product">
 						<table>
@@ -132,7 +172,7 @@ $(document).ready(function(){
 						          <div style=" height: 220px;">  
 						           <a href="detail.product?product_number=${pb.product_number }">
 						          	<img id="preview" width="100%" height="100%"
-									src='<c:url value='/resources/product/image/'/>${pb.image }' />
+									src='<c:url value='/resources/product/image/'/>${pb.image }' /> 
 						           </a> 
 						          </div>  
 						          <hr>
@@ -156,8 +196,12 @@ $(document).ready(function(){
 						</table>
 					</div>
 				</div>
-				<div>
-					${pageInfo.pagingHtml }
+				<div class="row">
+				    <div class="col-lg-12 text-center">
+				        <div class="d-flex justify-content-center">
+				            ${pageInfo.pagingHtml}
+				        </div>
+				    </div>
 				</div>
 				
 				

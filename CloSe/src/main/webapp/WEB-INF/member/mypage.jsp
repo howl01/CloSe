@@ -135,7 +135,9 @@
 		  success : function(data){
 			alert("성공");  
 			$("#orderdetail").empty();
-
+			$("#buyer").empty();
+			$("#receiver").empty();
+			var firstElement = data[0];
 	        // 받은 데이터를 기반으로 새로운 테이블 행을 동적으로 생성하고 삽입합니다.
 	        $(data).each(function () {
 	            var newRow = $("<tr>");
@@ -151,7 +153,39 @@
 	            newRow.append("<td>" + (this.price * this.qty) + "원 <button type='button' onclick='openReviewFormWindow(" + this.orderdetail_number + ")'>리뷰작성</button></td>");
 	            newRow.appendTo("#orderdetail");
         	});
-
+	        
+	        var buyerHtml = "<tr>" +
+					            "<td>주문자</td>" +
+					            "<td>" + firstElement.name + "</td>" +
+					         "</tr>" +
+					         "<tr>" +
+					            "<td>연락처</td>" +
+					            "<td>" + firstElement.phone + "</td>" +
+					         "</tr>" +
+					         "<tr>" +
+					            "<td>이메일</td>" +
+					            "<td>" + firstElement.email + "</td>" +
+					         "</tr>";
+			$("#buyer").append(buyerHtml);
+	        
+			var receiverHtml = "<tr>" +
+						            "<td>수령인</td>" +
+						            "<td>" + firstElement.receiver + "</td>" +
+						         "</tr>" +
+						         "<tr>" +
+						            "<td>연락처</td>" +
+						            "<td>" + firstElement.receiver_phone + "</td>" +
+						         "</tr>" +
+						         "<tr>" +
+						            "<td>배송지</td>" +
+						            "<td>" + firstElement.address + "</td>" +
+						         "</tr>" +
+						         "<tr>" +
+						            "<td>배송메모</td>" +
+						            "<td>" + firstElement.d_message + "</td>" +
+						         "</tr>";
+			$("#receiver").append(receiverHtml);
+	        
 	        // 새로운 탭을 표시합니다.
 	        $('#tab3-1').addClass('active show');
 		  },
@@ -171,6 +205,10 @@
 		if(num==3){
 			$('#tab3').addClass('active show');
 		}
+	}
+	function odlist(){
+		$('#tab3-1').removeClass('active show');
+		$('#tab3').addClass('active show');
 	}
 </script>
 
@@ -493,8 +531,26 @@
 		</div>
 		<div class="tab-pane fade" id="tab3-1" role="tabpanel">
 			<div class="row">
+				<div style="">
+	               <h3 style="padding: 22 0 22 0">주문내역</h3>
+	            </div>
 				<table class="table" id="orderdetail">
 				</table>
+				<div style="">
+					<h3 style="padding: 22 0 22 0">구매자 정보</h3>
+				</div>
+				<table class="table" id="buyer">
+				</table>
+				<div style="">
+					<h3 style="padding: 22 0 22 0">구매자 정보</h3>
+				</div>
+				<table class="table" id="receiver">
+				</table>
+				<div class="col-lg-12 text-center">
+					<button class="btn btn-dark btn-md" type="button" onclick="odlist()" style="width: 100px;">
+						목록보기
+					</button>
+				</div>
 			</div>
 		</div>
 		

@@ -1,6 +1,7 @@
 package product.model;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -29,14 +30,7 @@ public class ProductDao {
 		return sqlSessionTemplate.selectOne(namespace+".getOneProduct",product_number);
 	}
 
-	public List<ProductBean> getProductByBigcategory(String bigcategory_name, Paging_productList pageInfo) {
-		RowBounds rowBounds = new RowBounds(pageInfo.getOffset(), pageInfo.getLimit());
-		return sqlSessionTemplate.selectList(namespace+".getProductByBigcategory",bigcategory_name,rowBounds);
-	}
-	public List<ProductBean> getProductBySmallcategory(String smallcategory_name, Paging_productList pageInfo) {
-		RowBounds rowBounds = new RowBounds(pageInfo.getOffset(), pageInfo.getLimit());
-		return sqlSessionTemplate.selectList(namespace+".getProductBySmallcategory",smallcategory_name,rowBounds);
-	}
+	
 
 	public void updateStock(CartInfoBean cib) {
 		sqlSessionTemplate.update(namespace+".updateStock", cib);
@@ -71,9 +65,25 @@ public class ProductDao {
 	public int getCountByBrand(String brand) {
 		return sqlSessionTemplate.selectOne(namespace+".getCountByBrand", brand);
 	}
+	
+	public List<ProductBean> getProductByBigcategory(String bigcategory_name, Paging_productList pageInfo) {
+		RowBounds rowBounds = new RowBounds(pageInfo.getOffset(), pageInfo.getLimit());
+		return sqlSessionTemplate.selectList(namespace+".getProductByBigcategory",bigcategory_name,rowBounds);
+	}
+	public List<ProductBean> getProductBySmallcategory(String smallcategory_name, Paging_productList pageInfo) {
+		RowBounds rowBounds = new RowBounds(pageInfo.getOffset(), pageInfo.getLimit());
+		return sqlSessionTemplate.selectList(namespace+".getProductBySmallcategory",smallcategory_name,rowBounds);
+	}
+	public List<ProductBean> getProductByBrand(String brand, Paging_productList pageInfo) {
+		RowBounds rowBounds = new RowBounds(pageInfo.getOffset(), pageInfo.getLimit());
+		return sqlSessionTemplate.selectList(namespace+".getProductByBrand", brand, rowBounds);
+	}
 
-	public List<ProductBean> getProductByBrand(String brand) {
-		return sqlSessionTemplate.selectList(namespace+".getProductByBrand", brand);
+	public List<ProductBean> getIFProduct(Map<String, String> map, Paging_productList pageInfo) {
+		RowBounds rowBounds = new RowBounds(pageInfo.getOffset(), pageInfo.getLimit());
+		return sqlSessionTemplate.selectList(namespace+".getIFProduct", map, rowBounds);
 	}
 	
+	
+ 
 }

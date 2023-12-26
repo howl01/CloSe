@@ -153,7 +153,6 @@ window.addEventListener('scroll', function() {
 		location.href="delete.product?product_number="+pnum;
 	}
 	function updateProduct(pnum){
-		alert(1);
 		location.href="update.product?product_number="+pnum;
 	}
 	
@@ -250,11 +249,6 @@ window.addEventListener('scroll', function() {
 		    });
 
 		    $('#cart-total').html(totalSum);
-		    
-		    
-		    
-		    
-		    
 		    
 		    
 	    });
@@ -449,7 +443,7 @@ window.addEventListener('scroll', function() {
 					<td>
 						<span
 						style="background-color: #ff80bf; line-height: 27px; border-radius: 10px;"><font
-						color="#ffffff" size="2">태그</font></span>
+						color="#ffffff" size="2">${pb.smallcategory_name }</font></span>
 					</td>
 				</tr>
 
@@ -505,7 +499,7 @@ window.addEventListener('scroll', function() {
 				<table>
 					<tr>
 						<td>
-						<select id="selsize" name="size">
+						<select id="selsize" name="size" <c:if test="${loginInfo.member_id == 'admin'}">disabled</c:if>>
 							<option value="">옵션선택</option>
 							<option value="s_stock"
 								<c:if test="${pb.s_stock == 0}"> disabled </c:if>>
@@ -544,22 +538,6 @@ window.addEventListener('scroll', function() {
 				</table>
 			</div>
 
-			<!-- <form id="frm" name="frm" method="post">
-
-				<div>
-					<table style="border:1px;" id="dynamicTable">
-						<thead>
-						</thead>
-
-						<tbody id="dynamicTbody">
-
-						</tbody>
-						
-					</table>
-				</div>
-
-			</form> -->
-			
 			<div class="totals-item totals-item-total" style="float:left; margin-left:200px;">
 	      		<label class="total_price">총상품금액</label>&nbsp;&nbsp;
 	     		 <div class="total_price" style="float:right;">원</div>
@@ -573,14 +551,26 @@ window.addEventListener('scroll', function() {
 					<td>
 				</tr>
 			</table>
-
-			<button type="button" style="width: 150px; margin-left:100px; height: 40px;"
-				class="btn btn-dark" id="insertBasket">장바구니</button>
-			<button type="button" style="width: 150px; height: 40px;"
-				class="btn btn-dark" id="goodsOrder">구매하기</button>
-			<br>
-
-			<button type="button" onclick="updateProduct('${pb.product_number}')">수정하기</button>
+			<c:choose>
+			    <c:when test="${loginInfo.member_id == 'admin'}">
+			        <button type="button" style="width: 150px; margin-left: 100px; height: 40px;"
+			                class="btn btn-dark" onclick="updateProduct('${pb.product_number}')">수정하기</button>
+			        <button type="button" style="width: 150px; height: 40px;"
+			                class="btn btn-dark" onclick="deleteProduct('${pb.product_number}')">삭제하기</button>
+			    </c:when>
+			    <c:otherwise>
+			        <button type="button" style="width: 150px; margin-left: 100px; height: 40px;"
+			                class="btn btn-dark" id="insertBasket">장바구니</button>
+			        <button type="button" style="width: 150px; height: 40px;"
+			                class="btn btn-dark" id="goodsOrder">구매하기</button>
+			    </c:otherwise>
+			</c:choose>
+				<%-- <button type="button" style="width: 150px; margin-left:100px; height: 40px;"
+					class="btn btn-dark" id="insertBasket">장바구니</button>
+				<button type="button" style="width: 150px; height: 40px;"
+					class="btn btn-dark" id="goodsOrder">구매하기</button>
+				<button type="button" style="width: 150px; height: 40px;"
+					class="btn btn-dark" onclick="updateProduct('${pb.product_number}')">수정하기</button> --%>
 		
 		</div>
 	</div>

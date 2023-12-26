@@ -83,7 +83,7 @@ public class AdminListController {
      
      System.out.println("totalCount2 : "+totalCount2);
      
-     Paging_orderDetail pageInfo2 = new Paging_orderDetail(pageNumber, "2", totalCount2, url2, startDate, endDate);
+     Paging_orderDetail pageInfo2 = new Paging_orderDetail(pageNumber, "2", totalCount2, url2, startDate, endDate, "1");
      map2.put("begin", String.valueOf(pageInfo.getBeginRow()));
      map2.put("end", String.valueOf(pageInfo.getEndRow()));
      
