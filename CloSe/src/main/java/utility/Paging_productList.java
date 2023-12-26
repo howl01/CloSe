@@ -19,6 +19,7 @@ public class Paging_productList {
 	private String keyword = ""; // 검색할 단어
 	private String bigcategory_name = "";
 	private String smallcategory_name = "";
+	private String brand = "";
 	
 	
 	public int getTotalCount() {
@@ -150,7 +151,8 @@ public class Paging_productList {
 			int totalCount, String url, 
 			String whatColumn, String keyword, 
 			String bigcategory_name, 
-			String smallcategory_name) {
+			String smallcategory_name, 
+			String brand) {
 
 		if (_pageNumber == null || _pageNumber.equals("null") || _pageNumber.equals("")) {
 			_pageNumber = "1";
@@ -195,7 +197,7 @@ public class Paging_productList {
 		this.keyword = keyword;
 		this.smallcategory_name = smallcategory_name;
 		this.bigcategory_name = bigcategory_name;
-
+		this.brand = brand;
 		// System.out.println("url2:"+url); //url2:/ex/list.ab
 		this.pagingHtml = getPagingHtml(url);
 
@@ -206,7 +208,8 @@ public class Paging_productList {
 
 		String result = "";
 		String added_param = "&whatColumn=" + whatColumn + "&keyword=" + keyword 
-							+ "&bigcategory_name=" + bigcategory_name + "&smallcategory_name=" +smallcategory_name;
+							+ "&bigcategory_name=" + bigcategory_name + "&smallcategory_name=" +smallcategory_name
+							+ "&brand="+brand;
 
 		if (this.beginPage != 1) {
 			result += "&nbsp;<li class='page-item'><a class='page-link' href='" + url + "?pageNumber=" + (1)

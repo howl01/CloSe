@@ -72,7 +72,7 @@ public class OrdersListController {
 		String url = request.getContextPath() + command;
 
 		System.out.println("totalCount개수" + totalCount);
-
+ 
 		Paging_orderDetail pageInfo = new Paging_orderDetail(pageNumber, "2", totalCount, url, startDate, endDate);
 		map.put("begin", String.valueOf(pageInfo.getBeginRow()));
 		map.put("end", String.valueOf(pageInfo.getEndRow()));
@@ -88,7 +88,7 @@ public class OrdersListController {
 
 		return viewPage;
 	}
-
+ 
 	@RequestMapping(value = command2)
 	public String ordersDetailForm(HttpServletRequest request) {
 

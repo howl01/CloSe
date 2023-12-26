@@ -10,7 +10,8 @@
 	.plist{
 		display: flex;
         flex-direction: row;
-	}
+        height: 800px;
+	} 
 	.filter .product{
 		float: left;
 	} 
@@ -18,10 +19,12 @@
 		width:150px;
 	}
 	.product{
-		width:700px;
 	}
 	.small-category{
-            display: none; /* 초기에는 하위 항목을 숨김 */
+        display: none; /* 초기에는 하위 항목을 숨김 */
+    }
+    #small-brand{
+    	display: none;
     }
     .categories{
     	list-style: none;
@@ -61,7 +64,8 @@ $(document).ready(function(){
 		<div class="col-lg-8">
 			<div style="padding:20 10 20 10">
 				<div style="">
-					<h3 style="padding: 22 0 22 0">상품</h3>
+					<h3 style="padding: 10 0 10 0">상품</h3>
+					<hr width="1280px">
 				</div> 
 				<div class="plist">
 					<div class="filter">
@@ -86,6 +90,20 @@ $(document).ready(function(){
 					            
 					            <c:set var="previousBigCategory" value="${category.bigcategory_name}" />
 					        </c:forEach>
+					        
+					        <li class="big-category" id="brand">
+					        	<h2 class="bc">브랜드</h2>
+					        </li>
+					        <c:forEach var="pb" items="${blists }">
+					         <c:if test="${!fn:substringBefore(pb.product_name,'/').equals(previousBrand)}">
+					        	<li id="small-brand">
+					        		<a class="category" href="list.product?brand=${fn:substringBefore(pb.product_name,'/') }">
+					        			${fn:substringBefore(pb.product_name,'/') }
+					        		</a>
+					        	</li>
+					         </c:if>
+					        	<c:set var="previousBrand" value="${fn:substringBefore(pb.product_name,'/') }" />
+					        </c:forEach>
 					    </ul>
 					    
 					    
@@ -100,7 +118,7 @@ $(document).ready(function(){
 					
 					
 					<div class="product">
-						<table width="100%">
+						<table>
 						  <c:choose>
 						    <c:when test="${empty plists}">
 						      <td align="center" width="300" height="200" style="padding: 10px; font-size: 30px;">
@@ -110,17 +128,24 @@ $(document).ready(function(){
 						    <c:otherwise>
 						      <c:forEach var="pb" items="${plists}" varStatus="Status">
 						        <c:set var="count" value="${Status.count}" />
-						        <td align="center" valign="top" width="300" height="200" style="padding: 10px">
-						          <div>
+						        <td align="center" valign="top" width="270px" style="padding:0 40px 0 0">
+						          <div style=" height: 220px;">  
 						           <a href="detail.product?product_number=${pb.product_number }">
-						          	<img id="preview" width="70px"
+						          	<img id="preview" width="100%" height="100%"
 									src='<c:url value='/resources/product/image/'/>${pb.image }' />
-						           </a>
-						          </div>
-						          
+						           </a> 
+						          </div>  
+						          <hr>
 						          <div>브랜드:${fn:substringBefore(pb.product_name,'/') }</div>
-						          <div>상품명:${fn:substringAfter(pb.product_name,'/') }</div>
-						          <div>가격:${pb.price }원</div>
+						          <div>상품명:${fn:substringAfter(pb.product_name,'/') }</div> 
+						          ★
+						          <c:if test="${pb.average_rating == 0 }">
+						          	-
+						          </c:if>
+						          <c:if test="${pb.average_rating != 0 }">
+						          	<fmt:formatNumber value="${pb.average_rating }" pattern=".0"/>
+						          </c:if>
+						          <div>가격:<fmt:formatNumber value="${pb.price }" pattern="#,###" />원</div>
 						        </td>
 						        <c:if test="${count % 4 == 0}">
 						          </tr><tr>
@@ -131,8 +156,9 @@ $(document).ready(function(){
 						</table>
 					</div>
 				</div>
-				${pageInfo.pagingHtml }
-				
+				<div>
+					${pageInfo.pagingHtml }
+				</div>
 				
 				
 			</div>
@@ -163,5 +189,4 @@ $(document).ready(function(){
 	</div>
 </div>
 
-<button onclick="location.href='view.main'">이동</button>
 <%@ include file="../main/bottom.jsp"%>

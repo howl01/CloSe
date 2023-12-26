@@ -235,41 +235,26 @@ window.navigator.geolocation.getCurrentPosition(function(pos) {
             <div class="container">
                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
 
-                  <div class="col">
+                  <c:forEach var="pb" items="${plists }" begin="1" end="4">
+                  	<div class="col">
+                     <div class="card shadow-sm">
+                        <a href="detail.product?product_number=${pb.product_number }"><img class="bd-placeholder-img card-img-top" 
+                        src="<c:url value='/resources/product/image/'/>${pb.image }" height="100%"></a>
+                        <b>${fn:substringBefore(pb.product_name,'/') }</b>  
+                        ${fn:substringAfter(pb.product_name,'/') }<br>
+                        <b><fmt:formatNumber value="${pb.price }" pattern="#,###" />원</b>
+                     </div>
+                  	</div>
+                  </c:forEach> 
+
+                  <!-- <div class="col">
                      <div class="card shadow-sm">
                         <a><img class="bd-placeholder-img card-img-top" src="/pimages/" width="100%" height="225"></a>
                         <div class="card-body" align="center">
 
                         </div>
                      </div>
-                  </div>
-
-                  <div class="col">
-                     <div class="card shadow-sm">
-                        <a><img class="bd-placeholder-img card-img-top" src="/pimages/" width="100%" height="225"></a>
-                        <div class="card-body" align="center">
-
-                        </div>
-                     </div>
-                  </div>
-
-                  <div class="col">
-                     <div class="card shadow-sm">
-                        <a><img class="bd-placeholder-img card-img-top" src="/pimages/" width="100%" height="225"></a>
-                        <div class="card-body" align="center">
-
-                        </div>
-                     </div>
-                  </div>
-
-                  <div class="col">
-                     <div class="card shadow-sm">
-                        <a><img class="bd-placeholder-img card-img-top" src="/pimages/" width="100%" height="225"></a>
-                        <div class="card-body" align="center">
-
-                        </div>
-                     </div>
-                  </div>
+                  </div> -->
 
                </div>
             </div>

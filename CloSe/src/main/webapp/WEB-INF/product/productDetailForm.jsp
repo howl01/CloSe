@@ -302,7 +302,6 @@ window.addEventListener('scroll', function() {
 	    var $setRows = $('#setRows');
 
 	    $setRows.submit(function (e) {
-	    	alert('${fn:length(rlists)}');
 	    	e.preventDefault();
 	    	var rowPerPage = 15;
 	    	
@@ -317,7 +316,7 @@ window.addEventListener('scroll', function() {
 		    	var pageTotal = Math.ceil(rowTotals/ rowPerPage);
 		    	var i = 0;
 	
-		    	for (; i < pageTotal; i++) {
+		    	for (; i < pageTotal; i++) { 
 		    		$('<a href="#"></a>')
 		    				.attr('rel', i)
 		    				.html(i + 1)

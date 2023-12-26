@@ -56,6 +56,9 @@ public class ProductBean {
       }
    }
    
+   private double average_rating;
+   
+   
    public ProductBean() {
       super();
    }
@@ -125,5 +128,11 @@ public class ProductBean {
    public void setXl_stock(int xl_stock) {
       this.xl_stock = xl_stock;
    }
+	public double getAverage_rating() {
+		return average_rating;
+	}
+	public void setAverage_rating(double average_rating) {
+		this.average_rating = average_rating;
+	}
    
 }

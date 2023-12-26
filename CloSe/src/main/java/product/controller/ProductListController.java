@@ -33,13 +33,16 @@ public class ProductListController {
 	@RequestMapping(value=command)
 	public String productList(@RequestParam(value="bigcategory_name",  required = false) String bigcategory_name,
 							@RequestParam(value="smallcategory_name",  required = false) String smallcategory_name,
+							@RequestParam(value="brand",  required = false) String brand,
 							@RequestParam(value="whatColumn", required = false) String whatColumn,
 							@RequestParam(value="keyword", required = false) String keyword,
 							@RequestParam(value="pageNumber", required = false) String pageNumber,
 							HttpServletRequest request, Model model) {
-		
+		List<ProductBean> blists = productDao.getAllProduct();
 		List<CategoryBean> clists = categoryDao.getAllCategory();
+		model.addAttribute("blists", blists);
 		model.addAttribute("clists", clists);
+		
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("whatColumn", whatColumn);
 		map.put("keyword", "%"+keyword+"%");
@@ -61,8 +64,14 @@ public class ProductListController {
 				totalCount = productDao.getCountBySmallcategory(smallcategory_name);
 			}
 		}
+		if(brand !=null) {
+			if(!brand.equals("null")) {
+				String brand1 = "%"+brand+"%";
+				totalCount = productDao.getCountByBrand(brand1);
+			}
+		}
 		
-		Paging_productList pageInfo = new Paging_productList(pageNumber, "2", totalCount, url, whatColumn, keyword, bigcategory_name, smallcategory_name);
+		Paging_productList pageInfo = new Paging_productList(pageNumber, "4", totalCount, url, whatColumn, keyword, bigcategory_name, smallcategory_name, brand);
 		
 		if(bigcategory_name != null) {
 			if(!bigcategory_name.equals("null")) {
@@ -74,6 +83,12 @@ public class ProductListController {
 			if(!smallcategory_name.equals("null")) {
 				System.out.println("여기들어왔음44444444444444444444444444444444444");
 				plists = productDao.getProductBySmallcategory(smallcategory_name,pageInfo);
+			}
+		}
+		if(brand !=null) {
+			if(!brand.equals("null")) {
+				String brand1 = "%"+brand+"%";
+				plists = productDao.getProductByBrand(brand1);
 			}
 		}
 		

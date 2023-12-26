@@ -63,5 +63,17 @@ public class ProductDao {
 	public int getCountBySmallcategory(String smallcategory_name) {
 		return sqlSessionTemplate.selectOne(namespace+".getCountBySmallcategory", smallcategory_name);
 	}
+
+	public List<ProductBean> getPopularProduct() {
+		return sqlSessionTemplate.selectList(namespace+".getPopularProduct");
+	}
+
+	public int getCountByBrand(String brand) {
+		return sqlSessionTemplate.selectOne(namespace+".getCountByBrand", brand);
+	}
+
+	public List<ProductBean> getProductByBrand(String brand) {
+		return sqlSessionTemplate.selectList(namespace+".getProductByBrand", brand);
+	}
 	
 }

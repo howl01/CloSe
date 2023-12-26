@@ -13,6 +13,26 @@
 	th{
 		text-align: center;
 	}
+	.page-link {
+	  color: #000; 
+	  background-color: #fff;
+	  border: 1px solid #ccc; 
+	}
+	
+	.page-item.active .page-link {
+	 z-index: 1;
+	 color: #555;
+	 font-weight:bold;
+	 background-color: #f1f1f1;
+	 border-color: #ccc;
+	 
+	}
+	
+	.page-link:focus, .page-link:hover {
+	  color: #000;
+	  background-color: #fafafa; 
+	  border-color: #ccc;
+	}
 </style>
 
 <script type="text/javascript">
@@ -87,7 +107,71 @@
        location.href = "delete.member?member_id=" + member_id;
    }
 
+   //====================================
+	$(document).ready(function () {
+	    // 페이지 로딩 시 URL 파라미터 확인
+	    var activeTab = '${param.activeTab}';
+	    alert(activeTab);
+	    // URL 파라미터에 따라 탭 활성화
+	    if(activeTab!=3){
+		    $("a[href='#tab1']").addClass('active');
+	    }
+	    if (activeTab == 3) {
+	        $('.tab-pane').removeClass('active show'); // 모든 탭에서 'active' 클래스 제거
+	        $('.tab-nav-link').removeClass('active'); // 모든 탭에서 'active' 클래스 제거
+	        $("a[href='#tab"+activeTab+"']").addClass('active');
+	        $('#tab' + activeTab).addClass('active show'); // 선택된 탭에 'active' 클래스 추가
+	    }
+	    
+	    
+	});
+   //=====================================
+	function orderdetail(orders_id){
+		$('.tab-pane').removeClass('active show');
+	   $.ajax({
+		  url: "detail.orders?orders_id="+orders_id,
+		  type: "post", 
+		  contentType: "application/json; charset=utf8",
+		  success : function(data){
+			alert("성공");  
+			$("#orderdetail").empty();
+
+	        // 받은 데이터를 기반으로 새로운 테이블 행을 동적으로 생성하고 삽입합니다.
+	        $(data).each(function () {
+	            var newRow = $("<tr>");
+	            newRow.append("<td><img id='preview' width='100px' src='" + this.image + "' class='rounded' /></td>");
+	            
+	            // Splitting the product_name based on '/'
+	            var productNameParts = this.product_name.split('/');
+	            newRow.append("<td><a href='detail.product?product_number=" + this.product_number + "'>[" + productNameParts[0] + "] <br>" + productNameParts[1] + "</a></td>");
+	            
+	            newRow.append("<td>" + this.price + "원</td>");
+	            newRow.append("<td>" + this.product_size + "</td>");
+	            newRow.append("<td>" + this.qty + "</td>");
+	            newRow.append("<td>" + (this.price * this.qty) + "원 <button type='button' onclick='openReviewFormWindow(" + this.orderdetail_number + ")'>리뷰작성</button></td>");
+	            newRow.appendTo("#orderdetail");
+        	});
+
+	        // 새로운 탭을 표시합니다.
+	        $('#tab3-1').addClass('active show');
+		  },
+		  error : function(){
+			alert("실패");			  
+		  }
+	   });
+   } 
    
+	function openReviewFormWindow(orderDetailNumber) {
+		alert(orderDetailNumber);
+	    // 새 창을 열기
+	    window.open("reviewRegister.jsp?orderDetailNumber="+orderDetailNumber, "reviewWindow", "_blank", "menubar=no, toolbar=no");
+	}
+	function handleTabClick(num){
+		$('#tab3-1').removeClass('active show');
+		if(num==3){
+			$('#tab3').addClass('active show');
+		}
+	}
 </script>
 
 <div class="container">
@@ -100,25 +184,25 @@
  	
 	<ul class="nav nav-tabs" role="tablist">
 	  <li class="nav-item" role="presentation">
-	    <a class="nav-link active" data-bs-toggle="tab" href="#mypage" aria-selected="true" role="tab">내 정보</a>
+	    <a class="nav-link" data-bs-toggle="tab" href="#tab1" aria-selected="true" role="tab" onclick="handleTabClick()">내 정보</a>
+	  </li> 
+	  <li class="nav-item" role="presentation">
+	    <a class="nav-link" data-bs-toggle="tab" href="aa" aria-selected="false" role="tab" tabindex="-1" onclick="handleTabClick()">내 코디</a>
 	  </li>
 	  <li class="nav-item" role="presentation">
-	    <a class="nav-link" data-bs-toggle="tab" href="aa" aria-selected="false" role="tab" tabindex="-1">내 코디</a>
+	    <a class="nav-link" data-bs-toggle="tab" href="#tab3" aria-selected="false" role="tab" tabindex="-1" onclick="handleTabClick('3')">구매 상품</a>
 	  </li>
 	  <li class="nav-item" role="presentation">
-	    <a class="nav-link" data-bs-toggle="tab" href="bb" aria-selected="false" role="tab" tabindex="-1">구매 상품</a>
+	    <a class="nav-link" data-bs-toggle="tab" href="#coupon" aria-selected="false" role="tab" tabindex="-1" onclick="handleTabClick()">보유쿠폰</a>
 	  </li>
 	  <li class="nav-item" role="presentation">
-	    <a class="nav-link" data-bs-toggle="tab" href="#coupon" aria-selected="false" role="tab" tabindex="-1">보유쿠폰</a>
-	  </li>
-	  <li class="nav-item" role="presentation">
-	    <a class="nav-link" data-bs-toggle="tab" href="#delete" aria-selected="false" role="tab" tabindex="-1">회원탈퇴</a>
+	    <a class="nav-link" data-bs-toggle="tab" href="#delete" aria-selected="false" role="tab" tabindex="-1" onclick="handleTabClick()">회원탈퇴</a>
 	  </li>
 	</ul>
-	
+		
 	<div id="myTabContent" class="tab-content">
 		<!-- 첫번째 탭 -->
-		<div class="tab-pane fade active show" id="mypage" role="tabpanel">
+		<div class="tab-pane fade active show" id="tab1" role="tabpanel">
 			<div class="row">
 				<form>
 			        <table class="table" id="article-table">
@@ -340,11 +424,82 @@
 		</div>
 		
 		<!-- 세번째 탭 -->
-		<div class="tab-pane fade" id="bb" role="tabpanel">
+		<div class="tab-pane fade" id="tab3" role="tabpanel">
 			<div class="row">
-			
+				<div style="margin-bottom: 20px; margin-top:30px;">
+				    <form action="mypage.member" method="get">
+				    	<input type="hidden" name="activeTab" value="3">
+				        <label for="startDate">시작일:</label>
+				        <input type="date" id="startDate" name="startDate">
+				        
+				        <label for="endDate">종료일:</label>
+				        <input type="date" id="endDate" name="endDate">
+				        
+				        <button type="submit">필터</button>
+				    </form>
+				</div>
+				
+				<table class="table">
+					<thead>
+						<tr>
+							<th>
+								주문 날짜 
+							</th>
+							<th>
+								주문	번호 
+							</th>
+							<th>
+								주문 상태 
+							</th>
+							<th>
+								결제 금액 
+							</th>
+							<th>
+								상세 
+							</th>
+						</tr>	
+					</thead>
+					<tbody>
+						<c:forEach var="ob" items="${olists }">
+							<tr>
+								<td>
+									${ob.orders_date }
+								</td>
+								<td>
+									${ob.orders_id }
+								</td>
+								<td>
+									${ob.status }
+								</td>
+								<td>
+									${ob.totalamount }
+								</td>
+								<td>
+									<button onclick="orderdetail('${ob.orders_id }')">주문상세</button>
+								</td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+				<div class="row">
+				    <div class="col-lg-12 text-center">
+				        <div class="d-flex justify-content-center">
+				            ${pageInfo.pagingHtml}
+				        </div>
+				    </div> 
+				</div>
+				
 			</div>
 		</div>
+		<div class="tab-pane fade" id="tab3-1" role="tabpanel">
+			<div class="row">
+				<table class="table" id="orderdetail">
+				</table>
+			</div>
+		</div>
+		
+		
+		
 		
 		<!-- 네번째 탭 -->
 		<div class="tab-pane fade" id="coupon" role="tabpanel">
