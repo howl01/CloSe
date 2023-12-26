@@ -20,7 +20,6 @@ public class ProductListController {
 
 	private final String command = "/list.product";
 	private final String viewPage = "productList";
-	private final String gotoPage = "";
 	
 	@Autowired
 	ProductDao productDao; 

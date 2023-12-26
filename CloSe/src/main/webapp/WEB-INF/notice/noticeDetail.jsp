@@ -147,7 +147,7 @@
 			<tr>
 				<td colspan="2" align="right">
 					<input type="button" class="btn btn-dark me-md-2" value="목록" onClick="location.href='list.notice?pageNumber=${ pageNumber }'">
-					<c:if test="${ member_id == 'admin' }">
+					<c:if test="${ loginInfo.member_id == 'admin' }">
 					<input type="button" class="btn btn-dark me-md-2" value="수정" onClick="update('${ pageNumber }', '${ noticeBean.notice_number }')">
 					</c:if>
 				</td>
@@ -155,6 +155,3 @@
             </tbody>
         </table>
     </div>
-
-	
-</table>

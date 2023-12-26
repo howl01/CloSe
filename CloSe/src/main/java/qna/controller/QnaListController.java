@@ -53,7 +53,6 @@ public class QnaListController {
 		 
 		 List<QnaBean> lists = qnaDao.getAllQna(map, pageInfo);
 		 
-		 
 		 model.addAttribute("lists", lists);
 		 model.addAttribute("pageInfo", pageInfo);
 		 model.addAttribute("number", number);

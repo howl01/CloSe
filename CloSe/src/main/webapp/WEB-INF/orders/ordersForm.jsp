@@ -25,13 +25,29 @@ function updatePrices() {
     document.getElementById('totalAmount').value = total;
 }
 
+function updateTotalAmount() {
+	alert(1);
+    var totalPrice = parseInt(document.getElementById('totalPrice').innerText);
+    var deliveryPrice = parseInt(document.getElementById('deliveryPrice').innerText);
+    var selectedCouponOption = document.getElementById('couponSelect');
+    
+    var selectedCouponDiscount = selectedCouponOption.options[selectedCouponOption.selectedIndex].getAttribute('data-discount');
+    // 쿠폰 할인 적용
+    var discountAmount = (totalPrice * selectedCouponDiscount) / 100;
+    var totalAmount = totalPrice + deliveryPrice - discountAmount;
+    
+    // 화면 업데이트
+    document.getElementById('total').innerText = totalAmount;
+    document.getElementById('totalAmount').value = totalAmount;
+}
+
 window.onload = function () {
     updatePrices();
 };
 
 
 function goCart() {
-    location.href = "cartAdd.cart?member_id='kim'";
+		location.href = "cartAdd.cart";
 }
 
 function allCheck(all) { //전체체크박스를 눌렀을때
@@ -141,15 +157,13 @@ function pay() {
             msg += '상점 거래ID : ' + rsp.merchant_uid;
             msg += '결제 금액 : ' + rsp.paid_amount;
             msg += '카드 승인번호 : ' + rsp.apply_num;
-            
-          
+            document.getElementById('orders_id').value = rsp.imp_uid;
+            document.orderform.submit();
             
         } else {    // 결제가 실패했을 때
             // 결제에 실패했을떄 실패메세지와 실패사유를 출력
             var msg = '결제에 실패하였습니다.';
             msg += '실패 사유 : ' + rsp.error_msg;
-            document.getElementById('orders_id').value = 'merchant_' + new Date().getTime();
-            document.orderform.submit();
         }
         alert(msg);
     });
@@ -169,7 +183,13 @@ function pay() {
 					<h4>1.주문하는상품</h4>
 					<form method="post" action="order.orders" name="orderform">
 						<input type="hidden" name="orders_id" id="orders_id" value="">
-						<input type="hidden" name="member_id" value="kim">
+						
+						<c:if test="${not empty loginInfo }">
+							<input type="hidden" name="member_id" value="${loginInfo.member_id}">
+						</c:if>
+						<c:if test="${not empty kakaoLoginInfo }">
+							<input type="hidden" name="member_id" value="${kakaoLoginInfo.member_id}">
+						</c:if>
 						<input type="hidden" name="totalamount" id="totalAmount">
 			            <table class="table">
                            <thead>
@@ -189,7 +209,7 @@ function pay() {
                                                     src='<c:url value='/resources/product/image/'/>${cib.image }'
                                                     class="rounded" />
                                             </td>
-                                            <td>
+                                            <td> 
                                                 [${fn:substringBefore(cib.product_name,'/') }] <br>
                                             	${fn:substringAfter(cib.product_name,'/') } <br>
                                             	사이즈:${cib.product_size }
@@ -246,12 +266,23 @@ function pay() {
                 	</tr>
                  </tbody>
                 </table>
-               </form>
                
+               <h4>3.결제정보</h4>
                <table class="table">
                	<tr>
                  <td>
                   상품금액:<span id="totalPrice">${totalPrice }</span>원 <br>
+                  <select id="couponSelect" onchange="updateTotalAmount()" name="coupon_number">
+                  	<c:if test="${empty couponList }">
+	                  	<option value="" disabled>보유 중인 쿠폰이 없습니다.</option>
+                  	</c:if>
+                  	<c:if test="${not empty couponList }">
+                  		<option value="">쿠폰선택</option>
+                  	<c:forEach var="coupon" items="${couponList }">
+                  		<option value="${coupon.coupon_number}"  data-discount="${coupon.coupon_discount}">${coupon.coupon_name }/${coupon.coupon_discount }% 할인</option>
+                  	</c:forEach>
+                  	</c:if>
+                  </select>
                  </td>
                  <td>
                   배송비:<span id="deliveryPrice"></span>원
@@ -261,7 +292,7 @@ function pay() {
                  </td>
                 </tr>
                </table>
-               
+               </form>
                
                <input type="checkbox" id="selectAll" onclick="allCheck(this)"> 전체 동의
 				<br>

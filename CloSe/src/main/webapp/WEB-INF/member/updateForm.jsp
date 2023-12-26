@@ -121,6 +121,21 @@ $(document).ready(function() {
 	function goMyPage(){
 		location.href="mypage.member";
 	}
+	
+	function previewImage() {
+	    var input = document.getElementById('upload');
+	    var imgThumb = document.getElementById('imgThumb');
+
+	    if (input.files && input.files[0]) {
+	        var reader = new FileReader();
+
+	        reader.onload = function (e) {
+	            imgThumb.src = e.target.result;
+	        };
+
+	        reader.readAsDataURL(input.files[0]);
+	    }
+	}
 </script>
 
 <div class="container">
@@ -150,9 +165,24 @@ $(document).ready(function() {
 		<!-- 첫번째 탭 -->
 		<div class="tab-pane fade active show" id="home" role="tabpanel">
 			<div class="row">
-		        <form name="f" class="needs-validation" action = "update.member" method="post" onsubmit="return updatecheck()">
+		        <form name="f" class="needs-validation" action = "update.member" method="post" onsubmit="return updatecheck()" enctype="multipart/form-data">
 			        <table class="table" id="article-table">
 			        	<c:if test="${not empty loginInfo or not empty kakaoLoginInfo}">
+			        		<tr>
+					           <th>프로필 사진</th>
+					           <td>
+					           	  <c:choose>
+						              <c:when test="${not empty kakaoLoginInfo}">
+						              	<img id="imgThumb" src="<%=request.getContextPath()%>/resources/memberImage/${kakaoLoginInfo.member_image}" width="100" height="100"><br>
+				                        <input type="file" class="form-control mb-3" id="upload" name="upload" value="${kakaoLoginInfo.member_image}" style="border-color: black;" onchange="previewImage()">
+				                      </c:when>
+				                      <c:when test="${not empty loginInfo}">
+				                      	<img id="imgThumb" src="<%=request.getContextPath()%>/resources/memberImage/${loginInfo.member_image}" width="100" height="100"><br>
+				                        <input type="file" class="form-control mb-3" id="upload" name="upload" value="${loginInfo.member_image}" style="border-color: black;" onchange="previewImage()">
+				                      </c:when>
+			                      </c:choose>
+					           </td>
+					        </tr>
 					        <tr>
 					           <th>아이디</th>
 					           <td>
@@ -374,6 +404,7 @@ $(document).ready(function() {
 				        <tr>
 			               <th>휴대폰번호</th>
 				           <td>
+				           &nbsp;&nbsp;&nbsp;
 				              <c:choose>
 					              <c:when test="${not empty kakaoLoginInfo}">
 					              	${kakaoLoginInfo.phone}
@@ -384,13 +415,13 @@ $(document).ready(function() {
 			                        <input type="hidden" id="phone" name="phone">
 			                      </c:when>
 		                      </c:choose>
-			                  <input type = "button" id="phoneVerificationButton" value = "인증번호 요청" onclick = "sendSMS($('input[name=phone]').val())" style="border-color: black;">
+			                  <input type = "button" id="phoneVerificationButton" value = "인증번호 요청" onclick = "sendSMS($('input[name=phone]').val())">
 				           </td>
 				        </tr>
 				        <tr>
 				        	<th>휴대폰 인증</th>
 				        	<td>
-				              <input type="text" id="verificationCode" name="verificationCode" style="border-color: black;">&nbsp;
+				              <input type="text" id="verificationCode" name="verificationCode" size="7">&nbsp;
 				              <input type="button" value="인증하기" onClick="verify()">
 				        	</td>
 				        </tr>

@@ -31,8 +31,6 @@ public class StyleBean {
 	private MultipartFile MImage4;
 	private MultipartFile MImage5;
 
-	
-	
 	private String nickname;
 
 	private String product_name1;
@@ -50,16 +48,130 @@ public class StyleBean {
 	private String pimage3;
 	private String pimage4;
 
-	public String getNickname() {
-		return nickname;
+	private double avg_temperature;
+
+	private String gender;
+	private String height;
+	private String weight;
+	private String birth;
+
+	private Double temperature;
+
+	private String prevImage1;
+	private String prevImage2;
+	private String prevImage3;
+	private String prevImage4;
+	private String prevImage5;
+
+	public StyleBean() {
 	}
 
-	public void setNickname(String nickname) {
+	public StyleBean(int style_number, String image1, String image2, String image3, String image4, String image5,
+			String title, String content, String style, int read_count, int recommend_count, Date write_date,
+			Integer product_number1, Integer product_number2, Integer product_number3, Integer product_number4,
+			String member_id, List<MultipartFile> images, MultipartFile mImage1, MultipartFile mImage2,
+			MultipartFile mImage3, MultipartFile mImage4, MultipartFile mImage5, String nickname, String product_name1,
+			String product_name2, String product_name3, String product_name4, String price1, String price2,
+			String price3, String price4, String pimage1, String pimage2, String pimage3, String pimage4,
+			double avg_temperature, String gender, String height, String weight, String birth, Double temperature) {
+		this.style_number = style_number;
+		this.image1 = image1;
+		this.image2 = image2;
+		this.image3 = image3;
+		this.image4 = image4;
+		this.image5 = image5;
+		this.title = title;
+		this.content = content;
+		this.style = style;
+		this.read_count = read_count;
+		this.recommend_count = recommend_count;
+		this.write_date = write_date;
+		this.product_number1 = product_number1;
+		this.product_number2 = product_number2;
+		this.product_number3 = product_number3;
+		this.product_number4 = product_number4;
+		this.member_id = member_id;
+		this.images = images;
+		MImage1 = mImage1;
+		MImage2 = mImage2;
+		MImage3 = mImage3;
+		MImage4 = mImage4;
+		MImage5 = mImage5;
 		this.nickname = nickname;
+		this.product_name1 = product_name1;
+		this.product_name2 = product_name2;
+		this.product_name3 = product_name3;
+		this.product_name4 = product_name4;
+		this.price1 = price1;
+		this.price2 = price2;
+		this.price3 = price3;
+		this.price4 = price4;
+		this.pimage1 = pimage1;
+		this.pimage2 = pimage2;
+		this.pimage3 = pimage3;
+		this.pimage4 = pimage4;
+		this.avg_temperature = avg_temperature;
+		this.gender = gender;
+		this.height = height;
+		this.weight = weight;
+		this.birth = birth;
+		this.temperature = temperature;
+	}
+
+	public String getPrevImage1() {
+		return prevImage1;
+	}
+
+	public void setPrevImage1(String prevImage1) {
+		this.prevImage1 = prevImage1;
+	}
+
+	public String getPrevImage2() {
+		return prevImage2;
+	}
+
+	public void setPrevImage2(String prevImage2) {
+		this.prevImage2 = prevImage2;
+	}
+
+	public String getPrevImage3() {
+		return prevImage3;
+	}
+
+	public void setPrevImage3(String prevImage3) {
+		this.prevImage3 = prevImage3;
+	}
+
+	public String getPrevImage4() {
+		return prevImage4;
+	}
+
+	public void setPrevImage4(String prevImage4) {
+		this.prevImage4 = prevImage4;
+	}
+
+	public String getPrevImage5() {
+		return prevImage5;
+	}
+
+	public void setPrevImage5(String prevImage5) {
+		this.prevImage5 = prevImage5;
 	}
 
 	public String getProduct_name1() {
 		return product_name1;
+	}
+
+	public int getRecommend_count() {
+		return recommend_count;
+	}
+
+	public void setRecommend_count(int recommend_count) {
+		this.recommend_count = recommend_count;
+	}
+
+	public void setMImage5(MultipartFile mImage5) {
+		MImage5 = mImage5;
 	}
 
 	public void setProduct_name1(String product_name1) {
@@ -154,7 +266,53 @@ public class StyleBean {
 		this.pimage4 = pimage4;
 	}
 
-	private double avg_temperature;
+	public Double getTemperature() {
+		return temperature;
+	}
+
+	public void setTemperature(Double temperature) {
+		this.temperature = temperature;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
+	public String getHeight() {
+		return height;
+	}
+
+	public void setHeight(String height) {
+		this.height = height;
+	}
+
+	public String getWeight() {
+		return weight;
+	}
+
+	public void setWeight(String weight) {
+		this.weight = weight;
+	}
+
+	public String getBirth() {
+		return birth;
+	}
+
+	public void setBirth(String birth) {
+		this.birth = birth;
+	}
 
 	public double getAvg_temperature() {
 		return avg_temperature;
@@ -198,39 +356,6 @@ public class StyleBean {
 
 	public MultipartFile getMImage5() {
 		return MImage5;
-	}
-
-	public void setMImage5(MultipartFile mImage5) {
-		MImage5 = mImage5;
-	}
-
-	StyleBean() {
-		super();
-	}
-
-	StyleBean(int style_number, String image1, String image2, String image3, String image4, String image5, String title,
-			String content, String style, int read_count, int recommend_count, Date write_date,
-			Integer product_number1, Integer product_number2, Integer product_number3, Integer product_number4,
-			String member_id, List<MultipartFile> images) {
-		super();
-		this.style_number = style_number;
-		this.image1 = image1;
-		this.image2 = image2;
-		this.image3 = image3;
-		this.image4 = image4;
-		this.image5 = image5;
-		this.title = title;
-		this.content = content;
-		this.style = style;
-		this.read_count = read_count;
-		this.recommend_count = recommend_count;
-		this.write_date = write_date;
-		this.product_number1 = product_number1;
-		this.product_number2 = product_number2;
-		this.product_number3 = product_number3;
-		this.product_number4 = product_number4;
-		this.member_id = member_id;
-		this.images = images;
 	}
 
 	public List<MultipartFile> getImages() {
@@ -346,14 +471,6 @@ public class StyleBean {
 
 	public void setRead_count(int read_count) {
 		this.read_count = read_count;
-	}
-
-	public int getRecommend_count() {
-		return recommend_count;
-	}
-
-	public void setRecommend_count(int recommend_count) {
-		this.recommend_count = recommend_count;
 	}
 
 	public Date getWrite_date() {

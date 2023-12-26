@@ -1,4 +1,4 @@
-package member.controller;
+  package member.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -22,7 +22,7 @@ import member.model.MemberDao;
 public class KakaoLoginController {
 	
 	private final String command = "/kakaologin.member";
-	private final String gotoPage = "redirect:view.main";
+	private final String gotoPage = "view.main";
 	
 	@Autowired
 	private MemberDao memberDao;
@@ -44,7 +44,7 @@ public class KakaoLoginController {
 		}else {
 			session.setAttribute("kakaoLoginInfo", memberBean);
 			if (prevPage != null && !prevPage.isEmpty()
-					&& !prevPage.equals("http://localhost:8080/ex/register.member")) {
+					&& !prevPage.equals("http://localhost:8080/ex/kakaoRegister.member")) {
 				// 이전 페이지의 URL을 세션에서 제거
 				session.removeAttribute("prevPage");
 				out.println("<script>alert('로그인 되었습니다.'); location.href='" + prevPage + "';</script>");
