@@ -159,7 +159,7 @@ CREATE TABLE qna (
    write_date   Date,
    secret varchar2(10) default 'NO',
    ref   number,
-   re_level   number,
+   re_level   number default 0,
    answer number default 0,
    qna_category varchar2(20),
      member_id varchar2(15),

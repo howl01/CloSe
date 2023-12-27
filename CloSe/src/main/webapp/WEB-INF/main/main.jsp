@@ -20,6 +20,10 @@
       margin: auto;
       /* 가운데 정렬 */
    }
+   
+   .custom-height{
+   		height:  171px;
+   }
 </style>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script type="text/javascript">
@@ -125,15 +129,19 @@ window.navigator.geolocation.getCurrentPosition(function(pos) {
       <div class="carousel-inner">
          <div class="carousel-item active">
             <img src="resources/img/logo.png"
-               class="d-block w-100" alt="...">
+               class="d-block w-100 custom-height" alt="...">
          </div>
          <div class="carousel-item">
-            <img src="resources/img/logo.png"
-               class="d-block w-100" alt="...">
+            <img src="resources/img/couponBanner.png"
+               class="d-block w-100 custom-height" alt="...">
          </div>
          <div class="carousel-item">
-            <img src="resources/img/logo.png"
-               class="d-block w-100" alt="...">
+            <img src="resources/img/serviceBanner.png"
+               class="d-block w-100 custom-height" alt="...">
+         </div>
+         <div class="carousel-item">
+            <img src="resources/img/serviceBanner2.png"
+               class="d-block w-100 custom-height" alt="...">
          </div>
       </div>
       <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying"

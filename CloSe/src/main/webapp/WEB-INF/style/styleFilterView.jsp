@@ -53,6 +53,76 @@
     </style>
 </head>
 
+<script type="text/javascript">
+$(document).ready(function () {
+$('input[type=checkbox]').on('click', function () {
+	var checkboxSeasonValues = [];
+	$("input[name='season']:checked").each(function(i){
+		checkboxSeasonValues.push($(this).val());
+	});
+	
+	var checkboxGenderValues = [];
+	$("input[name='gender']:checked").each(function(i){
+		checkboxGenderValues.push($(this).val());
+	});
+	
+	var checkboxStyleValues = [];
+	$("input[name='style']:checked").each(function(i){
+		checkboxStyleValues.push($(this).val());
+	});
+	
+	var tempValue = "${temp}";
+	console.log("tempValue: ", tempValue);
+	
+	var allData = {"seasonArray":checkboxSeasonValues, "genderArray":checkboxGenderValues, "styleArray":checkboxStyleValues, "temp": tempValue};
+	
+            $.ajax({
+                url: "styleFilter.style",
+                method: "post",
+                data: allData,
+                success: function(response){
+                	var responseData = JSON.parse(response);
+					
+                	alert("완료");
+                	
+                    // 이동할 페이지 URL
+                    var redirectPage = responseData.redirectPage;
+
+                    // 페이지 이동
+                    window.location.href = redirectPage;
+                	
+                	<%-- console.log("JSON 응답: ", json);
+                	console.log("JSON 길이: ", json.length);
+                	if(json.length > 0){
+                		for (var i = 0; i < json.length; i++) {
+                			console.log("요소 " + i + ": ", json[i]);
+                            var styleBean = json[i];
+                            var styleHtml = '<div class="card m-3">' +
+                            '<a href="detail.style?style_number=' + styleBean.style_number + '" class="link-dark link-underline-opacity-0">' +
+                            '<img src="<%=request.getContextPath()%>/resources/styleImage/' + styleBean.image1 + '" class="card-img-top">' +
+                            '<div class="card-body">' +
+                            '<img src="data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'16\' height=\'16\' fill=\'gray\' class=\'bi bi-person-circle\' viewBox=\'0 0 16 16\'%3E%3Cpath d=\'M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z\'/%3E%3Cpath fill-rule=\'evenodd\' d=\'M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z\'/%3E%3C/svg%3E" alt="Person Icon">' +
+                            styleBean.nickname +
+                            '<p class="card-text">' + styleBean.title + '</p>' +
+                            '</div>' +
+                            '</a>' +
+                            '</div>';
+
+                        $("#styleContainer").append(styleHtml);
+                        }
+                    }
+                    alert("완료");
+                    window.opener.location.reload(); --%>
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error("AJAX Error:", textStatus, errorThrown);
+                    alert("검색 중 오류가 발생했습니다. 자세한 내용은 콘솔을 확인하세요.");
+                }
+            });
+        });
+    });
+</script>
+
 <div class="d-flex justify-content-start">
 <div class="flex-shrink-0 p-3 bg-white" style="width: 280px;">
     <a href="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
@@ -214,7 +284,5 @@
 
         </c:if>
     </c:forEach>
-    </div>
-	</div>  
-</div>
+    
 <%@ include file="../main/bottom.jsp" %>

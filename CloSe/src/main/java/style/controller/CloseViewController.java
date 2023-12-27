@@ -41,25 +41,98 @@ public class CloseViewController {
 
 	@Autowired
 	StyleDao styleDao;
+	
+    public static String coordToAddr(String longitude, String latitude) {
+        String url = "https://dapi.kakao.com/v2/local/geo/coord2address.json?x=" + longitude + "&y=" + latitude;
+        String addr = "";
+        try {
+            addr = getRegionAddress(getJSONData(url));
+        } catch (Exception e) {
+            System.out.println("주소 api 요청 에러");
+            e.printStackTrace();
+        }
+        return addr;
+    }
+    
+    private static String getJSONData(String apiUrl) throws Exception {
+        HttpURLConnection conn = null;
+        StringBuilder response = new StringBuilder();
+
+        String auth = "KakaoAK " + "44b34b58cb54c27ae218a2289fc544d9";
+
+        URL url = new URL(apiUrl);
+
+        conn = (HttpURLConnection) url.openConnection();
+
+        conn.setRequestMethod("GET");
+        conn.setRequestProperty("X-Requested-With", "curl");
+        conn.setRequestProperty("Authorization", auth);
+
+        conn.setDoOutput(true);
+
+        int responseCode = conn.getResponseCode();
+        if (responseCode == 400) {
+            System.out.println("400:: 해당 명령을 실행할 수 없음");
+        } else if (responseCode == 401) {
+            System.out.println("401:: Authorization가 잘못됨");
+        } else if (responseCode == 500) {
+            System.out.println("500:: 서버 에러, 문의 필요");
+        } else { // 성공 후 응답 JSON 데이터받기
+
+            BufferedReader br = new BufferedReader(
+                    new InputStreamReader(conn.getInputStream(), java.nio.charset.StandardCharsets.UTF_8));
+
+            String inputLine;
+            while ((inputLine = br.readLine()) != null) {
+                response.append(inputLine);
+            }
+        }
+
+        return response.toString();
+    }
+
+    private static String getRegionAddress(String jsonString) {
+        String value = "";
+        try {
+            JSONObject jObj = new JSONObject(jsonString);
+            JSONArray documents = jObj.getJSONArray("documents");
+            if (documents.length() > 0) {
+                JSONObject address = documents.getJSONObject(0).getJSONObject("address");
+                String region1 = address.getString("region_1depth_name");
+                String region2 = address.getString("region_2depth_name");
+                String region3 = address.getString("region_3depth_name");
+                value = region1 + " " + region2 + " " + region3;
+            }
+        } catch (Exception e) {
+            System.out.println("JSON에서 주소 추출 중 오류 발생");
+            e.printStackTrace();
+        }
+        return value;
+    }
 
 	// 현재 위치좌표 받아오기
-	@RequestMapping(value = command, method = RequestMethod.POST)
-	public void temp(@RequestParam("latitude") double latitude, @RequestParam("longitude") double longitude) {
-		System.out.println("Latitude: " + latitude);
-		System.out.println("Longitude: " + longitude);
+    @RequestMapping(value = command, method = RequestMethod.POST)
+    public void temp(@RequestParam("latitude") double latitude, @RequestParam("longitude") double longitude) {
+        String addr = coordToAddr(String.valueOf(longitude), String.valueOf(latitude));
 
-		String latString = String.valueOf(latitude);
-		String longString = String.valueOf(longitude);
+        System.out.println("Latitude: " + latitude);
+        System.out.println("Longitude: " + longitude);
+        System.out.println("Address: " + addr);
 
-		this.latString = latString;
-		this.longString = longString;
-	}
+        this.latString = String.valueOf(latitude);
+        this.longString = String.valueOf(longitude);
+    }
 
 	@RequestMapping(value = command, method = RequestMethod.GET)
 	public String close(Model model) {
-
+		
 		System.out.println("latString: " + latString);
 		System.out.println("longString: " + longString);
+		
+		String addr = coordToAddr(longString, latString);
+	    System.out.println("Address: " + addr);
+	    
+	    model.addAttribute("addr", addr);
 
 		String apiUrl = "";
 		if (latString == null || longString == null) {
@@ -70,8 +143,6 @@ public class CloseViewController {
 		}
 		try {
 
-			// OpenWeatherMap API 요청
-			apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=Seoul&appid=27f0e2dcc40e953d16644b55e897423d&units=metric";
 			URL url = new URL(apiUrl);
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 			connection.setRequestMethod("GET");

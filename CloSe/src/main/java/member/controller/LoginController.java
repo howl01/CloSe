@@ -72,6 +72,9 @@ public class LoginController {
 						out.flush();
 					}
 				}
+			}else { //비번이 일치안함
+				out.println("<script>alert('비번이 잘못되었습니다.')</script>");
+				out.flush();
 			}
 		}
 		out.println("<script>alert('비밀번호가 일치하지 않습니다.');</script>");
