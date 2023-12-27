@@ -1,8 +1,10 @@
 package member.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -24,6 +26,9 @@ public class UpdateController {
 	@Autowired
 	private MemberDao memberDao;
 	
+	@Autowired
+	ServletContext servletContext;
+	
 	@RequestMapping(value = command, method = RequestMethod.GET)
 	public String update() {
 		
@@ -35,6 +40,22 @@ public class UpdateController {
 		PrintWriter out;
 		out = response.getWriter();
 		response.setContentType("text/html; charset=UTF-8");
+		
+		String path = servletContext.getRealPath("/resources/memberImage");
+		
+		File directory = new File(path);
+	    if (!directory.exists()) {
+	        directory.mkdirs();
+	    }
+	    
+	    String imageName = memberBean.getMember_image();
+	    File uploadImage = new File(path + File.separator + imageName);
+	    
+	    try {
+	    	memberBean.getUpload().transferTo(uploadImage);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		if(memberBean.getSocial().equals("kakao")) {
 			session.setAttribute("kakaoLoginInfo", memberBean);
