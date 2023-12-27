@@ -49,7 +49,7 @@ function openReviewFormWindow(orderDetailNumber) {
                                     <img id="preview" width="100px"
                                         src='<c:url value='/resources/product/image/'/>${oi.image }'
                                         class="rounded" />
-                                </td>
+                                 </td>
                                 <td>
                                    <a href="detail.product?product_number=${oi.product_number }">[${fn:substringBefore(oi.product_name,'/') }] <br>
                                    ${fn:substringAfter(oi.product_name,'/') }</a> 
@@ -132,7 +132,7 @@ function openReviewFormWindow(orderDetailNumber) {
 						</tr>
 						<tr>
 							<td>할인</td>
-							<td>${totalPrice-olists[0].totalamount }</td>
+							<td>${totalPrice + (totalPrice > 50000 ? '0' : '4000') -olists[0].totalamount }</td>
 						</tr>
 						<tr>
 							<td>배송비</td>
@@ -181,25 +181,6 @@ function openReviewFormWindow(orderDetailNumber) {
    </div>
 </div>
 
-<form id="myform" method="post" enctype="multipart/form-data">
-    <textarea id="reviewText" name="text" cols="20" rows="2"></textarea><br>
-    평점:
-    <fieldset>
-    <div style="caret-color: transparent;">
-		<input type="radio" name="rating" value="5" id="rate1"><label
-			for="rate1">★</label>
-		<input type="radio" name="rating" value="4" id="rate2"><label
-			for="rate2">★</label>
-		<input type="radio" name="rating" value="3" id="rate3"><label
-			for="rate3">★</label>
-		<input type="radio" name="rating" value="2" id="rate4"><label
-			for="rate4">★</label>
-		<input type="radio" name="rating" value="1" id="rate5"><label
-			for="rate5">★</label>
-	</div>
-	</fieldset><br>
-    <button type="button" onclick="submitReview()">리뷰 등록</button>
-</form>
 
 <button onclick="location.href='view.main'">이동</button>
 <%@ include file="../main/bottom.jsp"%>

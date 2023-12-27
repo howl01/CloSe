@@ -47,6 +47,10 @@
 	input[type="checkbox"] {
  		accent-color: black;
 	}
+	.pd{
+		text-decoration: none;
+		color: black;
+	}
 </style>
 <script type="text/javascript">
 	function checkAllOnLoad() {
@@ -71,7 +75,7 @@
         var allCheckStatus = selectedValues.length === document.getElementsByName("rowcheck").length;
         allCheckbox.checked = allCheckStatus;
         
-        document.getElementById('totalPrice').innerText = totalPrice; // 여기서 변경
+        document.getElementById('totalPrice').innerText = totalPrice.toLocaleString(); // 여기서 변경
         
         var deliveryElement = document.getElementById('delivery');
         var deliveryPriceElement = document.getElementById('deliveryPrice');
@@ -84,15 +88,15 @@
                 deliveryPriceElement.innerText = '0'; 
             } else {
             	delivery ='4000';
-                deliveryElement.innerText = '4000'; 
-                deliveryPriceElement.innerText = '4000'; 
+                deliveryElement.innerText = '4,000'; 
+                deliveryPriceElement.innerText = '4,000'; 
             }
         } else {
             deliveryElement.innerText = '0';
             deliveryPriceElement.innerText = '0';
         }
         
-        document.getElementById('total').innerText = Number(totalPrice) + Number(delivery);
+        document.getElementById('total').innerText = (Number(totalPrice) + Number(delivery)).toLocaleString();
     }
 	
 	function allCheck(all) { //전체체크박스를 눌렀을때
@@ -239,12 +243,14 @@
                                                     class="rounded" />
                                             </td>
                                             <td>
+                                            	<a class='pd' href='detail.product?product_number=${cib.product_number }'>
                                             	[${fn:substringBefore(cib.product_name,'/') }] <br>
                                             	${fn:substringAfter(cib.product_name,'/') } <br>
                                             	사이즈:${cib.product_size }
+                                            	</a>
                                             </td>
                                             <td>
-                                            	${cib.price}원
+                                            	<fmt:formatNumber value="${cib.price}" pattern="#,###" />원
                                             	<c:set var="totalPrice" value="${totalPrice + (cib.price * cib.qty)}" />
                                             </td>
                                             <td>
@@ -262,16 +268,16 @@
                                                     </button>
                                                 </div>
                                                 <div>
-                                                	<button type="button" 
+                                                	<button type="button" class='btn btn-dark btn-md'
                                                 	onclick="cartUpdate('${cib.cart_number}','${status.index}')">변경</button>
                                                 </div>
                                             </td>
                                             <td>
-                                            	${cib.price*cib.qty}원
+                                            	<fmt:formatNumber value="${cib.price*cib.qty}" pattern="#,###" />원
                                             </td>
                                             <td>
-                                            	<button type="button" onclick="buyNow('${cib.cart_number}')">바로구매</button>
-                                            	<button type="button" onclick="deleteSel('${cib.cart_number}')">삭제하기</button>
+                                            	<button class='btn btn-dark btn-md' type="button" onclick="buyNow('${cib.cart_number}')">바로구매</button>
+                                            	<button class='btn btn-dark btn-md' type="button" onclick="deleteSel('${cib.cart_number}')">삭제하기</button>
                                             </td>
                                             <c:if test="${status.index==0 }">
 	                                            <td rowspan="100%">
@@ -296,8 +302,8 @@
                                 </tr>
                                 <tr>
                                 	<td colspan="8">
-                                		<button type="button" onclick="deleteSelected()">선택삭제</button>
-                                		<button type="button" onclick="purchaseSelected()">선택구매</button>
+                                		<button class='btn btn-dark btn-md' type="button" onclick="deleteSelected()">선택삭제</button>
+                                		<button class='btn btn-dark btn-md' type="button" onclick="purchaseSelected()">선택구매</button>
                                 	</td>
                                 </tr>
                             </table>

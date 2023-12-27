@@ -319,7 +319,7 @@
                 <c:if test="${not empty loginInfo or not empty kakaoLoginInfo}">
 				    <c:choose>
 				        <c:when test="${not empty loginInfo and loginInfo.member_id eq 'admin'}">
-				            <a href="javascript:goProductRegistration()" class="nav-link text-black">
+				            <a href="register.product" class="nav-link text-black">
 				                <img src="resources/icon/patch-plus.svg" class="bi d-block mx-auto mb-1" width="30" height="30" style="margin-top: 1px;"> 
 				                <font size="2">상품등록</font>
 				            </a>

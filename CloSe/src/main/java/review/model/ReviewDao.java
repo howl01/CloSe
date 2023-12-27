@@ -33,6 +33,10 @@ public class ReviewDao {
 	public int getTotalCount(String product_number) {
 		return sqlSessionTemplate.selectOne(namespace+".getTotalCount",product_number);
 	}
+
+	public List<ReviewItem> getReviewByProduct_number(String product_number) { 
+		return sqlSessionTemplate.selectList(namespace+".getReviewByProduct_number", product_number);
+	}
 	
 	
 }
