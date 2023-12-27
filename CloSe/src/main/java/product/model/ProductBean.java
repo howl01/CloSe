@@ -37,6 +37,9 @@ public class ProductBean {
    private MultipartFile pImage; //상품사진
    private MultipartFile pContent; //설명사진
    
+   private String keyword;
+   private int count;
+   
    public MultipartFile getpImage() {
       return pImage;
    }
@@ -134,5 +137,21 @@ public class ProductBean {
 	public void setAverage_rating(double average_rating) {
 		this.average_rating = average_rating;
 	}
-   
+
+	public String getKeyword() {
+		return keyword;
+	}
+
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
+
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
+
 }

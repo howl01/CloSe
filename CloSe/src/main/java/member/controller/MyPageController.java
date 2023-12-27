@@ -22,6 +22,7 @@ import member.model.MemberDao;
 import orders.model.OrdersBean;
 import orders.model.OrdersDao;
 import utility.Paging_orderDetail;
+import style.model.StyleDao;
 
 @Controller
 public class MyPageController {
@@ -30,6 +31,8 @@ public class MyPageController {
 
 	@Autowired
 	private EventDao eventDao;
+	@Autowired
+	private StyleDao styleDao;
 
 	@Autowired
 	OrdersDao ordersDao;
@@ -50,6 +53,7 @@ public class MyPageController {
 		List<EventBean> lists = new ArrayList<EventBean>();
 		if (memberBean != null) {
 			lists = eventDao.selectCoupon(memberBean.getMember_id());
+			model.addAttribute("styleList", styleDao.getStyleByMemberId(memberBean.getMember_id()));
 			if (!lists.isEmpty()) {
 				session.setAttribute("loginLists", lists);
 			}
@@ -58,6 +62,7 @@ public class MyPageController {
 		List<EventBean> kakaoLists = new ArrayList<EventBean>();
 		if (kakaoMemberBean != null) {
 			kakaoLists = eventDao.selectCoupon(kakaoMemberBean.getMember_id());
+			model.addAttribute("styleList", styleDao.getStyleByMemberId(kakaoMemberBean.getMember_id()));
 			if (!kakaoLists.isEmpty()) {
 				session.setAttribute("kakaoLoginLists", kakaoLists);
 			}
@@ -112,8 +117,6 @@ public class MyPageController {
 		// List<OrdersBean> olists = ordersDao.getOrderByMember_Id(member_id);
 		model.addAttribute("olists", olists);
 		model.addAttribute("pageInfo", pageInfo);
-
-		
 		
 	}
 

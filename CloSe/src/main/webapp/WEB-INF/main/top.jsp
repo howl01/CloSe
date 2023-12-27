@@ -117,15 +117,26 @@
 	   	                data: {"searchWord": searchWord},
 	   	                dataType: "text",
 	   	                success: function (json) {
-	   	                    if (json.length > 0) {
-	   	                        var html = "<ul>";
+	   	                	if (json.length > 0) {
+	   	                        var html = '<ol class="list-group" style="cursor:pointer; border: 1pt solid black;">';
 	   	                        var jsonArray = JSON.parse(json);
+	   	                        $(document).data('jsonArray', jsonArray);
+	   	                        var contextPath = '<%= request.getContextPath() %>';
 	   	                        $.each(jsonArray, function (index, item) {
-	   	                            html += "<li class='result' style='cursor:pointer;'>" + item.word + "</li>";
+	   	                         	var productNameParts = item.product_name.split('/'); // /를 기준으로 나눔
+	   	                        	html += '<li id="prosea" class="list-group-item d-flex justify-content-between align-items-start" style="border: none;">';
+	   	              			   	html += '<div><img id="displayList_img" src="' + contextPath +"/resources/productImage/"+ item.image + '"></div>';
+	   	              			    html += '<div class="ms-2 me-auto my-auto">';
+		   	              			// 각 부분을 출력
+		   	              		    for (var i = 0; i < productNameParts.length; i++) {
+		   	              		        html += '<div class="fw-bold">' + productNameParts[i] + '</div>';
+		   	              		    }
+	
+		   	              		    html += '₩ ' + item.price + '</div>';
+		   	              		    html += '<span class="badge bg-black rounded-pill my-auto">' + item.smallcategory_name + '</span></li>';
 	   	                        });
-	   	                        html += "</ul>";
-	   	                        var inputWidth = $("#searchWord").css("width");
-	   	                        $("#displayList").css({"width": inputWidth});
+	   	                        
+	   	                        html += '</ol>';
 	   	                        $("#displayList").html(html);
 	   	                        $("#displayList").show();
 	   	                    }
@@ -147,68 +158,96 @@
 	   	        updateRecentSearchList([]);
 	   	    });
 
-	   	    $(document).on('click', ".result", function () {
-	   	        var word = $(this).text();
-	   	        $("#searchWord").val(word);
+	   	    $(document).on('click', "#prosea", function () {
+	   	    	var jsonArray = $(document).data('jsonArray');
+	   	        var itemIndex = $(this).index(); // 클릭된 항목의 인덱스 가져오기
+	   	        var productName = jsonArray[itemIndex].product_name;
+	   	        
 	   	        $("#displayList").hide();
+	   	        
+	   	  		// 최근 검색어에 저장
+	   	        saveToLocalStorage(productName);
+	   	  
+		   	    var url = 'list.product?whatColumn=product_name&keyword=' + productName;
+	
+		   	    // 페이지 이동
+		   	    window.location.href = url;
 	   	    	});
+	   	    
+	   	// 검색어 저장 함수
+	   	 function saveToLocalStorage(searchWord) {
+	   	     if (searchWord.length > 0) {
+	   	         // 로컬 스토리지에서 최근 검색어 목록을 읽어옴
+	   	         var recentSearchList = JSON.parse(localStorage.getItem("recentSearchList")) || [];
+
+	   	         // recentSearchList가 배열이 아니면 초기화
+	   	         if (!Array.isArray(recentSearchList)) {
+	   	             recentSearchList = [];
+	   	         }
+
+	   	         // 중복 확인
+	   	         var existingIndex = recentSearchList.indexOf(searchWord);
+	   	         if (existingIndex !== -1) {
+	   	             // 중복된 검색어가 이미 있다면 삭제
+	   	             recentSearchList.splice(existingIndex, 1);
+	   	         }
+
+	   	         // 최근 검색어 목록에 추가
+	   	         recentSearchList.push(searchWord);
+
+	   	         // 로컬 스토리지에 최근 검색어 목록을 저장
+	   	         localStorage.setItem("recentSearchList", JSON.stringify(recentSearchList));
+
+	   	         // 최근 검색어 목록 업데이트
+	   	         updateRecentSearchList(recentSearchList);
+	   	     }
+	   	 }
+
+			
+			// 최근 검색어 목록 업데이트 함수
+			function updateRecentSearchList(list) {
+			    var recentSearchListElement = $("#recentSearchList");
+			    recentSearchListElement.empty(); // 목록 초기화
+			    for (var i = 0; i < list.length; i++) {
+			        // 각 검색어 옆에 지우기 버튼 추가
+			        var searchWords = list[i].split('/'); // 검색어를 /로 나눔
+
+			        var listItem = $("<li>");
+
+			        for (var j = 0; j < searchWords.length; j++) {
+			            // 나눈 각 부분을 리스트에 추가
+			            listItem.append("<span class='search-word-part'>" + searchWords[j] + "</span> ");
+			        }
+
+			        // 지우기 버튼 추가
+			        listItem.append("<button class='delete-btn' data-word='" + list[i] + "'>삭제</button>");
+
+			        // 완성된 리스트 아이템을 목록에 추가
+			        recentSearchListElement.append(listItem);
+			    }
+
+			}
+			
+				// 검색어 삭제 버튼 클릭 시
+			   $(document).on('click', ".delete-btn", function (event) {
+			       event.stopPropagation(); // 부모 클릭 방지
+			       var wordToDelete = $(this).data("word");
+			
+			       // 로컬 스토리지에서 최근 검색어 목록을 읽어옴
+			       var recentSearchList = JSON.parse(localStorage.getItem("recentSearchList")) || [];
+			
+			       // 해당 검색어 삭제
+			       var indexToDelete = recentSearchList.indexOf(wordToDelete);
+			       if (indexToDelete !== -1) {
+			           recentSearchList.splice(indexToDelete, 1);
+			           localStorage.setItem("recentSearchList", JSON.stringify(recentSearchList));
+			           updateRecentSearchList(recentSearchList);
+			       }
+			   });
+				
 	   		});
 	   		
-		//검색어 저장 함수
-		function saveToLocalStorage() {
-		    var searchWord = $("#searchWord").val().trim();
-		    if (searchWord.length > 0) {
-		        // 로컬 스토리지에서 최근 검색어 목록을 읽어옴
-		        var recentSearchList = JSON.parse(localStorage.getItem("recentSearchList")) || [];
-		
-		        // 중복 확인
-		        var existingIndex = recentSearchList.indexOf(searchWord);
-		        if (existingIndex !== -1) {
-		            // 중복된 검색어가 이미 있다면 삭제
-		            recentSearchList.splice(existingIndex, 1);
-		        }
-		
-		        // 최근 검색어 목록에 추가
-		        recentSearchList.push(searchWord);
-		
-		        // 로컬 스토리지에 최근 검색어 목록을 저장
-		        localStorage.setItem("recentSearchList", JSON.stringify(recentSearchList));
-		
-		        // 최근 검색어 목록 업데이트
-		        updateRecentSearchList(recentSearchList);
-		    }
-		
-		    // 검색 버튼 클릭 시 페이지 이동을 방지하기 위해 false 반환
-		    return false;
-		}
-		
-		// 최근 검색어 목록 업데이트 함수
-		function updateRecentSearchList(list) {
-		    var recentSearchListElement = $("#recentSearchList");
-		    recentSearchListElement.empty(); // 목록 초기화
-		    for (var i = 0; i < list.length; i++) {
-		           // 각 검색어 옆에 지우기 버튼 추가
-		           recentSearchListElement.append("<li>" + list[i] +
-		               "<button class='delete-btn' data-word='" + list[i] + "'>삭제</button></li>");
-		       }
-		}
-		
-			// 검색어 삭제 버튼 클릭 시
-		   $(document).on('click', ".delete-btn", function (event) {
-		       event.stopPropagation(); // 부모 클릭 방지
-		       var wordToDelete = $(this).data("word");
-		
-		       // 로컬 스토리지에서 최근 검색어 목록을 읽어옴
-		       var recentSearchList = JSON.parse(localStorage.getItem("recentSearchList")) || [];
-		
-		       // 해당 검색어 삭제
-		       var indexToDelete = recentSearchList.indexOf(wordToDelete);
-		       if (indexToDelete !== -1) {
-		           recentSearchList.splice(indexToDelete, 1);
-		           localStorage.setItem("recentSearchList", JSON.stringify(recentSearchList));
-		           updateRecentSearchList(recentSearchList);
-		       }
-		   });
+	 	
 </script>
 
 <style>
@@ -237,6 +276,10 @@
     .border{
     	border: none;
     }
+    #displayList_img{
+      width:100px;
+      height:100px;
+   }
 </style>
 
 
@@ -247,20 +290,28 @@
 	</svg>
 	</a>
 	<br><br>
-	<form action="view.main" onsubmit="return saveToLocalStorage()" name="searchForm" method="get">
-	   <div class="d-flex justify-content-center border-bottom border-dark" style="width: 50%; margin: auto; padding-bottom: 10px;">
-	      <div><input type="text" id="searchWord" name="searchWord" autocomplete= 'off' placeholder="카테고리, 상품명 등" style="border: none; outline: none; width: 500px;"></div>
+	<form action="view.main" onsubmit="return saveToLocalStorage()" name="searchForm" method="get" style="width: 50%; margin: auto; margin-bottom: 1px;">
+	   <div class="d-flex justify-content-between border-bottom border-dark">
+	      <div><input type="text" id="searchWord" name="searchWord" autocomplete= 'off' placeholder="브랜드, 상품, 프로필 등" style="border: none; outline: none; width: 500px;"></div>
 	      <div><input type="image" src="resources/icon/search.svg" style="width: 25px; height: 25px;"></div>
 	   </div>
 	</form>
-	<div id="displayList" style="border: solid 1px gray; height: 100px; overflow: auto; margin-left: 77px; margin-top: -1px; border-top: 0px;"></div>
-	<div class="d-flex justify-content-start" style="border: none; outline: none; width: 555px; margin-left: 410px; ">
+	<div id="displayList" style="overflow: auto; border-top: 0px; width: 50%; margin: auto;"></div>
+	<div class="d-flex justify-content-start" style="border: none; outline: none; width: 50%; margin: auto; margin-top: 3px;">
       <!-- 최근 검색어를 출력하는 부분 추가 -->
 		<div id="recentSearchDiv">
 		    최근 검색어 <button id="clearAllBtn">전체 삭제</button>
 		    <ul id="recentSearchList"></ul>
 		</div>
 	</div>
+	<div>
+    <h2>인기 키워드</h2>
+    <ol>
+        <c:forEach var="pop" items="${popList}">
+            <li>${pop.keyword} - ${pop.count}회</li>
+        </c:forEach>
+    </ol>
+</div>
 </div>
 
 <div class="sticky-top">
@@ -353,14 +404,14 @@
       	<c:if test="${empty loginInfo and empty kakaoLoginInfo}">
 	        <li class="nav-item"><a href="view.main" class="nav-link link-body-emphasis px-2">HOME</a></li>
 	        <li class="nav-item"><a href="login.member" class="nav-link link-body-emphasis px-2">오늘의 옷비서</a></li>
-	        <li class="nav-item"><a href="mainView.style" class="nav-link link-body-emphasis px-2">STYLE</a></li>
+	        <li class="nav-item"><a href="mainView.style" id="styleNav" class="nav-link link-body-emphasis px-2">STYLE</a></li>
 	        <li class="nav-item"><a href="list.product" class="nav-link link-body-emphasis px-2">SHOP</a></li>
 	        <li class="nav-item"><a href="event.member" class="nav-link link-body-emphasis px-2">EVENT</a></li>
       	</c:if>
       	<c:if test="${not empty loginInfo or not empty kakaoLoginInfo}">
       		<li class="nav-item"><a href="view.main" class="nav-link link-body-emphasis px-2">HOME</a></li>
 	        <li class="nav-item"><a href="view.style" class="nav-link link-body-emphasis px-2">오늘의 옷비서</a></li>
-	        <li class="nav-item"><a href="mainView.style" class="nav-link link-body-emphasis px-2">STYLE</a></li>
+	        <li class="nav-item"><a href="mainView.style" id="styleNav" class="nav-link link-body-emphasis px-2">STYLE</a></li>
 	        <li class="nav-item"><a href="list.product" class="nav-link link-body-emphasis px-2">SHOP</a></li>
 	        <li class="nav-item"><a href="event.member" class="nav-link link-body-emphasis px-2">EVENT</a></li>
       	</c:if>

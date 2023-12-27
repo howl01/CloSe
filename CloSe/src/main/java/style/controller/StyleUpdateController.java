@@ -51,9 +51,15 @@ public class StyleUpdateController {
 		if (!directory.exists()) {
 			directory.mkdirs();
 		}
-
-		if (styleBean.getPrevImage1() == null && styleBean.getPrevImage2() == null && styleBean.getPrevImage3() == null
-				&& styleBean.getPrevImage4() == null && styleBean.getPrevImage5() == null) {
+		
+		System.out.println(styleBean.getPrevImage1());
+		System.out.println(styleBean.getPrevImage2());
+		System.out.println(styleBean.getPrevImage3());
+		System.out.println(styleBean.getPrevImage4());
+		System.out.println(styleBean.getPrevImage5());
+		
+		if (styleBean.getPrevImage1().equals("") && styleBean.getPrevImage2().equals("") && styleBean.getPrevImage3().equals("")
+				&& styleBean.getPrevImage4().equals("") && styleBean.getPrevImage5().equals("")) {
 			List<MultipartFile> images = styleBean.getImages();
 			for (int i = 1; i < images.size() + 1; i++) {
 				String imageName = null;
@@ -90,11 +96,38 @@ public class StyleUpdateController {
 					e.printStackTrace();
 				}
 			}
+			for(int i=1; i<6; i++) {
+				String compareImage = null;
+				switch (i) {
+				case 1:
+					compareImage = styleBean.getCompareImage1();
+					break;
+				case 2:
+					compareImage = styleBean.getCompareImage2();
+					break;
+				case 3:
+					compareImage = styleBean.getCompareImage3();
+					break;
+				case 4:
+					compareImage = styleBean.getCompareImage4();
+					break;
+				case 5:
+					compareImage = styleBean.getCompareImage5();
+					break;
+				default:
+					break;
+				}
+				File deleteImage = new File(path + File.separator + compareImage);
+				deleteImage.delete();
+			}
+			System.out.println("사진 있"+styleBean.getPrevImage1());
+			styleDao.updateStyle(styleBean);
 		} else {
-			
+			System.out.println("사진 없"+styleBean.getPrevImage1());
+			styleDao.updateStyleNoImageUp(styleBean);
 		}
 
-		styleDao.updateStyle(styleBean);
+		
 		return gotoPage;
 	}
 

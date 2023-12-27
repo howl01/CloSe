@@ -9,7 +9,7 @@ DROP TABLE report cascade constraints;
 DROP TABLE qna cascade constraints;
 DROP TABLE notice cascade constraints;
 DROP TABLE coupon cascade constraints;
-
+DROP TABLE review cascade constraints;
 
 DROP SEQUENCE category_seq;
 DROP SEQUENCE product_seq;
@@ -21,6 +21,7 @@ DROP SEQUENCE report_seq;
 DROP SEQUENCE qna_seq;
 DROP SEQUENCE notice_seq;
 DROP SEQUENCE coupon_seq;
+DROP SEQUENCE review_seq;
 
 create SEQUENCE category_seq;
 create SEQUENCE product_seq;
@@ -32,6 +33,7 @@ create SEQUENCE report_seq;
 create SEQUENCE qna_seq;
 create SEQUENCE notice_seq;
 create SEQUENCE coupon_seq;
+create SEQUENCE review_seq;
 
 CREATE TABLE member (
    member_image   varchar2(100),
@@ -66,7 +68,7 @@ CREATE TABLE category (
 
 CREATE TABLE product (
     product_number  number  PRIMARY KEY,
-    product_name    varchar2(30)    NOT NULL,
+    product_name    varchar2(200)    NOT NULL,
     image   varchar2(30)    NULL,
     price   number  NOT NULL,
     content varchar2(30)    NOT NULL,
@@ -172,6 +174,22 @@ CREATE TABLE notice (
    title   varchar2(50)   NOT NULL,
    content   varchar2(4000)   NOT NULL,
    write_date   Date
+);
+
+CREATE TABLE review (
+    review_number NUMBER PRIMARY KEY,
+    rating NUMBER NOT NULL,
+    text VARCHAR2(20), -- Fixed the typo here
+    orderdetail_number number NOT NULL,
+    member_id VARCHAR2(30) NOT NULL,
+    write_date DATE,
+    FOREIGN KEY (orderdetail_number) REFERENCES orderdetail(orderdetail_number),
+    FOREIGN KEY (member_id) REFERENCES member(member_id)
+);
+
+create table pop(
+	keyword varchar2(100),
+	count number
 );
 
 select * from member;

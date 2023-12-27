@@ -32,6 +32,7 @@ public class StyleBean {
 	private MultipartFile MImage5;
 
 	private String nickname;
+	private String member_image;
 
 	private String product_name1;
 	private String product_name2;
@@ -62,60 +63,61 @@ public class StyleBean {
 	private String prevImage3;
 	private String prevImage4;
 	private String prevImage5;
+	private String compareImage1;
+	private String compareImage2;
+	private String compareImage3;
+	private String compareImage4;
+	private String compareImage5;
 
 	public StyleBean() {
 	}
 
-	public StyleBean(int style_number, String image1, String image2, String image3, String image4, String image5,
-			String title, String content, String style, int read_count, int recommend_count, Date write_date,
-			Integer product_number1, Integer product_number2, Integer product_number3, Integer product_number4,
-			String member_id, List<MultipartFile> images, MultipartFile mImage1, MultipartFile mImage2,
-			MultipartFile mImage3, MultipartFile mImage4, MultipartFile mImage5, String nickname, String product_name1,
-			String product_name2, String product_name3, String product_name4, String price1, String price2,
-			String price3, String price4, String pimage1, String pimage2, String pimage3, String pimage4,
-			double avg_temperature, String gender, String height, String weight, String birth, Double temperature) {
-		this.style_number = style_number;
-		this.image1 = image1;
-		this.image2 = image2;
-		this.image3 = image3;
-		this.image4 = image4;
-		this.image5 = image5;
-		this.title = title;
-		this.content = content;
-		this.style = style;
-		this.read_count = read_count;
-		this.recommend_count = recommend_count;
-		this.write_date = write_date;
-		this.product_number1 = product_number1;
-		this.product_number2 = product_number2;
-		this.product_number3 = product_number3;
-		this.product_number4 = product_number4;
-		this.member_id = member_id;
-		this.images = images;
-		MImage1 = mImage1;
-		MImage2 = mImage2;
-		MImage3 = mImage3;
-		MImage4 = mImage4;
-		MImage5 = mImage5;
-		this.nickname = nickname;
-		this.product_name1 = product_name1;
-		this.product_name2 = product_name2;
-		this.product_name3 = product_name3;
-		this.product_name4 = product_name4;
-		this.price1 = price1;
-		this.price2 = price2;
-		this.price3 = price3;
-		this.price4 = price4;
-		this.pimage1 = pimage1;
-		this.pimage2 = pimage2;
-		this.pimage3 = pimage3;
-		this.pimage4 = pimage4;
-		this.avg_temperature = avg_temperature;
-		this.gender = gender;
-		this.height = height;
-		this.weight = weight;
-		this.birth = birth;
-		this.temperature = temperature;
+	public String getMember_image() {
+		return member_image;
+	}
+
+	public void setMember_image(String member_image) {
+		this.member_image = member_image;
+	}
+
+	public String getCompareImage1() {
+		return compareImage1;
+	}
+
+	public void setCompareImage1(String compareImage1) {
+		this.compareImage1 = compareImage1;
+	}
+
+	public String getCompareImage2() {
+		return compareImage2;
+	}
+
+	public void setCompareImage2(String compareImage2) {
+		this.compareImage2 = compareImage2;
+	}
+
+	public String getCompareImage3() {
+		return compareImage3;
+	}
+
+	public void setCompareImage3(String compareImage3) {
+		this.compareImage3 = compareImage3;
+	}
+
+	public String getCompareImage4() {
+		return compareImage4;
+	}
+
+	public void setCompareImage4(String compareImage4) {
+		this.compareImage4 = compareImage4;
+	}
+
+	public String getCompareImage5() {
+		return compareImage5;
+	}
+
+	public void setCompareImage5(String compareImage5) {
+		this.compareImage5 = compareImage5;
 	}
 
 	public String getPrevImage1() {

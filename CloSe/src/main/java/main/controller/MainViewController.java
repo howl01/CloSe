@@ -20,11 +20,12 @@ public class MainViewController {
 	@Autowired
 	ProductDao productDao; 
 	
-	
 	@RequestMapping(command)
 	public String view(Model model) {
 		List<ProductBean> plists = productDao.getPopularProduct();
 		model.addAttribute("plists", plists);
+		
+		model.addAttribute("popList", productDao.getPop());
 		return viewPage;
 	}
 	

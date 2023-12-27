@@ -110,18 +110,6 @@
 		</if>
 	</select>
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	<update id="updateStock">
 		update product 
 		set s_stock=s_stock-#{s_stock},m_stock=m_stock-#{m_stock},l_stock=l_stock-#{l_stock},xl_stock=xl_stock-#{xl_stock}
@@ -166,4 +154,26 @@
 		p.s_stock,p.m_stock,p.l_stock,p.xl_stock,p.smallcategory_name
 		ORDER BY product_count DESC, average_rating DESC
     </select>
+    
+    <select id="getPop" resultType="ProductBean">
+    	SELECT keyword, count
+		FROM pop
+		ORDER BY count DESC
+		FETCH FIRST 10 ROWS ONLY
+    </select>
+    
+    <!-- 키워드 조회 -->
+    <select id="getKeywordCount" resultType="java.lang.Integer">
+        SELECT count FROM pop WHERE keyword = #{keyword}
+    </select>
+
+    <!-- 키워드 추가 -->
+    <insert id="insertKeyword">
+        INSERT INTO pop VALUES (#{keyword}, 0)
+    </insert>
+
+    <!-- 키워드 업데이트 -->
+    <update id="updateKeywordCount">
+        UPDATE pop SET count = count + 1 WHERE keyword = #{keyword}
+    </update>
 </mapper>

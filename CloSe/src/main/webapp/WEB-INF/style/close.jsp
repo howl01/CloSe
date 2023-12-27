@@ -27,11 +27,7 @@
             border-radius: 5px;
             cursor: pointer;
         }
-        #styleNav{
-        	font-size: 15pt;
-        	font-weight: 700;
-        	padding-top: 3px;
-        }
+        
         #img{
         	width: 80%;
         	height: 100%;
