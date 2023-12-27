@@ -36,13 +36,15 @@ public class ProductListController {
 							@RequestParam(value="brand",  required = false) String brand,
 							@RequestParam(value="sort",  required = false) String sort,
 							@RequestParam(value="whatColumn", required = false) String whatColumn,
-							@RequestParam(value="keyword", required = false) String keyword,
+							@RequestParam(value="searchWord", required = false) String keyword,
 							@RequestParam(value="pageNumber", required = false) String pageNumber,
 							HttpServletRequest request, Model model) {
 		List<ProductBean> blists = productDao.getAllProduct();
 		List<CategoryBean> clists = categoryDao.getAllCategory();
 		model.addAttribute("blists", blists);
 		model.addAttribute("clists", clists);
+		model.addAttribute("searchFlag", false);
+		model.addAttribute("keyword", keyword);
 		
 		if(sort != null) {
 			if(sort.equals("null")) {
@@ -85,6 +87,10 @@ public class ProductListController {
 		Paging_productList pageInfo = new Paging_productList(pageNumber, "16", totalCount, url, whatColumn, keyword, bigcategory_name, smallcategory_name, brand, sort);
 		
 		plists = productDao.getIFProduct(map,pageInfo);
+		
+		if(keyword != null && whatColumn != null) {
+			model.addAttribute("searchFlag", true);
+		}
 		
 		System.out.println("bigcategory_name="+bigcategory_name);
 		System.out.println("smallcategory_name="+smallcategory_name);

@@ -13,6 +13,38 @@
 <link href="resources/css/sidebars.css" rel="stylesheet">
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script type="text/javascript">
+	function saveTo() {
+			var searchWordValue = document.getElementById('searchWord').value;
+			alert(searchWordValue);
+			saveToLocalStorage(searchWordValue);
+	}
+	function saveToLocalStorage(searchWord) {
+  	     if (searchWord.length > 0) {
+  	         // 로컬 스토리지에서 최근 검색어 목록을 읽어옴
+  	         var recentSearchList = JSON.parse(localStorage.getItem("recentSearchList")) || [];
+
+  	         // recentSearchList가 배열이 아니면 초기화
+  	         if (!Array.isArray(recentSearchList)) {
+  	             recentSearchList = [];
+  	         }
+
+  	         // 중복 확인
+  	         var existingIndex = recentSearchList.indexOf(searchWord);
+  	         if (existingIndex !== -1) {
+  	             // 중복된 검색어가 이미 있다면 삭제
+  	             recentSearchList.splice(existingIndex, 1);
+  	         }
+
+  	         // 최근 검색어 목록에 추가
+  	         recentSearchList.push(searchWord);
+
+  	         // 로컬 스토리지에 최근 검색어 목록을 저장
+  	         localStorage.setItem("recentSearchList", JSON.stringify(recentSearchList));
+
+  	         // 최근 검색어 목록 업데이트
+  	         updateRecentSearchList(recentSearchList);
+  	     }
+  	 }
    function goLogin() {
       location.href = "login.member";
    }
@@ -168,7 +200,7 @@
 	   	  		// 최근 검색어에 저장
 	   	        saveToLocalStorage(productName);
 	   	  
-		   	    var url = 'list.product?whatColumn=product_name&keyword=' + productName;
+		   	    var url = 'list.product?whatColumn=product_name&searchWord=' + productName;
 	
 		   	    // 페이지 이동
 		   	    window.location.href = url;
@@ -202,7 +234,6 @@
 	   	         updateRecentSearchList(recentSearchList);
 	   	     }
 	   	 }
-
 			
 			// 최근 검색어 목록 업데이트 함수
 			function updateRecentSearchList(list) {
@@ -280,6 +311,10 @@
       width:100px;
       height:100px;
    }
+   .custom-border {
+	    border-width: 2px !important;
+	    /* 기타 스타일 설정 */
+	}
 </style>
 
 
@@ -290,9 +325,10 @@
 	</svg>
 	</a>
 	<br><br>
-	<form action="view.main" onsubmit="return saveToLocalStorage()" name="searchForm" method="get" style="width: 50%; margin: auto; margin-bottom: 1px;">
+	<form action="list.product" onsubmit="return saveTo()" name="searchForm" method="get" style="width: 50%; margin: auto; margin-bottom: 1px;">
 	   <div class="d-flex justify-content-between border-bottom border-dark">
 	      <div><input type="text" id="searchWord" name="searchWord" autocomplete= 'off' placeholder="브랜드, 상품, 프로필 등" style="border: none; outline: none; width: 500px;"></div>
+	      <input type="hidden" name="whatColumn" value="product_name">
 	      <div><input type="image" src="resources/icon/search.svg" style="width: 25px; height: 25px;"></div>
 	   </div>
 	</form>

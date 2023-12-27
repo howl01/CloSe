@@ -14,6 +14,10 @@
 		    padding-top: 3px;
 		}
     	
+    	.custom-height{
+   			height:  200px;
+   		}
+    	
         #photo-container {
             position: relative;
             width: 30%;
@@ -55,6 +59,12 @@
         	width: 66%;
         	margin: auto;
         }
+        
+        #imageMulti{
+        	position: absolute;
+        	top:5px;
+        	left: 235px;
+        }
     </style>
 
 <script>
@@ -74,6 +84,7 @@ $(window).scroll(function () {
             loadingData = true;  // 로딩 시작
             page++;
             loadMoreData();
+            
 
             // 일정 시간(예: 10초) 후에 로딩 상태를 해제
             setTimeout(function () {
@@ -89,9 +100,7 @@ function loadMoreData() {
         type: 'POST',
         data: { page: page, pageSize: pageSize },
         success: function (json) {
-        	alert("성공");
             if (json.length > 0) {
-                var html = '';
                 var jsonArray = JSON.parse(json);
                 $(document).data('jsonArray', jsonArray);
                 var contextPath = '<%= request.getContextPath() %>';
@@ -101,223 +110,170 @@ function loadMoreData() {
                 var flag4 = false;
                 $.each(jsonArray, function (index, styleBean) {
                     if (index % 4 === 0) {
-                    	if(!flag1){
-                        	html += '<div class="flex-column" style="width: 25%;">';
-                        	flag1 = true;
-                    	}
-
-                    html += '<div class="card m-2 border-0">';
-                    html += '<a href="detail.style?style_number=' + styleBean.style_number + '" class="link-dark link-underline-opacity-0">';
-                    html += '<div class="card-body p-0">';
-                    html += '<img src="' + contextPath + '/resources/styleImage/' + styleBean.image1 + '" style="max-height: 300px;" class="card-img-top">';
-                    html += '<div class="d-flex align-items-center">';
-                    html += '<img src="' + contextPath + '/resources/memberImage/' + styleBean.member_image + '" id="profile" style="width:3vw; height: 3vw; margin-top: 5px; border-radius: 100%; border: 1px solid #C0C0C0;">';
-                    html += '&nbsp;' + styleBean.nickname;
-                    html += '</div>';
-                    html += '<p class="card-text" style="font-size: 10pt; margin-top: 5px;">' + styleBean.content + '</p>';
-                    html += '</div>';
-                    html += '</a>';
-                    html += '</div>';
+                   		var html = '';
+	                    html += '<div class="card m-2 border-0">';
+	                    if(styleBean.image2 != null){
+                    		html += '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#C0C0C0" class="bi bi-images" id="imageMulti" viewBox="0 0 16 16"><path d="M4.502 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3"/><path d="M14.002 13a2 2 0 0 1-2 2h-10a2 2 0 0 1-2-2V5A2 2 0 0 1 2 3a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v8a2 2 0 0 1-1.998 2M14 2H4a1 1 0 0 0-1 1h9.002a2 2 0 0 1 2 2v7A1 1 0 0 0 15 11V3a1 1 0 0 0-1-1M2.002 4a1 1 0 0 0-1 1v8l2.646-2.354a.5.5 0 0 1 .63-.062l2.66 1.773 3.71-3.71a.5.5 0 0 1 .577-.094l1.777 1.947V5a1 1 0 0 0-1-1h-10"/></svg>';
+	                    }
+	                    html += '<a href="detail.style?style_number=' + styleBean.style_number + '" class="link-dark link-underline-opacity-0">';
+	                    html += '<div class="card-body p-0">';
+	                    html += '<img src="' + contextPath + '/resources/styleImage/' + styleBean.image1 + '" style="max-height: 300px;" class="card-img-top">';
+	                    html += '<div class="d-flex align-items-center">';
+	                    html += '<img src="' + contextPath + '/resources/memberImage/' + styleBean.member_image + '" id="profile" style="width:2vw; height: 2vw; margin-top: 5px; border-radius: 100%; border: 0.5px solid #C0C0C0;">';
+	                    html += '&nbsp;' + styleBean.nickname;
+	                    html += '</div>';
+	                    if(styleBean.title != null){
+	                    	html += '<p class="card-text" style="font-size: 10pt; margin-top: 5px;">' + styleBean.title + '</p>';
+	                    } else if(styleBean.title == null){
+	                    	html += '<p class="card-text" style="font-size: 10pt; margin-top: 5px;">' + styleBean.content + '</p>';
+	                    }
+	                    html += '</div>';
+	                    html += '</a>';
+	                    html += '</div>';
+	                    $("#firstCol").append(html);
                     }
                     
                     if (index % 4 === 1) {
-                    	if(!flag2){
-                        	html += '<div class="flex-column" style="width: 25%;">';
-                        	flag2 = true;
-                    	}
-
-                    html += '<div class="card m-2 border-0">';
-                    html += '<a href="detail.style?style_number=' + styleBean.style_number + '" class="link-dark link-underline-opacity-0">';
-                    html += '<div class="card-body p-0">';
-                    html += '<img src="' + contextPath + '/resources/styleImage/' + styleBean.image1 + '" style="max-height: 300px;" class="card-img-top">';
-                    html += '<div class="d-flex align-items-center">';
-                    html += '<img src="' + contextPath + '/resources/memberImage/' + styleBean.member_image + '" id="profile" style="width:3vw; height: 3vw; margin-top: 5px; border-radius: 100%; border: 1px solid #C0C0C0;">';
-                    html += '&nbsp;' + styleBean.nickname;
-                    html += '</div>';
-                    html += '<p class="card-text" style="font-size: 10pt; margin-top: 5px;">' + styleBean.content + '</p>';
-                    html += '</div>';
-                    html += '</a>';
-                    html += '</div>';
+                    	var html = '';
+	                    html += '<div class="card m-2 border-0">';
+	                    if(styleBean.image2 != null){
+                    		html += '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#C0C0C0" class="bi bi-images" id="imageMulti" viewBox="0 0 16 16"><path d="M4.502 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3"/><path d="M14.002 13a2 2 0 0 1-2 2h-10a2 2 0 0 1-2-2V5A2 2 0 0 1 2 3a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v8a2 2 0 0 1-1.998 2M14 2H4a1 1 0 0 0-1 1h9.002a2 2 0 0 1 2 2v7A1 1 0 0 0 15 11V3a1 1 0 0 0-1-1M2.002 4a1 1 0 0 0-1 1v8l2.646-2.354a.5.5 0 0 1 .63-.062l2.66 1.773 3.71-3.71a.5.5 0 0 1 .577-.094l1.777 1.947V5a1 1 0 0 0-1-1h-10"/></svg>';
+	                    }
+	                    html += '<a href="detail.style?style_number=' + styleBean.style_number + '" class="link-dark link-underline-opacity-0">';
+	                    html += '<div class="card-body p-0">';
+	                    html += '<img src="' + contextPath + '/resources/styleImage/' + styleBean.image1 + '" style="max-height: 300px;" class="card-img-top">';
+	                    html += '<div class="d-flex align-items-center">';
+	                    html += '<img src="' + contextPath + '/resources/memberImage/' + styleBean.member_image + '" id="profile" style="width:2vw; height: 2vw; margin-top: 5px; border-radius: 100%; border: 0.5px solid #C0C0C0;">';
+	                    html += '&nbsp;' + styleBean.nickname;
+	                    html += '</div>';
+	                    if(styleBean.title != null){
+	                    	html += '<p class="card-text" style="font-size: 10pt; margin-top: 5px;">' + styleBean.title + '</p>';
+	                    } else if(styleBean.title == null){
+	                    	html += '<p class="card-text" style="font-size: 10pt; margin-top: 5px;">' + styleBean.content + '</p>';
+	                    }
+	                    html += '</div>';
+	                    html += '</a>';
+	                    html += '</div>';
+	                    $("#secondCol").append(html);
                     }
                 	
                     if (index % 4 === 2) {
-                    	if(!flag3){
-                        	html += '<div class="flex-column" style="width: 25%;">';
-                        	flag3 = true;
-                    	}
-
-                    html += '<div class="card m-2 border-0">';
-                    html += '<a href="detail.style?style_number=' + styleBean.style_number + '" class="link-dark link-underline-opacity-0">';
-                    html += '<div class="card-body p-0">';
-                    html += '<img src="' + contextPath + '/resources/styleImage/' + styleBean.image1 + '" style="max-height: 300px;" class="card-img-top">';
-                    html += '<div class="d-flex align-items-center">';
-                    html += '<img src="' + contextPath + '/resources/memberImage/' + styleBean.member_image + '" id="profile" style="width:3vw; height: 3vw; margin-top: 5px; border-radius: 100%; border: 1px solid #C0C0C0;">';
-                    html += '&nbsp;' + styleBean.nickname;
-                    html += '</div>';
-                    html += '<p class="card-text" style="font-size: 10pt; margin-top: 5px;">' + styleBean.content + '</p>';
-                    html += '</div>';
-                    html += '</a>';
-                    html += '</div>';
+                    	var html = '';
+	                    html += '<div class="card m-2 border-0">';
+	                    if(styleBean.image2 != null){
+                    		html += '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#C0C0C0" class="bi bi-images" id="imageMulti" viewBox="0 0 16 16"><path d="M4.502 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3"/><path d="M14.002 13a2 2 0 0 1-2 2h-10a2 2 0 0 1-2-2V5A2 2 0 0 1 2 3a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v8a2 2 0 0 1-1.998 2M14 2H4a1 1 0 0 0-1 1h9.002a2 2 0 0 1 2 2v7A1 1 0 0 0 15 11V3a1 1 0 0 0-1-1M2.002 4a1 1 0 0 0-1 1v8l2.646-2.354a.5.5 0 0 1 .63-.062l2.66 1.773 3.71-3.71a.5.5 0 0 1 .577-.094l1.777 1.947V5a1 1 0 0 0-1-1h-10"/></svg>';
+	                    }
+	                    html += '<a href="detail.style?style_number=' + styleBean.style_number + '" class="link-dark link-underline-opacity-0">';
+	                    html += '<div class="card-body p-0">';
+	                    html += '<img src="' + contextPath + '/resources/styleImage/' + styleBean.image1 + '" style="max-height: 300px;" class="card-img-top">';
+	                    html += '<div class="d-flex align-items-center">';
+	                    html += '<img src="' + contextPath + '/resources/memberImage/' + styleBean.member_image + '" id="profile" style="width:2vw; height: 2vw; margin-top: 5px; border-radius: 100%; border: 0.5px solid #C0C0C0;">';
+	                    html += '&nbsp;' + styleBean.nickname;
+	                    html += '</div>';
+	                    if(styleBean.title != null){
+	                    	html += '<p class="card-text" style="font-size: 10pt; margin-top: 5px;">' + styleBean.title + '</p>';
+	                    } else if(styleBean.title == null){
+	                    	html += '<p class="card-text" style="font-size: 10pt; margin-top: 5px;">' + styleBean.content + '</p>';
+	                    }
+	                    html += '</div>';
+	                    html += '</a>';
+	                    html += '</div>';
+	                    $("#thirdCol").append(html);
                     }
 
                     if (index % 4 === 3) {
-                    	if(!flag4){
-                        	html += '<div class="flex-column" style="width: 25%;">';
-                        	flag4 = true;
-                    	}
-
-                    html += '<div class="card m-2 border-0">';
-                    html += '<a href="detail.style?style_number=' + styleBean.style_number + '" class="link-dark link-underline-opacity-0">';
-                    html += '<div class="card-body p-0">';
-                    html += '<img src="' + contextPath + '/resources/styleImage/' + styleBean.image1 + '" style="max-height: 300px;" class="card-img-top">';
-                    html += '<div class="d-flex align-items-center">';
-                    html += '<img src="' + contextPath + '/resources/memberImage/' + styleBean.member_image + '" id="profile" style="width:3vw; height: 3vw; margin-top: 5px; border-radius: 100%; border: 1px solid #C0C0C0;">';
-                    html += '&nbsp;' + styleBean.nickname;
-                    html += '</div>';
-                    html += '<p class="card-text" style="font-size: 10pt; margin-top: 5px;">' + styleBean.content + '</p>';
-                    html += '</div>';
-                    html += '</a>';
-                    html += '</div>';
+                    	var html = '';
+	                    html += '<div class="card m-2 border-0">';
+	                    if(styleBean.image2 != null){
+                    		html += '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#C0C0C0" class="bi bi-images" id="imageMulti" viewBox="0 0 16 16"><path d="M4.502 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3"/><path d="M14.002 13a2 2 0 0 1-2 2h-10a2 2 0 0 1-2-2V5A2 2 0 0 1 2 3a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v8a2 2 0 0 1-1.998 2M14 2H4a1 1 0 0 0-1 1h9.002a2 2 0 0 1 2 2v7A1 1 0 0 0 15 11V3a1 1 0 0 0-1-1M2.002 4a1 1 0 0 0-1 1v8l2.646-2.354a.5.5 0 0 1 .63-.062l2.66 1.773 3.71-3.71a.5.5 0 0 1 .577-.094l1.777 1.947V5a1 1 0 0 0-1-1h-10"/></svg>';
+	                    }
+                    	html += '<a href="detail.style?style_number=' + styleBean.style_number + '" class="link-dark link-underline-opacity-0">';
+	                    html += '<div class="card-body p-0">';
+	                    html += '<img src="' + contextPath + '/resources/styleImage/' + styleBean.image1 + '" style="max-height: 300px;" class="card-img-top">';
+	                    html += '<div class="d-flex align-items-center">';
+	                    html += '<img src="' + contextPath + '/resources/memberImage/' + styleBean.member_image + '" id="profile" style="width:2vw; height: 2vw; margin-top: 5px; border-radius: 100%; border: 0.5px solid #C0C0C0;">';
+	                    html += '&nbsp;' + styleBean.nickname;
+	                    html += '</div>';
+	                    if(styleBean.title != null){
+	                    	html += '<p class="card-text" style="font-size: 10pt; margin-top: 5px;">' + styleBean.title + '</p>';
+	                    } else if(styleBean.title == null){
+	                    	html += '<p class="card-text" style="font-size: 10pt; margin-top: 5px;">' + styleBean.content + '</p>';
+	                    }
+	                    html += '</div>';
+	                    html += '</a>';
+	                    html += '</div>';
+	                    $("#fourthCol").append(html);
                     }
                 });
-            	
-                $("#styleContainer").append(html);
-            } else {
-            	var html = '';
-            	html += '</div>';
-            	html += '</div>';
-            	html += '</div>';
-            	html += '</div>';
-            	
-            	$("#styleContainer").append(html);
             }
-            $("#styleContainer").show();
         },
         error: function (jqXHR, textStatus, errorThrown) {
-        	alert("실패");
             console.error("AJAX Error:", textStatus, errorThrown);
             alert("검색 중 오류가 발생했습니다. 자세한 내용은 콘솔을 확인하세요.");
         }
     });
 }
 
+$(document).ajaxStart(function () {
+    // AJAX 요청이 시작되면 로딩 아이콘을 보여줌
+    $("#loadingIcon").show();
+});
+
+$(document).ajaxStop(function () {
+    // AJAX 요청이 모두 완료되면 로딩 아이콘을 숨김
+    $("#loadingIcon").hide();
+});
 </script>
 </head>
 <body>
 
 <div class="body">
     <!-- 이미지 컨테이너 -->
-    <div class="border-bottom d-flex justify-content-around py-3" id="imgContainer">
-        <c:forEach begin="0" end="4">
-            <a href="view.main" class="link-dark link-underline-opacity-0">
-                <div class="d-flex flex-column" id="imgDiv" onclick="location.href='view.main'">
-                    <div>
-                        <img src="resources/img/abc.jpeg" id="img">
-                    </div>
-                    <div>
-                        겨울룩
-                    </div>
-                </div>
-            </a>
-        </c:forEach>
+    <div style="width:66%; margin: auto; text-align: center;">
+        <img class="d-block w-100 custom-height" src="resources/img/holilook.png">
     </div>
 
     <!-- 나의 코디 버튼 -->
-    <div class="d-flex justify-content-end">
-        <input style="float: right;" type="button" value="나의 코디" onclick="location.href='insert.style'">
-    </div>
+    <c:if test="${not empty loginInfo or not empty kakaoLoginInfo}">
+		<div style="width:66%; margin: auto; margin-top: 10px; margin-bottom: 10px;" class="d-flex justify-content-end">
+        	<input class="btn btn-dark" style="float: right;" type="button" value="스타일 등록" onclick="location.href='insert.style'">
+    	</div>
+	</c:if>
 
-	<c:set var="index" value="1"/>
+	<c:set var="index" value="0"/>
     <!-- 스타일 컨테이너 -->
     <div class="d-flex flex-wrap" id="styleContainer">
-    	<c:forEach var="styleBean" items="${styleList}" varStatus="status">
-	            <c:if test="${status.index % 4 == 0}">
-	              <c:if test="${status.index == 0}">
-	                  <div class="flex-column" style="width: 25%;">
-	              </c:if>
-	           <div class="card m-2 border-0">
-	               <a href="detail.style?style_number=${styleBean.style_number}" class="link-dark link-underline-opacity-0">
-	                   <div class="card-body p-0">
-	                      <img src="<%=request.getContextPath()%>/resources/styleImage/${styleBean.image1}" style="max-height: 300px;" class="card-img-top" >
-	                      <div class="d-flex align-items-center">
-	                      <img src="<%=request.getContextPath()%>/resources/memberImage/${styleBean.member_image}" id="profile" style="width:3vw; height: 3vw; margin-top: 5px; border-radius: 100%; border: 1px solid #C0C0C0;">
-	                       &nbsp;${styleBean.nickname}
-	                       </div>
-	                       <p class="card-text" style="font-size: 10pt; margin-top: 5px;">${styleBean.content}</p>
-	                   </div>
-	               </a>
-	           </div>
-	        </c:if>
-	    </c:forEach>
-	    </div>
-	   
-	   <c:forEach var="styleBean" items="${styleList}" varStatus="status">
-	        <c:if test="${status.index % 4 == 1}">
-	           <c:if test="${status.index == 1}">
-	               <div class="flex-column" style="width: 25%;">
-	            </c:if>
-	            <div class="card m-2 border-0">
-	               <a href="detail.style?style_number=${styleBean.style_number}" class="link-dark link-underline-opacity-0">
-	                   <div class="card-body p-0">
-	                      <img src="<%=request.getContextPath()%>/resources/styleImage/${styleBean.image1}" style="max-height: 300px;" class="card-img-top" >
-	                      <div class="d-flex align-items-center">
-	                      <img src="<%=request.getContextPath()%>/resources/memberImage/${styleBean.member_image}" id="profile" style="width:3vw; height: 3vw; margin-top: 5px; border-radius: 100%; border: 1px solid #C0C0C0;">
-	                       &nbsp;${styleBean.nickname}
-	                       </div>
-	                       <p class="card-text" style="font-size: 10pt; margin-top: 5px;">${styleBean.content}</p>
-	                   </div>
-	               </a>
-	           </div>
-	         </c:if>
-	        </c:forEach>
-	    </div>
-	
-	    <c:forEach var="styleBean" items="${styleList}" varStatus="status">
-	        <c:if test="${status.index % 4 == 2}">
-	           <c:if test="${status.index == 2}">
-	               <div class="flex-column" style="width: 25%;">
-	            </c:if>
-	
-	           <div class="card m-2 border-0">
-	               <a href="detail.style?style_number=${styleBean.style_number}" class="link-dark link-underline-opacity-0">
-	                   <div class="card-body p-0">
-	                      <img src="<%=request.getContextPath()%>/resources/styleImage/${styleBean.image1}" style="max-height: 300px;" class="card-img-top" >
-	                      <div class="d-flex align-items-center">
-	                      <img src="<%=request.getContextPath()%>/resources/memberImage/${styleBean.member_image}" id="profile" style="width:3vw; height: 3vw; margin-top: 5px; border-radius: 100%; border: 1px solid #C0C0C0;">
-	                       &nbsp;${styleBean.nickname}
-	                       </div>
-	                       <p class="card-text" style="font-size: 10pt; margin-top: 5px;">${styleBean.content}</p>
-	                   </div>
-	               </a>
-	           </div>
-	        </c:if>
-	    </c:forEach>
-	    </div>
-	    
-	    <c:forEach var="styleBean" items="${styleList}" varStatus="status">
-	        <c:if test="${status.index % 4 == 3}">
-	           <c:if test="${status.index == 3}">
-	               <div class="flex-column" style="width: 25%;">
-	            </c:if>
-	
-	           <div class="card m-2 border-0">
-	               <a href="detail.style?style_number=${styleBean.style_number}" class="link-dark link-underline-opacity-0">
-	                   <div class="card-body p-0">
-	                      <img src="<%=request.getContextPath()%>/resources/styleImage/${styleBean.image1}" style="max-height: 300px;" class="card-img-top" >
-	                      <div class="d-flex align-items-center">
-	                      <img src="<%=request.getContextPath()%>/resources/memberImage/${styleBean.member_image}" id="profile" style="width:3vw; height: 3vw; margin-top: 5px; border-radius: 100%; border: 1px solid #C0C0C0;">
-	                       &nbsp;${styleBean.nickname}
-	                       
-	                       </div>
-	                       <p class="card-text" style="font-size: 10pt; margin-top: 5px;">${styleBean.content}</p>
-	                   </div>
-	               </a>
-	           </div>
-	
-	        </c:if>
-	    </c:forEach>
-	    </div>
-	</div>
+        
+        <c:if test="${index == 0}">
+            <div class="flex-column" id="firstCol" style="width: 25%;">
+            <c:set var="index" value="${index+1}"/>
+        </c:if>
+   			</div>
+   			
+		<c:if test="${index == 1}">
+            <div class="flex-column" id="secondCol" style="width: 25%;">
+            <c:set var="index" value="${index+1}"/>
+        </c:if>
+   			</div>
+   		
+   		<c:if test="${index == 2}">
+            <div class="flex-column" id="thirdCol" style="width: 25%;">
+            <c:set var="index" value="${index+1}"/>
+        </c:if>
+   			</div>
+   			
+   		<c:if test="${index == 3}">
+            <div class="flex-column" id="fourthCol" style="width: 25%;">
+            <c:set var="index" value="${index+1}"/>
+        </c:if>
+   			</div>
+   			
+    </div>
+    
+    <div style="width:100%; margin: auto; text-align: center;">
+        <img src="resources/icon/Rolling-1s-200px.gif" id="loadingIcon" style="width: 100px; height: 100px;">
+    </div>
+    
 </div>
 </body>
 </html>

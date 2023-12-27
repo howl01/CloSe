@@ -78,8 +78,9 @@ $(document).ready(function(){
         $(this).siblings("#small-" + bigCategoryId).stop().slideToggle();
     });
 });
-function sort(sortType){
-	alert(sortType); 
+function sort(sortType, keyword){
+	alert(sortType);
+	alert(keyword);
 	
 	var urlParams = new URLSearchParams(window.location.search);
 	var bigcategory = urlParams.get("bigcategory_name");
@@ -88,13 +89,12 @@ function sort(sortType){
 	alert(bigcategory);
 	alert(smallcategory);
 	alert(brand);
-	location.href="list.product?bigcategory_name="+bigcategory+"&smallcategory_name="+smallcategory+"&brand="+brand+"&sort="+sortType;
+	location.href="list.product?bigcategory_name="+bigcategory+"&smallcategory_name="+smallcategory+"&brand="+brand+"&sort="+sortType+"&keyword="+keyword+"&whatColumn=product_name";
 }
 </script>
 
 <div class="body">
-
-
+	
 	<div class="row">
 		<div class="col-lg-2"></div>
 		<div class="col-lg-8">
@@ -147,11 +147,11 @@ function sort(sortType){
 					<table id="sort" style="border-collapse: collapse; margin-top: -30px; margin-bottom: 10px;">
 						<tr>
 							<td>
-								<a class="array" onclick="sort('new')">신상품순</a> | 
-								<a class="array" onclick="sort('low')">낮은 가격순</a> | 
-								<a class="array" onclick="sort('high')">높은 가격순</a> | 
-								<a class="array" onclick="sort('sale')">판매순</a> | 
-								<a class="array" onclick="sort('rating')">별점순</a>
+								<a class="array" onclick="sort('new', '${keyword}')">신상품순</a> | 
+								<a class="array" onclick="sort('low', '${keyword}')">낮은 가격순</a> | 
+								<a class="array" onclick="sort('high', '${keyword}')">높은 가격순</a> | 
+								<a class="array" onclick="sort('sale', '${keyword}')">판매순</a> | 
+								<a class="array" onclick="sort('rating', '${keyword}')">별점순</a>
 							</td>
 						</tr>
 					</table>

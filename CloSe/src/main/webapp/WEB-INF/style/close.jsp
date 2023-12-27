@@ -54,6 +54,9 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
+	var image1 = ${styleBean.image1};
+	alert(image1);
+	
     let queryUrl = "https://api.openweathermap.org/data/2.5/weather?";
     let apiKey = "appid=27f0e2dcc40e953d16644b55e897423d&";
     let apiOptions = "units=metric";
@@ -183,9 +186,6 @@ $(document).ready(function() {
                         var cardTextContainer = $('<div></div>').addClass('d-block'); // 닉네임과 제목을 감싸는 컨테이너
                         var nickname = $('<div></div>').text(style.nickname).addClass('d-block');
                         var title = $('<p></p>').addClass('card-text').text(style.title).addClass('d-block');
-
-                        alert(nickname.text());
-                        alert(title.text());
 
                         styleLink.append(styleImg);
                         cardTextContainer.append(personImg, nickname, title); // 닉네임과 제목을 컨테이너에 추가
