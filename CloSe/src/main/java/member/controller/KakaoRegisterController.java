@@ -48,7 +48,7 @@ public class KakaoRegisterController {
 		}
 		
 		String path = servletContext.getRealPath("/resources/memberImage");
-		
+		System.out.println(path);
 		File directory = new File(path);
 	    if (!directory.exists()) {
 	        directory.mkdirs();

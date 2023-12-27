@@ -19,7 +19,7 @@ public class MemberBean {
 	private String passwordcheck;
 
 	@NotEmpty(message = "이름을 입력하세요")
-	@Size(max = 3, message = "3글자이하로 입력하세요")
+	@Size(max = 5, message = "5글자이하로 입력하세요")
 	private String name;
 
 	@NotEmpty(message = "전화번호를 입력하세요")

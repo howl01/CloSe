@@ -162,6 +162,7 @@ function previewImage() {
       <div class="col-md-7 col-lg-8 text-start">
       <hr class="my-6">
         <form:form commandName="memberBean" name="f" class="needs-validation" action = "kakaoRegister.member" method="post" enctype="multipart/form-data">
+          <input type="hidden" name="password" value="1111111">
           <div class="row">
           
           	<div class="col-12">
@@ -194,18 +195,6 @@ function previewImage() {
               &nbsp;<span id="nickmessage" style = "display: none;"></span>
               </div>
               </div>
-            </div>
-
-            <div class="col-9">
-              <label for="password" class="form-label">비밀번호</label>
-                <input type="password" class="form-control mb-2" id="username" name = "password" placeholder="영문 소문자 + 숫자 8~16자리" value="${memberBean.password}" onblur="pwcheck()" style="border-color: black;">
-                <form:errors cssClass="err" path="password"/>
-            </div>
-            
-            <div class="col-9">
-              <label for="password2" class="form-label">비밀번호 확인</label>
-                <input type="password" class="form-control" id="passwordcheck" name = "passwordcheck" placeholder="비밀번호와 동일하게 입력해 주세요." onKeyUp = "repassword_keyup()" value="${memberBean.passwordcheck}" style="border-color: black;">
-                 &nbsp;<span id="pwmessage"></span>
             </div>
 
             <div class="col-4">

@@ -83,8 +83,13 @@
            return;
        }
 
-       // If the conditions are met, proceed with the deletion
-       location.href = "delete.member?member_id=" + member_id;
+       var userResponse = confirm('회원탈퇴시 보유하신 쿠폰이 모두 사라집니다.');
+       if (!userResponse) {
+    	   alert('회원탈퇴가 취소되었습니다.');
+    	   location.href='mypage.member';
+       }else{
+	       location.href = "delete.member?member_id=" + member_id;    	   
+       }
    }
 
    
