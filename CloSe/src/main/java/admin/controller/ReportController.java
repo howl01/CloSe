@@ -64,6 +64,9 @@ public class ReportController {
 		System.out.println("report_category : " + reportBean.getReport_category());
 		System.out.println("content : " + reportBean.getContent());
 		
+		PrintWriter out = response.getWriter();
+		response.setContentType("text/html; charset=UTF-8");
+
 		if(bResult.hasErrors()) {
 			model.addAttribute("style_number", reportBean.getStyle_number());
 			return viewPage;
@@ -77,19 +80,16 @@ public class ReportController {
 	        directory.mkdirs();
 	    }
 		
-		response.setContentType("text/html; charset=UTF-8");
-		PrintWriter out = response.getWriter();
-		
-		int cnt = reportDao.insertReport(reportBean);
-		File destination = new File(uploadPath+File.separator+reportBean.getImage());
-		
-		MultipartFile multi = reportBean.getUpload();
+		String imageName = reportBean.getImage();
+		File destination = new File(uploadPath+File.separator+imageName);
 		
 		try {
-			multi.transferTo(destination);
+			reportBean.getUpload().transferTo(destination);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
+		int cnt = reportDao.insertReport(reportBean);
 		
 		model.addAttribute("style_number", reportBean.getStyle_number());
 		return gotoPage;

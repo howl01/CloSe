@@ -15,13 +15,13 @@ import member.model.MemberDao;
 @Controller
 public class AdminLimit {
 
-	private final String command = "limit.member";
+	private final String command = "/limit.member";
 	private final String viewPage = "adminDetail";
 	
 	@Autowired
 	MemberDao memberDao;
 	
-	@RequestMapping(value = command, method = RequestMethod.POST)
+	@RequestMapping(value = command)
 	public String limit(@RequestParam("member_id") String member_id,
 						Model model) {
 		
@@ -36,7 +36,7 @@ public class AdminLimit {
 		case 1:
 			memberBean.setBan_expiration(now.plusDays(30));
 			break;
-		case 3:
+		case 2 :
 			memberBean.setBan_expiration(now.plusYears(1000));
 			break;
 		}
