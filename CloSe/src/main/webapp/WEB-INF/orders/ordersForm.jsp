@@ -10,18 +10,22 @@
 <%@ include file="../main/top.jsp"%>
 
 <style type="text/css">
+	.pd{
+		text-decoration: none;
+		color:black;
+	}
 </style>
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript" src = "resources/js/script.js"></script>
 <script type="text/javascript">
 function updatePrices() {
-    var totalPrice = parseInt(document.getElementById('totalPrice').innerText);
+    var totalPrice = parseInt(document.getElementById('totalPrice').innerText.replace(',' , ''));
     var deliveryPrice = totalPrice <= 50000 ? 4000 : 0;
     var total = totalPrice + deliveryPrice;
 
-    document.getElementById('deliveryPrice').innerText = deliveryPrice;
-    document.getElementById('total').innerText = total;
+    document.getElementById('deliveryPrice').innerText = deliveryPrice.toLocaleString();
+    document.getElementById('total').innerText = total.toLocaleString();
     document.getElementById('totalAmount').value = total;
 }
 
@@ -37,7 +41,7 @@ function updateTotalAmount() {
     var totalAmount = totalPrice + deliveryPrice - discountAmount;
     
     // 화면 업데이트
-    document.getElementById('total').innerText = totalAmount;
+    document.getElementById('total').innerText = totalAmount.toLocaleString();
     document.getElementById('totalAmount').value = totalAmount;
 }
 
@@ -210,15 +214,17 @@ function pay() {
                                                     class="rounded" />
                                             </td>
                                             <td> 
+                                            	<a class='pd' href='detail.product?product_number=${cib.product_number }'>
                                                 [${fn:substringBefore(cib.product_name,'/') }] <br>
                                             	${fn:substringAfter(cib.product_name,'/') } <br>
                                             	사이즈:${cib.product_size }
+                                            	</a>
                                             </td>
                                             <td>
                                             	${cib.qty }
                                             </td>
                                             <td>
-                                            	${cib.qty * cib.price }
+                                           		<fmt:formatNumber value="${cib.qty * cib.price }" pattern="#,###" />원
                                             	<c:set var="totalPrice" value="${totalPrice + (cib.price * cib.qty)}" />
                                             </td>
                                             <c:if test="${status.index == 0 }">
@@ -245,7 +251,7 @@ function pay() {
                 		<td>받으시는 분</td>
                 		<td>
                 			<input type="text" name="receiver">
-                			<button type="button" onclick="inputInfo()">같게</button>
+                			<button class='btn btn-dark btn-md' type="button" onclick="inputInfo()">주문자와 동일</button>
                 		</td>
                 	</tr>           
                 	<tr>
@@ -257,12 +263,12 @@ function pay() {
                 		<td>
                 			<input type="text" id="address1" name="address1" placeholder="주소 찾기 클릭"> <br>
 				            <input type="text" id="address2" name="address2" placeholder="상세주소 입력"> <br>
-				            <button type="button" onclick="searchAddress()">주소 찾기</button>
+				            <button class='btn btn-dark btn-md' type="button" onclick="searchAddress()">주소 찾기</button>
                 		</td>
                 	</tr>
                 	<tr>
                 		<td>배송메시지</td>
-                		<td><input type="text" name="d_message"></td>
+                		<td><input type="text" placeholder="없음" name="d_message"></td>
                 	</tr>
                  </tbody>
                 </table>
@@ -271,7 +277,7 @@ function pay() {
                <table class="table">
                	<tr>
                  <td>
-                  상품금액:<span id="totalPrice">${totalPrice }</span>원 <br>
+                  상품금액:<span id="totalPrice"><fmt:formatNumber value="${totalPrice }" pattern="#,###" /></span>원 <br>
                   <select id="couponSelect" onchange="updateTotalAmount()" name="coupon_number">
                   	<c:if test="${empty couponList }">
 	                  	<option value="" disabled>보유 중인 쿠폰이 없습니다.</option>
@@ -300,8 +306,8 @@ function pay() {
 				<input type="checkbox" class="term" id="terms1" onclick="rowCheck()"> 약관 1 동의 <a href="#" onclick="openDetailWindow()">자세히</a> <br>
 				<input type="checkbox" class="term" id="terms2" onclick="rowCheck()"> 약관 2 동의 <a href="">자세히</a> <br>
                
-               <button onclick="goCart()">장바구니</button>
-               <button onclick="pay()">결제하기</button>
+               <button class='btn btn-dark btn-md' onclick="goCart()">장바구니</button>
+               <button class='btn btn-dark btn-md' onclick="pay()">결제하기</button>
                
 			</div>
 		</div>

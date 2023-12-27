@@ -104,7 +104,7 @@
 					order by product_count DESC, product_number desc
 				</if>
 				<if test="sort == 'rating'">
-					order by average_rating asc nulls last, product_number desc
+					order by average_rating desc nulls last, product_number desc
 				</if>
 			</if>
 		</if>

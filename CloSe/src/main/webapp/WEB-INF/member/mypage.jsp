@@ -33,6 +33,10 @@
 	  background-color: #fafafa; 
 	  border-color: #ccc;
 	}
+	.pd{
+		text-decoration: none;
+		color: black;
+	}
 </style>
 
 <script type="text/javascript">
@@ -126,7 +130,9 @@
 	    
 	});
    //=====================================
+	var oid = "";
 	function orderdetail(orders_id){
+		oid = orders_id;
 		$('.tab-pane').removeClass('active show');
 	   $.ajax({
 		  url: "detail.orders?orders_id="+orders_id,
@@ -137,6 +143,7 @@
 			$("#orderdetail").empty();
 			$("#buyer").empty();
 			$("#receiver").empty();
+			var totalPrice = 0;
 			var firstElement = data[0];
 	        // 받은 데이터를 기반으로 새로운 테이블 행을 동적으로 생성하고 삽입합니다.
 	        $(data).each(function () {
@@ -145,13 +152,14 @@
 	            
 	            // Splitting the product_name based on '/'
 	            var productNameParts = this.product_name.split('/');
-	            newRow.append("<td><a href='detail.product?product_number=" + this.product_number + "'>[" + productNameParts[0] + "] <br>" + productNameParts[1] + "</a></td>");
+	            newRow.append("<td><a class='pd' href='detail.product?product_number=" + this.product_number + "'>[" + productNameParts[0] + "] <br>" + productNameParts[1] + "</a></td>");
 	            
-	            newRow.append("<td>" + this.price + "원</td>");
+	            newRow.append("<td>" + this.price.toLocaleString() + "원</td>");
 	            newRow.append("<td>" + this.product_size + "</td>");
 	            newRow.append("<td>" + this.qty + "</td>");
-	            newRow.append("<td>" + (this.price * this.qty) + "원 <button type='button' onclick='openReviewFormWindow(" + this.orderdetail_number + ")'>리뷰작성</button></td>");
+	            newRow.append("<td>" + (this.price * this.qty).toLocaleString() + "원 <button class='btn btn-dark btn-md' type='button' onclick='openReviewFormWindow(" + this.orderdetail_number + ")'>리뷰작성</button></td>");
 	            newRow.appendTo("#orderdetail");
+	            totalPrice += this.price * this.qty;
         	});
 	        
 	        var buyerHtml = "<tr>" +
@@ -185,7 +193,26 @@
 						            "<td>" + firstElement.d_message + "</td>" +
 						         "</tr>";
 			$("#receiver").append(receiverHtml);
-	        
+			
+			var receiptHtml = "<tr>" +
+						            "<td>상품금액</td>" +
+						            "<td>" + totalPrice.toLocaleString() + "원</td>" +
+						         "</tr>" +
+						         "<tr>" +
+						            "<td>할인</td>" +
+						            "<td>" + ((totalPrice + (totalPrice>5000? 0 : 4000)) - firstElement.totalamount).toLocaleString() + "원</td>" +
+						         "</tr>" +
+						         "<tr>" +
+						            "<td>배송비</td>" +
+						            "<td>" + (totalPrice>5000? 0 : 4000).toLocaleString() + "원</td>" +
+						         "</tr>" +
+						         "<tr>" +
+						            "<td>총 주문금액</td>" +
+						            "<td>" + firstElement.totalamount.toLocaleString() + "원</td>" +
+						         "</tr>";
+			$("#receipt").append(receiptHtml);
+			
+			
 	        // 새로운 탭을 표시합니다.
 	        $('#tab3-1').addClass('active show');
 		  },
@@ -209,6 +236,21 @@
 	function odlist(){
 		$('#tab3-1').removeClass('active show');
 		$('#tab3').addClass('active show');
+	}
+	function refund(){
+		if(confirm("환불하시겠습니까?")){
+			$.ajax({
+				  url: "refund.orders?orders_id="+oid,
+				  type: "post", 
+				  success : function(data){
+					alert("성공");  
+					location.href="mypage.member?startDate=${pageInfo.startDate}&endDate=${pageInfo.endDate}&pageNumber=${pageInfo.pageNumber}&activeTab=3";
+				  }
+		     });
+		} else{
+			alert("취소되었습니다.")
+		}
+		 
 	}
 </script>
 
@@ -473,7 +515,7 @@
 				        <label for="endDate">종료일:</label>
 				        <input type="date" id="endDate" name="endDate">
 				        
-				        <button type="submit">필터</button>
+				        <button class="btn btn-dark btn-md" style="height: 35px" type="submit">필터</button>
 				    </form>
 				</div>
 				
@@ -510,10 +552,10 @@
 									${ob.status }
 								</td>
 								<td>
-									${ob.totalamount }
+									<fmt:formatNumber value="${ob.totalamount }" pattern="#,###" />원
 								</td>
 								<td>
-									<button onclick="orderdetail('${ob.orders_id }')">주문상세</button>
+									<button class="btn btn-dark btn-md" onclick="orderdetail('${ob.orders_id }')">주문상세</button>
 								</td>
 							</tr>
 						</c:forEach>
@@ -535,6 +577,7 @@
 	               <h3 style="padding: 22 0 22 0">주문내역</h3>
 	            </div>
 				<table class="table" id="orderdetail">
+					
 				</table>
 				<div style="">
 					<h3 style="padding: 22 0 22 0">구매자 정보</h3>
@@ -546,9 +589,19 @@
 				</div>
 				<table class="table" id="receiver">
 				</table>
+				<div style="">
+					<h3 style="padding: 22 0 22 0">주문 금액 상세</h3>
+				</div>
+				<table class="table" id="receipt"> 
+				</table>
+				
+				
 				<div class="col-lg-12 text-center">
 					<button class="btn btn-dark btn-md" type="button" onclick="odlist()" style="width: 100px;">
 						목록보기
+					</button>
+					<button class="btn btn-dark btn-md" type="button" onclick="refund()" style="width: 100px;">
+						환불하기
 					</button>
 				</div>
 			</div>

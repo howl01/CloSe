@@ -49,7 +49,7 @@ function openReviewFormWindow(orderDetailNumber) {
                                     <img id="preview" width="100px"
                                         src='<c:url value='/resources/product/image/'/>${oi.image }'
                                         class="rounded" />
-                                </td>
+                                 </td>
                                 <td>
                                    <a href="detail.product?product_number=${oi.product_number }">[${fn:substringBefore(oi.product_name,'/') }] <br>
                                    ${fn:substringAfter(oi.product_name,'/') }</a> 

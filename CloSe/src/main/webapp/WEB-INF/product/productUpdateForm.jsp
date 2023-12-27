@@ -194,7 +194,7 @@
 							</div>
 						</div>
 						<div style="padding-top: 15; float: right;">
-							<input class="btn btn-primary btn-md" type="submit" value="수정하기">
+							<input class="btn btn-dark btn-md" type="submit" value="수정하기">
 						</div>
 					</form:form> 
 				</div>
@@ -224,7 +224,6 @@
 		</div>
 
 
-<button onclick="location.href='view.main'">이동</button>
 	</div>
 </div>
 

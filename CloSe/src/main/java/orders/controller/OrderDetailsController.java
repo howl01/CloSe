@@ -1,7 +1,6 @@
 package orders.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -21,8 +20,6 @@ import orders.model.OrdersDao;
 public class OrderDetailsController {
 
 	private final String command = "/detail.orders";
-	private final String viewPage = "orderDetail";
-	private final String gotoPage = "";
 
 	@Autowired
 	OrdersDao ordersDao;
@@ -35,7 +32,6 @@ public class OrderDetailsController {
 	public List<OrderItem> orderDetails(@RequestParam("orders_id") String orders_id, HttpServletRequest request, Model model) {
 
 		List<OrderItem> olists = ordersDetailDao.getOrderDetailsByOrder_id(orders_id);
-
 		return olists;
 	}
 }

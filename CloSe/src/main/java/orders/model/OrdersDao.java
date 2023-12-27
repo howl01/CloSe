@@ -57,4 +57,8 @@ public class OrdersDao {
 		return lists;
 	}
 
+	public void refundOrder(String orders_id) {
+		sqlSessionTemplate.update(namespace+".refundOrder", orders_id);
+	}
+
 }

@@ -121,7 +121,7 @@ window.addEventListener('scroll', function() {
     } else {
       floatingMenu.classList.remove('fixed-menu');
     }
-  });
+}); //스크롤내렸을때
 
 
 	function fnCalCount(type, size) {
@@ -148,6 +148,9 @@ window.addEventListener('scroll', function() {
         }
         updateTotalPrice(size, $input.val());
     }
+    
+    
+    
 	
 	function deleteProduct(pnum){
 		location.href="delete.product?product_number="+pnum;
@@ -156,9 +159,11 @@ window.addEventListener('scroll', function() {
 		location.href="update.product?product_number="+pnum;
 	}
 	
+	
+	
+	
 	function addToCart(){
 		var formData = $("#buyForm").serialize();
-
         $.ajax({
             type: "POST", // or "GET" depending on your server-side implementation
             url: "cartAdd.cart", // Specify the URL to your server-side endpoint
@@ -176,7 +181,67 @@ window.addEventListener('scroll', function() {
         });
 	}
 	
+	
+	//=======
+	function reviewList(pageNum){
+		$.ajax({
+            url: "list.review?product_number=${pb.product_number }", 
+            type: "post", 
+            contentType: "application/json; charset=utf8",
+            success: function(data) {
+            	if (data.length === 0) {
+		            // 데이터가 비어있을 경우 메시지를 표시하는 HTML을 생성
+		            var noReviewHtml = "<tr>";
+		            noReviewHtml += "<td align='center' height='200px;'>등록된 리뷰가 없습니다.</td>";
+		            noReviewHtml += "</tr>";
+		
+		            // 생성한 메시지를 화면에 추가
+		            $("#reviewsTable").append(noReviewHtml);
+		        } else {
+	            	$(data).each(function () {
+	            		// 각 리뷰에 대한 정보를 가져와서 HTML로 구성
+	            		
+	                    var reviewHtml = "<tr>";
+	                    reviewHtml += "<td>";
+	                    reviewHtml += "<fieldset>";
+	                    
+	                    // 별점 출력
+	                    for (var i = 1; i <= 5; i++) {
+	                        if (i <= 5 - this.rating) {
+	                            reviewHtml += "<label id='gstar'>★</label>";
+	                        } else {
+	                            reviewHtml += "<label id='star'>★</label>";
+	                        }
+	                    }
+	                    
+	                    reviewHtml += "</fieldset>";
+	                    reviewHtml += "</td>";
+	                    reviewHtml += "<td> | " + this.write_date + "</td>";
+	                    reviewHtml += "<td> | " + this.member_id + "</td>";
+	                    reviewHtml += "</tr>";
+	                    reviewHtml += "<tr>";
+	                    reviewHtml += "<td><b>선택한 옵션: " + this.product_size + "</b></td>";
+	                    reviewHtml += "</tr>";
+	                    reviewHtml += "<tr style='border-bottom: 0.5px solid rgba(0, 0, 0, .1);'>";
+	                    reviewHtml += "<td>" + this.text + "</td>";
+	                    reviewHtml += "</tr>";
+						
+	                    $("#review").append(reviewHtml);
+	                    document.getElementById("pagination").innerHTML = pagingUtil.pagingView(pageNum, "1", data.length, "reviewList()");
+	            	});
+	            }
+            	
+            }
+        });
+	}
+	
+	
+	
+	
 	$(document).ready(function() {
+		reviewList(1);
+		
+		
 		$('#insertBasket').click(function () {
 			alert("장바구니버튼");
 			 
@@ -251,7 +316,7 @@ window.addEventListener('scroll', function() {
 		    $('#cart-total').html(totalSum);
 		    
 		    
-	    });
+	    });//ajax끝
 		
 		//=-==================================================
 	    var $menu     = $('.floating-menu li.m'),
@@ -290,105 +355,9 @@ window.addEventListener('scroll', function() {
 	        })
 
 	    });
+	
 	    
 	    
-	    //============================================
-	    var $setRows = $('#setRows');
-
-	    $setRows.submit(function (e) {
-	    	e.preventDefault();
-	    	var rowPerPage = 15;
-	    	
-	    	if('${fn:length(rlists)}' != 0){
-		    	$('#nav').remove();
-		    	var $review = $('#review');
-	
-		    	$review.after('<div id="nav">');
-		    	
-		    	var $tr = $($review).find('tbody tr');
-		    	var rowTotals = $tr.length;
-		    	var pageTotal = Math.ceil(rowTotals/ rowPerPage);
-		    	var i = 0;
-	
-		    	for (; i < pageTotal; i++) { 
-		    		$('<a href="#"></a>')
-		    				.attr('rel', i)
-		    				.html(i + 1)
-		    				.appendTo('#nav');
-		    	}
-	
-		    	$tr.addClass('off-screen')
-		    			.slice(0, rowPerPage)
-		    			.removeClass('off-screen');
-	
-		    	var $pagingLink = $('#nav a');
-		    	
-		    	//
-		    	if ($pagingLink.length > 5) {
-		            $pagingLink.filter(':first').before('<a href="#" class="prev">이전</a>');
-		            $pagingLink.filter(':last').after('<a href="#" class="next">다음</a>');
-		        }
-		    	
-		    	$pagingLink.on('click', function (evt) {
-		    		evt.preventDefault();
-		    		var $this = $(this);
-		    		if ($this.hasClass('active')) {
-		    			return;
-		    		}
-		    		$pagingLink.removeClass('active');
-		    		$this.addClass('active');
-	
-		    		// 0 => 0(0*4), 4(0*4+4)
-		    		// 1 => 4(1*4), 8(1*4+4)
-		    		// 2 => 8(2*4), 12(2*4+4)
-		    		// 시작 행 = 페이지 번호 * 페이지당 행수
-		    		// 끝 행 = 시작 행 + 페이지당 행수
-	
-		    		var currPage = $this.attr('rel');
-		    		var startItem = currPage * rowPerPage;
-		    		var endItem = startItem + rowPerPage;
-	
-		    		$tr.css('opacity', '0.0')
-		    				.addClass('off-screen')
-		    				.slice(startItem, endItem)
-		    				.removeClass('off-screen')
-		    				.animate({opacity: 1}, 300);
-		    	
-
-	    		});
-		    	
-		    	// 추가된 부분: 이전 링크 클릭 시
-		        $('.prev').on('click', function (evt) {
-		            evt.preventDefault();
-		            var $current = $pagingLink.filter('.active');
-		            var $prev = $current.prev('a');
-		            if ($prev.length > 0) {
-		                $prev.trigger('click');
-		            }
-		        });
-
-		        // 추가된 부분: 다음 링크 클릭 시
-		        $('.next').on('click', function (evt) {
-		            evt.preventDefault();
-		            var $current = $pagingLink.filter('.active');
-		            var $next = $current.next('a');
-		            if ($next.length > 0) {
-		                $next.trigger('click');
-		            }
-		        });
-		    	
-	    		$pagingLink.filter(':first').addClass('active');
-	    	}
-
-	    });
-
-	    $setRows.submit();
-	    //==페이지끝
-	    
-	    
-	});
-	
-	
 		function removeQuantitySelection(button) { //사이즈별 수량 선택란 제거
 		    $(button).closest('.quantity-selection').remove();
 		    var totalSum = 0;
@@ -627,41 +596,19 @@ window.addEventListener('scroll', function() {
 	        
 	        
 	        <table id="review" width="100%" style="border-collapse: collapse;">
-	        <form action="" id="setRows">
-				<input type="hidden" name="rowPerPage" value="3">
-			</form>
 	       	 <tbody>
 	        	<c:if test="${empty rlists }">
 	        		<tr>
 	        			<td align="center" height="200px;">등록된 리뷰이 없습니다.</td>
 	        		</tr>
 	        	</c:if>
-	        	<c:if test="${not empty rlists }">
-	        	<c:forEach var="ri" items="${rlists }">
-	        		<tr>
-	        			<td>
-	        				<fieldset>
-	        					<c:forEach begin="1" end="${5-ri.rating }">
-   									<label id="gstar">★</label>
-	        					</c:forEach>
-	        					<c:forEach begin="1" end="${ri.rating }">
-            						<label id="star">★</label>
-	        					</c:forEach>
-   							</fieldset>
-	        			</td>
-	        			<td> | ${ri.write_date }</td>
-	        			<td> | ${ri.member_id }</td>
-	        		</tr>
-	        		<tr>
-	        			<td><b>선택한옵션:${ri.product_size }</b></td>
-	        		</tr>
-	        		<tr style="border-bottom: 0.5px solid rgba(0, 0, 0, .1);"> 
-	        			<td>${ri.text }
-	        		</tr>
-	        	</c:forEach>
-	        	</c:if>  
 	         </tbody>
 	        </table>
+	        <div>
+			    <nav>
+			        <ul class="pagination" id="pagination"></ul>
+			    </nav>
+			</div>
 	        
 	        
 	        
