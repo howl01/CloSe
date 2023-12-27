@@ -60,14 +60,18 @@
                 <td colspan="3">
                 	<c:if test="${ reportBean.image != null }">
                 		<img src="<%= request.getContextPath() %>/resources/uploadReport/${ reportBean.image }" width="150px">
+	                	<br>
+	                	${ reportBean.content  }
                 	</c:if>
-                	${ reportBean.content  }
+                	<c:if test="${reportBean.image == null }">
+                		${ reportBean.content  }
+                	</c:if>
                 </td>
             </tr>
             <tr>
             	<td colspan="2" align="right">
             		<input type="button" class="btn btn-Dark me-md-2" value="목록보기" onClick="location.href='adminPage.member?pageNumber=${ pageInfo.pageNumber }'">
-            		<input type="button" class="btn btn-Dark me-md-2" value="회원 정지" onClick="limit.member">
+            		<input type="button" class="btn btn-Dark me-md-2" value="회원 정지" onClick="location.href='limit.member?member_id=${ reportBean.reported_user_id}'">
             	</td>
             </tr>
             </tbody>

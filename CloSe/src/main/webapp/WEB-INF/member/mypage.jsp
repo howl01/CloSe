@@ -133,7 +133,6 @@
 	$(document).ready(function () {
 	    // 페이지 로딩 시 URL 파라미터 확인
 	    var activeTab = '${param.activeTab}';
-	    alert(activeTab);
 	    // URL 파라미터에 따라 탭 활성화
 	    if(activeTab!=3){
 		    $("a[href='#tab1']").addClass('active');

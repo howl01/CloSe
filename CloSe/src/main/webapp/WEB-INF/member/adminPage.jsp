@@ -11,7 +11,7 @@
 		text-align: center;
 	}
 	th{
-		text-align: right;
+		text-align: center;
 	}
 </style>
 
