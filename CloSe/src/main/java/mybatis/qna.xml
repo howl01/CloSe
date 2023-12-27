@@ -5,9 +5,12 @@
 <mapper namespace = "qna.QnaBean">
 
 	<select id="getTotalCount" resultType="int">
-		select count(*) from qna qna 
+		select count(*) from qna qna
 		left outer join member mem on qna.member_id = mem.member_id
-		where qna.re_level = 0			
+		where qna.re_level = 0
+		<if test="whatColumn == 'all'">
+        	and mem.nickname like #{keyword} or qna.title like #{keyword}
+    	</if>
 		<if test="whatColumn == 'nickname'">
         	and mem.nickname like #{keyword}
     	</if>
@@ -30,6 +33,9 @@
 	            FROM qna qna
 	            INNER JOIN member mem ON qna.member_id = mem.member_id
 	            WHERE qna.re_level = 0
+	            <if test="whatColumn == 'all'">
+		        	and mem.nickname like #{keyword} or qna.title like #{keyword}
+		    	</if>
 	            <if test="whatColumn == 'nickname'">
 	                AND mem.nickname LIKE #{keyword}
 	            </if>

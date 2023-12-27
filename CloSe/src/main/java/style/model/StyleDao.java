@@ -9,28 +9,28 @@ import org.springframework.stereotype.Component;
 
 @Component("StyleDao")
 public class StyleDao {
-	
-	@Autowired
-	private SqlSessionTemplate sqlSessionTemplate;
-	private String namespace = "style.StyleBean";
-	
-	public int insertStyle(StyleBean styleBean) {
-		int cnt = -1;
-		try {
-			cnt = sqlSessionTemplate.insert(namespace + ".insertStyle", styleBean);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return cnt;
-	}
+   
+   @Autowired
+   private SqlSessionTemplate sqlSessionTemplate;
+   private String namespace = "style.StyleBean";
+   
+   public int insertStyle(StyleBean styleBean) {
+      int cnt = -1;
+      try {
+         cnt = sqlSessionTemplate.insert(namespace + ".insertStyle", styleBean);
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
+      return cnt;
+   }
 
-	public List<StyleBean> getStyleList() {
-		return sqlSessionTemplate.selectList(namespace + ".getStyleList");
-	}
+   public List<StyleBean> getStyleList() {
+      return sqlSessionTemplate.selectList(namespace + ".getStyleList");
+   }
 
-	public StyleBean getStyleByStyleNumber(int style_number) {
-		return sqlSessionTemplate.selectOne(namespace + ".getStyleByStyleNumber", style_number);
-	}
+   public StyleBean getStyleByStyleNumber(int style_number) {
+      return sqlSessionTemplate.selectOne(namespace + ".getStyleByStyleNumber", style_number);
+   }
 
 	public List<StyleBean> getTemperatureAvgByStyle() {
 		return sqlSessionTemplate.selectList(namespace+".getTemperatureAvgByStyle");
@@ -65,5 +65,5 @@ public class StyleDao {
 		List<StyleBean> lists = sqlSessionTemplate.selectList(namespace+".styleFilter", map);
 		return lists;
 	}
-	
+   
 }

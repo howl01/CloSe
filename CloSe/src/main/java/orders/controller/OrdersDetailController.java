@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import cart.model.CartBean;
 import cart.model.CartDao;
 import cart.model.CartInfoBean;
+import member.model.EventBean;
+import member.model.EventDao;
 import member.model.MemberBean;
 import member.model.MemberDao;
 import orders.model.OrdersDao;
@@ -40,12 +42,23 @@ public class OrdersDetailController {
 	@Autowired
 	ProductDao productDao;
 	
-	@RequestMapping(value=command)
+	@Autowired
+	EventDao eventDao;
+	
+	@RequestMapping(value=command) //선택구매
 	public String ordersDetailForm(@RequestParam(value="cnum",required = false)String cnum,
 									@RequestParam(value="cnums",required = false)String[] cnums,
 									Model model,HttpSession session) {
 		
-		MemberBean mb = memberDao.getMember("kim");
+		String member_id = "";
+		if(session.getAttribute("loginInfo") != null) {
+			MemberBean mb = (MemberBean) session.getAttribute("loginInfo");
+			member_id = mb.getMember_id();
+		} else if(session.getAttribute("kakaoLoginInfo") != null) {
+			MemberBean mb = (MemberBean) session.getAttribute("kakaoLoginInfo");
+			member_id = mb.getMember_id();
+		}
+		MemberBean mb = memberDao.getMember(member_id);
 		model.addAttribute("mb", mb);
 		
 		if(cnums!=null) {
@@ -57,20 +70,32 @@ public class OrdersDetailController {
 			List<CartInfoBean> clists = new ArrayList<CartInfoBean>();
 			clists.add(cib);
 			model.addAttribute("clists", clists);
+			System.out.println("clists다"+clists);
 		}
-		session.removeAttribute("clists");
+		
+		List<EventBean> couponList = eventDao.selectCoupon(member_id);
+		model.addAttribute("couponList", couponList);
+		System.out.println(couponList.size());
+		session.removeAttribute("clists"); 
 		return viewPage;
 	}
 	
-	@RequestMapping(value=command2)
+	@RequestMapping(value=command2) //바로구매
 	public String orderDetailForm(@RequestParam("product_number")String product_number,
-								@RequestParam("member_id")String member_id,
 								@RequestParam(value="s_stock", required = false)String s_stock,
 								@RequestParam(value="m_stock", required = false)String m_stock,
 								@RequestParam(value="l_stock", required = false)String l_stock,
 								@RequestParam(value="xl_stock", required = false)String xl_stock,
 								Model model, HttpSession session) {
-		MemberBean mb = memberDao.getMember("kim");
+		String member_id = "";
+		if(session.getAttribute("loginInfo") != null) {
+			MemberBean mb = (MemberBean) session.getAttribute("loginInfo");
+			member_id = mb.getMember_id();
+		} else if(session.getAttribute("kakaoLoginInfo") != null) {
+			MemberBean mb = (MemberBean) session.getAttribute("kakaoLoginInfo");
+			member_id = mb.getMember_id();
+		}
+		MemberBean mb = memberDao.getMember(member_id);
 		model.addAttribute("mb", mb);
 		
 		
@@ -95,6 +120,10 @@ public class OrdersDetailController {
 				nLists.add(cib);
 			}
 		}
+		
+		List<EventBean> couponList = eventDao.selectCoupon(member_id);
+		model.addAttribute("couponList", couponList);
+		System.out.println(couponList.size());
 		session.setAttribute("clists", nLists);
 		return viewPage;
 	}

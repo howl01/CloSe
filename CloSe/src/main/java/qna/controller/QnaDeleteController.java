@@ -29,6 +29,7 @@ public class QnaDeleteController {
 	public String delete(@RequestParam("pageNumber") String pageNumber,
 							@RequestParam("qna_number") String qna_number,
 							Model model) {
+		
 		QnaBean qnaBean = qnaDao.selectQna(qna_number);
 		qnaDao.deleteQna(qna_number);
 		

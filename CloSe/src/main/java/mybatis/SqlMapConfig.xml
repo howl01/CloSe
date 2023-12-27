@@ -13,6 +13,8 @@
 		<typeAlias type="orders.model.OrdersBean" alias="OrdersBean"/>
 		<typeAlias type="cart.model.CartBean" alias="CartBean"/>
 		<typeAlias type="orderdetail.model.OrderDetailBean" alias="OrderDetailBean"/>
+		<typeAlias type="review.model.ReviewBean" alias="ReviewBean"/>
+		<typeAlias type="member.model.EventBean" alias="EventBean"/>
 	</typeAliases>
 	
 	<mappers>
@@ -20,12 +22,14 @@
 		<mapper resource="mybatis/category.xml"/>
 		<mapper resource="mybatis/member.xml"/>
 		<mapper resource="mybatis/notice.xml"/>
-		<mapper resource="mybatis/orderdetail.xml"/> 
 		<mapper resource="mybatis/orders.xml"/>
 		<mapper resource="mybatis/product.xml"/>
 		<mapper resource="mybatis/qna.xml"/>
 		<mapper resource="mybatis/report.xml"/>
 		<mapper resource="mybatis/style.xml"/>
+		<mapper resource="mybatis/orderdetail.xml"/> 
+		<mapper resource="mybatis/review.xml"/>
+		<mapper resource="mybatis/event.xml"/>
 	</mappers>
 </configuration>
 <!-- SqlMapConfig.xml -->

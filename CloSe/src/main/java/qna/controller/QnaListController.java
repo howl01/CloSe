@@ -37,9 +37,9 @@ public class QnaListController {
 		System.out.println("whatColumn : " + whatColumn);
 		System.out.println("keyword : " + keyword);
 		
-		 Map<String, String> map = new HashMap<String, String>();
-		 map.put("whatColumn", whatColumn); 
-		 map.put("keyword", "%"+keyword+"%");
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("whatColumn", whatColumn);
+		map.put("keyword", "%"+keyword+"%");
 		 
 		 int totalCount = qnaDao.getTotalCount(map);
 		 String url = request.getContextPath() + command;

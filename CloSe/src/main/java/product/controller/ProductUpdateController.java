@@ -121,12 +121,12 @@ public class ProductUpdateController {
 		if(bresult.hasErrors()) { 
 			return viewPage;
 		}
-		for(int i=0;i<plists.size();i++) { 
-			ProductBean pb0 = plists.get(i);
-			if(pb0.getProduct_name().equals(pb.getProduct_name())) {
-				return viewPage;
-			}
-		}
+//		for(int i=0;i<plists.size();i++) { 
+//			ProductBean pb0 = plists.get(i);
+//			if(pb0.getProduct_name().equals(pb.getProduct_name())) {
+//				return viewPage;
+//			}
+//		}
 		System.out.println(pb.getImage());
 		productDao.updateProduct(pb);
 		return gotoPage+"?product_number="+pb.getProduct_number();

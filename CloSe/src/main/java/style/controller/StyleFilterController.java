@@ -4,10 +4,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,16 +29,33 @@ public class StyleFilterController {
 	
 	@RequestMapping(command)
 	@ResponseBody
-	public ResponseEntity<String> styleFilter(
-	        @RequestParam(value = "seasonArray[]", required = false) List<String> seasonList,
-	        @RequestParam(value = "genderArray[]", required = false) List<String> genderList,
-	        @RequestParam(value = "styleArray[]", required = false) List<String> styleList,
-	        @RequestParam(value = "temp") String temp) {
-
+	public ResponseEntity<org.json.simple.JSONArray> styleFilter(
+	        @RequestParam(value = "seasonArray", required = false) List<String> seasonLists,
+	        @RequestParam(value = "genderArray", required = false) List<String> genderLists,
+	        @RequestParam(value = "styleArray", required = false) List<String> styleLists,
+	        @RequestParam(value = "temp", required = false) String temp,
+	        Model model) {
+		
+		if(seasonLists != null) {
+			for(String z : seasonLists) {
+				System.out.println("z : " + z);
+			}
+		}
+		if(genderLists != null) {
+			for(String x : genderLists) {
+				System.out.println("x : " + x);
+			}
+		}
+		if(styleLists != null) {
+			for(String y : styleLists) {
+				System.out.println("y : " + y);
+			}
+		}
+		
 	    Map<String, Object> map = new HashMap<String, Object>();
-	    map.put("seasonList", seasonList);
-	    map.put("genderList", genderList);
-	    map.put("styleList", styleList);
+	    map.put("seasonLists", seasonLists);
+	    map.put("genderLists", genderLists);
+	    map.put("styleLists", styleLists);
 	    map.put("temp", temp);
 
 	    List<StyleBean> lists = styleDao.styleFilter(map);
@@ -43,6 +64,8 @@ public class StyleFilterController {
 
 	    org.json.simple.JSONArray jsonArr = new org.json.simple.JSONArray();
 	    for(StyleBean styleBean : lists) {
+	    	System.out.println("title : " + styleBean.getTitle());
+	    	System.out.println("style_number : " + styleBean.getStyle_number());
 	        org.json.simple.JSONObject jsonObj = new org.json.simple.JSONObject();
 	        jsonObj.put("style_number", styleBean.getStyle_number());
 	        jsonObj.put("avg_temperature", styleBean.getAvg_temperature());
@@ -54,7 +77,9 @@ public class StyleFilterController {
 	        jsonObj.put("gender", styleBean.getGender());
 	        jsonArr.add(jsonObj);
 	    }
-
-	    return new ResponseEntity<String>(jsonArr.toJSONString(), HttpStatus.OK);
+	    
+	    HttpHeaders headers = new HttpHeaders();
+	    headers.setContentType(MediaType.APPLICATION_JSON);
+	    return new ResponseEntity<org.json.simple.JSONArray>(jsonArr, headers, HttpStatus.OK);
 	}
 }

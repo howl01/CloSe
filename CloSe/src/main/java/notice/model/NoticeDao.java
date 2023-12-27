@@ -29,6 +29,7 @@ public class NoticeDao {
 	public List<NoticeBean> getAllNotice(Map<String, String> map, Paging pageInfo) {
 		RowBounds rowbounds = new RowBounds(pageInfo.getOffset(), pageInfo.getLimit());
 		List<NoticeBean> lists = sqlSessionTemplate.selectList(namespace+".getAllNotice", map, rowbounds);
+		System.out.println("lists : " + lists.size());
 		return lists;
 	}
 

@@ -81,6 +81,7 @@
 </script>
 
 <div class="row">
+	<div>
 	<h1 style="margin-left: 220px;">공지사항</h1>
 	<div class="card search-form mb-3" style="width: 30%; height: 60px; margin-left: auto; margin-right: 220px;">
 		<div class="card-body p-0">
@@ -115,6 +116,7 @@
 				</div>
 			</form>
 		</div>
+	</div>
 	</div>
 </div>
 

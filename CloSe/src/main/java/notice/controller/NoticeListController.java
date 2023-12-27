@@ -45,11 +45,9 @@ public class NoticeListController {
 		int number = totalCount - (pageInfo.getPageNumber() -1) * 10;
 		
 		List<NoticeBean> lists = noticeDao.getAllNotice(map, pageInfo);
-		
 		model.addAttribute("lists", lists);
 		model.addAttribute("pageInfo", pageInfo);
 		model.addAttribute("number", number);
-		
 		return viewPage;
 	}
 	

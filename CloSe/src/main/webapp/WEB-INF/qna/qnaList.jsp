@@ -74,7 +74,26 @@
   border: 1px solid #e6e4e9;
   border-radius: 8px;
 }
+.page-link {
+  color: #000; 
+  background-color: #fff;
+  border: 1px solid #ccc; 
+}
 
+.page-item.active .page-link {
+ z-index: 1;
+ color: #555;
+ font-weight:bold;
+ background-color: #f1f1f1;
+ border-color: #ccc;
+ 
+}
+
+.page-link:focus, .page-link:hover {
+  color: #000;
+  background-color: #fafafa; 
+  border-color: #ccc;
+}
     </style>
 <script type="text/javascript">
 	function insert(){
@@ -82,9 +101,9 @@
 	}
 </script>
 
-<h1 style="margin-left: 220px;">고객센터</h1>
-
- <div class="row">
+  <div class="row">
+ 		<div>
+ 		<h1 style="margin-left: 220px; width: 50%">고객센터</h1>
         <div class="card search-form mb-3" style="width: 30%; height: 60px; margin-left: auto; margin-right: 220px;">
             <div class="card-body p-0" style="padding-top: 30px;">
                 <form action="list.qna" method="get">
@@ -121,6 +140,7 @@
                     </div>
                 </form>
             </div>
+        </div>
         </div>
     </div>
  
