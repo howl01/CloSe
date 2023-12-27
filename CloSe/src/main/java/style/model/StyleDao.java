@@ -1,5 +1,6 @@
 package style.model;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,8 +25,13 @@ public class StyleDao {
       return cnt;
    }
 
-   public List<StyleBean> getStyleList() {
-      return sqlSessionTemplate.selectList(namespace + ".getStyleList");
+   public List<StyleBean> getStyleList(int page, int pageSize) {
+	   int startRow = (page - 1) * pageSize + 1;
+	   int endRow = startRow + pageSize - 1;
+       Map<String, Integer> params = new HashMap<String, Integer>();
+       params.put("startRow", startRow);
+       params.put("endRow", endRow);
+      return sqlSessionTemplate.selectList(namespace + ".getStyleList", params);
    }
 
    public StyleBean getStyleByStyleNumber(int style_number) {

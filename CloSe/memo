@@ -66,7 +66,7 @@ CREATE TABLE category (
 
 CREATE TABLE product (
     product_number  number  PRIMARY KEY,
-    product_name    varchar2(30)    NOT NULL,
+    product_name    varchar2(200)    NOT NULL,
     image   varchar2(30)    NULL,
     price   number  NOT NULL,
     content varchar2(30)    NOT NULL,
@@ -174,6 +174,11 @@ CREATE TABLE notice (
    write_date   Date
 );
 
+create table pop(
+	keyword varchar2(100),
+	count number
+);
+
 select * from member;
 select * from category;
 select * from product;
@@ -259,8 +264,3 @@ insert into product values
 (product_seq.nextval,'반스/롱스커트1','롱스커트1.jpg',79000,'롱스커트c1.jpg','10',100,100,100,100,'롱스커트');
 
 commit; 
-
-SELECT keyword, count
-FROM pop
-ORDER BY count DESC
-FETCH FIRST 10 ROWS ONLY;

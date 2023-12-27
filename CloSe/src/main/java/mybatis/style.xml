@@ -39,11 +39,15 @@
 		where style_number = #{style_number}
 	</update>
 	
-	<select id="getStyleList" resultType="StyleBean">
-		 select s.*, nickname
-	    from style s
-	    left join
-	      member m ON s.member_id = m.member_id
+	<select id="getStyleList" resultType="StyleBean" parameterType="java.util.Map">
+        SELECT *
+		    FROM (
+		        SELECT s.*, m.nickname nickname, m.member_image member_image,
+		               ROW_NUMBER() OVER (ORDER BY style_number) AS rnum
+		        FROM style s
+		        LEFT JOIN member m ON s.member_id = m.member_id
+		    )
+	    WHERE rnum BETWEEN #{startRow} AND #{endRow}
 	</select>
 	
 	<select id="getStyleByMemberId" resultType="StyleBean">

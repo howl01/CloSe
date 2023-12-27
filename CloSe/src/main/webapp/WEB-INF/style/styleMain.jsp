@@ -56,6 +56,63 @@
         	margin: auto;
         }
     </style>
+
+<script>
+    var page = 1;
+    var pageSize = 10;
+    var contextPath = '<%= request.getContextPath() %>';
+
+    $(document).ready(function () {
+        $(window).scroll(function () {
+        	 if ($(window).scrollTop() + $(window).height() >= $(document).height() - 50) {
+        	        // 스크롤이 끝에 도달했을 때, 서버에 새로운 데이터 요청
+        	        page++;
+        	        loadMoreData();
+       	    }
+        });
+    });
+
+    function loadMoreData() {
+        $.ajax({
+            url: 'mainView.style',
+            type: 'POST',
+            data: { page: page, pageSize: pageSize },
+            success: function (json) {
+            	 if (json.length > 0) {
+            	        var html = '<div class="d-flex flex-wrap" id="styleContainer">';
+            	        $.each(json, function (index, styleBean) {
+            	            if (index % 4 === 1) {
+            	                html += '<div class="flex-column" style="width: 25%;">';
+            	            }
+
+            	            html += '<div class="card m-3">';
+            	            html += '<a href="detail.style?style_number=' + styleBean.style_number + '" class="link-dark link-underline-opacity-0">';
+            	            html += '<img src="' + contextPath + '/resources/styleImage/' + styleBean.image1 + '" class="card-img-top">';
+            	            html += '<div class="card-body">';
+            	            html += '<img src="data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'16\' height=\'16\' fill=\'gray\' class=\'bi bi-person-circle\' viewBox=\'0 0 16 16\'%3E%3Cpath d=\'M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z\'/%3E%3Cpath fill-rule=\'evenodd\' d=\'M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z\'/%3E%3C/svg%3E" alt="Person Icon">';
+            	            html += styleBean.nickname;
+            	            html += '<p class="card-text">' + styleBean.content + '</p>';
+            	            html += '</div>';
+            	            html += '</a>';
+            	            html += '</div>';
+
+            	            if (index % 4 === 0) {
+            	                html += '</div>';
+            	            }
+            	        });
+            	        html += '</div>';
+            	        
+            	        $("#displayList2").html(html);
+            	        $("#displayList2").show();
+            	    }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.error("AJAX Error:", textStatus, errorThrown);
+                alert("검색 중 오류가 발생했습니다. 자세한 내용은 콘솔을 확인하세요.");
+            }
+        });
+    }
+</script>
 </head>
 <body>
 
@@ -163,9 +220,8 @@
         </c:if>
     </c:forEach>
     </div>
-	
+	<div id="displayList2"></div>
 </div>
-	
 </body>
 </html>
 <%@ include file="../main/bottom.jsp" %>
