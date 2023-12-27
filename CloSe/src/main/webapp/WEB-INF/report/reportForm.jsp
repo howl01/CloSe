@@ -3,7 +3,7 @@
 <%@ include file="../common/common.jsp" %>
 <%@ include file= "../main/top.jsp" %>
   <style>
-        .search-form {
+.search-form {
   width: 80%;
   margin: 0 auto;
   margin-top: 1rem;

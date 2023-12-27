@@ -189,9 +189,9 @@ window.navigator.geolocation.getCurrentPosition(function(pos) {
 
 				  <a href="#" class="link-dark link-underline-opacity-0">
 	                  <div class="col" align="center">
-	                     <img class="bd-placeholder-img card-img-top" src="resources/img/weather.jpg" width="100%" height="120"
+	                     <img class="bd-placeholder-img card-img-top" src="resources/img/cou.png" width="100%" height="120"
 	                           style="border-radius: 20%;">
-	                     계절별 코디
+	                     쿠폰
 	                  </div>
                   </a>
 
