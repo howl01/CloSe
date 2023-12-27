@@ -44,10 +44,7 @@
 	.pd{
 		text-decoration: none;
 		color: black;
-	#profile{
-		border-radius: 100%;
-		border: 1px solid #C0C0C0;
-	}
+		
 	.container{
 		width: 100%;
 	}
@@ -528,7 +525,7 @@
 				                <div class="card-body p-0">
 					                <img src="<%=request.getContextPath()%>/resources/styleImage/${styleBean.image1}" style="height: 350px;" class="card-img-top" >
 				                	<div class="d-flex align-items-center">
-				                	<img src="<%=request.getContextPath()%>/resources/memberImage/${styleBean.member_image}" id="profile" style="width:3vw; height: 3vw; margin-top: 5px;">
+				                	<img src="<%=request.getContextPath()%>/resources/memberImage/${styleBean.member_image}" id="profile" style="width:3vw; height: 3vw; margin-top: 5px; border-radius: 100%; border: 1px solid #C0C0C0;">
 				                    &nbsp;${styleBean.nickname}
 				                    </div>
 				                    <p class="card-text" style="font-size: 10pt; margin-top: 5px;">${styleBean.content}</p>

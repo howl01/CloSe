@@ -39,7 +39,7 @@ public class StyleMainViewController {
 	@RequestMapping(value=command, method = RequestMethod.POST)
 	@ResponseBody
 	public void mainAjax(@RequestParam(value = "page", defaultValue = "1") int page,
-            			   @RequestParam(value = "pageSize", defaultValue = "10") int pageSize, 
+            			   @RequestParam(value = "pageSize", defaultValue = "12") int pageSize, 
             			   Model model, HttpServletResponse response) throws IOException {
 		List<StyleBean> styleList =  styleDao.getStyleList(page, pageSize);
         

@@ -78,7 +78,7 @@ CREATE TABLE product (
     l_stock   number  NOT NULL,
     xl_stock   number  NOT NULL,
     smallcategory_name varchar2(20) NOT NULL,
-    FOREIGN KEY (smallcategory_name) REFERENCES category(smallcategory_name)
+    FOREIGN KEY (smallcategory_name) REFERENCES category(smallcategory_name) on delete cascade
 );
 
 CREATE TABLE style (
@@ -99,11 +99,11 @@ CREATE TABLE style (
   product_number3   number,
   product_number4   number,
    member_id   varchar2(30)   NOT NULL,
-   FOREIGN KEY (product_number1) REFERENCES product(product_number),
-  FOREIGN KEY (product_number2) REFERENCES product(product_number),
-  FOREIGN KEY (product_number3) REFERENCES product(product_number),
-  FOREIGN KEY (product_number4) REFERENCES product(product_number),
-  FOREIGN KEY (member_id) REFERENCES member(member_id)
+   FOREIGN KEY (product_number1) REFERENCES product(product_number) on delete cascade,
+  FOREIGN KEY (product_number2) REFERENCES product(product_number) on delete cascade,
+  FOREIGN KEY (product_number3) REFERENCES product(product_number) on delete cascade,
+  FOREIGN KEY (product_number4) REFERENCES product(product_number) on delete cascade,
+  FOREIGN KEY (member_id) REFERENCES member(member_id) on delete cascade
 );
 
 CREATE TABLE orders (
@@ -117,7 +117,7 @@ CREATE TABLE orders (
     d_message varchar2(100) NULL,
     totalamount NUMBER NOT NULL,
     status varchar2(20),
-    FOREIGN KEY (member_id) REFERENCES member(member_id)
+    FOREIGN KEY (member_id) REFERENCES member(member_id) on delete cascade
 );
 
 create table orderdetail (
@@ -126,7 +126,7 @@ create table orderdetail (
     orders_id varchar2(50) NOT NULL,
     product_size varchar2(10) Not NULL,
     qty number NOT NULL,
-    FOREIGN KEY (product_number) REFERENCES product(product_number)
+    FOREIGN KEY (product_number) REFERENCES product(product_number) on delete cascade
 );
 
 CREATE TABLE cart (
@@ -135,8 +135,8 @@ CREATE TABLE cart (
     product_size varchar2(10) Not NULL,
     qty number  NOT NULL,
     member_id   varchar2(15)    NOT NULL,
-        FOREIGN KEY (product_number) REFERENCES product(product_number),
-        FOREIGN KEY (member_id) REFERENCES member(member_id)
+        FOREIGN KEY (product_number) REFERENCES product(product_number) on delete cascade,
+        FOREIGN KEY (member_id) REFERENCES member(member_id) on delete cascade
 );
 
 CREATE TABLE report (
@@ -148,9 +148,9 @@ CREATE TABLE report (
     reported_user_id varchar2(15),
     style_number number,
     write_date date,
-    FOREIGN KEY (reporter_id) REFERENCES member(member_id),
-    FOREIGN KEY (reported_user_id) REFERENCES member(member_id),
-    FOREIGN KEY (style_number) REFERENCES style(style_number)
+    FOREIGN KEY (reporter_id) REFERENCES member(member_id) on delete cascade,
+    FOREIGN KEY (reported_user_id) REFERENCES member(member_id) on delete cascade,
+    FOREIGN KEY (style_number) REFERENCES style(style_number) on delete cascade
 );
 
 CREATE TABLE qna (
@@ -165,7 +165,7 @@ CREATE TABLE qna (
    answer number default 0,
    qna_category varchar2(20),
      member_id varchar2(15),
-   FOREIGN KEY (member_id) REFERENCES member(member_id)
+   FOREIGN KEY (member_id) REFERENCES member(member_id) on delete cascade
 );
 
 CREATE TABLE notice (
@@ -183,8 +183,8 @@ CREATE TABLE review (
     orderdetail_number number NOT NULL,
     member_id VARCHAR2(30) NOT NULL,
     write_date DATE,
-    FOREIGN KEY (orderdetail_number) REFERENCES orderdetail(orderdetail_number),
-    FOREIGN KEY (member_id) REFERENCES member(member_id)
+    FOREIGN KEY (orderdetail_number) REFERENCES orderdetail(orderdetail_number) on delete cascade,
+    FOREIGN KEY (member_id) REFERENCES member(member_id) on delete cascade
 );
 
 create table pop(
