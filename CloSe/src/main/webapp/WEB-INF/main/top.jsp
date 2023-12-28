@@ -91,15 +91,14 @@
 		location.href="mypage.member";
 	}
 	
-	   	function search() {
-	       var overlay = document.getElementById('overlay');
-	       overlay.style.display = 'block';
-	    }
-	   	function hideOverlay() {
-	   		var overlay = document.getElementById('overlay');
-	   		overlay.style.display = 'none';
-		 }
-	   	
+   	function search() {
+       var overlay = document.getElementById('overlay');
+       overlay.style.display = 'block';
+    }
+   	function hideOverlay() {
+   		var overlay = document.getElementById('overlay');
+   		overlay.style.display = 'none';
+	}
 	   	
 	   	$(document).ready(function () {
 	   	    // 페이지 로드 시 최근 검색어 목록을 가져와서 업데이트
@@ -253,7 +252,7 @@
 <style>
 	.overlay {
       display: none;
-      position: fixed;
+      position: absolute;
       top: 0;
       left: 0;
       width: 100%;
@@ -339,6 +338,42 @@
     margin-left: 10px; /* 왼쪽 여백 설정 */
     color: #ff0000; /* 색상 설정 */
   }
+  
+  /* 인기 키워드 리스트 스타일 */
+  ol {
+    list-style: none; /* 기본 리스트 스타일 제거 */
+    padding-left: 0; /* 리스트의 왼쪽 패딩 제거 */
+    background-color: #f9f9f9; /* 배경 색상 설정 */
+    border-radius: 8px; /* 모서리 둥글게 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 효과 추가 */
+    width: 100%; /* 너비 설정 */
+    max-width: 600px; /* 최대 너비 설정 */
+    margin: 20px auto; /* 상하 마진 20px, 좌우 마진 자동(가운데 정렬) */
+    counter-reset: item;
+  }
+
+  /* 리스트 아이템 스타일 */
+  ol li {
+    background-color: #ffffff; /* 배경 색상 설정 */
+    padding: 10px 20px; /* 내부 여백 설정 */
+    margin: 8px 0; /* 위아래 마진 설정 */
+    border-radius: 4px; /* 모서리 둥글게 */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* 그림자 효과 추가 */
+    transition: background-color 0.3s ease; /* 배경 색상 변화 애니메이션 */
+  }
+
+  /* 리스트 아이템 호버 스타일 */
+  ol li:hover {
+    background-color: #f0f0f0; /* 호버시 배경 색상 변경 */
+  }
+
+  /* 리스트 아이템의 숫자 스타일 */
+  ol li::before {
+    content: counter(item) ". "; /* 숫자와 점 추가 */
+    counter-increment: item; /* 숫자 증가 */
+    font-weight: bold; /* 글자 두껍게 */
+    margin-right: 10px; /* 숫자와 텍스트 사이의 여백 */
+  }
 
 </style>
 
@@ -365,13 +400,13 @@
 		</div>
 	</div>
 	<div style="margin: auto;">
-    <h2 align="center">인기 키워드</h2>
-    <ol>
-        <c:forEach var="pop" items="${popList}">
-            <li>${pop.keyword} - ${pop.count}회</li>
-        </c:forEach>
-    </ol>
-</div>
+	    <h2 align="center">인기 키워드</h2>
+	    <ol>
+	        <c:forEach var="pop" items="${popList}">
+	            <li>${pop.keyword}</li>
+	        </c:forEach>
+	    </ol>
+	</div>
 </div>
 
 <div class="sticky-top">
