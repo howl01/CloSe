@@ -279,7 +279,67 @@
     #displayList_img{
       width:100px;
       height:100px;
-   }
+    }
+   #clearAllBtn {
+   	margin-bottom: 5px;
+    padding: 5px 5px; /* 패딩 */
+    font-size: 10px; /* 글자 크기 */
+    text-align: center; /* 텍스트 중앙 정렬 */
+    cursor: pointer; /* 커서 모양을 클릭 가능한 형태로 변경 */
+    outline: none; /* 아웃라인 제거 */
+    color: #fff; /* 글자 색상 */
+    background-color: black; /* 배경 색상 */
+    border: none; /* 테두리 제거 */
+    border-radius: 5px; /* 모서리 둥글게 */
+    transition: all 0.3s; /* 클릭 효과를 위한 전환 효과 */
+  }
+
+  /* 버튼을 눌렀을 때의 스타일 */
+  #clearAllBtn:active {
+    background-color: #3e50b4; /* 배경 색상을 어둡게 변경 */
+    box-shadow: 0 5px #666; /* 그림자 위치 변경 */
+    transform: translateY(4px); /* 버튼을 아래로 조금 이동 */
+  }
+
+  /* 마우스 오버 시 버튼 스타일 */
+  #clearAllBtn:hover {
+    background-color: #6c7ae0; /* 배경 색상 변경 */
+  }
+  
+  /* 최근 검색어를 감싸는 div의 스타일 */
+  #recentSearchDiv {
+    width: 100%; /* 부모 요소의 너비에 맞춥니다 */
+    /* 필요하다면 여기에 추가적인 스타일을 적용하세요 */
+  }
+
+  /* 최근 검색어 리스트 스타일 */
+  #recentSearchList {
+    list-style: none; /* 기본 리스트 스타일 제거 */
+    padding-left: 0; /* 리스트의 왼쪽 패딩 제거 */
+    display: flex; /* 항목들을 가로로 나열 */
+    flex-wrap: wrap; /* 내용이 넘치면 다음 줄로 */
+  }
+
+  /* 리스트 아이템 스타일 */
+  #recentSearchList li {
+    background: #f2f2f2; /* 배경색 설정 */
+    margin: 5px; /* 주변과의 거리 설정 */
+    border-radius: 20px; /* 타원형 모양을 만들기 위한 굴곡 설정 */
+    padding: 5px 15px; /* 내부 여백 설정 */
+    display: flex; /* 내부 요소를 가로로 나열 */
+    align-items: center; /* 세로 중앙 정렬 */
+    justify-content: center; /* 가로 중앙 정렬 */
+  }
+
+  /* 삭제 버튼 스타일 */
+  .delete-btn {
+    cursor: pointer; /* 커서 모양 변경 */
+    background: none; /* 배경 투명 */
+    border: none; /* 테두리 없음 */
+    margin-left: 10px; /* 왼쪽 여백 설정 */
+    color: #ff0000; /* 색상 설정 */
+  }
+
 </style>
 
 
@@ -300,12 +360,12 @@
 	<div class="d-flex justify-content-start" style="border: none; outline: none; width: 50%; margin: auto; margin-top: 3px;">
       <!-- 최근 검색어를 출력하는 부분 추가 -->
 		<div id="recentSearchDiv">
-		    최근 검색어 <button id="clearAllBtn">전체 삭제</button>
+		    최근 검색어 <button id="clearAllBtn" >전체 삭제</button>
 		    <ul id="recentSearchList"></ul>
 		</div>
 	</div>
-	<div>
-    <h2>인기 키워드</h2>
+	<div style="margin: auto;">
+    <h2 align="center">인기 키워드</h2>
     <ol>
         <c:forEach var="pop" items="${popList}">
             <li>${pop.keyword} - ${pop.count}회</li>

@@ -69,7 +69,7 @@ CREATE TABLE category (
 CREATE TABLE product (
     product_number  number  PRIMARY KEY,
     product_name    varchar2(200)    NOT NULL,
-    image   varchar2(30)    NULL,
+    image   varchar2(300)    NULL,
     price   number  NOT NULL,
     content varchar2(30)    NOT NULL,
     temperature number  NOT NULL,
