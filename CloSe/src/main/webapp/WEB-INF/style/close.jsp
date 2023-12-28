@@ -139,43 +139,47 @@ $(document).ready(function() {
 		}
 	});
 	
-    $("input[type='checkbox']").change(function() {
-        var checkboxSeasonValues = $("input[name='season']:checked").map(function() {
-            return this.value;
-        }).get();
-        var checkboxGenderValues = $("input[name='gender']:checked").map(function() {
-            return this.value;
-        }).get();
-        var checkboxStyleValues = $("input[name='style']:checked").map(function() {
-            return this.value;
-        }).get();
-        
-        var tempValue = "${temp}";
+	callRequest();
+	
+	$("input[type='checkbox']").change(function() {
+	    callRequest();
+	});
+	
+	function callRequest() {
+	    var checkboxSeasonValues = $("input[name='season']:checked").map(function() {
+	        return this.value;
+	    }).get();
+	    var checkboxGenderValues = $("input[name='gender']:checked").map(function() {
+	        return this.value;
+	    }).get();
+	    var checkboxStyleValues = $("input[name='style']:checked").map(function() {
+	        return this.value;
+	    }).get();
+	    
+	    var tempValue = "${temp}";
 
-        $.ajax({
-            url: 'styleFilter.style',
-            method: 'POST',
-            traditional: true,
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            data: JSON.stringify({
-                'seasonArray': checkboxSeasonValues,
-                'genderArray': checkboxGenderValues,
-                'styleArray': checkboxStyleValues,
-                'temp': tempValue
-            }),
-            success: function(response) {
-                var contextPath = "<%= request.getContextPath() %>";
-                console.log('Success:', response); // 성공 결과 로그 출력
-                var parsedData = typeof response === 'string' ? JSON.parse(response) : response;
-                console.log('Parsed Data:', parsedData); // 파싱된 데이터 로그 출력
+	    $.ajax({
+	        url: 'styleFilter.style',
+	        method: 'POST',
+	        data: {
+	            'seasonArray': checkboxSeasonValues,
+	            'genderArray': checkboxGenderValues,
+	            'styleArray': checkboxStyleValues,
+	            'temp': tempValue
+	        },
+	        success: function(response) {
+	        	var contextPath = "<%= request.getContextPath() %>";
+            	var jsonArray = JSON.parse(response);
+            	if (!(jsonArray instanceof Array)) { // jsonArray가 배열이 아닌 경우
+                    jsonArray = [jsonArray]; // jsonArray를 배열로 변환
+                }
+                $(document).data('jsonArray', jsonArray);
 
                 var styleContainer = $('#result'); // 결과를 표시할 컨테이너
                 styleContainer.empty(); // 결과 컨테이너 초기화
-                styleContainer.addClass('d-flex flex-wrap'); // 클래스 추가
+                styleContainer.addClass('d-flex flex-wrap');
 
-                $.each(parsedData, function(index, style) {
-                    if(style.nickname && style.title) { // nickname과 title이 존재하는지 확인
+                $.each(jsonArray, function(index, style) {
                         var styleCard = $('<div></div>').css('width', '33%');
                         var styleLink = $('<a></a>').attr('href', contextPath + '/detail.style?style_number=' + style.style_number)
                             .addClass('link-dark link-underline-opacity-0');
@@ -188,27 +192,21 @@ $(document).ready(function() {
                         var nickname = $('<div></div>').text(style.nickname).addClass('d-block');
                         var title = $('<p></p>').addClass('card-text').text(style.title).addClass('d-block');
 
-                        alert(nickname.text());
-                        alert(title.text());
-
                         styleLink.append(styleImg);
                         cardTextContainer.append(personImg, nickname, title); // 닉네임과 제목을 컨테이너에 추가
                         cardBody.append(cardTextContainer);
                         styleCard.append(styleLink, cardBody);
 
                         styleContainer.append(styleCard);
-                    } else {
-                        console.log('Error: Missing nickname or title in style object', style);
-                    }
                 });
                 alert("성공");
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                console.error('AJAX Error:', textStatus, errorThrown); // 오류를 콘솔에 출력
-                alert("실패");
-            }
-        });
-    });
+	        },
+	        error: function (jqXHR, textStatus, errorThrown) {
+	            console.error('AJAX Error:', textStatus, errorThrown);
+	            alert("실패");
+	        }
+	    });
+	}
     }
 });
 </script>
@@ -228,10 +226,10 @@ $(document).ready(function() {
         </button>
         <div class="collapse show" id="home-collapse" style="margin-left: 30px;">
           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small" id="season">
-            <li><input type="checkbox" style="accent-color: black;" name="season" value="Spring"> Spring</li>
-            <li><input type="checkbox" style="accent-color: black;" name="season" value="Summer"> Summer</li>
-            <li><input type="checkbox" style="accent-color: black;" name="season" value="Fall"> Fall</li>
-            <li><input type="checkbox" style="accent-color: black;" name="season" value="Winter"> Winter</li>
+            <li><input type="checkbox" style="accent-color: black;" name="season" value="Spring"> 봄</li>
+            <li><input type="checkbox" style="accent-color: black;" name="season" value="Summer"> 여름</li>
+            <li><input type="checkbox" style="accent-color: black;" name="season" value="Fall"> 가을</li>
+            <li><input type="checkbox" style="accent-color: black;" name="season" value="Winter"> 겨울</li>
           </ul>
         </div>
       </li>
@@ -269,11 +267,8 @@ $(document).ready(function() {
   
   <div>
 <div>
-  
-<section class="vw-100">
-  <div class="container py-5">
-    <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col-md-9 col-lg-7 col-xl-5">
+  		
+      <div class="col-md-9 col-lg-7 col-xl-5" style="width: 600px;">
         <div id="wrapper-bg" class="card text-white bg-image shadow-4-strong">
           <!-- Main current data -->
           <div class="card-header p-4 border-0">
@@ -329,9 +324,6 @@ $(document).ready(function() {
         
         
       </div>
-    </div>
-  </div>
-</section>
 
   
 </div>
@@ -343,34 +335,7 @@ $(document).ready(function() {
 	
 </div>
 
-<div id="result">
-	<c:if test="${fn:length(styleFilterLists) == 0}">
-		<c:forEach var="styleBean" items="${ lists }">
-			<div class="card m-3">
-	            <a href="detail.style?style_number=${styleBean.style_number}" class="link-dark link-underline-opacity-0">
-	                <img src="${contextPath}/resources/styleImage/${styleBean.image1}" class="card-img-top">
-	                <div class="card-body">
-	                    ${styleBean.nickname}
-	                    <p class="card-text">${styleBean.title}</p>
-	                </div>
-	            </a>
-	        </div>
-		</c:forEach>
-	</c:if>
-	<%-- <c:if test="${fn:length(styleFilterLists) != 0}">
-	    <c:forEach var="styleFilterBean" items="${styleFilterLists}" varStatus="status">
-	        <div class="card m-3">
-	            <a href="detail.style?style_number=${styleFilterBean.style_number}" class="link-dark link-underline-opacity-0">
-	                <img src="${contextPath}/resources/styleImage/${styleFilterBean.image1}" class="card-img-top">
-	                <div class="card-body">
-	                    ${styleFilterBean.nickname}
-	                    <p class="card-text">${styleFilterBean.title}</p>
-	                </div>
-	            </a>
-	        </div>
-	    </c:forEach>
-	</c:if> --%>
-</div>
+<div id="result"></div>
     
 <%@ include file="../main/bottom.jsp" %>
 

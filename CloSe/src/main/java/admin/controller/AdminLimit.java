@@ -1,5 +1,6 @@
 package admin.controller;
 
+import java.sql.Date;
 import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +17,14 @@ import member.model.MemberDao;
 public class AdminLimit {
 
 	private final String command = "limit.member";
-	private final String viewPage = "adminDetail";
+	private final String gotoPage = "redirect:/adminPage.member";
 	
 	@Autowired
 	MemberDao memberDao;
 	
-	@RequestMapping(value = command, method = RequestMethod.POST)
+	@RequestMapping(value = command, method = RequestMethod.GET)
 	public String limit(@RequestParam("member_id") String member_id,
+						@RequestParam("pageNumber") String pageNumber,
 						Model model) {
 		
 		MemberBean memberBean = memberDao.getMember(member_id);
@@ -30,16 +32,16 @@ public class AdminLimit {
 		LocalDate now = LocalDate.now();
 		
 		switch (memberBean.getBan_count()) {
-		case 0 :
-			memberBean.setBan_expiration(now.plusDays(7));
-			break;
-		case 1:
-			memberBean.setBan_expiration(now.plusDays(30));
-			break;
-		case 3:
-			memberBean.setBan_expiration(now.plusYears(1000));
-			break;
-		}
+	    case 0 :
+	        memberDao.updateMemberBanExpiration(member_id, Date.valueOf(now.plusDays(7)));
+	        break;
+	    case 1:
+	        memberDao.updateMemberBanExpiration(member_id, Date.valueOf(now.plusDays(30)));
+	        break;
+	    case 2:
+	        memberDao.updateMemberBanExpiration(member_id, Date.valueOf(now.plusYears(1000)));
+	        break;
+	}
 		
 		memberBean.setBan_count(memberBean.getBan_count() + 1);
 		
@@ -52,6 +54,7 @@ public class AdminLimit {
 		}
 		
 		model.addAttribute("member_id", member_id);
-		return viewPage;
+		model.addAttribute("pageNumber", pageNumber);
+		return gotoPage;
 	}
 }

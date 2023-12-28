@@ -1,10 +1,12 @@
 package style.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.json.simple.JSONArray;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -29,27 +31,36 @@ public class StyleFilterController {
 	
 	@RequestMapping(command)
 	@ResponseBody
-	public ResponseEntity<org.json.simple.JSONArray> styleFilter(
-	        @RequestParam(value = "seasonArray", required = false) List<String> seasonLists,
-	        @RequestParam(value = "genderArray", required = false) List<String> genderLists,
-	        @RequestParam(value = "styleArray", required = false) List<String> styleLists,
+	public void styleFilter(
+	        @RequestParam(value = "seasonArray[]", required = false) List<String> seasonLists,
+	        @RequestParam(value = "genderArray[]", required = false) List<String> genderLists,
+	        @RequestParam(value = "styleArray[]", required = false) List<String> styleLists,
 	        @RequestParam(value = "temp", required = false) String temp,
-	        Model model) {
+	        Model model,
+	        HttpServletResponse response) throws IOException {
 		
 		if(seasonLists != null) {
 			for(String z : seasonLists) {
 				System.out.println("z : " + z);
 			}
+		}else {
+			System.out.println("없어");
 		}
+		
 		if(genderLists != null) {
 			for(String x : genderLists) {
 				System.out.println("x : " + x);
 			}
+		}else {
+			System.out.println("없어");
 		}
+		
 		if(styleLists != null) {
 			for(String y : styleLists) {
 				System.out.println("y : " + y);
 			}
+		}else {
+			System.out.println("없어");
 		}
 		
 	    Map<String, Object> map = new HashMap<String, Object>();
@@ -60,7 +71,7 @@ public class StyleFilterController {
 
 	    List<StyleBean> lists = styleDao.styleFilter(map);
 
-	    System.out.println("전체 lists 크기: " + lists.size());
+	    System.out.println("전체 FilterLists 크기: " + lists.size());
 
 	    org.json.simple.JSONArray jsonArr = new org.json.simple.JSONArray();
 	    for(StyleBean styleBean : lists) {
@@ -78,8 +89,9 @@ public class StyleFilterController {
 	        jsonArr.add(jsonObj);
 	    }
 	    
-	    HttpHeaders headers = new HttpHeaders();
-	    headers.setContentType(MediaType.APPLICATION_JSON);
-	    return new ResponseEntity<org.json.simple.JSONArray>(jsonArr, headers, HttpStatus.OK);
+	    response.setCharacterEncoding("UTF-8");
+	    response.setContentType("text/html");
+	    response.getWriter().append(jsonArr.toString());
+	    
 	}
 }

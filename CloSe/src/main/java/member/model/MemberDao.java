@@ -1,6 +1,9 @@
 package member.model;
 
 import java.util.Map;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
@@ -77,6 +80,19 @@ public class MemberDao {
 		return memberBean;
 	}
 
+
+	public void updateMemberBanExpiration(String member_id, Date date) {
+	    int cnt = -1;
+	    try {
+	        Map<String, Object> map = new HashMap<String, Object>();
+	        map.put("member_id", member_id);
+	        map.put("ban_expiration", date);
+	        cnt = sqlSessionTemplate.update(namespace + ".updateMemberBanExpiration", map);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
+	
 	public int updateMemberBan(MemberBean memberBean) {
 		int cnt = -1;
 		try {
@@ -86,5 +102,6 @@ public class MemberDao {
 		}
 		return cnt;
 	}
+
 
 }

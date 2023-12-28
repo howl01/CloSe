@@ -1,7 +1,10 @@
-  package member.controller;
+package member.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,7 +25,8 @@ import member.model.MemberDao;
 public class KakaoLoginController {
 	
 	private final String command = "/kakaologin.member";
-	private final String gotoPage = "redirect:view.main";
+	private final String viewPage = "loginForm";
+	private final String gotoPage = "view.main";
 	
 	@Autowired
 	private MemberDao memberDao;
@@ -36,25 +40,41 @@ public class KakaoLoginController {
 	    response.setContentType("text/html; charset=UTF-8");
 	    
 	    MemberBean memberBean = memberDao.findwithId(member_id);//가입한 아이디가 있는지 확인
-		
+	    
 		if(memberBean == null) {
 			out.println("<script>alert('등록된 정보가없어 회원가입페이지로 이동합니다.'); location.href='" + request.getContextPath() + "/kakaoRegister.member';</script>");
 			out.flush();
-		    
 		}else {
-			session.setAttribute("kakaoLoginInfo", memberBean);
-			if (prevPage != null && !prevPage.isEmpty()
-					&& !prevPage.equals("http://localhost:8080/ex/register.member")) {
-				// 이전 페이지의 URL을 세션에서 제거
-				session.removeAttribute("prevPage");
-				out.println("<script>alert('로그인 되었습니다.'); location.href='" + prevPage + "';</script>");
-				out.flush();
+			Date now = new Date();
+			Date ban_expiration = memberBean.getBan_expiration();
+			System.out.println("now : " + now);
+			System.out.println("ban_expiration : " + ban_expiration);
+			if (memberBean.getBan_count() > 0 && memberBean.getBan_expiration() != null) {
+				if (!now.after(ban_expiration)) {
+					out.println("<script>alert('규칙 위반으로 계정 이용 정지 기간입니다.'); location.href='" + gotoPage + "';</script>");
+					out.flush();
+				}else {
+					session.setAttribute("kakaoLoginInfo", memberBean);
+					if (prevPage != null && !prevPage.isEmpty() && !prevPage.equals("http://localhost:8080/ex/register.member")) {
+						session.removeAttribute("prevPage");
+						out.println("<script>alert('로그인 되었습니다.'); location.href='" + prevPage + "';</script>");
+						out.flush();
+					}else {
+						out.println("<script>alert('로그인 되었습니다.'); location.href='" + gotoPage + "';</script>");
+						out.flush();
+					}
+				}
 			} else {
-				// 이전 페이지의 URL이 없으면 기본적으로 메인 페이지로 리다이렉트
-				out.println("<script>alert('로그인 되었습니다.'); location.href='" + gotoPage + "';</script>");
-				out.flush();
+				session.setAttribute("kakaoLoginInfo", memberBean);
+				if (prevPage != null && !prevPage.isEmpty() && !prevPage.equals("http://localhost:8080/ex/register.member")) {
+					session.removeAttribute("prevPage");
+					out.println("<script>alert('로그인 되었습니다.'); location.href='" + prevPage + "';</script>");
+					out.flush();
+				}else {
+					out.println("<script>alert('로그인 되었습니다.'); location.href='" + gotoPage + "';</script>");
+					out.flush();
+				}
 			}
 		}
-		
 	}
 }
