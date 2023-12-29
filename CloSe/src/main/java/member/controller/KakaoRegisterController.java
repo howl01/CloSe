@@ -1,8 +1,10 @@
 package member.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -24,6 +26,9 @@ public class KakaoRegisterController {
 	private final String viewPage = "kakaoRegisterForm";
 
 	@Autowired
+	ServletContext servletContext;
+	
+	@Autowired
 	private MemberDao memberDao;
 
 	@RequestMapping(value = command, method = RequestMethod.GET)
@@ -40,6 +45,21 @@ public class KakaoRegisterController {
 		
 		if(bresult.hasErrors()) {
 			return viewPage;
+		}
+		
+		String path = servletContext.getRealPath("/resources/memberImage");
+		System.out.println(path);
+		File directory = new File(path);
+	    if (!directory.exists()) {
+	        directory.mkdirs();
+	    }
+	    
+	    String imageName = mb.getMember_image();
+	    File uploadImage = new File(path + File.separator + imageName);
+	    try {
+			mb.getUpload().transferTo(uploadImage);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		
 		model.addAttribute("memberBean", mb);

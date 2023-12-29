@@ -28,11 +28,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+
+import orders.model.OrdersDao;
 
 @Controller 
 public class OrdersRefundController {
@@ -44,16 +47,21 @@ public class OrdersRefundController {
     @Autowired
     PaymentService paymentService;
     
+    @Autowired
+    OrdersDao ordersDao;
+    
+    @ResponseBody
 	@RequestMapping(command)
-	public String refund(@RequestParam("pageNumber")String pageNumber,
-						@RequestParam("orders_id")String orders_id) throws IOException {
+	public String refund(@RequestParam("orders_id")String orders_id) throws IOException {
 		
 		System.out.println(orders_id);
 		String token = paymentService.getToken();
 		System.out.println(token);
 		paymentService.payMentCancle(token, orders_id);
 		
-		return gotoPage;
+		ordersDao.refundOrder(orders_id);
+		
+		return "o";
 	}
 	
 }

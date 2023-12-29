@@ -19,6 +19,7 @@ public class Paging_orderDetail {
    private String keyword = "" ; 
    private String startDate = "";
    private String endDate = "";
+   private String activeTab = "";
 
    public int getTotalCount() {
       return totalCount;
@@ -190,15 +191,26 @@ public class Paging_orderDetail {
    public void setEndDate(String endDate) {
       this.endDate = endDate;
    }
+   
+
+   public String getActiveTab() {
+	   return activeTab;
+   }
+	
+	
+   public void setActiveTab(String activeTab) {
+	   this.activeTab = activeTab;
+   }
 
 
-   public Paging_orderDetail(
+public Paging_orderDetail(
          String _pageNumber, 
          String _pageSize,  
          int totalCount,
          String url, 
          String startDate, 
-         String endDate) {      
+         String endDate,
+         String activeTab) {      
 
       if(  _pageNumber == null || _pageNumber.equals("null") || _pageNumber.equals("")  ){
          System.out.println("_pageNumber:"+_pageNumber); // null
@@ -243,6 +255,7 @@ public class Paging_orderDetail {
       this.url = url ; //  /ex/list.ab
       this.startDate = startDate;
       this.endDate = endDate;
+      this.activeTab = activeTab;
       System.out.println("startDate:"+startDate+"/endDate:"+endDate);
       
       //System.out.println("url2:"+url); //url2:/ex/list.ab
@@ -300,7 +313,7 @@ public class Paging_orderDetail {
        System.out.println("getPagingHtml url:" + url);
 
        String result = "";
-       String added_param = "&startDate=" + startDate + "&endDate=" + endDate;
+       String added_param = "&startDate=" + startDate + "&endDate=" + endDate + "&activeTab=3";
 
        if (this.beginPage != 1) {
            result += "&nbsp;<li class='page-item'><a class='page-link' href='" + url + "?pageNumber=" + (1) + "&pageSize=" + this.pageSize + added_param

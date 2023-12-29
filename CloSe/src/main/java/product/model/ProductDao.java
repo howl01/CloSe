@@ -1,12 +1,15 @@
 package product.model;
 
 import java.util.List;
+import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import cart.model.CartInfoBean;
+import utility.Paging_productList;
 
 @Component("ProductDao")
 public class ProductDao {
@@ -27,16 +30,14 @@ public class ProductDao {
 		return sqlSessionTemplate.selectOne(namespace+".getOneProduct",product_number);
 	}
 
-	public List<ProductBean> getProductByBigcategory(String bigcategory_name) {
-		return sqlSessionTemplate.selectList(namespace+".getProductByBigcategory",bigcategory_name);
-	}
+	
 
 	public void updateStock(CartInfoBean cib) {
 		sqlSessionTemplate.update(namespace+".updateStock", cib);
 	}
 
 	public void deleteProduct(String product_number) {
-		sqlSessionTemplate.delete(namespace+".deleteProduct", product_number); 
+		sqlSessionTemplate.update(namespace+".deleteProduct", product_number); 
 	}
 
 	public void updateProduct(ProductBean pb) {
@@ -48,5 +49,34 @@ public class ProductDao {
 	public List<ProductBean> findProductNames2(String searchWord2) {
 		return sqlSessionTemplate.selectList(namespace + ".findProductNames2", searchWord2);
 	}
+
+	public int getCountByBigcategory(String bigcategory_name) {
+		return sqlSessionTemplate.selectOne(namespace+".getCountByBigcategory", bigcategory_name);
+	}
+
+	public int getCountBySmallcategory(String smallcategory_name) {
+		return sqlSessionTemplate.selectOne(namespace+".getCountBySmallcategory", smallcategory_name);
+	}
+
+	public List<ProductBean> getPopularProduct() {
+		return sqlSessionTemplate.selectList(namespace+".getPopularProduct");
+	}
+
+	public int getCountByBrand(String brand) {
+		return sqlSessionTemplate.selectOne(namespace+".getCountByBrand", brand);
+	}
+
+	public List<ProductBean> getIFProduct(Map<String, String> map, Paging_productList pageInfo) {
+		RowBounds rowBounds = new RowBounds(pageInfo.getOffset(), pageInfo.getLimit());
+		return sqlSessionTemplate.selectList(namespace+".getIFProduct", map, rowBounds);
+	}
+	public List<ProductBean> getPop() {
+		return sqlSessionTemplate.selectList(namespace + ".getPop");
+	}
+
+	public int getProductAllCount() {
+		return sqlSessionTemplate.selectOne(namespace+".getProductAllCount");
+	}
 	
+ 
 }

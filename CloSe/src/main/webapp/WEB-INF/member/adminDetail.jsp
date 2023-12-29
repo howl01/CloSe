@@ -28,10 +28,7 @@
  
    <ul class="nav nav-tabs" role="tablist">
      <li class="nav-item" role="presentation">
-       <a class="nav-link active" data-bs-toggle="tab" href="#home" aria-selected="true" role="tab">회원관리</a>
-     </li>
-     <li class="nav-item" role="presentation">
-       <a class="nav-link" data-bs-toggle="tab" href="#profile" aria-selected="false" role="tab" tabindex="-1">구매상품</a>
+       <a class="nav-link active" data-bs-toggle="tab" href="#home" aria-selected="true" role="tab">신고 관리</a>
      </li>
    </ul>
    
@@ -55,19 +52,23 @@
                 <th>신고대상자</th>
                 <td>${ reportBean.reported_user_id  }</td>
                 <th>신고일</th>
-                <td>${ reportBean.write_date  }</td>
+                <td><fmt:formatDate value="${ reportBean.write_date }" pattern="yyyy-MM-dd" /></td>
             
             </tr>
             <tr>
-                <th colspan="4">내용</th>
-            </tr>
-            <tr>
-                <td colspan="4">
+                <th colspan="1" align="left">내용</th>
+                <td colspan="3">
                 	<c:if test="${ reportBean.image != null }">
                 		<img src="<%= request.getContextPath() %>/resources/uploadReport/${ reportBean.image }" width="150px">
                 	</c:if>
                 	${ reportBean.content  }
                 </td>
+            </tr>
+            <tr>
+            	<td colspan="2" align="right">
+            		<input type="button" class="btn btn-Dark me-md-2" value="목록보기" onClick="location.href='adminPage.member?pageNumber=${ pageInfo.pageNumber }'">
+            		<input type="button" class="btn btn-Dark me-md-2" value="회원 정지" onClick="limit.member">
+            	</td>
             </tr>
             </tbody>
         </table>

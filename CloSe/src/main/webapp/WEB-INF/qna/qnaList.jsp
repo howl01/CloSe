@@ -74,7 +74,26 @@
   border: 1px solid #e6e4e9;
   border-radius: 8px;
 }
+.page-link {
+  color: #000; 
+  background-color: #fff;
+  border: 1px solid #ccc; 
+}
 
+.page-item.active .page-link {
+ z-index: 1;
+ color: #555;
+ font-weight:bold;
+ background-color: #f1f1f1;
+ border-color: #ccc;
+ 
+}
+
+.page-link:focus, .page-link:hover {
+  color: #000;
+  background-color: #fafafa; 
+  border-color: #ccc;
+}
     </style>
 <script type="text/javascript">
 	function insert(){
@@ -82,9 +101,11 @@
 	}
 </script>
 
- <div class="row">
-        <div class="card card-margin search-form">
-            <div class="card-body p-0">
+  <div class="row">
+ 		<div>
+ 		<h1 style="margin-left: 220px; width: 50%">고객센터</h1>
+        <div class="card search-form mb-3" style="width: 30%; height: 60px; margin-left: auto; margin-right: 220px;">
+            <div class="card-body p-0" style="padding-top: 30px;">
                 <form action="list.qna" method="get">
                     <div class="row">
                         <div class="col-12">
@@ -120,6 +141,7 @@
                 </form>
             </div>
         </div>
+        </div>
     </div>
  
     <div class="row">
@@ -137,7 +159,7 @@
             <tbody>
             <c:if test="${ fn:length(lists) == 0 }">
             	<tr>
-            		<td align="center">검색된 레코드가 없습니다.</td>
+            		<td colspan="6" align="center">검색된 레코드가 없습니다.</td>
             	</tr>
             </c:if>
             <c:if test="${ fn:length(lists) != 0 }">
@@ -222,30 +244,24 @@
             </tbody>
         </table>
     </div>
+<br>
 
     <div class="row">
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
             <a href="insert.qna" class="btn btn-dark me-md-2" role="button" id="write-article">글쓰기</a>
+        	<c:if test="${ loginInfo.member_id == 'admin' }">
+            	<a href="delete.qna" class="btn btn-dark me-md-2" role="button" id="write-article">삭제</a>
+        	</c:if>
         </div>
-        <c:if test="${ qnaBean.member_id == 'admin' }">
-        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <a href="delete.qna" class="btn btn-dark me-md-2" role="button" id="write-article">삭제</a>
+    </div>
+    
+
+<br><br>
+
+<div class="row">
+    <div class="col-lg-12 text-center">
+        <div class="d-flex justify-content-center">
+            ${pageInfo.pagingHtml}
         </div>
-        </c:if>
     </div>
-
-    <div class="row">
-        <nav id="pagination" aria-label="Page navigation">
-            <ul class="pagination justify-content-center">
-                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">Next</a></li>
-            </ul>
-        </nav>
-    </div>
-
-
-
-<br>
-<br>
-<center>${pageInfo.pagingHtml}</center>
+</div>

@@ -130,8 +130,12 @@ public class OrdersController {
 			}
 		}
 		System.out.println("쿠폰번호:"+coupon_number);
-		eventDao.useCoupon(coupon_number);
-		
+		if(coupon_number!=null) {
+			if(!coupon_number.equals("null")) {
+				eventDao.useCoupon(coupon_number);
+			}
+		}
+		 
 		OrdersBean orderBean = ordersDao.getOrderById(ob.getOrders_id());
 		
 		model.addAttribute("orderBean", orderBean);

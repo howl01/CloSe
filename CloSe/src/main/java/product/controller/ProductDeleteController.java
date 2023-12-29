@@ -28,7 +28,7 @@ public class ProductDeleteController {
 		String referer = request.getHeader("Referer");
 		
 		System.out.println("이전페이지:"+referer);
-		//productDao.deleteProduct(product_number);
+		productDao.deleteProduct(product_number);
 		
 		return "redirect:"+referer;
 	}

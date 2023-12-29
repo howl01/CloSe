@@ -35,18 +35,12 @@ public class StyleInsertController {
 	private StyleDao styleDao;
 
 	@RequestMapping(value = command, method = RequestMethod.GET)
-	public String insertForm(HttpSession session) {
-		session.setAttribute("member_id", "kim");
+	public String insertForm() {
 		return viewPage;
 	}
 
 	@RequestMapping(value = command, method = RequestMethod.POST)
-	public String insert(@Valid StyleBean styleBean, BindingResult result, HttpServletResponse response, HttpServletRequest request) {
-		response.setContentType("text/html; charset=UTF-8");
-		if (result.hasErrors()) {
-			return viewPage;
-		}
-
+	public String insert(StyleBean styleBean) {
 		String path = servletContext.getRealPath("/resources/styleImage");
 		
 	    File directory = new File(path);

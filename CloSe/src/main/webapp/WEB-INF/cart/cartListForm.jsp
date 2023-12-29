@@ -47,8 +47,17 @@
 	input[type="checkbox"] {
  		accent-color: black;
 	}
+	.pd{
+		text-decoration: none;
+		color: black;
+	}
 </style>
 <script type="text/javascript">
+	<c:if test='${not empty qtycheck and qtycheck}'>
+    	alert("재고수량을 초과했습니다.");
+	</c:if>
+
+
 	function checkAllOnLoad() {
 	    var allCheckbox = document.getElementById("bbb");
 	    allCheckbox.checked = true; // 전체 선택 체크박스를 선택 상태로 만듭니다.
@@ -71,28 +80,28 @@
         var allCheckStatus = selectedValues.length === document.getElementsByName("rowcheck").length;
         allCheckbox.checked = allCheckStatus;
         
-        document.getElementById('totalPrice').innerText = totalPrice; // 여기서 변경
+        document.getElementById('totalPrice').innerText = totalPrice.toLocaleString(); // 여기서 변경
         
         var deliveryElement = document.getElementById('delivery');
         var deliveryPriceElement = document.getElementById('deliveryPrice');
         var delivery = 0;
         
         if (selectedValues.length > 0) { //배송비계산
-            if (totalPrice > 100000) {
+            if (totalPrice > 50000) {
             	delivery ='0';
                 deliveryElement.innerText = '0'; 
                 deliveryPriceElement.innerText = '0'; 
             } else {
             	delivery ='4000';
-                deliveryElement.innerText = '4000'; 
-                deliveryPriceElement.innerText = '4000'; 
+                deliveryElement.innerText = '4,000'; 
+                deliveryPriceElement.innerText = '4,000'; 
             }
         } else {
             deliveryElement.innerText = '0';
             deliveryPriceElement.innerText = '0';
         }
         
-        document.getElementById('total').innerText = Number(totalPrice) + Number(delivery);
+        document.getElementById('total').innerText = (Number(totalPrice) + Number(delivery)).toLocaleString();
     }
 	
 	function allCheck(all) { //전체체크박스를 눌렀을때
@@ -197,7 +206,6 @@
 <c:choose>
     <c:when test="${fn:length(cartInfoLists) == 0}">
         <div class="bg-body-white">
-            <img class="empty" src="../img/empty.png">
             <br>
             <font size="4" style="vertical-align: inherit;">
                 <b>장바구니에 담긴 상품이 없습니다.</b>
@@ -205,134 +213,118 @@
             <br>
             <br>
         </div>
+        <div class="col-lg-12" style="text-align: center;">
+        	<button class='btn btn-dark btn-md' onclick="location.href='view.main'">쇼핑하러가기</button>
+        </div>
     </c:when>
     
     
     <c:otherwise>
             <form method="post" name="myform">
             <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">
-                                        	<input checked id="bbb" size="3" type="checkbox" name = "allcheck" onclick = "allCheck(this)">
-								        </th>
-                                        <th scope="col">이미지</th>
-                                        <th scope="col">상품정보</th>
-                                        <th scope="col">가격</th>
-                                        <th scope="col">주문수량</th>
-                                        <th scope="col">소계</th>
-                                        <th scope="col">구분</th>
-                                        <th scope="col">배송비</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <c:forEach var="cib" items="${cartInfoLists}" varStatus="status">
-                                        <tr>
-                                            <%-- <th scope="row">${status.index + 1}</th> --%>
-                                            <td>
-                                                <input class="pnum" type="checkbox" id="procheck"
-                                                    name="rowcheck" value="${cib.cart_number}" onclick="updateTotalPrice()">
-                                            </td>
-                                            <td>
-                                                <img id="preview" width="100px"
-                                                    src='<c:url value='/resources/product/image/'/>${cib.image }'
-                                                    class="rounded" />
-                                            </td>
-                                            <td>
-                                            	[${fn:substringBefore(cib.product_name,'/') }] <br>
-                                            	${fn:substringAfter(cib.product_name,'/') } <br>
-                                            	사이즈:${cib.product_size }
-                                            </td>
-                                            <td>
-                                            	${cib.price}원
-                                            	<c:set var="totalPrice" value="${totalPrice + (cib.price * cib.qty)}" />
-                                            </td>
-                                            <td>
-                                                <div class="d-flex align-items-center">
-                                                    <button type="button" class="btn btn-light"
-                                                     onclick="fnCalCount('m','${status.index}')">
-                                                        -
-                                                    </button>
-                                                    <input type="text" class="form-control oqty" style="width: 50px;"
-                                                        id="oqty${status.index}" name="oqty" value="${cib.qty}" size="3"
-                                                        disabled>
-                                                    <button type="button" class="btn btn-light"
-                                                     onclick="fnCalCount('p','${status.index}')">
-                                                        +
-                                                    </button>
-                                                </div>
-                                                <div>
-                                                	<button type="button" 
-                                                	onclick="cartUpdate('${cib.cart_number}','${status.index}')">변경</button>
-                                                </div>
-                                            </td>
-                                            <td>
-                                            	${cib.price*cib.qty}원
-                                            </td>
-                                            <td>
-                                            	<button type="button" onclick="buyNow('${cib.cart_number}')">바로구매</button>
-                                            	<button type="button" onclick="deleteSel('${cib.cart_number}')">삭제하기</button>
-                                            </td>
-                                            <c:if test="${status.index==0 }">
-	                                            <td rowspan="100%">
-	                                            	<span id="delivery"></span>원
-	                                            </td>
-                                            </c:if>
-                                        </tr>
-                                    </c:forEach>
-                                </tbody>
-                                <tr>
-                                	<td colspan="2">
-                                		<span>상품금액 합계:</span><br>
-                                		<span>배송비:</span>
-                                	</td>
-                                	<td colspan="2">
-                                		<span id="totalPrice"></span>원 <br>
-                                		<span id="deliveryPrice"></span>원
-                                	</td>
-                                	<td colspan="4">
-                                		총결제금액: <span id="total"></span>원
-                                	</td>
-                                </tr>
-                                <tr>
-                                	<td colspan="8">
-                                		<button type="button" onclick="deleteSelected()">선택삭제</button>
-                                		<button type="button" onclick="purchaseSelected()">선택구매</button>
-                                	</td>
-                                </tr>
-                            </table>
+              <thead>
+                  <tr>
+                    <th scope="col">
+                      	<input checked id="bbb" size="3" type="checkbox" name = "allcheck" onclick = "allCheck(this)">
+					</th>
+                        <th scope="col">이미지</th>
+                        <th scope="col">상품정보</th>
+                        <th scope="col">가격</th>
+                        <th scope="col">주문수량</th>
+                        <th scope="col">소계</th>
+                        <th scope="col">구분</th>
+                        <th scope="col">배송비</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach var="cib" items="${cartInfoLists}" varStatus="status">
+                      <tr>
+                          <%-- <th scope="row">${status.index + 1}</th> --%>
+                          <td>
+                              <input class="pnum" type="checkbox" id="procheck"
+                                  name="rowcheck" value="${cib.cart_number}" onclick="updateTotalPrice()">
+                          </td>
+                          <td>
+                              <img id="preview" width="100px"
+                                  src='<c:url value='/resources/product/image/'/>${cib.image }'
+                                  class="rounded" />
+                          </td>
+                          <td>
+                          	<a class='pd' href='detail.product?product_number=${cib.product_number }'>
+                          	[${fn:substringBefore(cib.product_name,'/') }] <br>
+                          	${fn:substringAfter(cib.product_name,'/') } <br>
+                          	사이즈:${cib.product_size }
+                          	</a>
+                          </td>
+                          <td>
+                          	<fmt:formatNumber value="${cib.price}" pattern="#,###" />원
+                          	<c:set var="totalPrice" value="${totalPrice + (cib.price * cib.qty)}" />
+                          </td>
+                          <td>
+                              <div class="d-flex align-items-center">
+                                  <button type="button" class="btn btn-light"
+                                   onclick="fnCalCount('m','${status.index}')">
+                                      -
+                                  </button>
+                                  <input type="text" class="form-control oqty" style="width: 50px;"
+                                      id="oqty${status.index}" name="oqty" value="${cib.qty}" size="3"
+                                      disabled>
+                                  <button type="button" class="btn btn-light"
+                                   onclick="fnCalCount('p','${status.index}')">
+                                      +
+                                  </button>
+                              </div>
+                              <div>
+                              	<button type="button" class='btn btn-dark btn-md'
+                              	onclick="cartUpdate('${cib.cart_number}','${status.index}')">변경</button>
+                              </div>
+                          </td>
+                          <td>
+                          	<fmt:formatNumber value="${cib.price*cib.qty}" pattern="#,###" />원
+                          </td>
+                          <td>
+                          	<button class='btn btn-dark btn-md' type="button" onclick="buyNow('${cib.cart_number}')">바로구매</button>
+                          	<button class='btn btn-dark btn-md' type="button" onclick="deleteSel('${cib.cart_number}')">삭제하기</button>
+                          </td>
+                          <c:if test="${status.index==0 }">
+                           <td rowspan="100%">
+                           	<span id="delivery"></span>원
+                           </td>
+                          </c:if>
+                      </tr>
+                  </c:forEach>
+              </tbody>
+              <tr>
+              	<td colspan="2">
+              		<span>상품금액 합계:</span><br>
+              		<span>배송비:</span>
+              	</td>
+              	<td colspan="2">
+              		<span id="totalPrice"></span>원 <br>
+              		<span id="deliveryPrice"></span>원
+              	</td>
+              	<td colspan="4">
+              		총결제금액: <span id="total"></span>원
+              	</td>
+              </tr>
+              <tr>
+              	<td colspan="8">
+              		<button class='btn btn-dark btn-md' type="button" onclick="deleteSelected()">선택삭제</button>
+              		<button class='btn btn-dark btn-md' type="button" onclick="purchaseSelected()">선택구매</button>
+              	</td>
+              </tr>
+          	</table>
             </form>
-    </c:otherwise>
-</c:choose>
+    	</c:otherwise>
+	</c:choose>
 
 
 			</div>
 		</div>
-
 		<div class="col-lg-2 mt-5 px-5">
-			<div class="bs-component">
-				<div class="card mb-3">
-					<h3 class="card-header">오늘의 날씨 정보</h3>
-					<div class="card-body">
-						<h5 class="card-title">Special title treatment</h5>
-						<h6 class="card-subtitle text-muted">Support card subtitle</h6>
-					</div>
-					<svg xmlns="http://www.w3.org/2000/svg"
-						class="d-block user-select-none" width="100%" height="200"
-						aria-label="Placeholder: Image cap" focusable="false" role="img"
-						preserveAspectRatio="xMidYMid slice" viewBox="0 0 318 180"
-						style="font-size: 1.125rem; text-anchor: middle">
-                  <rect width="100%" height="100%" fill="#868e96"></rect>
-                  <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
-                </svg>
-				</div>
-			</div>
 		</div>
-
-
 
 	</div>
 </div>
 
-<button onclick="location.href='view.main'">이동</button>
 <%@ include file="../main/bottom.jsp"%>

@@ -27,7 +27,7 @@
 	<select id="getAllCartInfoByMember_Id" resultType="cart.model.CartInfoBean">
 		select * from product p inner join cart c 
 		on p.PRODUCT_NUMBER=c.PRODUCT_NUMBER
-		where c.MEMBER_ID='kim'
+		where c.MEMBER_ID=#{member_id}
 		order by c.CART_NUMBER, c.product_number, 
 		case c.product_size when 'S' then 1 
 							when 'M' then 2 

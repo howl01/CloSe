@@ -25,13 +25,17 @@ public class SearchController {
     @RequestMapping(value = "/wordSearchShow.main", method = RequestMethod.GET)
     @ResponseBody
     public void wordSearchShow(@RequestParam("searchWord") String searchWord, HttpServletResponse response) throws IOException {
-    	List<String> wordList =  productDao.findProductNames(searchWord);
+    	List<ProductBean> productList =  productDao.findProductNames2(searchWord);
         
-        JSONArray jsonArr = new JSONArray(); 
-		if(wordList != null) {
-			for(String word : wordList) {
+    	JSONArray jsonArr = new JSONArray(); 
+		if(productList != null) {
+			for(ProductBean productBean : productList) {
 				JSONObject jsonObj = new JSONObject();
-				jsonObj.put("word", word);			
+				jsonObj.put("product_number", productBean.getProduct_number());			
+				jsonObj.put("product_name", productBean.getProduct_name());			
+				jsonObj.put("image", productBean.getImage());			
+				jsonObj.put("price", productBean.getPrice());		
+				jsonObj.put("smallcategory_name", productBean.getSmallcategory_name());		
 				jsonArr.add(jsonObj);
 			}
 		}

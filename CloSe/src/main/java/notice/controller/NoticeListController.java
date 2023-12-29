@@ -31,7 +31,6 @@ public class NoticeListController {
 						@RequestParam(value = "keyword", required = false) String keyword,
 						@RequestParam(value = "pageNumber", required = false) String pageNumber,
 						HttpServletRequest request,
-						HttpSession session,
 						Model model) {
 		
 		Map<String, String> map = new HashMap<String, String>();
@@ -41,13 +40,11 @@ public class NoticeListController {
 		int totalCount = noticeDao.getTotalCount(map);
 		String url = request.getContextPath()+command;
 		
-		Paging pageInfo = new Paging(pageNumber, "10", totalCount, url, whatColumn, keyword);
+		Paging pageInfo = new Paging(pageNumber, "2", totalCount, url, whatColumn, keyword);
 		
 		int number = totalCount - (pageInfo.getPageNumber() -1) * 10;
 		
 		List<NoticeBean> lists = noticeDao.getAllNotice(map, pageInfo);
-		
-		
 		model.addAttribute("lists", lists);
 		model.addAttribute("pageInfo", pageInfo);
 		model.addAttribute("number", number);

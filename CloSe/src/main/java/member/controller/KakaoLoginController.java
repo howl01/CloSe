@@ -22,6 +22,7 @@ import member.model.MemberDao;
 public class KakaoLoginController {
 	
 	private final String command = "/kakaologin.member";
+	private final String gotoPage = "view.main";
 	
 	@Autowired
 	private MemberDao memberDao;
@@ -29,6 +30,7 @@ public class KakaoLoginController {
 	@RequestMapping(value = command, method = RequestMethod.GET)
 	public void kakaoregister(@RequestParam("member_id") String member_id, HttpSession session, HttpServletResponse response, HttpServletRequest request) throws IOException {
 		session.setAttribute("member_id", member_id);
+		String prevPage = (String) session.getAttribute("prevPage");
 		
 		PrintWriter out = response.getWriter();
 	    response.setContentType("text/html; charset=UTF-8");
@@ -41,8 +43,17 @@ public class KakaoLoginController {
 		    
 		}else {
 			session.setAttribute("kakaoLoginInfo", memberBean);
-			out.println("<script>alert('로그인 되었습니다.'); location.href='" + request.getContextPath() + "/view.main';</script>");
-			out.flush();
+			if (prevPage != null && !prevPage.isEmpty()
+					&& !prevPage.equals("http://localhost:8080/ex/kakaoRegister.member")) {
+				// 이전 페이지의 URL을 세션에서 제거
+				session.removeAttribute("prevPage");
+				out.println("<script>alert('로그인 되었습니다.'); location.href='" + prevPage + "';</script>");
+				out.flush();
+			} else {
+				// 이전 페이지의 URL이 없으면 기본적으로 메인 페이지로 리다이렉트
+				out.println("<script>alert('로그인 되었습니다.'); location.href='" + gotoPage + "';</script>");
+				out.flush();
+			}
 		}
 		
 	}

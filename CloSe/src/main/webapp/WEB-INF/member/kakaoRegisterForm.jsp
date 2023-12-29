@@ -123,6 +123,21 @@ function goLogin(){
 	location.href="login.member";
 }
 
+function previewImage() {
+    var input = document.getElementById('upload');
+    var imgThumb = document.getElementById('imgThumb');
+
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            imgThumb.src = e.target.result;
+        };
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
 </script>
 
 <style type="text/css">
@@ -146,8 +161,21 @@ function goLogin(){
     <div align = "center">
       <div class="col-md-7 col-lg-8 text-start">
       <hr class="my-6">
-        <form:form commandName="memberBean" name="f" class="needs-validation" action = "kakaoRegister.member" method="post">
+        <form:form commandName="memberBean" name="f" class="needs-validation" action = "kakaoRegister.member" method="post" enctype="multipart/form-data">
+          <input type="hidden" name="password" value="1111111">
           <div class="row">
+          
+          	<div class="col-12">
+			    <label for="lastName" class="form-label">프로필 사진</label>
+			    <div class="row" style="display: flex;">
+			        <div class="col-6 mb-2">
+			            <img id="imgThumb" src="https://static.nid.naver.com/images/web/user/default.png" width="100" height="100">
+			        </div>
+			    </div>
+			    <div class="col-5">
+			        <input type="file" class="form-control mb-3" id="upload" name="upload" value="${memberBean.member_image}" style="border-color: black;" onchange="previewImage()">
+			    </div>
+			</div>
 
             <div class="col-12">
               <label for="lastName" class="form-label">아이디</label>
@@ -167,18 +195,6 @@ function goLogin(){
               &nbsp;<span id="nickmessage" style = "display: none;"></span>
               </div>
               </div>
-            </div>
-
-            <div class="col-9">
-              <label for="password" class="form-label">비밀번호</label>
-                <input type="password" class="form-control mb-2" id="username" name = "password" placeholder="영문 소문자 + 숫자 8~16자리" value="${memberBean.password}" onblur="pwcheck()" style="border-color: black;">
-                <form:errors cssClass="err" path="password"/>
-            </div>
-            
-            <div class="col-9">
-              <label for="password2" class="form-label">비밀번호 확인</label>
-                <input type="password" class="form-control" id="passwordcheck" name = "passwordcheck" placeholder="비밀번호와 동일하게 입력해 주세요." onKeyUp = "repassword_keyup()" value="${memberBean.passwordcheck}" style="border-color: black;">
-                 &nbsp;<span id="pwmessage"></span>
             </div>
 
             <div class="col-4">

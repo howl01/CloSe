@@ -38,6 +38,7 @@ public class StyleDetailController {
 
 	@RequestMapping(value = command, method = RequestMethod.GET)
 	public String insertForm(HttpSession session, @RequestParam("style_number") int style_number, Model model) {
+		styleDao.updateReadCount(style_number);
 		model.addAttribute("styleBean", styleDao.getStyleByStyleNumber(style_number));
 		return viewPage;
 	}

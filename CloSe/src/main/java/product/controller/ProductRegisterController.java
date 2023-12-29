@@ -28,12 +28,10 @@ public class ProductRegisterController {
 
 	private final String command = "/register.product";
 	private final String viewPage = "productRegisterForm";
-	private final String gotoPage = "";
+	private final String gotoPage = "redirect:/list.product";
 
 	@Autowired
 	ServletContext servletContext;
-
-
 
 	@Autowired
 	ProductDao productDao;
@@ -60,14 +58,11 @@ public class ProductRegisterController {
 		if(pb.getImage().equals("")) {
 			pb.setImage(prevImage);
 		}
-		
-
 		String uploadPath = servletContext.getRealPath("/resources/product/image"); 
 		String uploadPath2 = servletContext.getRealPath("/resources/product/content"); 
 
 		File destination0 = new File(uploadPath+File.separator+prevImage); 
 		File destination = new File(uploadPath+File.separator+pb.getImage());
-		
 		File destination1 = new File(uploadPath2+File.separator+prevContent); 
 		File destination2 = new File(uploadPath2+File.separator+pb.getContent()); 
 
@@ -100,23 +95,12 @@ public class ProductRegisterController {
 					destination1.delete();
 				}
 			}
-			
-			
-			
-			
-			
-			
-			
-			
-			
 			if(!destination.exists()) {
 				multi.transferTo(destination);
 			}
 			if(!destination2.exists()) {
 				multi2.transferTo(destination2);
 			}
-
-			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

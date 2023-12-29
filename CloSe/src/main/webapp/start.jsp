@@ -2,5 +2,7 @@
     pageEncoding="UTF-8"%>
 
 <%
+
 	response.sendRedirect("view.main");
 %>
+p

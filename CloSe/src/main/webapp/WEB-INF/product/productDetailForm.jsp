@@ -1,3 +1,4 @@
+<%@page import="member.model.MemberBean"%>
 <%@page import="product.model.ProductBean"%>
 <%@page import="java.text.DecimalFormat"%>
 <%@page import="java.util.ArrayList"%>
@@ -13,6 +14,7 @@
 .ptab {
 	text-decoration: none;
 	color: black;
+	cursor: pointer;
 }
 
 .nav-item {
@@ -63,12 +65,14 @@
     padding-left: 12px;
     text-align: right;
 }
-.section-01,.section-02,.section-03,.section-04  { position: relative;}
+.section-01,.section-02,.section-03,.section-04  { position: relative;
+	margin-top: 50;
+}
 
-.fixed-menu {
+.fixed-menu { 
   position: fixed;
-  top: 142;
   left: 0;
+  top: 142; 
   width: 100%;
   z-index: 1000;
   background-color: #fff; /* 배경색을 지정해주면 메뉴가 스크롤되는 내내 보일 것입니다. */
@@ -110,19 +114,39 @@ fieldset {
 	background: #333;
 	color: #fff;
 }
+.page-link {
+  color: #000; 
+  background-color: #fff;
+  border: 1px solid #ccc; 
+}
+
+.page-item.active .page-link {
+ z-index: 1;
+ color: #555;
+ font-weight:bold;
+ background-color: #f1f1f1;
+ border-color: #ccc;
+ 
+}
+.page-link:focus, .page-link:hover {
+  color: #000;
+  background-color: #fafafa; 
+  border-color: #ccc;
+}
 </style>
 <script type="text/javascript">
 window.addEventListener('scroll', function() {
+	var stickyTopHeight = document.getElementById('stop').offsetHeight;
     var floatingMenu = document.querySelector('.floating-menu');
+    var fixedMenu = document.querySelector('.fixed-menu');
     var scrollPosition = window.scrollY;
-
-    if (scrollPosition > 600) { // Adjust this value based on when you want the menu to become fixed
+    
+    if (scrollPosition > 600) {
       floatingMenu.classList.add('fixed-menu');
     } else {
       floatingMenu.classList.remove('fixed-menu');
     }
-  });
-
+}); //스크롤내렸을때
 
 	function fnCalCount(type, size) {
         // size를 사용하여 적절한 선택자를 찾도록 수정
@@ -148,45 +172,212 @@ window.addEventListener('scroll', function() {
         }
         updateTotalPrice(size, $input.val());
     }
-	
 	function deleteProduct(pnum){
 		location.href="delete.product?product_number="+pnum;
 	}
 	function updateProduct(pnum){
-		alert(1);
 		location.href="update.product?product_number="+pnum;
 	}
-	
 	function addToCart(){
 		var formData = $("#buyForm").serialize();
-
         $.ajax({
             type: "POST", // or "GET" depending on your server-side implementation
             url: "cartAdd.cart", // Specify the URL to your server-side endpoint
             async : false,
             data: formData,
             success: function(response) {
-                var addToCart = confirm("상품을 장바구니에 추가했습니다. 장바구니로 이동하시겠습니까?");
-        	    
-        	    if (addToCart) {
-        				location.href = "cartAdd.cart";
-        	    } else{
-        	    	return;
-        	    }
+            	if(response == "o"){
+	                var addToCart = confirm("상품을 장바구니에 추가했습니다. 장바구니로 이동하시겠습니까?");
+	        	    
+	        	    if (addToCart) {
+	        				location.href = "cartAdd.cart";
+	        	    } else{
+	        	    	return;
+	        	    }
+            	}
+            	if(response == "x"){
+            		alert("이미 장바구니에 있는 상품입니다.");
+            	}
             }
         });
 	}
+	<% 
+    MemberBean mb = (MemberBean)session.getAttribute("loginInfo");
+    MemberBean mb1 = (MemberBean)session.getAttribute("kakaoLoginInfo");
+
+    String memberid = null;
+
+    if (mb != null) {
+        memberid = mb.getMember_id();
+    } else if (mb1 != null) {
+        memberid = mb1.getMember_id();
+    }
+	%>
+	
+	//=======
+	function reviewList(pageNum){
+		if(pageNum)
+		$("#review").html("");
+		$.ajax({
+            url: "list.review?product_number=${pb.product_number }&start="+pagingUtil.getStartOffset(pageNum,1)+"&end=1", 
+            type: "post", 
+            contentType: "application/json; charset=utf8",
+            success: function(data) {
+            	if (data.rlists.length === 0) {
+            		
+            		pageNum = pageNum-1;
+		            // 데이터가 비어있을 경우 메시지를 표시하는 HTML을 생성
+		            var noReviewHtml = "<tr>";
+		            noReviewHtml += "<td align='center' height='200px;'>등록된 리뷰가 없습니다.</td>";
+		            noReviewHtml += "</tr>";
+					
+		            
+		            
+		            // 생성한 메시지를 화면에 추가
+		            $("#review").append(noReviewHtml);
+		        } else {
+	            	$(data.rlists).each(function () {
+	            		// 각 리뷰에 대한 정보를 가져와서 HTML로 구성
+	            		
+	                    var reviewHtml = "<tr>";
+	                    reviewHtml += "<td>";
+	                    reviewHtml += "<fieldset>";
+	                    
+	                    // 별점 출력
+	                    for (var i = 1; i <= 5; i++) {
+	                        if (i <= 5 - this.rating) {
+	                            reviewHtml += "<label id='gstar'>★</label>";
+	                        } else {
+	                            reviewHtml += "<label id='star'>★</label>";
+	                        }
+	                    }
+	                    
+	                    reviewHtml += "</fieldset>";
+	                    reviewHtml += "</td>";
+	                    reviewHtml += "<td> | " + this.write_date + "</td>";
+	                    reviewHtml += "<td> | " + this.member_id + "</td>";
+	                    reviewHtml += "</tr>";
+	                    reviewHtml += "<tr>";
+	                    reviewHtml += "<td><b>선택한 옵션: " + this.product_size + "</b></td>";
+	                    reviewHtml += "<td colspan='2' style='text-align:right;'>";
+	                    if('<%= memberid %>' == this.member_id){
+	                    reviewHtml += "<a class='ptab' href='javascript:deleteReview("+this.review_number+")'>X</a>";
+	                    }
+	                    reviewHtml += "</td>";
+	                    reviewHtml += "</tr>";
+	                    reviewHtml += "<tr style='border-bottom: 0.5px solid rgba(0, 0, 0, .1);'>";
+	                    reviewHtml += "<td>" + this.text + "</td>";
+	                    reviewHtml += "</tr>";
+						
+	                    $("#review").append(reviewHtml);
+	                    document.getElementById("pagination").innerHTML = pagingUtil.pagingView(pageNum, "1", data.totalCount, "reviewList");
+	                    
+	            	});
+	            }
+            }//success
+            
+        });
+	}
+	
+	function deleteReview(review_number){
+		if(confirm("정말로 삭제하시겠습니까?")){
+			$.ajax({
+	            url: "delete.review?review_number=1", 
+	            type: "post", 
+	            success: function(data) { 
+	            	if(data == 1){
+	            		alert("리뷰가 삭제되었습니다.");
+	            	} 
+	            		reviewList(1);
+	            }
+			}); 
+		}		
+	}
+	//============================================
+	 var pagingUtil = {
+	    pagingView: function (currentPageNo, pageSize, totalCount, targetFunction) {
+	        var pageNo = parseInt(currentPageNo); // 현재 페이지 번호
+	        var countPage = 10; // 한 화면에 출력될 페이징 개수.
+	        var finalPageNo = parseInt(totalCount / pageSize);  //마지막 페이지 번호
+	        var strPaging = "";
+	        var targetFunction = (targetFunction == null || targetFunction == "") ? "goPage" : targetFunction;
+	        
+	        if (totalCount % pageSize > 0) {
+	            finalPageNo++;
+	        }
+	
+	        if (finalPageNo < pageNo) {
+	            pageNo = finalPageNo;
+	        }
+	
+	        var startPage = Math.floor(((pageNo - 1) / countPage)) * countPage + 1;
+	        var endPage = startPage + countPage - 1;
+	
+	        if (startPage <= 0) {
+	            startPage = 1;
+	        }
+	        if (endPage > finalPageNo) {
+	            endPage = finalPageNo;
+	        }
+			if(finalPageNo<pageNo){
+				pageNo = finalPageNo;
+			}
+	        //strPaging ="<ul class='paginate'>";
+	        if (pageNo > 1) {
+	            // strPaging += "<a href=\"javascript:"+targetFunction+"(1);\">처음으로</a>";
+	            strPaging += "<li class='page-item'><a href=\"javascript:" + targetFunction + "(" + (pageNo - 1) + "); \" class='page-link'><</a></li>";
+	        }
+	
+	        for (var iCount = startPage; iCount <= endPage; iCount++) {
+	            if (iCount == pageNo) {
+	                strPaging += "<li class='page-item active'><a href='javascript:void(0);' class='page-link'><strong>" + iCount + "</strong></a></li>";
+	            } else {
+	                strPaging += "<li class='page-item'><a href=\"javascript:" + targetFunction + "(" + iCount + ");\" class='page-link'>" + iCount + "</a></li>";
+	            }
+	        }
+	
+	        if (pageNo < finalPageNo) {
+	            strPaging += "<li class='page-item'><a href=\"javascript:" + targetFunction + "(" + (pageNo + 1) + ");\" class='page-link'>></a></li>";
+	            //strPaging += "<a href=\"javascript:"+targetFunction+"("+finalPageNo+"); \" class='next'>다음페이지</a>";
+	        }
+	        //strPaging +="</ul>";
+	
+	        return strPaging;
+	    }
+	    //게시글의 시작 인덱스번호
+	    , getStartOffset: function (currentPageNo, pageSize) {
+	        //      return ((currentPageNo -1) * pageSize) + 1;
+	        return (currentPageNo - 1) * pageSize;
+	    }
+	
+	    //게시글의 끝 인덱스번호
+	    , getEndOffset: function (currentPageNo, pageSize) {
+	        return currentPageNo * pageSize;
+	    }
+	
+	    //마지막 페이지 번호
+	    , getfinalPageNo: function (totalCount, pageSize) {
+	        var finalPageNo = parseInt(totalCount / pageSize);
+	        if (totalCount % pageSize > 0) {
+	            finalPageNo++;
+	        }
+	        return finalPageNo;
+	    }
+	}
+	//=====페이지끝
+	
+	
 	
 	$(document).ready(function() {
+		reviewList(1);//reviewList가져오는 함수
+		
 		$('#insertBasket').click(function () {
 			alert("장바구니버튼");
-			 
 			<c:if test="${empty loginInfo and empty kakaoLoginInfo}">
 				alert("로그인이 필요한 서비스입니다.");
 				window.location.href = 'login.member';
 				return;
 			</c:if>
-
 			if ($('.quantity-selection').length === 0) {
 	            alert("사이즈를 선택해주세요.");
 	            return;
@@ -197,13 +388,11 @@ window.addEventListener('scroll', function() {
 		
 		$('#goodsOrder').click(function () { 
 			alert("구매하기버튼");
-			
 			<c:if test="${empty loginInfo and empty kakaoLoginInfo}">
 				alert("로그인이 필요한 서비스입니다.");
 				window.location.href = 'login.member';
 				return;
 			</c:if>
-			
 		  	if ($('.quantity-selection').length === 0) {
             	alert("사이즈를 선택해주세요.");
            	 	return;
@@ -213,13 +402,10 @@ window.addEventListener('scroll', function() {
 		});
 		
 		$('select[name="size"]').change(function() {
-	        // 기존의 수량 선택 요소를 제거합니다.
-			
 	        // 선택된 사이즈 값을 가져옵니다.
 	        var selectedSize = $(this).val();
 	        var selectedSizeText = $(this).find('option:selected').text();
 	        var sST = selectedSizeText.split(' ');
-	        
 	        
 	        // 유효한 사이즈가 선택된 경우
 	        if (selectedSize !== "") {
@@ -232,7 +418,7 @@ window.addEventListener('scroll', function() {
                 quantitySelection += '<input type="text" name='+selectedSize+' class="sq" size="2" value="1" readonly style="text-align:right;"/>';
                 quantitySelection += '<button type="button" onclick="fnCalCount(\'p\', \'' + selectedSize + '\')">+</button>';
                 var totalPrice = ${pb.price} * 1;
-                quantitySelection += '<span class="total-price">' + totalPrice + '</span>원';
+                quantitySelection += '<span class="total-price">' + totalPrice.toLocaleString() + '</span>원';
                 quantitySelection += '<button type="button" class="remove-button" onclick="removeQuantitySelection(this)">X</button>';
                 quantitySelection += '</div>';
 
@@ -246,20 +432,14 @@ window.addEventListener('scroll', function() {
 	        
 	        var totalSum = 0;
 		    $('.quantity-selection .total-price').each(function () {
-		        totalSum += Number($(this).text());
+		        totalSum += Number($(this).text().replace(',',""));
 		    });
 
-		    $('#cart-total').html(totalSum);
-		    
-		    
-		    
-		    
-		    
-		    
+		    $('#cart-total').html(totalSum.toLocaleString());
 		    
 	    });
 		
-		//=-==================================================
+		//=-===================메뉴바========================
 	    var $menu     = $('.floating-menu li.m'),
 	        $contents = $('.scroll'),
 	        $doc      = $('html, body');
@@ -298,126 +478,31 @@ window.addEventListener('scroll', function() {
 	    });
 	    
 	    
-	    //============================================
-	    var $setRows = $('#setRows');
-
-	    $setRows.submit(function (e) {
-	    	alert('${fn:length(rlists)}');
-	    	e.preventDefault();
-	    	var rowPerPage = 15;
-	    	
-	    	if('${fn:length(rlists)}' != 0){
-		    	$('#nav').remove();
-		    	var $review = $('#review');
-	
-		    	$review.after('<div id="nav">');
-		    	
-		    	var $tr = $($review).find('tbody tr');
-		    	var rowTotals = $tr.length;
-		    	var pageTotal = Math.ceil(rowTotals/ rowPerPage);
-		    	var i = 0;
-	
-		    	for (; i < pageTotal; i++) {
-		    		$('<a href="#"></a>')
-		    				.attr('rel', i)
-		    				.html(i + 1)
-		    				.appendTo('#nav');
-		    	}
-	
-		    	$tr.addClass('off-screen')
-		    			.slice(0, rowPerPage)
-		    			.removeClass('off-screen');
-	
-		    	var $pagingLink = $('#nav a');
-		    	
-		    	//
-		    	if ($pagingLink.length > 5) {
-		            $pagingLink.filter(':first').before('<a href="#" class="prev">이전</a>');
-		            $pagingLink.filter(':last').after('<a href="#" class="next">다음</a>');
-		        }
-		    	
-		    	$pagingLink.on('click', function (evt) {
-		    		evt.preventDefault();
-		    		var $this = $(this);
-		    		if ($this.hasClass('active')) {
-		    			return;
-		    		}
-		    		$pagingLink.removeClass('active');
-		    		$this.addClass('active');
-	
-		    		// 0 => 0(0*4), 4(0*4+4)
-		    		// 1 => 4(1*4), 8(1*4+4)
-		    		// 2 => 8(2*4), 12(2*4+4)
-		    		// 시작 행 = 페이지 번호 * 페이지당 행수
-		    		// 끝 행 = 시작 행 + 페이지당 행수
-	
-		    		var currPage = $this.attr('rel');
-		    		var startItem = currPage * rowPerPage;
-		    		var endItem = startItem + rowPerPage;
-	
-		    		$tr.css('opacity', '0.0')
-		    				.addClass('off-screen')
-		    				.slice(startItem, endItem)
-		    				.removeClass('off-screen')
-		    				.animate({opacity: 1}, 300);
-		    	
-
-	    		});
-		    	
-		    	// 추가된 부분: 이전 링크 클릭 시
-		        $('.prev').on('click', function (evt) {
-		            evt.preventDefault();
-		            var $current = $pagingLink.filter('.active');
-		            var $prev = $current.prev('a');
-		            if ($prev.length > 0) {
-		                $prev.trigger('click');
-		            }
-		        });
-
-		        // 추가된 부분: 다음 링크 클릭 시
-		        $('.next').on('click', function (evt) {
-		            evt.preventDefault();
-		            var $current = $pagingLink.filter('.active');
-		            var $next = $current.next('a');
-		            if ($next.length > 0) {
-		                $next.trigger('click');
-		            }
-		        });
-		    	
-	    		$pagingLink.filter(':first').addClass('active');
-	    	}
-
-	    });
-
-
-	    $setRows.submit();
+	    
+	}); //document function 끝
 	    
 	    
-	    
-	});
-	
-	
 		function removeQuantitySelection(button) { //사이즈별 수량 선택란 제거
 		    $(button).closest('.quantity-selection').remove();
 		    var totalSum = 0;
 		    $('.quantity-selection .total-price').each(function () {
-		        totalSum += Number($(this).text());
+		        totalSum += Number($(this).text().replace(',',""));
 		    });
 
-		    $('#cart-total').html(totalSum);
+		    $('#cart-total').html(totalSum.toLocaleString());
 		}
 		function updateTotalPrice(selectedSize, quantity) {
 		    var productPrice = ${pb.price};
 		    var totalPrice = productPrice * quantity;
 		    alert(totalPrice);
-		    $('.quantity-selection[data-size="' + selectedSize + '"] .total-price').text(totalPrice);
+		    $('.quantity-selection[data-size="' + selectedSize + '"] .total-price').text(totalPrice.toLocaleString());
 		    
 		    var totalSum = 0;
 		    $('.quantity-selection .total-price').each(function () {
-		        totalSum += Number($(this).text());
+		        totalSum += Number($(this).text().replace(',',""));
 		    });
 
-		    $('#cart-total').html(totalSum);
+		    $('#cart-total').html(totalSum.toLocaleString());
 		}
 </script>
 
@@ -433,31 +518,32 @@ window.addEventListener('scroll', function() {
 						<div class="col-lg-1"></div>
 						<div class="col-lg-10 row">
 						
-		<div style="width:100%; align:center; height:600px;">
+		<div style="width:100%; align:center; height:100%;">
 		
-		<div style="float:left; margin-left:30px; width: 40%;">
+		<div style="float:left; margin-left:30px; width: 400;">
 			<table border="0" width="100%">
 				<tr>
 					<td><img id="preview" width="100%"
-						src='<c:url value='/resources/product/image/'/>${pb.image }' />
+						src='<%=request.getContextPath()%>/resources/product/image/${pb.image }' />
 				</tr>
 			</table>
 		</div>
 
-		<div style="float:left; margin-left:30px; width: 50%;">
+		<div style="float:left; margin-left:30px; width: 470;">
 			<table border="0">
 
 				<tr>
 					<td>
 						<span
 						style="background-color: #ff80bf; line-height: 27px; border-radius: 10px;"><font
-						color="#ffffff" size="2">태그</font></span>
+						color="#ffffff" size="2">${pb.smallcategory_name }</font></span>
 					</td>
 				</tr>
 
 				<tr>
 					<td id="goodsName"><font size="5"
-						style="box-sizing: border-box; position: relative;">${fn:substringAfter(pb.product_name,'/') }</font></td>
+						style="box-sizing: border-box; position: relative;">${fn:substringAfter(pb.product_name,'/') }</font>
+					</td>
 				</tr>
 
 				<tr>
@@ -507,7 +593,7 @@ window.addEventListener('scroll', function() {
 				<table>
 					<tr>
 						<td>
-						<select id="selsize" name="size">
+						<select id="selsize" name="size" <c:if test="${loginInfo.member_id == 'admin'}">disabled</c:if>>
 							<option value="">옵션선택</option>
 							<option value="s_stock"
 								<c:if test="${pb.s_stock == 0}"> disabled </c:if>>
@@ -546,28 +632,12 @@ window.addEventListener('scroll', function() {
 				</table>
 			</div>
 
-			<!-- <form id="frm" name="frm" method="post">
-
-				<div>
-					<table style="border:1px;" id="dynamicTable">
-						<thead>
-						</thead>
-
-						<tbody id="dynamicTbody">
-
-						</tbody>
-						
-					</table>
-				</div>
-
-			</form> -->
-			
 			<div class="totals-item totals-item-total" style="float:left; margin-left:200px;">
 	      		<label class="total_price">총상품금액</label>&nbsp;&nbsp;
 	     		 <div class="total_price" style="float:right;">원</div>
 	      		<div class="totals-value" id="cart-total" style="float:right;">0</div>
 	   	    </div>
-			<br><br>
+			<br><br> 
 			
 			<table>
 				<tr>
@@ -575,15 +645,20 @@ window.addEventListener('scroll', function() {
 					<td>
 				</tr>
 			</table>
-
-			<button type="button" style="width: 150px; margin-left:100px; height: 40px;"
-				class="btn btn-dark" id="insertBasket">장바구니</button>
-			<button type="button" style="width: 150px; height: 40px;"
-				class="btn btn-dark" id="goodsOrder">구매하기</button>
-			<br>
-
-			<button type="button" onclick="updateProduct('${pb.product_number}')">수정하기</button>
-		
+			<c:choose>
+			    <c:when test="${loginInfo.member_id == 'admin'}">
+			        <button type="button" style="width: 150px; margin-left: 100px; height: 40px;"
+			                class="btn btn-dark" onclick="updateProduct('${pb.product_number}')">수정하기</button>
+			        <button type="button" style="width: 150px; height: 40px;"
+			                class="btn btn-dark" onclick="deleteProduct('${pb.product_number}')">삭제하기</button>
+			    </c:when>
+			    <c:otherwise>
+			        <button type="button" style="width: 150px; margin-left: 100px; height: 40px;"
+			                class="btn btn-dark" id="insertBasket">장바구니</button>
+			        <button type="button" style="width: 150px; height: 40px;"
+			                class="btn btn-dark" id="goodsOrder">구매하기</button>
+			    </c:otherwise>
+			</c:choose>
 		</div>
 	</div>
 						</div> 
@@ -593,18 +668,6 @@ window.addEventListener('scroll', function() {
 
 				<div> <!-- 메뉴바 -->
 					<div class="floating-menu" style="text-align: center;">
-						<!-- <ul class="nav nav-tabs" id="myTab" role="tablist"
-							style="width: 90%">
-							<li class="nav-item" id="tab1" style="width: 25%"
-								onClick="fnMove(1)"><a class="ptab nav-link active" id=""
-								href="#">상세정보</a></li>
-							<li class="nav-item" id="tab2" style="width: 25%"
-								onClick="fnMove(2)"><a class="ptab" id="" href="#">상품리뷰</a></li>
-							<li class="nav-item" id="tab3" style="width: 25%"
-								onClick="fnMove(3)"><a class="ptab" id="" href="#">코디</a></li>
-							<li class="nav-item" id="tab4" style="width: 25%"
-								onClick="fnMove(4)"><a class="ptab" id="" href="#">쇼핑가이드</a></li>
-						</ul> -->
 						<ul class="nav nav-tabs" role="tablist" style="width: 100%">
 						  <li class="nav-item m" role="presentation" style="width: 25%">
 						    <a class="nav-link menu-01 active" data-bs-toggle="tab" href="#section-01" aria-selected="true" role="tab">상품상세</a>
@@ -627,7 +690,7 @@ window.addEventListener('scroll', function() {
 		<div class="section-01 scroll">
 	        <h2>상품상세</h2>
 	        <hr>
-	        <div>
+	        <div style="width: 800; margin:auto;">
 	        	<img id="preview" width="100%"
 						src='<c:url value='/resources/product/content/'/>${pb.content }' />
 	        </div>
@@ -639,42 +702,14 @@ window.addEventListener('scroll', function() {
 	        
 	        
 	        <table id="review" width="100%" style="border-collapse: collapse;">
-	        <form action="" id="setRows">
-				<input type="hidden" name="rowPerPage" value="3">
-			</form>
-	       	 <tbody>
-	        	<c:if test="${empty rlists }">
-	        		<tr>
-	        			<td align="center" height="200px;">등록된 리뷰이 없습니다.</td>
-	        		</tr>
-	        	</c:if>
-	        	<c:if test="${not empty rlists }">
-	        	<c:forEach var="ri" items="${rlists }">
-	        	  
-	        		<tr>
-	        			<td>
-	        				<fieldset>
-	        					<c:forEach begin="1" end="${5-ri.rating }">
-   									<label id="gstar">★</label>
-	        					</c:forEach>
-	        					<c:forEach begin="1" end="${ri.rating }">
-            						<label id="star">★</label>
-	        					</c:forEach>
-   							</fieldset>
-	        			</td>
-	        			<td> | ${ri.write_date }</td>
-	        			<td> | ${ri.member_id }</td>
-	        		</tr>
-	        		<tr>
-	        			<td><b>선택한옵션:${ri.product_size }</b></td>
-	        		</tr>
-	        		<tr style="border-bottom: 0.5px solid rgba(0, 0, 0, .1);"> 
-	        			<td>${ri.text }
-	        		</tr>
-	        	</c:forEach>
-	        	</c:if>  
-	         </tbody>
 	        </table>
+	        <div class="col-lg-12 text-center">
+	        	<div class="d-flex justify-content-center">
+				    <nav>
+				        <ul class="pagination" id="pagination"></ul>
+				    </nav>
+			    </div>
+			</div>
 	        
 	        
 	        
@@ -682,10 +717,60 @@ window.addEventListener('scroll', function() {
 	    </div>
 	
 	    <div class="section-03 scroll">
-	        <h2>섹션 3</h2>
+	    	<h2>
+	    		코디
+				<font size="2" style="float: right; margin-top:20;">
+					<a href="mainView.style" class="ptab">전체보기</a>
+				</font>	  
+	    	</h2> 
+	    	<hr>
+	    	<table width="100%">
+	    		<tr>
+			    	<c:if test="${empty slists}">
+			    			<td align='center' height='200px;'>해당 제품의 코디가 없습니다.</td>
+			    	</c:if>
+			    	<c:forEach var="sb" items="${slists}" begin="0" end="4">
+			    		<td width="200" style="padding: 20">
+			    			<a href="detail.style?style_number=${sb.style_number }" class="link-dark link-underline-opacity-0">
+			    				<img src="<%=request.getContextPath()%>/resources/styleImage/${sb.image1}" width="100%">
+			    				<b>${sb.title}</b><br>
+								${sb.style}			    				
+			    			</a>
+			    		</td>
+			    	</c:forEach>
+	    		</tr>
+	    		<tr><td></td><td></td><td></td><td></td><td></td></tr>
+	    	</table>
 	    </div>
+	    
+	    
 	    <div class="section-04 scroll">
-	        <h2>섹션 4</h2>
+	    	<div>
+	        	<h5 style="margin-top: 60;">주문안내</h5><!-- https://liemar.co.kr/product/detail.html?product_no=137&gclid=CjwKCAiAs6-sBhBmEiwA1Nl8szjl1bAD1VYuX8dSnj9VaZ94a3YwNjg3ne4DFAIaVxJPZLzA-Y4iPhoCgqAQAvD_BwE#tab02 --> 
+	        	<hr>
+	        	<span>상품주문은 다음단계로 이루어집니다.</span>
+	        	<ul>
+	        		<li>Step1:회원 로그인 후 장바구니에 상품 담기</li>
+	        		<li>Step2:주문서 작성</li>
+	        		<li>Step3:결제방법선택 및 결제</li>
+	        		<li>Step4:주문 성공 화면(주문번호)</li>
+	        	</ul>
+	        	<h5 style="margin-top: 60;">배송안내</h5><!-- https://liemar.co.kr/product/detail.html?product_no=137&gclid=CjwKCAiAs6-sBhBmEiwA1Nl8szjl1bAD1VYuX8dSnj9VaZ94a3YwNjg3ne4DFAIaVxJPZLzA-Y4iPhoCgqAQAvD_BwE#tab02 --> 
+	        	<hr>
+	        	<ul style="list-style-type: none;">
+	        		<li>배송 방법:택배</li>
+	        		<li>배송 지역:전국지역</li>
+	        		<li>배송 비용:선불4,000원(50,000원 이상 무료배송)</li>
+	        		<li>배송 기간:1일~3일</li>
+	        	</ul>
+	        	<span>고객님께서 주문하신 사움은 입금 확인 후 배송해 드립니다. 다만, 상품 종류에 따라서 상품의 배송이 다소 지연될 수 있습니다.</span>
+	        	<h5 style="margin-top: 60;">환불안내</h5><!-- https://liemar.co.kr/product/detail.html?product_no=137&gclid=CjwKCAiAs6-sBhBmEiwA1Nl8szjl1bAD1VYuX8dSnj9VaZ94a3YwNjg3ne4DFAIaVxJPZLzA-Y4iPhoCgqAQAvD_BwE#tab02 --> 
+	        	<hr>
+	        	<span>
+	        		환불시 반품 확인여부를 확인한 후 3영업일 이내에 결제 금액을 환불해 드립니다.
+					신용카드로 결제하신 경우는 신용카드 승인을 취소하여 결제 대금이 청구되지 않게 합니다.
+				</span>
+	        </div>
 	    </div>
 	</div>
 
@@ -720,5 +805,4 @@ window.addEventListener('scroll', function() {
 	</div>
 </div>
 
-<button onclick="location.href='view.main'">이동</button>
 <%@ include file="../main/bottom.jsp"%>

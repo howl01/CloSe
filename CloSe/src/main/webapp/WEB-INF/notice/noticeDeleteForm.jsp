@@ -67,6 +67,26 @@
 		border: 1px solid #e6e4e9;
 		border-radius: 8px;
 	}
+	.page-link {
+	  color: #000; 
+	  background-color: #fff;
+	  border: 1px solid #ccc; 
+	}
+	
+	.page-item.active .page-link {
+	 z-index: 1;
+	 color: #555;
+	 font-weight:bold;
+	 background-color: #f1f1f1;
+	 border-color: #ccc;
+	 
+	}
+	
+	.page-link:focus, .page-link:hover {
+	  color: #000;
+	  background-color: #fafafa; 
+	  border-color: #ccc;
+	}
 </style>
 <script type="text/javascript">
 	function allChecked(target){
@@ -110,17 +130,16 @@
 </script>
 
 <div class="row">
-	<div class="card card-margin search-form">
+	<h1 style="margin-left: 220px;">공지사항</h1>
+	<div class="card search-form mb-3" style="width: 30%; height: 60px; margin-left: auto; margin-right: 220px;">
 		<div class="card-body p-0">
-			<form action="list.qna" method="get">
+			<form action="list.notice" method="get">
 				<div class="row">
 					<div class="col-12">
 						<div class="row no-gutters">
 							<div class="col-lg-3 col-md-3 col-sm-12 p-0">
-								<label for="search-type" hidden>검색 유형</label> <select
-									class="form-control" id="search-type" name="whatColumn">
-									<option value="all">전체
-									<option value="nickname">작성자
+								<label for="search-type" hidden>검색 유형</label> 
+								<select class="form-control" id="search-type" name="whatColumn">
 									<option value="title">제목
 								</select>
 							</div>
@@ -131,16 +150,12 @@
 									name="keyword">
 							</div>
 							<div class="col-lg-1 col-md-3 col-sm-12 p-0">
-								<button type="submit" class="btn btn-base">
-									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-										viewBox="0 0 24 24" fill="none" stroke="currentColor"
-										stroke-width="2" stroke-linecap="round"
-										stroke-linejoin="round" class="feather feather-search">
-                                            <circle cx="11" cy="11"
-											r="8"></circle>
-                                            <line x1="21" y1="21"
-											x2="16.65" y2="16.65"></line>
-                                        </svg>
+								<button type="submit" class="btn btn-base ml-auto">
+									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" 
+										stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+	                                    <circle cx="11" cy="11" r="8"></circle>
+	                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                    </svg>
 								</button>
 							</div>
 						</div>
@@ -151,7 +166,6 @@
 	</div>
 </div>
 
-<h2 style="width: 60%; margin: auto;">공지사항</h2> <br>
 <form action="delete.notice" method="post">
 <div class="row">
 <input type="hidden" name="pageNumber" value="${ pageInfo.pageNumber }">
@@ -194,12 +208,12 @@
 </div>
 </form>
 
+<br><br>
+
 <div class="row">
-	<nav id="pagination" aria-label="Page navigation">
-		<ul class="pagination justify-content-center">
-			<li class="page-item"><a class="page-link" href="#">Previous</a></li>
-			<li class="page-item"><a class="page-link" href="#">1</a></li>
-			<li class="page-item"><a class="page-link" href="#">Next</a></li>
-		</ul>
-	</nav>
+    <div class="col-lg-12 text-center">
+        <div class="d-flex justify-content-center">
+            ${pageInfo.pagingHtml}
+        </div>
+    </div>
 </div>

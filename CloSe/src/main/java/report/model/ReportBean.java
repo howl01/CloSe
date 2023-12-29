@@ -2,15 +2,37 @@ package report.model;
 
 import java.sql.Timestamp;
 
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.web.multipart.MultipartFile;
+
 public class ReportBean {
 	private int report_number;
+	
+	@NotNull(message = "문의유형을 선택하세요.")
 	private String report_category;
+	
+	
+	@NotBlank(message = "내용을 입력하세요.")
 	private String content;
 	private String image;
 	private String reporter_id;
 	private String reported_user_id;
 	private int style_number;
 	private Timestamp write_date;
+	
+	private MultipartFile upload;
+	
+	public MultipartFile getUpload() {
+		return upload;
+	}
+	public void setUpload(MultipartFile upload) {
+		this.upload = upload;
+		if(this.upload != null) {
+			image = upload.getOriginalFilename();
+		}
+	}
 	
 	public ReportBean() {
 		super();
@@ -28,7 +50,6 @@ public class ReportBean {
 		this.style_number = style_number;
 		this.write_date = write_date;
 	}
-
 
 	public int getReport_number() {
 		return report_number;

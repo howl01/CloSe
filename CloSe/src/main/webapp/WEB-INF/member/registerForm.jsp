@@ -151,6 +151,21 @@ function goLogin(){
 	location.href="login.member";
 }
 
+function previewImage() {
+    var input = document.getElementById('upload');
+    var imgThumb = document.getElementById('imgThumb');
+
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            imgThumb.src = e.target.result;
+        };
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
 </script>
 
 <style type="text/css">
@@ -174,8 +189,20 @@ function goLogin(){
     <div align = "center">
       <div class="col-md-7 col-lg-8 text-start">
       <hr class="my-6">
-        <form:form commandName="memberBean" name="f" class="needs-validation" action = "register.member" method="post">
+        <form:form commandName="memberBean" name="f" class="needs-validation" action = "register.member" method="post" enctype="multipart/form-data">
           <div class="row">
+          
+          	<div class="col-12">
+			    <label for="lastName" class="form-label">프로필 사진</label>
+			    <div class="row" style="display: flex;">
+			        <div class="col-6 mb-2">
+			            <img id="imgThumb" src="https://static.nid.naver.com/images/web/user/default.png" width="100" height="100">
+			        </div>
+			    </div>
+			    <div class="col-5">
+			        <input type="file" class="form-control mb-3" id="upload" name="upload" value="${memberBean.member_image}" style="border-color: black;" onchange="previewImage()">
+			    </div>
+			</div>
 
             <div class="col-12">
               <label for="lastName" class="form-label">아이디</label>

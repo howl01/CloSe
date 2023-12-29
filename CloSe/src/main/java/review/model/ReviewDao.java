@@ -1,6 +1,7 @@
 package review.model;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -32,6 +33,15 @@ public class ReviewDao {
 
 	public int getTotalCount(String product_number) {
 		return sqlSessionTemplate.selectOne(namespace+".getTotalCount",product_number);
+	}
+
+	public List<ReviewItem> getReviewByProduct_number(String product_number, Map<String,String> map) { 
+		RowBounds rowBounds = new RowBounds(Integer.parseInt(map.get("start")),Integer.parseInt(map.get("end")));
+		return sqlSessionTemplate.selectList(namespace+".getReviewByProduct_number", product_number, rowBounds);
+	}
+
+	public int deleteReview(String review_number) {
+		return sqlSessionTemplate.delete(namespace+".deleteReview", review_number);
 	}
 	
 	

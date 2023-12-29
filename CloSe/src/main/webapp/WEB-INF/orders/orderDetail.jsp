@@ -2,7 +2,7 @@
 <%@page import="java.text.DecimalFormat"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+   pageEncoding="UTF-8"%>
 
 <%@ include file="../main/top.jsp"%>
 
@@ -22,15 +22,15 @@ function openReviewFormWindow(orderDetailNumber) {
 </script>
 
 <div class="body">
-	<div class="row">
-		<div class="col-lg-2"></div>
-		<div class="col-lg-8">
-			<div style="padding:20 10 20 10">
-				<div style="">
-					<h3 style="padding: 22 0 22 0">주문내역</h3>
-				</div>
-				
-				<table class="table">
+   <div class="row">
+      <div class="col-lg-2"></div>
+      <div class="col-lg-8">
+         <div style="padding:20 10 20 10">
+            <div style="">
+               <h3 style="padding: 22 0 22 0">주문내역</h3>
+            </div>
+            
+            <table class="table">
                     <thead>
                         <tr>
                             <th scope="col">이미지</th>
@@ -43,19 +43,19 @@ function openReviewFormWindow(orderDetailNumber) {
                     </thead>
                     <tbody>
                         <c:forEach var="oi" items="${olists}" varStatus="status">
-                        	<c:set var="totalPrice" value="${totalPrice + (oi.price*oi.qty)}" />
+                           <c:set var="totalPrice" value="${totalPrice + (oi.price*oi.qty)}" />
                             <tr>
                                 <td>
                                     <img id="preview" width="100px"
                                         src='<c:url value='/resources/product/image/'/>${oi.image }'
                                         class="rounded" />
+                                 </td>
+                                <td>
+                                   <a href="detail.product?product_number=${oi.product_number }">[${fn:substringBefore(oi.product_name,'/') }] <br>
+                                   ${fn:substringAfter(oi.product_name,'/') }</a> 
                                 </td>
                                 <td>
-                                	<a href="detail.product?product_number=${oi.product_number }">[${fn:substringBefore(oi.product_name,'/') }] <br>
-                                	${fn:substringAfter(oi.product_name,'/') }</a> 
-                                </td>
-                                <td>
-                                	${oi.price}원
+                                   ${oi.price}원
                                 </td>
                                 <td>
                                     ${oi.product_size }
@@ -132,7 +132,7 @@ function openReviewFormWindow(orderDetailNumber) {
 						</tr>
 						<tr>
 							<td>할인</td>
-							<td>${totalPrice-olists[0].totalamount }</td>
+							<td>${totalPrice + (totalPrice > 50000 ? '0' : '4000') -olists[0].totalamount }</td>
 						</tr>
 						<tr>
 							<td>배송비</td>
@@ -156,50 +156,31 @@ function openReviewFormWindow(orderDetailNumber) {
 			</div>
 		</div>
 
-		<div class="col-lg-2 mt-5 px-5">
-			<div class="bs-component">
-				<div class="card mb-3">
-					<h3 class="card-header">오늘의 날씨 정보</h3>
-					<div class="card-body">
-						<h5 class="card-title">Special title treatment</h5>
-						<h6 class="card-subtitle text-muted">Support card subtitle</h6>
-					</div>
-					<svg xmlns="http://www.w3.org/2000/svg"
-						class="d-block user-select-none" width="100%" height="200"
-						aria-label="Placeholder: Image cap" focusable="false" role="img"
-						preserveAspectRatio="xMidYMid slice" viewBox="0 0 318 180"
-						style="font-size: 1.125rem; text-anchor: middle">
+      <div class="col-lg-2 mt-5 px-5">
+         <div class="bs-component">
+            <div class="card mb-3">
+               <h3 class="card-header">오늘의 날씨 정보</h3>
+               <div class="card-body">
+                  <h5 class="card-title">Special title treatment</h5>
+                  <h6 class="card-subtitle text-muted">Support card subtitle</h6>
+               </div>
+               <svg xmlns="http://www.w3.org/2000/svg"
+                  class="d-block user-select-none" width="100%" height="200"
+                  aria-label="Placeholder: Image cap" focusable="false" role="img"
+                  preserveAspectRatio="xMidYMid slice" viewBox="0 0 318 180"
+                  style="font-size: 1.125rem; text-anchor: middle">
                   <rect width="100%" height="100%" fill="#868e96"></rect>
                   <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
                 </svg>
-				</div>
-			</div>
-		</div>
+            </div>
+         </div>
+      </div>
 
 
 
-	</div>
+   </div>
 </div>
 
-<form id="myform" method="post" enctype="multipart/form-data">
-    <textarea id="reviewText" name="text" cols="20" rows="2"></textarea><br>
-    평점:
-    <fieldset>
-    <div style="caret-color: transparent;">
-		<input type="radio" name="rating" value="5" id="rate1"><label
-			for="rate1">★</label>
-		<input type="radio" name="rating" value="4" id="rate2"><label
-			for="rate2">★</label>
-		<input type="radio" name="rating" value="3" id="rate3"><label
-			for="rate3">★</label>
-		<input type="radio" name="rating" value="2" id="rate4"><label
-			for="rate4">★</label>
-		<input type="radio" name="rating" value="1" id="rate5"><label
-			for="rate5">★</label>
-	</div>
-	</fieldset><br>
-    <button type="button" onclick="submitReview()">리뷰 등록</button>
-</form>
 
 <button onclick="location.href='view.main'">이동</button>
 <%@ include file="../main/bottom.jsp"%>

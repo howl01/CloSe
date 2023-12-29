@@ -2,7 +2,6 @@ package cart.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +23,6 @@ public class CartAddController {
 
 	private final String command = "/cartAdd.cart";
 	private final String viewPage = "cartListForm";
-	private final String gotoPage = "";
 	
 	@Autowired
 	CartDao cartDao;
@@ -40,6 +38,7 @@ public class CartAddController {
 							@RequestParam(value="l_stock", required = false)String l_stock,
 							@RequestParam(value="xl_stock", required = false)String xl_stock,
 							HttpSession session) {
+		boolean cflag = false;
 		String member_id ="";
 		if(session.getAttribute("loginInfo") != null) {
 			MemberBean mb = (MemberBean) session.getAttribute("loginInfo");
@@ -74,14 +73,20 @@ public class CartAddController {
 						break;
 					} 
 				} //for
-				if(flag) { 
-					cartDao.updateCart(cb);
+				if(flag) { //중복임
+					
 				} else { 
+					cflag = true;
 					cartDao.addCart(cb);
 				}
 			}
 		}
-		return "s";
+		
+		if(cflag) {
+			return "o";
+		} else {
+			return "x";
+		}
 	}
 	
 	@RequestMapping(value=command,method=RequestMethod.GET)
@@ -96,6 +101,11 @@ public class CartAddController {
 		}
 		List<CartInfoBean> cartInfoLists = cartDao.getAllCartInfoByMember_Id(member_id);
 		model.addAttribute("cartInfoLists", cartInfoLists);
+		
+		
+		
+		
+		
 		return viewPage;
 	}
 }

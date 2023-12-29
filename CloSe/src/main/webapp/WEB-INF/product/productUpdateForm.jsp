@@ -107,7 +107,7 @@
 								<span>상품명<font color="red">*</font></span>
 							</div>
 							<div class="col-3">
-								<input type="text" class="form-control mb-1" name="product_name" 
+								<input type="text" class="form-control mb-1" name="product_name" maxlength="50"
 								placeholder="상품명을 입력해 주세요." value="${productBean.product_name }">
 								<div>
 									<form:errors path="product_name" cssClass="err"/>
@@ -135,7 +135,7 @@
 								<span>가격<font color="red">*</font></span>
 							</div>
 							<div class="col-3">
-								<input type="text" class="form-control mb-1" name="price" 
+								<input type="text" class="form-control mb-1" name="price" maxlength="12"
 								placeholder="가격을 입력해 주세요." value="${productBean.price }" oninput="NumerInput('price')">
 								<div>
 									<form:errors path="price" cssClass="err"/>
@@ -164,15 +164,8 @@
 								<span>추천온도<font color="red">*</font></span>
 							</div>
 							<div class="col-3">
-								<select name="temperature">
-									<option value="">옵션선택</option>
-									<option value="0" <c:if test="${productBean.temperature  == 0 }"> selected </c:if>>~5</option>
-									<option value="7" <c:if test="${productBean.temperature == 7 }"> selected </c:if>>5~10</option>
-									<option value="12" <c:if test="${productBean.temperature == 12 }"> selected </c:if>>10~15</option>
-									<option value="17" <c:if test="${productBean.temperature == 17 }"> selected </c:if>>15~20</option>
-									<option value="22" <c:if test="${productBean.temperature == 22 }"> selected </c:if>>20~25</option>
-									<option value="30" <c:if test="${productBean.temperature == 30 }"> selected </c:if>>25~</option>
-								</select>
+								<input type="text" class="form-control mb-1" 
+									placeholder="추천온도를 입력해주세요." maxlength="2" value='${productBean.temperature}' name="temperature" oninput="NumerInput('temperature')">
 								<div>
 									<form:errors path="temperature" cssClass="err"/>
 								</div>
@@ -183,18 +176,18 @@
 								<span>사이즈별 수량<font color="red">*</font></span>
 							</div>
 							<div class="col-2">
-								S <input type="text" name="s_stock" class="form-control mb-1" 
+								S <input type="text" name="s_stock" class="form-control mb-1" maxlength="4"
 								placeholder="0" value="${productBean.s_stock }" oninput="NumerInput('s_stock')">
-								M <input type="text" name="m_stock" class="form-control mb-1" 
+								M <input type="text" name="m_stock" class="form-control mb-1" maxlength="4"
 								placeholder="0" value="${productBean.m_stock }" oninput="NumerInput('m_stock')">
-								L <input type="text" name="l_stock" class="form-control mb-1" 
+								L <input type="text" name="l_stock" class="form-control mb-1" maxlength="4"
 								placeholder="0" value="${productBean.l_stock }" oninput="NumerInput('l_stock')">
-								XL <input type="text" name="xl_stock" class="form-control mb-1" 
+								XL <input type="text" name="xl_stock" class="form-control mb-1" maxlength="4"
 								placeholder="0" value="${productBean.xl_stock }" oninput="NumerInput('xl_stock')">
 							</div>
 						</div>
 						<div style="padding-top: 15; float: right;">
-							<input class="btn btn-primary btn-md" type="submit" value="수정하기">
+							<input class="btn btn-dark btn-md" type="submit" value="수정하기">
 						</div>
 					</form:form> 
 				</div>
@@ -224,7 +217,6 @@
 		</div>
 
 
-<button onclick="location.href='view.main'">이동</button>
 	</div>
 </div>
 

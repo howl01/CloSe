@@ -1,6 +1,7 @@
 package product.model;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.web.multipart.MultipartFile;
@@ -9,11 +10,12 @@ public class ProductBean {
    private int product_number;
    
    @NotEmpty(message = "상품명을 입력해 주세요.")
+   @Pattern(regexp = "^.{1,14}/.{1,}$", message = "형식에 맞게 입력해주세요.")
    private String product_name;
    
    @NotEmpty(message = "상품 사진을 등록해주세요.")
    private String image;
-   
+    
    @NotNull(message = "가격을 입력해 주세요.")
    private Integer price;
    
@@ -37,6 +39,9 @@ public class ProductBean {
    private MultipartFile pImage; //상품사진
    private MultipartFile pContent; //설명사진
    
+   private String keyword;
+   private int count;
+   
    public MultipartFile getpImage() {
       return pImage;
    }
@@ -55,6 +60,9 @@ public class ProductBean {
          content = pContent.getOriginalFilename();
       }
    }
+   
+   private double average_rating;
+   
    
    public ProductBean() {
       super();
@@ -125,5 +133,27 @@ public class ProductBean {
    public void setXl_stock(int xl_stock) {
       this.xl_stock = xl_stock;
    }
-   
+	public double getAverage_rating() {
+		return average_rating;
+	}
+	public void setAverage_rating(double average_rating) {
+		this.average_rating = average_rating;
+	}
+
+	public String getKeyword() {
+		return keyword;
+	}
+
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
+
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
+
 }

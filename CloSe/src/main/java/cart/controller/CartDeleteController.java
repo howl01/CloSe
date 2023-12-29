@@ -1,8 +1,5 @@
 package cart.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +9,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import cart.model.CartDao;
 import member.model.MemberBean;
-import product.model.ProductDao;
 
 @Controller
 public class CartDeleteController {
 	private final String command = "/delete.cart";
-	private final String viewPage = "";
 	private final String gotoPage = "redirect:/cartAdd.cart";
 	
 	@Autowired

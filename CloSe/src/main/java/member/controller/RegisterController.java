@@ -1,8 +1,10 @@
 package member.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -26,6 +28,9 @@ public class RegisterController {
 	private final String viewPage = "registerForm";
 
 	@Autowired
+	ServletContext servletContext;
+	
+	@Autowired
 	private MemberDao memberDao;
 
 	@RequestMapping(value = command, method = RequestMethod.GET)
@@ -45,8 +50,25 @@ public class RegisterController {
 		if (bresult.hasErrors()) {
 			return viewPage;
 		}
+		
+		String path = servletContext.getRealPath("/resources/memberImage");
+		
+		File directory = new File(path);
+	    if (!directory.exists()) {
+	        directory.mkdirs();
+	    }
+	    
+	    String imageName = mb.getMember_image();
+	    File uploadImage = new File(path + File.separator + imageName);
+	    try {
+			mb.getUpload().transferTo(uploadImage);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		memberDao.memberRegister(mb);
+		
+		System.out.println(mb.getMember_image());
 		out.println("<script>alert('회원가입이 완료되었습니다.'); location.href='" + request.getContextPath()
 				+ "/login.member';</script>");
 		out.flush();

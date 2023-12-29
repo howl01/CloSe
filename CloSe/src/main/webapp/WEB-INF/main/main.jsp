@@ -9,18 +9,9 @@
 <style type="text/css">
    .body {
       width: 100%;
+      overflow-x: hidden;
       margin: auto;
-   }
-
-   #par {
-      position: relative;
-   }
-
-   #chi {
-      position: absolute;
-      left: 0px;
-      top: 0px;
-      opacity: 0.4;
+      overflow-x: hidden;
    }
 
    #carouselExampleAutoplaying {
@@ -29,9 +20,24 @@
       margin: auto;
       /* 가운데 정렬 */
    }
+   
+   .custom-height{
+   		height:  171px;
+   }
 </style>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script type="text/javascript">
+window.navigator.geolocation.getCurrentPosition(function(pos) {
+    var latitude = pos.coords.latitude;
+    var longitude = pos.coords.longitude;
+    
+    $.ajax({
+      type: 'POST',
+      url: 'view.style',
+      data: {latitude: latitude, longitude: longitude}
+  });
+});
+
    $(document).ready(function () {
       var bsComponent = $(".bs-component");
       var initialPosition = bsComponent.offset().top;
@@ -85,10 +91,8 @@
 	                var year = ot.getFullYear();
 	                var month = ot.getMonth() + 1;
 	                var dt = ot.getDate();
-	                var hr = ot.getHours();
-	                var m = ot.getMinutes();
 
-	                return year + '년 ' + month + '월 ' + dt + '일 ' + hr + '시 기준';
+	                return year + '년 ' + month + '월 ' + dt + '일 ';
 	            }
 
 	            var currentTime = convertTime(ct);
@@ -106,6 +110,17 @@
    		 alert(bigcate);
    		 location.href="list.product?bigcategory_name="+bigcate;
    	 }
+   	 
+   	window.navigator.geolocation.getCurrentPosition(function(pos) {
+   	    var latitude = pos.coords.latitude;
+   	    var longitude = pos.coords.longitude;
+   	    
+	   	 $.ajax({
+	         type: 'POST',
+	         url: 'view.close',
+	         data: {latitude: latitude, longitude: longitude}
+	     });
+   	});
 </script>
 
 <div class="body">
@@ -114,15 +129,19 @@
       <div class="carousel-inner">
          <div class="carousel-item active">
             <img src="resources/img/logo.png"
-               class="d-block w-100" alt="...">
+               class="d-block w-100 custom-height" alt="...">
          </div>
          <div class="carousel-item">
-            <img src="resources/img/logo.png"
-               class="d-block w-100" alt="...">
+            <img src="resources/img/couponBanner.png"
+               class="d-block w-100 custom-height" alt="...">
          </div>
          <div class="carousel-item">
-            <img src="resources/img/logo.png"
-               class="d-block w-100" alt="...">
+            <img src="resources/img/serviceBanner.png"
+               class="d-block w-100 custom-height" alt="...">
+         </div>
+         <div class="carousel-item">
+            <img src="resources/img/serviceBanner2.png"
+               class="d-block w-100 custom-height" alt="...">
          </div>
       </div>
       <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying"
@@ -140,57 +159,73 @@
    <div class="row">
       <div class="col-lg-2"></div>
       <div class="col-lg-8">
-         <div class="album py-5 bg-body-tertiary">
+         <div class="album py-5">
             <div class="container">
                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
 
-                  <div class="col" align="center">
-                     <a href="view.close"><img class="bd-placeholder-img card-img-top" width="100%" height="120"
-                           style="border-radius: 20%;" id="par" src="resources/img/abc.jpeg"></a>
-                     오늘의 옷비서
-                  </div>
+				  <a href="view.style" class="link-dark link-underline-opacity-0">
+	                  <div class="col" align="center">
+	                     <img class="bd-placeholder-img card-img-top" width="100%" height="120"
+	                           style="border-radius: 20%;" id="par" src="resources/img/close.png">
+	                     오늘의 옷비서
+	                  </div>
+                  </a>
 
-                  <div class="col" align="center">
-                     <a><img class="bd-placeholder-img card-img-top" src="/pimages/" width="100%" height="120"
-                           style="border-radius: 20%;"></a>
-                     남자 코디
-                  </div>
+				  <a href="#" class="link-dark link-underline-opacity-0">
+	                  <div class="col" align="center">
+	                     <img class="bd-placeholder-img card-img-top" src="resources/img/man.png" width="100%" height="120"
+	                           style="border-radius: 20%;">
+	                     남자 코디
+	                  </div>
+                  </a>
 
-                  <div class="col" align="center">
-                     <a><img class="bd-placeholder-img card-img-top" src="/pimages/" width="100%" height="120"
-                           style="border-radius: 20%;"></a>
-                     여자 코디
-                  </div>
+				  <a href="#" class="link-dark link-underline-opacity-0">
+	                  <div class="col" align="center">
+	                     <img class="bd-placeholder-img card-img-top" src="resources/img/woman.png" width="100%" height="120"
+	                           style="border-radius: 20%;">
+	                     여자 코디
+	                  </div>
+                  </a>
 
-                  <div class="col" align="center">
-                     <a><img class="bd-placeholder-img card-img-top" src="/pimages/" width="100%" height="120"
-                           style="border-radius: 20%;"></a>
-                     계절별 코디
-                  </div>
+				  <a href="#" class="link-dark link-underline-opacity-0">
+	                  <div class="col" align="center">
+	                     <img class="bd-placeholder-img card-img-top" src="resources/img/weather.jpg" width="100%" height="120"
+	                           style="border-radius: 20%;">
+	                     계절별 코디
+	                  </div>
+                  </a>
 
-                  <div class="col" align="center">
-                     <a><img class="bd-placeholder-img card-img-top" src="/pimages/" width="100%" height="120"
-                           style="border-radius: 20%;" onclick="productList('아우터')"></a>
-                     아우터
-                  </div>
-
-                  <div class="col" align="center">
-                     <a><img class="bd-placeholder-img card-img-top" src="/pimages/" width="100%" height="120"
-                           style="border-radius: 20%;" onclick="productList('상의')"></a>
-                     상의
-                  </div>
-
-                  <div class="col" align="center">
-                     <a><img class="bd-placeholder-img card-img-top" src="/pimages/" width="100%" height="120"
-                           style="border-radius: 20%;" onclick="productList('하의')"></a>
-                     하의
-                  </div>
-
-                  <div class="col" align="center">
-                     <a><img class="bd-placeholder-img card-img-top" src="/pimages/" width="100%" height="120"
-                           style="border-radius: 20%;" onclick="productList('신발')"></a>
-                     신발
-                  </div>
+				  <a href="#" class="link-dark link-underline-opacity-0">
+	                  <div class="col" align="center">
+	                     <img class="bd-placeholder-img card-img-top" src="resources/img/outer.avif" width="100%" height="120"
+	                           style="border-radius: 20%;" onclick="productList('아우터')">
+	                     아우터
+	                  </div>
+                  </a>
+					
+				  <a href="#" class="link-dark link-underline-opacity-0">
+	                  <div class="col" align="center">
+	                     <img class="bd-placeholder-img card-img-top" src="resources/img/top.png" width="100%" height="120"
+	                           style="border-radius: 20%;" onclick="productList('상의')">
+	                     상의
+	                  </div>
+                  </a>
+                  
+				  <a href="#" class="link-dark link-underline-opacity-0">
+	                  <div class="col" align="center">
+	                     <img class="bd-placeholder-img card-img-top" src="resources/img/bottom.png" width="100%" height="120"
+	                           style="border-radius: 20%;" onclick="productList('하의')">
+	                     하의
+	                  </div>
+                  </a>
+                  
+				  <a href="#" class="link-dark link-underline-opacity-0">
+	                  <div class="col" align="center">
+	                     <img class="bd-placeholder-img card-img-top" src="resources/img/shoes.png" width="100%" height="120"
+	                           style="border-radius: 20%;" onclick="productList('신발')">
+	                     신발
+	                  </div>
+                  </a>
 
                </div>
             </div>
@@ -204,45 +239,21 @@
             Most Popular <br>
             인기 상품 <br>
          </div>
-         <div class="album py-5 bg-body-tertiary">
+         <div class="album py-5">
             <div class="container">
                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
 
-                  <div class="col">
+                  <c:forEach var="pb" items="${plists }" begin="1" end="4">
+                  	<div class="col">
                      <div class="card shadow-sm">
-                        <a><img class="bd-placeholder-img card-img-top" src="/pimages/" width="100%" height="225"></a>
-                        <div class="card-body" align="center">
-
-                        </div>
+                        <a href="detail.product?product_number=${pb.product_number }"><img class="bd-placeholder-img card-img-top" 
+                        src="<c:url value='/resources/product/image/'/>${pb.image }" height="100%"></a>
+                        <b>${fn:substringBefore(pb.product_name,'/') }</b>  
+                        ${fn:substringAfter(pb.product_name,'/') }<br>
+                        <b><fmt:formatNumber value="${pb.price }" pattern="#,###" />원</b>
                      </div>
-                  </div>
-
-                  <div class="col">
-                     <div class="card shadow-sm">
-                        <a><img class="bd-placeholder-img card-img-top" src="/pimages/" width="100%" height="225"></a>
-                        <div class="card-body" align="center">
-
-                        </div>
-                     </div>
-                  </div>
-
-                  <div class="col">
-                     <div class="card shadow-sm">
-                        <a><img class="bd-placeholder-img card-img-top" src="/pimages/" width="100%" height="225"></a>
-                        <div class="card-body" align="center">
-
-                        </div>
-                     </div>
-                  </div>
-
-                  <div class="col">
-                     <div class="card shadow-sm">
-                        <a><img class="bd-placeholder-img card-img-top" src="/pimages/" width="100%" height="225"></a>
-                        <div class="card-body" align="center">
-
-                        </div>
-                     </div>
-                  </div>
+                  	</div>
+                  </c:forEach> 
 
                </div>
             </div>
@@ -301,8 +312,9 @@
             </div>
          </div>
       </div>
+      
 
-      <div class="col-lg-2 mt-5 px-5">
+      <div class="col-lg-2 mt-3 px-4">
          <div class="bs-component">
             <div class="card mb-3">
                <h3 class="card-header" align="center">오늘의 날씨</h3>
@@ -318,13 +330,6 @@
       </div>
       
    </div>
-
-   <div class="col-lg-2">
-   		<button onclick="location.href='insert.category'">상등</button>
-   		<button onclick="location.href='register.product'">상등</button>
-   		<button onclick="orderdetails()">주문내역</button>
-   </div>
-
 
  </div> 
 
