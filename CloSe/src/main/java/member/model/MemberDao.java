@@ -103,5 +103,11 @@ public class MemberDao {
 		return cnt;
 	}
 
+	public int updateMemberBanCancel(String member_id) {
+		int cnt = -1;
+		cnt = sqlSessionTemplate.update(namespace+".updateMemberBanCancel", member_id);
+		return cnt;
+	}
+
 
 }

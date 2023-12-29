@@ -60,4 +60,8 @@
 	    where member_id = #{member_id}
 	</update>
 	
+	<update id="updateMemberBanCancel">
+		update member set ban_count = 0, ban_expiration = null
+		where member_id = #{member_id}
+	</update>
 </mapper>
