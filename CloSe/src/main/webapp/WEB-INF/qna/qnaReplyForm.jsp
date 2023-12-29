@@ -37,6 +37,20 @@
     </style>
     
 <script type="text/javascript">
+// textarea에 입력할 때마다 호출되는 함수
+function updateCharCount() {
+  // textarea의 값을 가져온 후 글자수를 계산
+  var text = document.getElementById('myTextarea').value;
+  var count = text.length;
+
+  // 글자수를 HTML 요소에 업데이트
+  document.getElementById('charCount').innerText = count;
+  if (count > 1000) {
+      document.getElementById('myTextarea').value = text.substring(0, 1000);
+      document.getElementById('charCount').innerText = 1000;
+    }
+}
+
 function replyForm() {
     var formData = new FormData(document.getElementById("insertForm"));
 
@@ -57,7 +71,7 @@ function replyForm() {
 }
 </script>
 
-<form:form action="reply.qna" method="post" commandName="qnaBean">
+<form:form action="reply.qna" method="post" commandName="qnaBean" id="insertForm">
 	<div class="row mx-auto">
 	        <table class="table" id="article-table">
 	            <tbody>
@@ -69,7 +83,8 @@ function replyForm() {
 						<input type="hidden" name="pageNumber" value="${ pageNumber }">
 						<input type="hidden" name="qna_category" value="${ qnaBean.qna_category }">
 						<input type="hidden" name="member_id" value="admin">
-						<textarea name="content" cols="50" rows="10"  style="resize: none;" placeholder="답변작성"></textarea>
+						<textarea id="myTextarea" oninput="updateCharCount()" name="content" cols="50" rows="10"  style="resize: none;" placeholder="답변작성">${ qnaBean.content }</textarea>
+						<p>글자수:( <span id="charCount">${ fn:length(qnaBean.content) }</span>/1000자)</p>
 						<br><form:errors cssClass="err" path="content" />
 					</td>
 				</tr>

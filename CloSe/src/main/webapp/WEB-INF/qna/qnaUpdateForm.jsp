@@ -3,46 +3,6 @@
 <%@ include file="../common/common.jsp" %>
 <%@ include file= "../main/top.jsp" %>
 <style>
-        .search-form {
-  width: 80%;
-  margin: 0 auto;
-  margin-top: 1rem;
-}
-
-.search-form input {
-  height: 100%;
-  background: transparent;
-  border: 0;
-  display: block;
-  width: 100%;
-  padding: 1rem;
-  height: 100%;
-  font-size: 1rem;
-}
-
-.search-form select {
-  background: transparent;
-  border: 0;
-  padding: 1rem;
-  height: 100%;
-  font-size: 1rem;
-}
-
-.search-form select:focus {
-  border: 0;
-}
-
-.search-form button {
-  height: 100%;
-  width: 100%;
-  font-size: 1rem;
-}
-
-.search-form button svg {
-  width: 24px;
-  height: 24px;
-}
-
 .card-margin {
   margin-bottom: 1.875rem;
 }
@@ -75,12 +35,29 @@
 }
 
     </style>
+    
+    <script type="text/javascript">
+	// textarea에 입력할 때마다 호출되는 함수
+	function updateCharCount() {
+	  // textarea의 값을 가져온 후 글자수를 계산
+	  var text = document.getElementById('myTextarea').value;
+	  var count = text.length;
+	
+	  // 글자수를 HTML 요소에 업데이트
+	  document.getElementById('charCount').innerText = count;
+	  if (count > 1000) {
+	      document.getElementById('myTextarea').value = text.substring(0, 1000);
+	      document.getElementById('charCount').innerText = 1000;
+	    }
+	}
+	
+</script>
+    
 <form:form action="update.qna" method="post" commandName="qnaBean" enctype="multipart/form-data">
 <input type="hidden" name="pageNumber" value="${ pageNumber }">
 <input type="hidden" name="qna_number" value="${ qnaBean.qna_number }">
- <div class="row">
+<div class="row">
         <table class="table" id="article-table" style="width: 70%; margin: auto;">
-            <tbody>
             <tr>
                 <th>문의유형</th>
 				<td>
@@ -106,9 +83,10 @@
 				</td>
             </tr>
             <tr>
-            	<th>내용</th>
-                <td>
-					<textarea name="content" cols="130" rows="10"  style="resize: none;">${ qnaBean.content }</textarea>
+				<th>내용</th>
+				<td colspan="2">
+					<textarea id="myTextarea" oninput="updateCharCount()" name="content" cols="50" rows="10"  style="resize: none;">${ qnaBean.content }</textarea>
+					<p>글자수:( <span id="charCount">${ fn:length(qnaBean.content) }</span>/1000자)</p>
 					<br><form:errors cssClass="err" path="content" />
 				</td>
             </tr>
@@ -129,7 +107,6 @@
             		<input type="submit" class="btn btn-Dark me-md-2" value="수정" style="float: right;">
             	</td>
             </tr>
-            </tbody>
         </table>
     </div>
 </form:form>

@@ -80,7 +80,7 @@ window.navigator.geolocation.getCurrentPosition(function(pos) {
 	            var $ctemp = result.main.temp;
 	            $('#ctemp').text(openWeatherTemperature + '°C');
 	            var wiconUrl = '<img src="http://openweathermap.org/img/wn/' + result.weather[0].icon + '.png" alt="' + result.weather[0].description + '">';
-	            $('.icon').html(wiconUrl);
+	            $('#icon').html(wiconUrl);
 	            $('#feel').text(result.main.feels_like + '°C');
 	            $('#description').text(result.weather[0].description);
 
@@ -346,8 +346,7 @@ window.navigator.geolocation.getCurrentPosition(function(pos) {
                   <h5 class="card-title time">Special title treatment</h5>
                   <p class="card-text">현재 온도 : <span id="ctemp"></span></p>
                   <p class="card-text">체감 온도 : <span id="feel"></span></p>
-                  <p class="card-text">날씨 : <span id="description"></span></p>
-                  <div class="icon"></div>
+                  <p class="card-text">날씨 : <span id="icon"></span></p>
                </div>
             </div>
          </div>
