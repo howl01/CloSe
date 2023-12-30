@@ -3,7 +3,6 @@ package member.model;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import java.time.LocalDate;
 import java.util.Date;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -65,28 +64,14 @@ public class MemberBean {
 
 	private MultipartFile upload; // 파일 업로드를 위한 변수
 
-	public MultipartFile getUpload() {
-		return upload;
-	}
-
-	public void setUpload(MultipartFile upload) {
-		this.upload = upload;
-		if (this.upload != null) { // 파일을 선택했다면
-			System.out.println(upload.getName()); // upload
-			System.out.println(upload.getOriginalFilename()); // 검정양복.jpg
-			member_image = upload.getOriginalFilename(); // 원래 올리려고 했던 image에 검정양복.jpg가 들어감
-		}
-	}
-
 	public MemberBean() {
 		super();
 	}
 
-	MemberBean(String member_id, String member_image, String password, String passwordcheck, String name, String phone,
-			String email, String address1, String address2, String birth, String gender, String nickname,
-			String verificationCode, String height, String weight, String social, int ban_count,
-			Date ban_expiration, MultipartFile upload) {
-		super();
+	public MemberBean(String member_id, String member_image, String password, String passwordcheck, String name,
+			String phone, String email, String address1, String address2, String birth, String gender, String nickname,
+			String verificationCode, String height, String weight, String social, int ban_count, Date ban_expiration,
+			MultipartFile upload) {
 		this.member_id = member_id;
 		this.member_image = member_image;
 		this.password = password;
@@ -106,6 +91,19 @@ public class MemberBean {
 		this.ban_count = ban_count;
 		this.ban_expiration = ban_expiration;
 		this.upload = upload;
+	}
+
+	public MultipartFile getUpload() {
+		return upload;
+	}
+
+	public void setUpload(MultipartFile upload) {
+		this.upload = upload;
+		if (this.upload != null) { // 파일을 선택했다면
+			System.out.println(upload.getName()); // upload
+			System.out.println(upload.getOriginalFilename()); // 검정양복.jpg
+			member_image = upload.getOriginalFilename(); // 원래 올리려고 했던 image에 검정양복.jpg가 들어감
+		}
 	}
 
 	public String getMember_image() {

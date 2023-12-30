@@ -44,7 +44,10 @@
 	.pd{
 		text-decoration: none;
 		color: black;
-		
+	#profile{
+		border-radius: 100%;
+		border: 1px solid #C0C0C0;
+	}
 	.container{
 		width: 100%;
 	}
@@ -155,16 +158,17 @@
 		  type: "post", 
 		  contentType: "application/json; charset=utf8",
 		  success : function(data){
-			alert("성공");  
 			$("#orderdetail").empty();
 			$("#buyer").empty();
 			$("#receiver").empty();
+			$("#receipt").empty();
+			
 			var totalPrice = 0;
 			var firstElement = data[0];
 	        // 받은 데이터를 기반으로 새로운 테이블 행을 동적으로 생성하고 삽입합니다.
 	        $(data).each(function () {
 	            var newRow = $("<tr>");
-	            newRow.append("<td><img id='preview' width='100px' src='" + this.image + "' class='rounded' /></td>");
+	            newRow.append("<td><img id='preview' width='100px' src='<%=request.getContextPath()%>/resources/product/image/" + this.image + "' class='rounded' /></td>");
 	            
 	            // Splitting the product_name based on '/'
 	            var productNameParts = this.product_name.split('/');
@@ -241,7 +245,7 @@
 	function openReviewFormWindow(orderDetailNumber) {
 		alert(orderDetailNumber);
 	    // 새 창을 열기
-	    window.open("reviewRegister.jsp?orderDetailNumber="+orderDetailNumber, "reviewWindow", "_blank", "menubar=no, toolbar=no");
+	    window.open("reviewRegister.jsp?orderDetailNumber="+orderDetailNumber, "reviewWindow", "menubar=no,toolbar=no,width=600,height=200");
 	}
 	function handleTabClick(num){
 		$('#tab3-1').removeClass('active show');

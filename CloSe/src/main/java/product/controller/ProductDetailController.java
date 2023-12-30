@@ -19,6 +19,8 @@ import product.model.ProductDao;
 import review.model.ReviewBean;
 import review.model.ReviewDao;
 import review.model.ReviewItem;
+import style.model.StyleBean;
+import style.model.StyleDao;
 import utility.Paging_review;
 
 @Controller
@@ -34,11 +36,17 @@ public class ProductDetailController {
 	@Autowired
 	ReviewDao reviewDao;
 	
+	@Autowired
+	StyleDao styleDao;
+	
 	@RequestMapping(value=command, method=RequestMethod.GET)
 	public String detailForm(@RequestParam("product_number") String product_number,
 							@RequestParam(value="pageNumber", required = false) String pageNumber,
 								HttpServletRequest request,
 								Model model) {
+		List<StyleBean> slists = styleDao.getStyleByProductNum(product_number);
+		
+		
 		ProductBean pb = productDao.getOneProduct(product_number);
 		
 		int totalCount = reviewDao.getTotalCount(product_number);
@@ -49,6 +57,7 @@ public class ProductDetailController {
 
 		model.addAttribute("pageInfo", pageInfo);
 		model.addAttribute("rlists", rlists);
+		model.addAttribute("slists", slists);
 		model.addAttribute("pb", pb);
 		return viewPage;
 	}

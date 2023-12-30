@@ -22,17 +22,18 @@
 function updatePrices() {
     var totalPrice = parseInt(document.getElementById('totalPrice').innerText.replace(',' , ''));
     var deliveryPrice = totalPrice <= 50000 ? 4000 : 0;
+    var deliveryPrice2 = totalPrice <= 50000 ? 4000 : 0;
     var total = totalPrice + deliveryPrice;
 
     document.getElementById('deliveryPrice').innerText = deliveryPrice.toLocaleString();
+    document.getElementById('deliveryPrice2').innerText = deliveryPrice.toLocaleString();
     document.getElementById('total').innerText = total.toLocaleString();
     document.getElementById('totalAmount').value = total;
 }
 
 function updateTotalAmount() {
-	alert(1);
-    var totalPrice = parseInt(document.getElementById('totalPrice').innerText);
-    var deliveryPrice = parseInt(document.getElementById('deliveryPrice').innerText);
+    var totalPrice = parseInt(document.getElementById('totalPrice').innerText.replace(',' , ''));
+    var deliveryPrice = parseInt(document.getElementById('deliveryPrice').innerText.replace(',' , ''));
     var selectedCouponOption = document.getElementById('couponSelect');
     
     var selectedCouponDiscount = selectedCouponOption.options[selectedCouponOption.selectedIndex].getAttribute('data-discount');
@@ -54,6 +55,13 @@ function goCart() {
 		location.href = "cartAdd.cart";
 }
 
+function NumerInput(fieldName) { //숫자칸에는 숫자만 들어가게
+    var inputField = document.getElementsByName(fieldName)[0];
+    var inputValue = inputField.value;
+    var numericValue = inputValue.replace(/[^0-9]/g, '');
+    inputField.value = numericValue;
+}
+
 function allCheck(all) { //전체체크박스를 눌렀을때
 	rcheck = document.getElementsByClassName("term");
 	acheck = all.checked;
@@ -68,24 +76,12 @@ function allCheck(all) { //전체체크박스를 눌렀을때
 		}
 	}
 }
-function rowCheck(){ //약관
-	var rcheck = document.getElementsByClassName('term');
-    var acheck = document.getElementById('selectAll');
-    
-    for (var i = 0; i < rcheck.length; i++) {
-        if (!rcheck[i].checked) {
-        	acheck.checked = false;
-            return; 
-        }
-    }
-    acheck.checked = true;
-}
 
 function openDetailWindow() {
     // 새로운 윈도우 창 열기
-    var detailWindow = window.open('', '_blank', 'width=600,height=400');
+    var detailWindow = window.open('', '_blank', 'width=400,height=400'); 
     // 윈도우 창에 JSP를 로드
-    detailWindow.location.href = 'resources/jsp/term1.jsp';
+    detailWindow.location.href = 'term.jsp'; 
 }
 
 
@@ -135,8 +131,8 @@ function pay() {
     }
     
     //약관체크
-    if(!document.getElementById('selectAll').checked){
-    	alert("모든 약관에 동의하셔야 구매가 가능합니다.")
+    if(!document.getElementById('term').checked){
+    	alert("약관에 동의하셔야 구매가 가능합니다.")
     	return;
     }
     
@@ -157,15 +153,15 @@ function pay() {
         if (rsp.success) {  // 결제가 성공했을 떄
             // 결제가 완료되었을 떄 결제 정보를 뜨게 만듬
             var msg = '결제가 완료되었습니다.';
-            msg += '고유ID : ' + rsp.imp_uid;
-            msg += '상점 거래ID : ' + rsp.merchant_uid;
-            msg += '결제 금액 : ' + rsp.paid_amount;
-            msg += '카드 승인번호 : ' + rsp.apply_num;
+            msg += '\n고유ID : ' + rsp.imp_uid;
+            //msg += '\n상점 거래ID : ' + rsp.merchant_uid;
+            msg += '\n결제 금액 : ' + rsp.paid_amount;
+            msg += '\n카드 승인번호 : ' + rsp.apply_num;
             
         } else {    // 결제가 실패했을 때
             // 결제에 실패했을떄 실패메세지와 실패사유를 출력
-            var msg = '결제에 실패하였습니다.';
-            msg += '실패 사유 : ' + rsp.error_msg;
+            var msg = '결제에 실패하였습니다.\n';
+            msg += '사유 : ' + rsp.error_msg;
             document.getElementById('orders_id').value = 'merchant_' + new Date().getTime();
             document.orderform.submit();
         }
@@ -229,7 +225,7 @@ function pay() {
                                             </td>
                                             <c:if test="${status.index == 0 }">
 												<td rowspan="100%">
-													<span>0</span>원
+													<span id="deliveryPrice2"></span>원
 												</td>
 											</c:if>
                                         </tr>
@@ -250,13 +246,13 @@ function pay() {
                 	<tr>
                 		<td>받으시는 분</td>
                 		<td>
-                			<input type="text" name="receiver">
+                			<input type="text" name="receiver" maxlength="10">
                 			<button class='btn btn-dark btn-md' type="button" onclick="inputInfo()">주문자와 동일</button>
                 		</td>
                 	</tr>           
                 	<tr>
                 		<td>연락처</td>
-                		<td><input type="text" name="receiver_phone"></td>
+                		<td><input type="text" name="receiver_phone" maxlength="15"  oninput="NumerInput('receiver_phone')"></td>
                 	</tr>
                 	<tr>
                 		<td>주소</td>
@@ -280,7 +276,7 @@ function pay() {
                   상품금액:<span id="totalPrice"><fmt:formatNumber value="${totalPrice }" pattern="#,###" /></span>원 <br>
                   <select id="couponSelect" onchange="updateTotalAmount()" name="coupon_number">
                   	<c:if test="${empty couponList }">
-	                  	<option value="" disabled>보유 중인 쿠폰이 없습니다.</option>
+	                  	<option value="" disabled selected>보유 중인 쿠폰이 없습니다.</option>
                   	</c:if>
                   	<c:if test="${not empty couponList }">
                   		<option value="">쿠폰선택</option>
@@ -300,11 +296,9 @@ function pay() {
                </table>
                </form>
                
-               <input type="checkbox" id="selectAll" onclick="allCheck(this)"> 전체 동의
 				<br>
-				<!-- 각각의 약관 동의 체크박스 -->
-				<input type="checkbox" class="term" id="terms1" onclick="rowCheck()"> 약관 1 동의 <a href="#" onclick="openDetailWindow()">자세히</a> <br>
-				<input type="checkbox" class="term" id="terms2" onclick="rowCheck()"> 약관 2 동의 <a href="">자세히</a> <br>
+				<!-- 약관 동의 체크박스 -->
+				<input type="checkbox" class="term" id="term" onclick="rowCheck()"> 개인 정보 수집 및 이용 동의 <a href="#" onclick="openDetailWindow()">자세히</a> <br>
                
                <button class='btn btn-dark btn-md' onclick="goCart()">장바구니</button>
                <button class='btn btn-dark btn-md' onclick="pay()">결제하기</button>

@@ -9,6 +9,12 @@
 <style type="text/css">
 </style>
 <script type="text/javascript">
+function goOrderList(){
+	location.href="mypage.member?activeTab=3";
+}
+function viewMain(){
+	location.href="view.main";
+}
 </script>
 
 <div class="body">
@@ -19,12 +25,15 @@
 				<div style="">
 					<h3 style="padding: 22 0 22 0">주문완료</h3>
 				</div>
-				
-				<h4>고객님의 주문이 완료 되었습니다.</h4>
-				<span>주문일시:${orderBean.orders_date }</span> <br>
-				<span>주문번호:${orderBean.orders_id }</span> <br>
-				
-
+				<div class="col-lg-12 text-center">
+        			<div class="d-flexjustify-content-center"> 
+						<h3>고객님의 주문이 완료 되었습니다.</h3>
+						<span>주문일시:${orderBean.orders_date }</span> <br>
+						<span>주문번호:${orderBean.orders_id }</span> <br>
+						<button type="button" class='btn btn-dark btn-md' onclick="goOrderList()">구매내역</button>
+						<button type="button" class='btn btn-dark btn-md' onclick="viewMain()">계속쇼핑하기</button>
+					</div>
+				</div>
 			</div>
 		</div>
 

@@ -40,7 +40,7 @@ public class NoticeListController {
 		int totalCount = noticeDao.getTotalCount(map);
 		String url = request.getContextPath()+command;
 		
-		Paging pageInfo = new Paging(pageNumber, "10", totalCount, url, whatColumn, keyword);
+		Paging pageInfo = new Paging(pageNumber, "2", totalCount, url, whatColumn, keyword);
 		
 		int number = totalCount - (pageInfo.getPageNumber() -1) * 10;
 		

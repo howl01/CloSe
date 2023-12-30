@@ -10,7 +10,6 @@ public class CategoryInsertController {
 	
 	private final String command = "/insert.category";
 	private final String viewPage = "categoryInsertForm";
-	private final String gotoPage = "";
 	
 	@RequestMapping(value=command, method=RequestMethod.GET)
 	public String insertForm() {

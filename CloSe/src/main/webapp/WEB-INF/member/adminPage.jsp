@@ -32,6 +32,7 @@
 	  color: #000;
 	  background-color: #fafafa; 
 	  border-color: #ccc;
+	text-align: right;
 	}
 </style>
 
@@ -126,13 +127,15 @@ $(document).ready(function() {
             </tbody>
         </table>
 		    </div> 
-			<div class="row">
-			    <div class="col-lg-12 text-center">
-			        <div class="d-flex justify-content-center">
-			            ${pageInfo.pagingHtml}
-			        </div>
-			    </div>
-			</div>
+		 <div class="row">
+        <nav id="pagination" aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+            </ul>
+        </nav>
+    </div>
 		</div>
 		
 		<!-- 두번째 탭 -->
@@ -174,16 +177,7 @@ $(document).ready(function() {
 					</c:if>
 				</table>
 			</div>
-			<div class="row">
-			    <div class="col-lg-12 text-center">
-			        <div class="d-flex justify-content-center">
-			            ${pageInfo.pagingHtml}
-			        </div>
-			    </div>
-			</div>
 		</div>
-		
-		
 		
 		<!-- 세번째 탭 -->
 		<div class="tab-pane fade" id="bb" role="tabpanel">

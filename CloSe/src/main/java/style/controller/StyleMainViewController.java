@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import member.model.MemberBean;
 import product.model.ProductBean;
 import style.model.HeartDao;
+import product.model.ProductBean;
 import style.model.StyleBean;
 import style.model.StyleDao;
 
@@ -27,35 +28,34 @@ import style.model.StyleDao;
 public class StyleMainViewController {
 	private final String command = "mainView.style";
 	private final String viewPage = "styleMain";
-	
+
 	@Autowired
 	private StyleDao styleDao;
 	@Autowired
 	private HeartDao heartDao;
-	
-	@RequestMapping(value=command, method = RequestMethod.GET)
+
+	@RequestMapping(value = command, method = RequestMethod.GET)
 	public String mainView(@RequestParam(value = "page", defaultValue = "1") int page,
-            			   @RequestParam(value = "pageSize", defaultValue = "10") int pageSize, 
-            			   Model model) {
+			@RequestParam(value = "pageSize", defaultValue = "10") int pageSize, Model model) {
 		model.addAttribute("styleList", styleDao.getStyleList(page, pageSize));
 		return viewPage;
 	}
-	
-	@RequestMapping(value=command, method = RequestMethod.POST)
+
+	@RequestMapping(value = command, method = RequestMethod.POST)
 	@ResponseBody
 	public void mainAjax(@RequestParam(value = "page", defaultValue = "1") int page,
-            			   @RequestParam(value = "pageSize", defaultValue = "12") int pageSize, 
-            			   Model model, HttpServletResponse response, HttpSession session) throws IOException {
-		List<StyleBean> styleList =  styleDao.getStyleList(page, pageSize);
-        
-        JSONArray jsonArr = new JSONArray(); 
-		if(styleList != null) {
-			for(StyleBean styleBean : styleList) {
+			@RequestParam(value = "pageSize", defaultValue = "12") int pageSize, Model model,
+			HttpServletResponse response, HttpSession session) throws IOException {
+		List<StyleBean> styleList = styleDao.getStyleList(page, pageSize);
+
+		JSONArray jsonArr = new JSONArray();
+		if (styleList != null) {
+			for (StyleBean styleBean : styleList) {
 				JSONObject jsonObj = new JSONObject();
 				if (session.getAttribute("loginInfo") != null) {
-					styleBean.setInfoMemberId(((MemberBean)(session.getAttribute("loginInfo"))).getMember_id());
+					styleBean.setInfoMemberId(((MemberBean) (session.getAttribute("loginInfo"))).getMember_id());
 				} else if (session.getAttribute("kakaoLoginInfo") != null) {
-					styleBean.setInfoMemberId(((MemberBean)(session.getAttribute("kakaoLoginInfo"))).getMember_id());
+					styleBean.setInfoMemberId(((MemberBean) (session.getAttribute("kakaoLoginInfo"))).getMember_id());
 				}
 				jsonObj.put("style_number", styleBean.getStyle_number());
 				jsonObj.put("image1", styleBean.getImage1());
@@ -64,7 +64,7 @@ public class StyleMainViewController {
 				jsonObj.put("content", styleBean.getContent());
 				jsonObj.put("member_image", styleBean.getMember_image());
 				jsonObj.put("nickname", styleBean.getNickname());
-				jsonObj.put("heartCount", heartDao.countHeart(styleBean.getStyle_number()));		
+				jsonObj.put("heartCount", heartDao.countHeart(styleBean.getStyle_number()));
 				jsonObj.put("heartFlag", heartDao.searchHeart(styleBean));
 				jsonArr.add(jsonObj);
 			}
@@ -73,5 +73,5 @@ public class StyleMainViewController {
 		response.setContentType("text/html");
 		response.getWriter().append(jsonArr.toString());
 	}
-	
+
 }

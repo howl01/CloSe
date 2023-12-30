@@ -84,5 +84,8 @@ public class StyleDao {
 		return sqlSessionTemplate.selectList(namespace + ".getStyleByMemberId", id);
 	}
 
+	public List<StyleBean> getStyleByProductNum(String product_number) {
+		return sqlSessionTemplate.selectList(namespace + ".getStyleByProductNum", product_number);
+	}
    
 }

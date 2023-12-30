@@ -2,18 +2,14 @@ package member.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,7 +21,6 @@ import member.model.MemberDao;
 public class KakaoLoginController {
 
 	private final String command = "/kakaologin.member";
-	private final String viewPage = "loginForm";
 	private final String gotoPage = "view.main";
 
 	@Autowired
@@ -36,7 +31,6 @@ public class KakaoLoginController {
 			HttpServletResponse response, HttpServletRequest request) throws IOException {
 		session.setAttribute("member_id", member_id);
 		String prevPage = (String) session.getAttribute("prevPage");
-
 		PrintWriter out = response.getWriter();
 		response.setContentType("text/html; charset=UTF-8");
 

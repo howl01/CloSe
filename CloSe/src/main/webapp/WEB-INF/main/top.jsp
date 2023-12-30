@@ -445,7 +445,7 @@
 	</div>
 </div>
 
-<div class="sticky-top">
+<div class="sticky-top" id="stop">
 <div class="px-3 py-2 bg-white">
    <div class="container" style="width:66%;">
       <div

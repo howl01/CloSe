@@ -254,16 +254,6 @@ window.navigator.geolocation.getCurrentPosition(function(pos) {
                      </div>
                   	</div>
                   </c:forEach> 
-
-                  <!-- <div class="col">
-                     <div class="card shadow-sm">
-                        <a><img class="bd-placeholder-img card-img-top" src="/pimages/" width="100%" height="225"></a>
-                        <div class="card-body" align="center">
-
-                        </div>
-                     </div>
-                  </div> -->
-
                </div>
             </div>
          </div>
@@ -338,11 +328,6 @@ window.navigator.geolocation.getCurrentPosition(function(pos) {
       </div>
       
    </div>
-
-   <div class="col-lg-2">
-   		<button onclick="location.href='insert.category'">상등</button>
-   </div>
-
 
  </div> 
 
