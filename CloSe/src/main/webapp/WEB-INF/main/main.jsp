@@ -279,7 +279,7 @@ window.navigator.geolocation.getCurrentPosition(function(pos) {
 			    </c:if>
 			    <a href="detail.style?style_number=${mainStyleBean.style_number}" class="link-dark link-underline-opacity-0">
 			        <div class="card-body p-0">
-			            <img src="<%=request.getContextPath()%>/resources/styleImage/${mainStyleBean.image1}" style="max-height: 550px;" class="card-img-top">
+			            <img src="<%=request.getContextPath()%>/resources/styleImage/${mainStyleBean.image1}" style="max-height: 320px;" class="card-img-top">
 			            <div class="d-flex align-items-center">
 			                <img src="<%=request.getContextPath()%>/resources/memberImage/${mainStyleBean.member_image}" id="profile" style="width:2vw; height: 2vw; margin-top: 5px; border-radius: 100%; border: 0.5px solid #C0C0C0;">
 			                &nbsp; ${mainStyleBean.nickname}
