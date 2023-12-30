@@ -58,8 +58,6 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-	var image1 = ${styleBean.image1};
-	alert(image1);
 	
     let queryUrl = "https://api.openweathermap.org/data/2.5/weather?";
     let apiKey = "appid=27f0e2dcc40e953d16644b55e897423d&";
