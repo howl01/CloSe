@@ -156,6 +156,7 @@ window.addEventListener('scroll', function() {
 		location.href="delete.product?product_number="+pnum;
 	}
 	function updateProduct(pnum){
+		alert(1);
 		location.href="update.product?product_number="+pnum;
 	}
 	
@@ -380,6 +381,7 @@ window.addEventListener('scroll', function() {
 
 		    $('#cart-total').html(totalSum);
 		}
+	});
 </script>
 
 <div class="body">

@@ -5,24 +5,24 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import style.model.LikeBean;
-import style.model.LikeDao;
+import style.model.HeartBean;
+import style.model.HeartDao;
 
 @Controller
-public class StyleLikeController {
-	private final String command = "like.style";
+public class StyleUnHeartController {
+	private final String command = "unheart.style";
 	private final String gotoPage = "redirect:detail.style";
 	
 	@Autowired
-	private LikeDao likeDao;
+	private HeartDao heartDao;
 	
 	@RequestMapping(command)
-	public String like(@RequestParam("style_number") int style_number, @RequestParam("member_id") String member_id) {
-		LikeBean likeBean = new LikeBean();
-		likeBean.setMember_id(member_id);
-		likeBean.setStyle_number(style_number);
+	public String unheart(@RequestParam("style_number") int style_number, @RequestParam("member_id") String member_id) {
+		HeartBean heartBean = new HeartBean();
+		heartBean.setMember_id(member_id);
+		heartBean.setStyle_number(style_number);
 		
-		likeDao.like(likeBean);
+		heartDao.unheart(heartBean);
 		
 		return gotoPage + "?style_number=" + style_number;
 	}

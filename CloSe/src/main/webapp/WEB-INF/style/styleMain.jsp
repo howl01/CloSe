@@ -58,6 +58,7 @@
         #styleContainer{
         	width: 66%;
         	margin: auto;
+        	
         }
         
         #imageMulti{
@@ -71,6 +72,7 @@
 var page = 1;
 var pageSize = 12;
 var loadingData = false;  // 데이터 로딩 중인지 여부를 나타내는 플래그
+var flag = false;
 
 //페이지 로딩 후 처음 한 번은 바로 데이터를 로드하고, 그 후에는 일정한 간격으로 호출
 $(document).ready(function () {
@@ -101,13 +103,13 @@ function loadMoreData() {
         data: { page: page, pageSize: pageSize },
         success: function (json) {
             if (json.length > 0) {
+            	if(!flag){
+            		alert("성공");
+            		flag = true;
+            	}
                 var jsonArray = JSON.parse(json);
                 $(document).data('jsonArray', jsonArray);
                 var contextPath = '<%= request.getContextPath() %>';
-                var flag1 = false;
-                var flag2 = false;
-                var flag3 = false;
-                var flag4 = false;
                 $.each(jsonArray, function (index, styleBean) {
                     if (index % 4 === 0) {
                    		var html = '';

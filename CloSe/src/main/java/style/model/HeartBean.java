@@ -1,16 +1,16 @@
 package style.model;
 
-public class LikeBean {
-	private int like_id;
+public class HeartBean {
+	private int heart_id;
 	private String member_id;
 	private int style_number;
 
-	public int getLike_id() {
-		return like_id;
+	public int getHeart_id() {
+		return heart_id;
 	}
 
-	public void setLike_id(int like_id) {
-		this.like_id = like_id;
+	public void setHeart_id(int heart_id) {
+		this.heart_id = heart_id;
 	}
 
 	public String getMember_id() {

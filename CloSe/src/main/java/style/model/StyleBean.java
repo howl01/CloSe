@@ -69,6 +69,25 @@ public class StyleBean {
 	private String compareImage4;
 	private String compareImage5;
 
+	private int heart_id;
+	private String infoMemberId;
+
+	public String getInfoMemberId() {
+		return infoMemberId;
+	}
+
+	public void setInfoMemberId(String infoMemberId) {
+		this.infoMemberId = infoMemberId;
+	}
+
+	public int getHeart_id() {
+		return heart_id;
+	}
+
+	public void setHeart_id(int heart_id) {
+		this.heart_id = heart_id;
+	}
+
 	public StyleBean() {
 	}
 

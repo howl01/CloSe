@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import style.model.HeartDao;
 import style.model.StyleBean;
 import style.model.StyleDao;
 
@@ -35,11 +36,21 @@ public class StyleDetailController {
 
 	@Autowired
 	private StyleDao styleDao;
+	@Autowired
+	private HeartDao heartDao;
 
 	@RequestMapping(value = command, method = RequestMethod.GET)
 	public String insertForm(HttpSession session, @RequestParam("style_number") int style_number, Model model) {
 		styleDao.updateReadCount(style_number);
-		model.addAttribute("styleBean", styleDao.getStyleByStyleNumber(style_number));
+		StyleBean styleBean = styleDao.getStyleByStyleNumber(style_number);
+		model.addAttribute("styleBean", styleBean);
+		
+		if(session.getAttribute("loginInfo")!=null) {
+			styleBean.setxnfoMemberId(String.valueOf(session.getAttribute("loginInfo")));
+			model.addAttribute("heartFlag", heartDao.searchHeart());
+		} else {
+			
+		}
 		return viewPage;
 	}
 
