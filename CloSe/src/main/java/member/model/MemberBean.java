@@ -4,6 +4,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.Date;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.web.multipart.MultipartFile;
@@ -60,7 +61,7 @@ public class MemberBean {
 	private String social;
 
 	private int ban_count;
-	private LocalDate ban_expiration;
+	private Date ban_expiration;
 
 	private MultipartFile upload; // 파일 업로드를 위한 변수
 
@@ -84,7 +85,7 @@ public class MemberBean {
 	MemberBean(String member_id, String member_image, String password, String passwordcheck, String name, String phone,
 			String email, String address1, String address2, String birth, String gender, String nickname,
 			String verificationCode, String height, String weight, String social, int ban_count,
-			LocalDate ban_expiration, MultipartFile upload) {
+			Date ban_expiration, MultipartFile upload) {
 		super();
 		this.member_id = member_id;
 		this.member_image = member_image;
@@ -243,11 +244,11 @@ public class MemberBean {
 		this.ban_count = ban_count;
 	}
 
-	public LocalDate getBan_expiration() {
+	public Date getBan_expiration() {
 		return ban_expiration;
 	}
 
-	public void setBan_expiration(LocalDate ban_expiration) {
+	public void setBan_expiration(Date ban_expiration) {
 		this.ban_expiration = ban_expiration;
 	}
 

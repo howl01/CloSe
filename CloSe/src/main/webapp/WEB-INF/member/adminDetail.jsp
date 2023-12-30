@@ -69,9 +69,10 @@
                 </td>
             </tr>
             <tr>
-            	<td colspan="2" align="right">
+            	<td colspan="4" align="center">
             		<input type="button" class="btn btn-Dark me-md-2" value="목록보기" onClick="location.href='adminPage.member?pageNumber=${ pageInfo.pageNumber }'">
-            		<input type="button" class="btn btn-Dark me-md-2" value="회원 정지" onClick="location.href='limit.member?member_id=${ reportBean.reported_user_id}'">
+            		<input type="button" class="btn btn-Dark me-md-2" value="회원 정지" onClick="location.href='limit.member?member_id=${ reportBean.reported_user_id  }&pageNumber=${ pageInfo.pageNumber }'">
+            		<input type="button" class="btn btn-Dark me-md-2" value="회원 정지 취소" onClick="location.href='limitCancel.member?member_id=${ reportBean.reported_user_id  }&pageNumber=${ pageInfo.pageNumber }'">
             	</td>
             </tr>
             </tbody>
@@ -83,7 +84,6 @@
       
       <div class="tab-pane fade" id="profile" role="tabpanel">
       	 <div class="row">
-              ㅋㅋㅋ
           </div>  
       </div>
       

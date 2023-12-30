@@ -51,7 +51,17 @@
 	</select>
 	
 	<update id="updateMemberBan">
-		update member set ban_count = #{ban_count}, ban_expiration = #{ban_expiration}
+		update member set ban_count = #{ban_count}
+		where member_id = #{member_id}
+	</update>
+	
+	<update id="updateMemberBanExpiration">
+	    update member set ban_expiration = #{ban_expiration}
+	    where member_id = #{member_id}
+	</update>
+	
+	<update id="updateMemberBanCancel">
+		update member set ban_count = 0, ban_expiration = null
 		where member_id = #{member_id}
 	</update>
 </mapper>

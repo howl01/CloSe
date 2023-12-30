@@ -90,11 +90,10 @@
 	      document.getElementById('charCount').innerText = 1000;
 	    }
 	}
-	
 </script>
 
 <form:form action="insert.qna" method="post" commandName="qnaBean" enctype="multipart/form-data">
-<input type="hidden" name="member_id" value="${ member_id }">
+<input type="hidden" name="member_id" value="${ loginInfo.member_id }">
   <div class="row">
         <table class="table" id="article-table" style="width: 70%; margin: auto;">
             <tr>
@@ -119,7 +118,7 @@
 		<th>내용</th>
 		<td colspan="2">
 			<textarea id="myTextarea" oninput="updateCharCount()" name="content" cols="50" rows="10"  style="resize: none;">${ qnaBean.content }</textarea>
-			<p>글자수:( <span id="charCount">0</span>/1000자)</p>
+			<p>글자수:( <span id="charCount">${ fn:length(qnaBean.content) }</span>/1000자)</p>
 			<br><form:errors cssClass="err" path="content" />
 		</td>
 	</tr>

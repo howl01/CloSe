@@ -3,6 +3,8 @@ package member.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -43,20 +45,20 @@ public class LoginController {
 
 		MemberBean memberBean = memberDao.getDetail(mb.getMember_id());
 
-		LocalDate now = LocalDate.now();
-
 		if (memberBean == null) {
-			out.println("<script>alert('가입하지 않은 회원입니다.');</script>");
+			out.println("<script>alert('가입하지 않은 회원입니다.'); location.href='" + viewPage + "';</script>");
 			out.flush();
-			return viewPage;
 		} else { // 아이디 존재함
 			if (memberBean.getPassword().equals(mb.getPassword())) { // 비번이 일치함
 				if (memberBean.getBan_count() > 0 && memberBean.getBan_expiration() != null) {
-					LocalDate expirationDate = memberBean.getBan_expiration();
-					if (now.isBefore(expirationDate)) {
-						out.println("<script>alert('규칙 위반으로 계정 이용 정지 기간입니다.');</script>");
+					Date now = new Date();
+					Date ban_expiration = memberBean.getBan_expiration();
+					System.out.println("now : " + now);
+					System.out.println("ban_expiration : " + ban_expiration);
+					if (!now.after(ban_expiration)) {
+						out.println(
+								"<script>alert('규칙 위반으로 계정 이용 정지 기간입니다.'); location.href='" + gotoPage + "';</script>");
 						out.flush();
-						return viewPage;
 					}
 				} else {
 					session.setAttribute("loginInfo", memberBean); // DB에서 가져온 레코드를 loginInfo로 설정
@@ -72,7 +74,7 @@ public class LoginController {
 						out.flush();
 					}
 				}
-			}else { //비번이 일치안함
+			} else { // 비번이 일치안함
 				out.println("<script>alert('비번이 잘못되었습니다.')</script>");
 				out.flush();
 			}
