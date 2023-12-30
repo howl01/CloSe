@@ -170,7 +170,7 @@ function sort(sortType, keyword){
 						          <div style=" height: 250px;">  
 						           <a href="detail.product?product_number=${pb.product_number }">
 						          	<img id="preview" width="100%" height="100%"
-									src='<%=request.getContextPath()%>/resources/product/image/${pb.image }' /> 
+									src='<%=request.getContextPath()%>/resources/productImage/${pb.image}' /> 
 						           </a> 
 						          </div>  
 						          <hr>
