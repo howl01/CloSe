@@ -87,5 +87,12 @@ public class StyleDao {
 	public List<StyleBean> getStyleByProductNum(String product_number) {
 		return sqlSessionTemplate.selectList(namespace + ".getStyleByProductNum", product_number);
 	}
+
+	public List<StyleBean> getMainStyleList() {
+		Map<String, Integer> params = new HashMap<String, Integer>();
+	       params.put("startRow", 1);
+	       params.put("endRow", 4);
+		return sqlSessionTemplate.selectList(namespace + ".getStyleList", params);
+	}
    
 }

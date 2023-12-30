@@ -165,7 +165,7 @@ window.navigator.geolocation.getCurrentPosition(function(pos) {
 
 				  <a href="view.style" class="link-dark link-underline-opacity-0">
 	                  <div class="col" align="center">
-	                     <img class="bd-placeholder-img card-img-top" width="100%" height="120"
+	                     <img class="bd-placeholder-img card-img-top" width="100%" height="150"
 	                           style="border-radius: 20%;" id="par" src="resources/img/close.png">
 	                     오늘의 옷비서
 	                  </div>
@@ -173,7 +173,7 @@ window.navigator.geolocation.getCurrentPosition(function(pos) {
 
 				  <a href="#" class="link-dark link-underline-opacity-0">
 	                  <div class="col" align="center">
-	                     <img class="bd-placeholder-img card-img-top" src="resources/img/man.png" width="100%" height="120"
+	                     <img class="bd-placeholder-img card-img-top" src="resources/img/man.png" width="100%" height="150"
 	                           style="border-radius: 20%;">
 	                     남자 코디
 	                  </div>
@@ -181,7 +181,7 @@ window.navigator.geolocation.getCurrentPosition(function(pos) {
 
 				  <a href="#" class="link-dark link-underline-opacity-0">
 	                  <div class="col" align="center">
-	                     <img class="bd-placeholder-img card-img-top" src="resources/img/woman.png" width="100%" height="120"
+	                     <img class="bd-placeholder-img card-img-top" src="resources/img/woman.png" width="100%" height="150"
 	                           style="border-radius: 20%;">
 	                     여자 코디
 	                  </div>
@@ -189,7 +189,7 @@ window.navigator.geolocation.getCurrentPosition(function(pos) {
 
 				  <a href="#" class="link-dark link-underline-opacity-0">
 	                  <div class="col" align="center">
-	                     <img class="bd-placeholder-img card-img-top" src="resources/img/cou.png" width="100%" height="120"
+	                     <img class="bd-placeholder-img card-img-top" src="resources/img/cou.png" width="100%" height="150"
 	                           style="border-radius: 20%;">
 	                     쿠폰
 	                  </div>
@@ -197,7 +197,7 @@ window.navigator.geolocation.getCurrentPosition(function(pos) {
 
 				  <a href="#" class="link-dark link-underline-opacity-0">
 	                  <div class="col" align="center">
-	                     <img class="bd-placeholder-img card-img-top" src="resources/img/outer.avif" width="100%" height="120"
+	                     <img class="bd-placeholder-img card-img-top" src="resources/img/outer.avif" width="100%" height="150"
 	                           style="border-radius: 20%;" onclick="productList('아우터')">
 	                     아우터
 	                  </div>
@@ -205,7 +205,7 @@ window.navigator.geolocation.getCurrentPosition(function(pos) {
 					
 				  <a href="#" class="link-dark link-underline-opacity-0">
 	                  <div class="col" align="center">
-	                     <img class="bd-placeholder-img card-img-top" src="resources/img/top.png" width="100%" height="120"
+	                     <img class="bd-placeholder-img card-img-top" src="resources/img/top.png" width="100%" height="150"
 	                           style="border-radius: 20%;" onclick="productList('상의')">
 	                     상의
 	                  </div>
@@ -213,7 +213,7 @@ window.navigator.geolocation.getCurrentPosition(function(pos) {
                   
 				  <a href="#" class="link-dark link-underline-opacity-0">
 	                  <div class="col" align="center">
-	                     <img class="bd-placeholder-img card-img-top" src="resources/img/bottom.png" width="100%" height="120"
+	                     <img class="bd-placeholder-img card-img-top" src="resources/img/bottom.png" width="100%" height="150"
 	                           style="border-radius: 20%;" onclick="productList('하의')">
 	                     하의
 	                  </div>
@@ -221,7 +221,7 @@ window.navigator.geolocation.getCurrentPosition(function(pos) {
                   
 				  <a href="#" class="link-dark link-underline-opacity-0">
 	                  <div class="col" align="center">
-	                     <img class="bd-placeholder-img card-img-top" src="resources/img/shoes.png" width="100%" height="120"
+	                     <img class="bd-placeholder-img card-img-top" src="resources/img/shoes.png" width="100%" height="150"
 	                           style="border-radius: 20%;" onclick="productList('신발')">
 	                     신발
 	                  </div>
@@ -247,7 +247,7 @@ window.navigator.geolocation.getCurrentPosition(function(pos) {
                   	<div class="col">
                      <div class="card shadow-sm">
                         <a href="detail.product?product_number=${pb.product_number }"><img class="bd-placeholder-img card-img-top" 
-                        src="<c:url value='/resources/product/image/'/>${pb.image }" height="100%"></a>
+                        src="<%=request.getContextPath()%>/resources/productImage/${pb.image}" height="100%"></a>
                         <b>${fn:substringBefore(pb.product_name,'/') }</b>  
                         ${fn:substringAfter(pb.product_name,'/') }<br>
                         <b><fmt:formatNumber value="${pb.price }" pattern="#,###" />원</b>
@@ -266,48 +266,30 @@ window.navigator.geolocation.getCurrentPosition(function(pos) {
             Style <br>
             코디 모음 <br>
          </div>
-         <div class="album py-5 bg-body-tertiary">
+         <div class="album py-5">
             <div class="container">
-               <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
-
-                  <div class="col">
-                     <div class="card shadow-sm">
-                        <a><img class="bd-placeholder-img card-img-top" src="/pimages/" width="100%" height="225"></a>
-                        <div class="card-body" align="center">
-
-                        </div>
-                     </div>
-
-                  </div>
-
-                  <div class="col">
-                     <div class="card shadow-sm">
-                        <a><img class="bd-placeholder-img card-img-top" src="/pimages/" width="100%" height="225"></a>
-                        <div class="card-body" align="center">
-
-                        </div>
-                     </div>
-                  </div>
-
-                  <div class="col">
-                     <div class="card shadow-sm">
-                        <a><img class="bd-placeholder-img card-img-top" src="/pimages/" width="100%" height="225"></a>
-                        <div class="card-body" align="center">
-
-                        </div>
-                     </div>
-                  </div>
-
-                  <div class="col">
-                     <div class="card shadow-sm">
-                        <a><img class="bd-placeholder-img card-img-top" src="/pimages/" width="100%" height="225"></a>
-                        <div class="card-body" align="center">
-
-                        </div>
-                     </div>
-                  </div>
-
-               </div>
+            	<div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
+            	<c:forEach var="mainStyleBean" items="${mainStyleList}">
+               <div class="card m-2 border-0" style="width:23%;">
+               <c:if test="${not empty mainStyleBean.image2}"> 
+				    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#C0C0C0" class="bi bi-images" id="imageMulti" viewBox="0 0 16 16">
+				        <path d="M4.502 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3"/>
+				        <path d="M14.002 13a2 2 0 0 1-2 2h-10a2 2 0 0 1-2-2V5A2 2 0 0 1 2 3a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v8a2 2 0 0 1-1.998 2M14 2H4a1 1 0 0 0-1 1h9.002a2 2 0 0 1 2 2v7A1 1 0 0 0 15 11V3a1 1 0 0 0-1-1M2.002 4a1 1 0 0 0-1 1v8l2.646-2.354a.5.5 0 0 1 .63-.062l2.66 1.773 3.71-3.71a.5.5 0 0 1 .577-.094l1.777 1.947V5a1 1 0 0 0-1-1h-10"/>
+				    </svg>
+			    </c:if>
+			    <a href="detail.style?style_number=${mainStyleBean.style_number}" class="link-dark link-underline-opacity-0">
+			        <div class="card-body p-0">
+			            <img src="<%=request.getContextPath()%>/resources/styleImage/${mainStyleBean.image1}" style="max-height: 550px;" class="card-img-top">
+			            <div class="d-flex align-items-center">
+			                <img src="<%=request.getContextPath()%>/resources/memberImage/${mainStyleBean.member_image}" id="profile" style="width:2vw; height: 2vw; margin-top: 5px; border-radius: 100%; border: 0.5px solid #C0C0C0;">
+			                &nbsp; ${mainStyleBean.nickname}
+			            </div>
+		                <p class="card-text" style="font-size: 10pt; margin-top: 5px;">${mainStyleBean.title}</p>
+			        </div>
+			    </a>
+			</div>
+			</c:forEach>
+			</div>
             </div>
          </div>
       </div>
