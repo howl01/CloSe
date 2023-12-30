@@ -197,7 +197,7 @@ insert into style (style_number, image1, title, content, style, read_count, reco
 values (style_seq.nextval, '94. 모델사진.jpg', '멋스러운 실루엣', '스웨트셔츠에 워싱 데님 팬츠를 더해 꾸민 캐주얼 룩','캐주얼',0,0,'2023-12-26',224,225,226,'gyu');
 
 insert into style (style_number, image1, title, content, style, read_count, recommend_count, write_date, product_number1, product_number2, member_id)
-values (style_seq.nextval, '121. 모델사진.jpg', '여름을 가득 담은', '독특한 디테일의 뷔스티에 탑과 데님 팬츠를 매치하고 미니 백으로 포인트를 준 로맨틱 룩','로맨틱',0,0,'2023-12-26',227,228,'min');
+values (style_seq.nextval, '121. 모델.jpg', '여름을 가득 담은', '독특한 디테일의 뷔스티에 탑과 데님 팬츠를 매치하고 미니 백으로 포인트를 준 로맨틱 룩','로맨틱',0,0,'2023-12-26',227,228,'min');
 
 insert into style (style_number, image1, title, content, style, read_count, recommend_count, write_date, product_number1, product_number2, product_number3, member_id)
 values (style_seq.nextval, '123. 모델사진.jpg', '여름에 제격', '그래픽 프린팅이 돋보이는 반팔 티셔츠와 숏 팬츠를 매치하고 블루 컬러 볼캡으로 포인트 준 캐주얼 룩','캐주얼',0,0,'2023-12-26',229,230,231,'gyu');
