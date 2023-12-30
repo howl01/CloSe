@@ -20,5 +20,21 @@ public class HeartDao {
 	public void unheart(HeartBean heartBean) {
 		sqlSessionTemplate.delete(namespace + ".unheart", heartBean);
 	}
+
+	public boolean searchHeart(StyleBean styleBean) {
+		HeartBean heartBean = sqlSessionTemplate.selectOne(namespace + ".searchHeart", styleBean);
+		if(heartBean == null) {
+			System.out.println("null");
+			return false;
+		} else {
+			System.out.println("full");
+			return true;
+		}
+	}
+	
+	public int countHeart(int style_number) {
+		return sqlSessionTemplate.selectOne(namespace + ".countHeart", style_number);
+	}
+
    
 }

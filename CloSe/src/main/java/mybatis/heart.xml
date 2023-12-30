@@ -10,6 +10,16 @@
 	
 	<delete id="unheart">
 		delete heart
-		where heart_number = #{heart_number}
+		where style_number = #{style_number} and member_id = #{member_id}
 	</delete>
+	
+	<select id="searchHeart" resultType="HeartBean">
+		select * from heart
+		where style_number = #{style_number} and member_id = #{infoMemberId, jdbcType=VARCHAR}
+	</select>
+	
+	<select id="countHeart" resultType="int">
+		select count(*) from heart
+		where style_number = #{style_number}
+	</select>
 </mapper>

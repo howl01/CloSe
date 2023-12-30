@@ -64,7 +64,7 @@
         #imageMulti{
         	position: absolute;
         	top:5px;
-        	left: 235px;
+        	left: 14vw;
         }
     </style>
 
@@ -104,7 +104,7 @@ function loadMoreData() {
         success: function (json) {
             if (json.length > 0) {
             	if(!flag){
-            		alert("성공");
+            		alert("로딩 표시 확인");
             		flag = true;
             	}
                 var jsonArray = JSON.parse(json);
@@ -123,6 +123,12 @@ function loadMoreData() {
 	                    html += '<div class="d-flex align-items-center">';
 	                    html += '<img src="' + contextPath + '/resources/memberImage/' + styleBean.member_image + '" id="profile" style="width:2vw; height: 2vw; margin-top: 5px; border-radius: 100%; border: 0.5px solid #C0C0C0;">';
 	                    html += '&nbsp;' + styleBean.nickname;
+	                    if(!styleBean.heartFlag){
+	                    	html += '<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#C0C0C0" style="margin-left:9vw;" class="bi bi-heart" viewBox="0 0 16 16"><path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/></svg>'
+	                    } else if(styleBean.heartFlag){
+	                    	html += '<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#f93737" style="margin-left:9vw;" class="bi bi-heart-fill" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/></svg>'
+	                    }
+	                    html += '<span class="like-count" style="margin-left: 5px;">'+styleBean.heartCount+'</span>';
 	                    html += '</div>';
 	                    if(styleBean.title != null){
 	                    	html += '<p class="card-text" style="font-size: 10pt; margin-top: 5px;">' + styleBean.title + '</p>';
@@ -147,6 +153,12 @@ function loadMoreData() {
 	                    html += '<div class="d-flex align-items-center">';
 	                    html += '<img src="' + contextPath + '/resources/memberImage/' + styleBean.member_image + '" id="profile" style="width:2vw; height: 2vw; margin-top: 5px; border-radius: 100%; border: 0.5px solid #C0C0C0;">';
 	                    html += '&nbsp;' + styleBean.nickname;
+	                    if(!styleBean.heartFlag){
+	                    	html += '<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#C0C0C0" style="margin-left:9vw;" class="bi bi-heart" viewBox="0 0 16 16"><path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/></svg>'
+	                    } else if(styleBean.heartFlag){
+	                    	html += '<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#f93737" style="margin-left:9vw;" class="bi bi-heart-fill" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/></svg>'
+	                    }
+	                    html += '<span class="like-count" style="margin-left: 5px;">'+styleBean.heartCount+'</span>';
 	                    html += '</div>';
 	                    if(styleBean.title != null){
 	                    	html += '<p class="card-text" style="font-size: 10pt; margin-top: 5px;">' + styleBean.title + '</p>';
@@ -171,6 +183,12 @@ function loadMoreData() {
 	                    html += '<div class="d-flex align-items-center">';
 	                    html += '<img src="' + contextPath + '/resources/memberImage/' + styleBean.member_image + '" id="profile" style="width:2vw; height: 2vw; margin-top: 5px; border-radius: 100%; border: 0.5px solid #C0C0C0;">';
 	                    html += '&nbsp;' + styleBean.nickname;
+	                    if(!styleBean.heartFlag){
+	                    	html += '<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#C0C0C0" style="margin-left:9vw;" class="bi bi-heart" viewBox="0 0 16 16"><path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/></svg>'
+	                    } else if(styleBean.heartFlag){
+	                    	html += '<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#f93737" style="margin-left:9vw;" class="bi bi-heart-fill" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/></svg>'
+	                    }
+	                    html += '<span class="like-count" style="margin-left: 5px;">'+styleBean.heartCount+'</span>';
 	                    html += '</div>';
 	                    if(styleBean.title != null){
 	                    	html += '<p class="card-text" style="font-size: 10pt; margin-top: 5px;">' + styleBean.title + '</p>';
@@ -195,6 +213,12 @@ function loadMoreData() {
 	                    html += '<div class="d-flex align-items-center">';
 	                    html += '<img src="' + contextPath + '/resources/memberImage/' + styleBean.member_image + '" id="profile" style="width:2vw; height: 2vw; margin-top: 5px; border-radius: 100%; border: 0.5px solid #C0C0C0;">';
 	                    html += '&nbsp;' + styleBean.nickname;
+	                    if(!styleBean.heartFlag){
+	                    	html += '<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#C0C0C0" style="margin-left:9vw;" class="bi bi-heart" viewBox="0 0 16 16"><path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/></svg>'
+	                    } else if(styleBean.heartFlag){
+	                    	html += '<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#f93737" style="margin-left:9vw;" class="bi bi-heart-fill" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/></svg>'
+	                    }
+	                    html += '<span class="like-count" style="margin-left: 5px;">'+styleBean.heartCount+'</span>';
 	                    html += '</div>';
 	                    if(styleBean.title != null){
 	                    	html += '<p class="card-text" style="font-size: 10pt; margin-top: 5px;">' + styleBean.title + '</p>';

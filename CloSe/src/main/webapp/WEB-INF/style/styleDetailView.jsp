@@ -267,7 +267,7 @@
 				</c:choose>
 			</div>
 			<div>
-				<c:if test="${styleBean.}">
+				<c:if test="${!heartFlag}">
 					<c:if test="${not empty loginInfo}">
 						<a class="link-dark link-underline-opacity-0" href="heart.style?style_number=${styleBean.style_number}&member_id=${loginInfo.member_id}">
 					</c:if>	
@@ -283,11 +283,22 @@
 					</a>
 				</c:if>
 				
-				
-				<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#f93737" class="bi bi-heart-fill" viewBox="0 0 16 16">
-				  <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
-				</svg>
-    			<span class="like-count">0</span>
+				<c:if test="${heartFlag}">
+					<c:if test="${not empty loginInfo}">
+						<a class="link-dark link-underline-opacity-0" href="unheart.style?style_number=${styleBean.style_number}&member_id=${loginInfo.member_id}">
+					</c:if>	
+					<c:if test="${not empty kakaoLoginInfo}">
+						<a class="link-dark link-underline-opacity-0" href="unheart.style?style_number=${styleBean.style_number}&member_id=${kakaoLoginInfo.member_id}">
+					</c:if>
+					<c:if test="${empty loginInfo and empty kakaoLoginInfo}">
+						<a class="link-dark link-underline-opacity-0" href="login.member">
+					</c:if>
+						<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#f93737" class="bi bi-heart-fill" viewBox="0 0 16 16">
+						  <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
+						</svg>
+					</a>
+				</c:if>
+    			<span class="like-count">${heartCount}</span>
 			</div>
 		</div>
 		

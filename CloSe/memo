@@ -278,11 +278,11 @@ insert into product values
 
 commit; 
 
-create table like(
-  like_id number primary key,
+create table heart(
+  heart_id number primary key,
   member_id VARCHAR2(30) NOT NULL,
   style_number number,
   FOREIGN KEY (style_number) REFERENCES style(style_number) on delete cascade,
   FOREIGN KEY (member_id) REFERENCES member(member_id) on delete cascade
 );
-create SEQUENCE like_seq;
+create SEQUENCE heart_seq;
