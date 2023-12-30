@@ -119,7 +119,7 @@ function loadMoreData() {
 	                    }
 	                    html += '<a href="detail.style?style_number=' + styleBean.style_number + '" class="link-dark link-underline-opacity-0">';
 	                    html += '<div class="card-body p-0">';
-	                    html += '<img src="' + contextPath + '/resources/styleImage/' + styleBean.image1 + '" style="max-height: 300px;" class="card-img-top">';
+	                    html += '<img src="' + contextPath + '/resources/styleImage/' + styleBean.image1 + '" style="max-height: 330px;" class="card-img-top">';
 	                    html += '<div class="d-flex align-items-center">';
 	                    html += '<img src="' + contextPath + '/resources/memberImage/' + styleBean.member_image + '" id="profile" style="width:2vw; height: 2vw; margin-top: 5px; border-radius: 100%; border: 0.5px solid #C0C0C0;">';
 	                    html += '&nbsp;' + styleBean.nickname;
@@ -149,7 +149,7 @@ function loadMoreData() {
 	                    }
 	                    html += '<a href="detail.style?style_number=' + styleBean.style_number + '" class="link-dark link-underline-opacity-0">';
 	                    html += '<div class="card-body p-0">';
-	                    html += '<img src="' + contextPath + '/resources/styleImage/' + styleBean.image1 + '" style="max-height: 300px;" class="card-img-top">';
+	                    html += '<img src="' + contextPath + '/resources/styleImage/' + styleBean.image1 + '" style="max-height: 400px;" class="card-img-top">';
 	                    html += '<div class="d-flex align-items-center">';
 	                    html += '<img src="' + contextPath + '/resources/memberImage/' + styleBean.member_image + '" id="profile" style="width:2vw; height: 2vw; margin-top: 5px; border-radius: 100%; border: 0.5px solid #C0C0C0;">';
 	                    html += '&nbsp;' + styleBean.nickname;
@@ -179,7 +179,7 @@ function loadMoreData() {
 	                    }
 	                    html += '<a href="detail.style?style_number=' + styleBean.style_number + '" class="link-dark link-underline-opacity-0">';
 	                    html += '<div class="card-body p-0">';
-	                    html += '<img src="' + contextPath + '/resources/styleImage/' + styleBean.image1 + '" style="max-height: 300px;" class="card-img-top">';
+	                    html += '<img src="' + contextPath + '/resources/styleImage/' + styleBean.image1 + '" style="max-height: 470px;" class="card-img-top">';
 	                    html += '<div class="d-flex align-items-center">';
 	                    html += '<img src="' + contextPath + '/resources/memberImage/' + styleBean.member_image + '" id="profile" style="width:2vw; height: 2vw; margin-top: 5px; border-radius: 100%; border: 0.5px solid #C0C0C0;">';
 	                    html += '&nbsp;' + styleBean.nickname;
@@ -209,7 +209,7 @@ function loadMoreData() {
 	                    }
                     	html += '<a href="detail.style?style_number=' + styleBean.style_number + '" class="link-dark link-underline-opacity-0">';
 	                    html += '<div class="card-body p-0">';
-	                    html += '<img src="' + contextPath + '/resources/styleImage/' + styleBean.image1 + '" style="max-height: 300px;" class="card-img-top">';
+	                    html += '<img src="' + contextPath + '/resources/styleImage/' + styleBean.image1 + '" style="max-height: 550px;" class="card-img-top">';
 	                    html += '<div class="d-flex align-items-center">';
 	                    html += '<img src="' + contextPath + '/resources/memberImage/' + styleBean.member_image + '" id="profile" style="width:2vw; height: 2vw; margin-top: 5px; border-radius: 100%; border: 0.5px solid #C0C0C0;">';
 	                    html += '&nbsp;' + styleBean.nickname;
