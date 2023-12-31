@@ -281,7 +281,12 @@ window.navigator.geolocation.getCurrentPosition(function(pos) {
 			        <div class="card-body p-0">
 			            <img src="<%=request.getContextPath()%>/resources/styleImage/${mainStyleBean.image1}" style="max-height: 320px;" class="card-img-top">
 			            <div class="d-flex align-items-center">
+			            	<c:if test="${empty mainStyleBean.member_image}">
+			                <img src="https://static.nid.naver.com/images/web/user/default.png" id="profile" style="width:2vw; height: 2vw; margin-top: 5px; border-radius: 100%; border: 0.5px solid #C0C0C0;">
+			               </c:if>
+			            	<c:if test="${not empty mainStyleBean.member_image}">
 			                <img src="<%=request.getContextPath()%>/resources/memberImage/${mainStyleBean.member_image}" id="profile" style="width:2vw; height: 2vw; margin-top: 5px; border-radius: 100%; border: 0.5px solid #C0C0C0;">
+			               </c:if>
 			                &nbsp; ${mainStyleBean.nickname}
 			            </div>
 		                <p class="card-text" style="font-size: 10pt; margin-top: 5px;">${mainStyleBean.title}</p>
