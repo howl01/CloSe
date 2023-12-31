@@ -51,7 +51,7 @@ public class KakaoLoginController {
                out.flush();
             } 
          } else {
-            session.setAttribute("kakaoLoginInfo", memberBean);
+            session.setAttribute("loginInfo", memberBean);
             if (prevPage != null && !prevPage.isEmpty()
                   && !prevPage.equals("http://localhost:8080/ex/kakaoRegister.member")) {
                session.removeAttribute("prevPage");
