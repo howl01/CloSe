@@ -214,7 +214,7 @@
             <br>
         </div>
         <div class="col-lg-12" style="text-align: center;">
-        	<button class='btn btn-dark btn-md' onclick="location.href='view.main'">쇼핑하러가기</button>
+        	<button class='btn btn-dark btn-md' onclick="location.href='list.product'">쇼핑하러가기</button>
         </div>
     </c:when>
     
@@ -246,7 +246,7 @@
                           </td>
                           <td>
                               <img id="preview" width="100px"
-                                  src='<c:url value='/resources/product/image/'/>${cib.image }'
+                                  src='<c:url value='/resources/productImage/'/>${cib.image }'
                                   class="rounded" />
                           </td>
                           <td>

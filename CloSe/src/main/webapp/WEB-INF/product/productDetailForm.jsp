@@ -178,6 +178,10 @@ window.addEventListener('scroll', function() {
 	function updateProduct(pnum){
 		location.href="update.product?product_number="+pnum;
 	}
+	
+	
+	
+	
 	function addToCart(){
 		var formData = $("#buyForm").serialize();
         $.ajax({
@@ -219,11 +223,11 @@ window.addEventListener('scroll', function() {
 		if(pageNum)
 		$("#review").html("");
 		$.ajax({
-            url: "list.review?product_number=${pb.product_number }&start="+pagingUtil.getStartOffset(pageNum,1)+"&end=1", 
+            url: "list.review?product_number=${pb.product_number }&start="+pagingUtil.getStartOffset(pageNum,1)+"&end=5", 
             type: "post", 
             contentType: "application/json; charset=utf8",
             success: function(data) {
-            	if (data.rlists.length === 0) {
+            	if (data.rlists.length === 0) { 
             		
             		pageNum = pageNum-1;
 		            // 데이터가 비어있을 경우 메시지를 표시하는 HTML을 생성
@@ -270,7 +274,7 @@ window.addEventListener('scroll', function() {
 	                    reviewHtml += "</tr>";
 						
 	                    $("#review").append(reviewHtml);
-	                    document.getElementById("pagination").innerHTML = pagingUtil.pagingView(pageNum, "1", data.totalCount, "reviewList");
+	                    document.getElementById("pagination").innerHTML = pagingUtil.pagingView(pageNum, "5", data.totalCount, "reviewList");
 	                    
 	            	});
 	            }
@@ -365,7 +369,6 @@ window.addEventListener('scroll', function() {
 	    }
 	}
 	//=====페이지끝
-	
 	
 	
 	$(document).ready(function() {
@@ -477,8 +480,6 @@ window.addEventListener('scroll', function() {
 
 	    });
 	    
-	    
-	    
 	}); //document function 끝
 	    
 	    
@@ -524,7 +525,7 @@ window.addEventListener('scroll', function() {
 			<table border="0" width="100%">
 				<tr>
 					<td><img id="preview" width="100%"
-						src='<%=request.getContextPath()%>/resources/product/image/${pb.image }' />
+						src='<%=request.getContextPath()%>/resources/productImage/${pb.image }' />
 				</tr>
 			</table>
 		</div>
@@ -692,7 +693,7 @@ window.addEventListener('scroll', function() {
 	        <hr>
 	        <div style="width: 800; margin:auto;">
 	        	<img id="preview" width="100%"
-						src='<c:url value='/resources/product/content/'/>${pb.content }' />
+						src='<c:url value='/resources/productImage/'/>${pb.content }' />
 	        </div>
 	    </div>
 	
@@ -702,6 +703,13 @@ window.addEventListener('scroll', function() {
 	        
 	        
 	        <table id="review" width="100%" style="border-collapse: collapse;">
+	       	 <tbody>
+	        	<c:if test="${empty rlists }">
+	        		<tr>
+	        			<td align="center" height="200px;">등록된 리뷰이 없습니다.</td>
+	        		</tr>
+	        	</c:if>
+	         </tbody>
 	        </table>
 	        <div class="col-lg-12 text-center">
 	        	<div class="d-flex justify-content-center">
@@ -774,31 +782,8 @@ window.addEventListener('scroll', function() {
 	    </div>
 	</div>
 
-
-
-
- 
 </div>
 
-		<div class="col-lg-2 mt-5 px-5"> 
-			<div class="bs-component">
-				<div class="card mb-3">
-					<h3 class="card-header">오늘의 날씨 정보</h3>
-					<div class="card-body">
-						<h5 class="card-title">Special title treatment</h5>
-						<h6 class="card-subtitle text-muted">Support card subtitle</h6>
-					</div>
-					<svg xmlns="http://www.w3.org/2000/svg"
-						class="d-block user-select-none" width="100%" height="200"
-						aria-label="Placeholder: Image cap" focusable="false" role="img"
-						preserveAspectRatio="xMidYMid slice" viewBox="0 0 318 180"
-						style="font-size: 1.125rem; text-anchor: middle">
-                  <rect width="100%" height="100%" fill="#868e96"></rect>
-                  <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
-                </svg>
-				</div>
-			</div>
-		</div>
 
 
 

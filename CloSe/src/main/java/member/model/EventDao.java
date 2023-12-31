@@ -1,7 +1,6 @@
 package member.model;
 
 import java.util.List;
-import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +32,7 @@ public class EventDao {
 
 	public void deleteCoupon(String member_id) {
 		sqlSessionTemplate.delete(namespace + ".deleteCoupon", member_id);
-		
+
 	}
 
 }

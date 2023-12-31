@@ -168,7 +168,7 @@
 	        // 받은 데이터를 기반으로 새로운 테이블 행을 동적으로 생성하고 삽입합니다.
 	        $(data).each(function () {
 	            var newRow = $("<tr>");
-	            newRow.append("<td><img id='preview' width='100px' src='<%=request.getContextPath()%>/resources/product/image/" + this.image + "' class='rounded' /></td>");
+	            newRow.append("<td><img id='preview' width='100px' src='<%=request.getContextPath()%>/resources/productImage/" + this.image + "' class='rounded' /></td>");
 	            
 	            // Splitting the product_name based on '/'
 	            var productNameParts = this.product_name.split('/');
@@ -283,15 +283,15 @@
     </div>
  	
  	<div class="d-flex justify-content-start mb-3" style="width: 70%; margin: auto;">
-	<ul class="nav nav-tabs" role="tablist" width="100%">
+	<ul class="nav nav-tabs" role="tablist">
 	  <li class="nav-item" role="presentation">
 	    <a class="nav-link" data-bs-toggle="tab" href="#tab1" aria-selected="true" role="tab" onclick="handleTabClick()">내 정보</a>
 	  </li> 
 	  <li class="nav-item" role="presentation">
-	    <a class="nav-link" data-bs-toggle="tab" href="#cody" aria-selected="false" role="tab" tabindex="-1" onclick="handleTabClick()">내 코디</a>
+	    <a class="nav-link" data-bs-toggle="tab" href="#cody" aria-selected="false" role="tab" tabindex="-1">내 코디</a>
 	  </li>
 	  <li class="nav-item" role="presentation">
-	    <a class="nav-link" data-bs-toggle="tab" href="#tab3" aria-selected="false" role="tab" tabindex="-1" onclick="handleTabClick(3)">구매 상품</a>
+	    <a class="nav-link" data-bs-toggle="tab" href="#tab3" aria-selected="false" role="tab" tabindex="-1" onclick="handleTabClick('3')">구매 상품</a>
 	  </li>
 	  <li class="nav-item" role="presentation">
 	    <a class="nav-link" data-bs-toggle="tab" href="#coupon" aria-selected="false" role="tab" tabindex="-1" onclick="handleTabClick()">보유쿠폰</a>
@@ -528,7 +528,7 @@
 				                <div class="card-body p-0">
 					                <img src="<%=request.getContextPath()%>/resources/styleImage/${styleBean.image1}" style="height: 350px;" class="card-img-top" >
 				                	<div class="d-flex align-items-center">
-				                	<img src="<%=request.getContextPath()%>/resources/memberImage/${styleBean.member_image}" id="profile" style="width:3vw; height: 3vw; margin-top: 5px;">
+				                	<img src="<%=request.getContextPath()%>/resources/memberImage/${styleBean.member_image}" id="profile" style="width:3vw; height: 3vw; margin-top: 5px; border-radius: 100%; border: 1px solid #C0C0C0;">
 				                    &nbsp;${styleBean.nickname}
 				                    </div>
 				                    <p class="card-text" style="font-size: 10pt; margin-top: 5px;">${styleBean.content}</p>

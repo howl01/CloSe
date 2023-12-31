@@ -89,7 +89,7 @@
 				<div class="row">
 					<div class="col-12">
 						<div class="row no-gutters">
-							<div class="col-lg-3 col-md-3 col-sm-12 p-0">
+							<div class="col-lg-2 col-md-3 col-sm-12 p-0">
 								<label for="search-type" hidden>검색 유형</label> 
 								<select class="form-control" id="search-type" name="whatColumn">
 									<option value="all">전체
@@ -102,7 +102,7 @@
 									placeholder="검색어..." class="form-control" id="search-value"
 									name="keyword">
 							</div>
-							<div class="col-lg-1 col-md-3 col-sm-12 p-0">
+							<div class="col-lg-2 col-md-3 col-sm-12 p-0">
 								<button type="submit" class="btn btn-base ml-auto">
 									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" 
 										stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
@@ -136,7 +136,7 @@
 		<tr>
 			<td colspan="2">
 				<c:if test="${ noticeBean.image != null }">
-					<img src="<%= request.getContextPath() %>/resources/uploadFolder/${ noticeBean.image }" width="150px">
+					<img src="<%= request.getContextPath() %>/resources/uploadNotice/${ noticeBean.image }" width="150px">
 				</c:if>
 				${ noticeBean.content }
 			</td>

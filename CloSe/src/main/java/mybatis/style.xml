@@ -276,7 +276,6 @@
         </if>
 </select>
 
-
 <select id="getStyleByProductNum" resultType="StyleBean">
 	select * from style 
 	where product_number1=#{product_number} or product_number2=#{product_number} or product_number3=#{product_number} or product_number4=#{product_number}

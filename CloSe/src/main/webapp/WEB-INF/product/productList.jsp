@@ -79,22 +79,38 @@ $(document).ready(function(){
     });
 });
 function sort(sortType){
-	alert(sortType); 
 	
 	var urlParams = new URLSearchParams(window.location.search);
 	var bigcategory = urlParams.get("bigcategory_name");
 	var smallcategory = urlParams.get("smallcategory_name");
+	var keyword = urlParams.get("searchWord");
+	var whatColumn = urlParams.get("whatColumn");
 	var brand = urlParams.get("brand");
-	alert(bigcategory);
-	alert(smallcategory);
-	alert(brand);
-	location.href="list.product?bigcategory_name="+bigcategory+"&smallcategory_name="+smallcategory+"&brand="+brand+"&sort="+sortType;
+	location.href="list.product?bigcategory_name="+bigcategory+"&smallcategory_name="+smallcategory+"&brand="+brand+"&sort="+sortType+"&searchWord="+keyword+"&whatColumn="+whatColumn;
 }
+function sfilter(smallcategory){
+	
+	var urlParams = new URLSearchParams(window.location.search);
+	var bigcategory = urlParams.get("bigcategory_name");
+	var keyword = urlParams.get("searchWord");
+	var whatColumn = urlParams.get("whatColumn");
+	var brand = urlParams.get("brand");
+	location.href="list.product?bigcategory_name="+bigcategory+"&smallcategory_name="+smallcategory+"&brand="+brand+"&searchWord="+keyword+"&whatColumn="+whatColumn;
+}
+function bfilter(bigcategory){
+	
+	var urlParams = new URLSearchParams(window.location.search);
+	var smallcategory = urlParams.get("smallcategory_name");
+	var keyword = urlParams.get("searchWord");
+	var whatColumn = urlParams.get("whatColumn");
+	var brand = urlParams.get("brand");
+	location.href="list.product?bigcategory_name="+bigcategory+"&smallcategory_name="+smallcategory+"&brand="+brand+"&searchWord="+keyword+"&whatColumn="+whatColumn;
+}
+
 </script>
 
 <div class="body">
-
-
+	
 	<div class="row">
 		<div class="col-lg-2"></div>
 		<div class="col-lg-8">
@@ -113,12 +129,12 @@ function sort(sortType){
 			                    <h2 class="bc">${category.bigcategory_name}</h2>
 			                </li>
 			                <li class="small-category" id="small-${category.bigcategory_name}">
-			            		<a class="category" href="list.product?bigcategory_name=${category.bigcategory_name}">전체</a>
+			            		<a class="category" onclick="bfilter('${category.bigcategory_name}')">전체</a>
 			            	</li>
 			            </c:if>
 			            
 			            	<li class="small-category" id="small-${category.bigcategory_name}">
-			            		<a  class="category" href="list.product?smallcategory_name=${category.smallcategory_name}">${category.smallcategory_name}</a>
+			            		<a  class="category" onclick="sfilter('${category.smallcategory_name}')">${category.smallcategory_name}</a>
 			            	</li>
 			            
 			            <c:set var="previousBigCategory" value="${category.bigcategory_name}" />
@@ -170,7 +186,7 @@ function sort(sortType){
 						          <div style=" height: 250px;">  
 						           <a href="detail.product?product_number=${pb.product_number }">
 						          	<img id="preview" width="100%" height="100%"
-									src='<%=request.getContextPath()%>/resources/product/image/${pb.image }' /> 
+									src='<%=request.getContextPath()%>/resources/productImage/${pb.image}' /> 
 						           </a> 
 						          </div>  
 						          <hr>
@@ -203,8 +219,6 @@ function sort(sortType){
 				        </div>
 				    </div>
 				</div>
-				
-				
 			</div>
 		</div>
 

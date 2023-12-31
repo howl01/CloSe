@@ -15,6 +15,7 @@
 		<typeAlias type="orderdetail.model.OrderDetailBean" alias="OrderDetailBean"/>
 		<typeAlias type="review.model.ReviewBean" alias="ReviewBean"/>
 		<typeAlias type="member.model.EventBean" alias="EventBean"/>
+		<typeAlias type="style.model.HeartBean" alias="HeartBean"/>
 	</typeAliases>
 	
 	<mappers>
@@ -30,6 +31,7 @@
 		<mapper resource="mybatis/orderdetail.xml"/> 
 		<mapper resource="mybatis/review.xml"/>
 		<mapper resource="mybatis/event.xml"/>
+		<mapper resource="mybatis/heart.xml"/>
 	</mappers>
 </configuration>
 <!-- SqlMapConfig.xml -->

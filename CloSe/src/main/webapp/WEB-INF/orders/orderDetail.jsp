@@ -47,7 +47,7 @@ function openReviewFormWindow(orderDetailNumber) {
                             <tr>
                                 <td>
                                     <img id="preview" width="100px"
-                                        src='<c:url value='/resources/product/image/'/>${oi.image }'
+                                        src='<c:url value='/resources/productImage/'/>${oi.image }'
                                         class="rounded" />
                                  </td>
                                 <td>

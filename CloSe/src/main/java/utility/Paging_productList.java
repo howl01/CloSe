@@ -241,7 +241,7 @@ public class Paging_productList {
 		String result = "";
 		String added_param = "&whatColumn=" + whatColumn + "&keyword=" + keyword 
 							+ "&bigcategory_name=" + bigcategory_name + "&smallcategory_name=" +smallcategory_name
-							+ "&brand="+brand+"&sort="+sort;
+							+ "&brand="+brand+"&sort="+sort + "&whatColumn="+whatColumn+"&searchWord="+keyword;
 
 		if (this.beginPage != 1) {
 			result += "&nbsp;<li class='page-item'><a class='page-link' href='" + url + "?pageNumber=" + (1)

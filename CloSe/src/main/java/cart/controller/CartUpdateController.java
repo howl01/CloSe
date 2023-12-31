@@ -21,7 +21,6 @@ import member.model.MemberBean;
 public class CartUpdateController {
 	private final String command = "/qtyUpdate.cart";
 	private final String viewPage = "cartListForm";
-	private final String gotoPage = "redirect:/cartAdd.cart";
 	
 	@Autowired
 	CartDao cartDao;

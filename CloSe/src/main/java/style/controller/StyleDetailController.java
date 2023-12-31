@@ -1,7 +1,6 @@
 package style.controller;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -14,12 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import member.model.MemberBean;
+import style.model.HeartDao;
 import style.model.StyleBean;
 import style.model.StyleDao;
 
@@ -35,30 +35,44 @@ public class StyleDetailController {
 
 	@Autowired
 	private StyleDao styleDao;
+	@Autowired
+	private HeartDao heartDao;
 
 	@RequestMapping(value = command, method = RequestMethod.GET)
 	public String insertForm(HttpSession session, @RequestParam("style_number") int style_number, Model model) {
 		styleDao.updateReadCount(style_number);
-		model.addAttribute("styleBean", styleDao.getStyleByStyleNumber(style_number));
+		StyleBean styleBean = styleDao.getStyleByStyleNumber(style_number);
+		model.addAttribute("styleBean", styleBean);
+		
+
+		if (session.getAttribute("loginInfo") != null) {
+			styleBean.setInfoMemberId(((MemberBean)(session.getAttribute("loginInfo"))).getMember_id());
+		} else if (session.getAttribute("kakaoLoginInfo") != null) {
+			styleBean.setInfoMemberId(((MemberBean)(session.getAttribute("kakaoLoginInfo"))).getMember_id());
+			System.out.println("styleBean.getInfoMemberId():"+styleBean.getInfoMemberId());
+		}
+		model.addAttribute("heartCount", heartDao.countHeart(styleBean.getStyle_number()));
+		model.addAttribute("heartFlag", heartDao.searchHeart(styleBean));
 		return viewPage;
 	}
 
 	@RequestMapping(value = command, method = RequestMethod.POST)
-	public String insert(@Valid StyleBean styleBean, BindingResult result, HttpServletResponse response, HttpServletRequest request) {
+	public String insert(@Valid StyleBean styleBean, BindingResult result, HttpServletResponse response,
+			HttpServletRequest request) {
 		response.setContentType("text/html; charset=UTF-8");
 		if (result.hasErrors()) {
 			return viewPage;
 		}
 
 		String path = servletContext.getRealPath("/resources/styleImage");
-		
-	    File directory = new File(path);
-	    if (!directory.exists()) {
-	        directory.mkdirs(); //
-	    }
-		
+
+		File directory = new File(path);
+		if (!directory.exists()) {
+			directory.mkdirs(); //
+		}
+
 		List<MultipartFile> images = styleBean.getImages();
-		for (int i = 1; i < images.size()+1; i++) {
+		for (int i = 1; i < images.size() + 1; i++) {
 			String imageName = null;
 			MultipartFile image = null;
 			switch (i) {
@@ -85,7 +99,7 @@ public class StyleDetailController {
 			default:
 				break;
 			}
-			
+
 			File uploadImage = new File(path + File.separator + imageName);
 			try {
 				image.transferTo(uploadImage);
@@ -93,9 +107,9 @@ public class StyleDetailController {
 				e.printStackTrace();
 			}
 		}
-		
+
 		styleDao.insertStyle(styleBean);
 		return gotoPage;
 	}
-	
+
 }

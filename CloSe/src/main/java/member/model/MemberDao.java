@@ -1,14 +1,12 @@
 package member.model;
 
 import java.util.Map;
-import java.util.List;
+import java.sql.Date;
+import java.util.HashMap;
 
-import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import utility.Paging;
 
 @Component("MemberDao")
 public class MemberDao {
@@ -77,6 +75,19 @@ public class MemberDao {
 		return memberBean;
 	}
 
+
+	public void updateMemberBanExpiration(String member_id, Date date) {
+	    int cnt = -1;
+	    try {
+	        Map<String, Object> map = new HashMap<String, Object>();
+	        map.put("member_id", member_id);
+	        map.put("ban_expiration", date);
+	        cnt = sqlSessionTemplate.update(namespace + ".updateMemberBanExpiration", map);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
+	
 	public int updateMemberBan(MemberBean memberBean) {
 		int cnt = -1;
 		try {
@@ -86,5 +97,12 @@ public class MemberDao {
 		}
 		return cnt;
 	}
+
+	public int updateMemberBanCancel(String member_id) {
+		int cnt = -1;
+		cnt = sqlSessionTemplate.update(namespace+".updateMemberBanCancel", member_id);
+		return cnt;
+	}
+
 
 }

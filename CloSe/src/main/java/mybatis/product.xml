@@ -13,6 +13,7 @@
 	<select id="getOneProduct" resultType="ProductBean">
 		select * from product where product_number = #{product_number}
 	</select>
+	
 	<select id="getCountByBigcategory" resultType="int">
 		SELECT count(*) FROM product p 
 		INNER JOIN category c 
@@ -23,6 +24,10 @@
 		SELECT count(*) FROM product 
 		WHERE smallcategory_name = #{smallcategory_name} 
 	</select> 
+	<select id="getCountByKeyword" resultType="int">
+		SELECT count(*) FROM product
+		where product_name like #{keyword}
+	</select>
 	<select id="getCountByBrand" resultType="int">
 		SELECT count(*) FROM product 
 		WHERE product_name like #{brand} 
@@ -31,6 +36,32 @@
 		select count(*) from product
 	</select>
 	
+	<select id="getIFCount" resultType="int">
+		SELECT count(*) FROM product p 
+		INNER JOIN category c 
+		ON p.smallcategory_name = c.smallcategory_name
+		where 1=1
+		<if test="whatColumn != null">
+        	<if test="!keyword.equals('%null%')">
+				and p.product_name like #{keyword}
+			</if>
+		</if>   
+		<if test="bigcategory_name != null">
+			<if test="!bigcategory_name.equals('null')">
+				and c.bigcategory_name = #{bigcategory_name}
+			</if>
+		</if>
+		<if test="smallcategory_name != null">
+			<if test="!smallcategory_name.equals('null')">
+				and p.smallcategory_name = #{smallcategory_name}
+			</if>
+		</if>
+		<if test="brand != null">
+			<if test="!brand.equals('%null%')">
+				and p.product_name like #{brand}
+			</if>
+		</if>
+	</select>
 	
 	
 	<select id="getIFProduct" resultType="ProductBean">
@@ -41,19 +72,25 @@
 		INNER JOIN category c ON p.smallcategory_name = c.smallcategory_name
 		LEFT JOIN orderdetail od ON p.product_number = od.product_number
 		LEFT JOIN review r ON od.orderdetail_number = r.orderdetail_number
+		where 1=1
+        <if test="whatColumn != null">
+        	<if test="!keyword.equals('%null%')">
+				and product_name like #{keyword}
+			</if>
+		</if>   
 		<if test="bigcategory_name != null">
 			<if test="!bigcategory_name.equals('null')">
-				where c.bigcategory_name = #{bigcategory_name}
+				and c.bigcategory_name = #{bigcategory_name}
 			</if>
 		</if>
 		<if test="smallcategory_name != null">
 			<if test="!smallcategory_name.equals('null')">
-				where p.smallcategory_name = #{smallcategory_name}
+				and p.smallcategory_name = #{smallcategory_name}
 			</if>
 		</if>
 		<if test="brand != null">
 			<if test="!brand.equals('%null%')">
-				where p.product_name like #{brand}
+				and p.product_name like #{brand}
 			</if>
 		</if>
 		GROUP BY p.product_number,p.product_name,p.image,p.price,p.content,p.temperature,
@@ -94,10 +131,6 @@
 		set s_stock=0,m_stock=0,l_stock=0,xl_stock=0
 		where product_number=#{product_number}
 	</update>
-	
-	<!-- <delete id="deleteProduct">
-		delete product where product_number=#{product_number}
-	</delete> -->
 	
 	<update id="updateProduct">
 		update product 

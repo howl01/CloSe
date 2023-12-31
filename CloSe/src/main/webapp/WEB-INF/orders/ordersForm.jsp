@@ -137,6 +137,7 @@ function pay() {
     }
     
     var totalP = document.getElementById('total').innerText;
+    alert(totalP.replace(',',''));
     // 원포트 관리자 페이지 -> 내정보 -> 가맹점식별코드
     // ''안에 띄어쓰기 없이 가맹점 식별코드를 붙여넣어주세요. 안그러면 결제창이 안뜹니다.
     IMP.request_pay({
@@ -144,7 +145,7 @@ function pay() {
         pay_method: 'card', // 'card'만 지원됩니다.
         merchant_uid: 'merchant_' + new Date().getTime(), // 상점에서 관리하는 주문 번호
         name: '옷비서 결제', // 상품 이름
-        amount: '100',//totalP, // 결제창에 표시될 금액. 실제 승인이 이뤄지지는 않습니다. 
+        amount: 100, //totalP.replace(',',''),  // 결제창에 표시될 금액. 
         buyer_email: '${mb.email}',
         buyer_name: '${mb.name}', 
         buyer_tel: '${mb.phone}',
@@ -156,14 +157,13 @@ function pay() {
             msg += '\n고유ID : ' + rsp.imp_uid;
             //msg += '\n상점 거래ID : ' + rsp.merchant_uid;
             msg += '\n결제 금액 : ' + rsp.paid_amount;
-            msg += '\n카드 승인번호 : ' + rsp.apply_num;
+            document.getElementById('orders_id').value = rsp.imp_uid;
+            document.orderform.submit();
             
         } else {    // 결제가 실패했을 때
             // 결제에 실패했을떄 실패메세지와 실패사유를 출력
             var msg = '결제에 실패하였습니다.\n';
             msg += '사유 : ' + rsp.error_msg;
-            document.getElementById('orders_id').value = 'merchant_' + new Date().getTime();
-            document.orderform.submit();
         }
         alert(msg);
     });
@@ -206,7 +206,7 @@ function pay() {
                                             <td>
                                             	<input type="hidden" name="cnums" value="${cib.cart_number}">
                                                 <img id="preview" width="100px"
-                                                    src='<c:url value='/resources/product/image/'/>${cib.image }'
+                                                    src='<c:url value='/resources/productImage/'/>${cib.image }'
                                                     class="rounded" />
                                             </td>
                                             <td> 

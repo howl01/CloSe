@@ -86,7 +86,7 @@
 							</div>
 							<div class="col-3">
 								<img id="preview" width="200px" height="200px" style="margin: 10 0 10 0" 
-									src='<c:url value='/resources/product/image/'/>${productBean.image}'
+									src='<c:url value='/resources/productImage/'/>${productBean.image}'
 									 onerror="this.src='<c:url value='/resources/img/idd.PNG'/>'"/>
 								<div>
 									<form:errors path="image" cssClass="err"/>
@@ -105,7 +105,7 @@
 							<div class="col-2" style="white-space: nowrap;">
 								<span>상품명<font color="red">*</font></span>
 							</div>
-							<div class="col-3">
+							<div class="col-5">
 								<input type="text" class="form-control mb-1" name="product_name" maxlength="50"
 								placeholder="상품명을 입력해 주세요." value="${productBean.product_name }">
 								<div>
@@ -145,7 +145,7 @@
 							<div class="col-2" style="white-space: nowrap;">
 								<span>설명사진<font color="red">*</font></span>
 							</div>
-							<div class="col-3">
+							<div class="col-6">
 							<label for="file2">
   								<div class="btn-upload">파일 업로드하기</div>
   							</label>
@@ -154,7 +154,8 @@
 								<input type="hidden" name="content" value="${productBean.content}">
 								<div>
 									<form:errors path="content" cssClass="err"/>
-							 		<span id="fileSelectionMessage">선택된 파일: ${productBean.content }</span>
+							 		<span id="fileSelectionMessage"><br>
+							 		선택된 파일: ${productBean.content }</span>
 								</div>
 							</div>
 						</div>
@@ -276,7 +277,6 @@
  				document.getElementById('preview').src = e.target.result;
  			};
  			reader.readAsDataURL(input.files[0]);
- 			alert(hiddenField.value);
 	        hiddenField.value = "";
  		}
      

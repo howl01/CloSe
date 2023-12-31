@@ -110,7 +110,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="row no-gutters">
-                                <div class="col-lg-3 col-md-3 col-sm-12 p-0">
+                                <div class="col-lg-2 col-md-3 col-sm-12 p-0">
                                     <label for="search-type" hidden>검색 유형</label>
                                     <select class="form-control" id="search-type" name="whatColumn">
                                         <option value="all">전체
@@ -124,7 +124,7 @@
                                     <input type="text" placeholder="검색어..." class="form-control" id="search-value"
                                            name="keyword">
                                 </div>
-                                <div class="col-lg-1 col-md-3 col-sm-12 p-0">
+                                <div class="col-lg-2 col-md-3 col-sm-12 p-0">
                                     <button type="submit" class="btn btn-base">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -150,7 +150,7 @@
             <tr>
                 <th class="number col-1"><a>번호</a></th>
                 <th class="answer col-1"><a>답변여부</a></th>
-                <th class="qna_category col-1"><a>문의유형</a></th>
+                <th class="qna_category col-2"><a>문의유형</a></th>
                 <th class="title col-4"><a>제목</a></th>
                 <th class="user-id"><a>작성자</a></th>
                 <th class="created-at"><a>작성일</a></th>
@@ -181,7 +181,7 @@
 			                	</td>
 							</c:if>
 							<td class="qna_category">${ qnaBean.qna_category }</td>
-							<c:if test="${member_id == 'admin'}">
+							<c:if test="${loginInfo.member_id == 'admin'}">
 				        <c:if test="${ qnaBean.secret == 'YES'}">
 				            <td>
 				                <a href="detail.qna?pageNumber=${pageInfo.pageNumber}&qna_number=${qnaBean.qna_number}">
@@ -200,8 +200,8 @@
 				            </td>
 				        </c:if>
 				</c:if>
-				<c:if test="${member_id != 'admin'}">
-				        <c:if test="${qnaBean.member_id != member_id && qnaBean.secret == 'YES'}">
+				<c:if test="${loginInfo.member_id != 'admin'}">
+				        <c:if test="${qnaBean.member_id != loginInfo.member_id && qnaBean.secret == 'YES'}">
 				            <td>
 				                ${qnaBean.title}
 				                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill-lock" viewBox="0 0 16 16">
@@ -209,14 +209,14 @@
 								</svg>
 				            </td>
 				        </c:if>
-				        <c:if test="${qnaBean.member_id != member_id && qnaBean.secret == 'NO'}">
+				        <c:if test="${qnaBean.member_id != loginInfo.member_id && qnaBean.secret == 'NO'}">
 				            <td>
 								<a href="detail.qna?pageNumber=${pageInfo.pageNumber}&qna_number=${qnaBean.qna_number}">
 				                    ${qnaBean.title}
 				                </a>
 							</td>
 				        </c:if>
-				        <c:if test="${qnaBean.member_id == member_id && qnaBean.secret == 'YES'}">
+				        <c:if test="${qnaBean.member_id == loginInfo.member_id && qnaBean.secret == 'YES'}">
 				            <td>
 				                <a href="detail.qna?pageNumber=${pageInfo.pageNumber}&qna_number=${qnaBean.qna_number}">
 				                    ${qnaBean.title}
@@ -226,7 +226,7 @@
 				                </a>
 				            </td>
 				        </c:if>
-				        <c:if test="${qnaBean.member_id == member_id && qnaBean.secret == 'NO'}">
+				        <c:if test="${qnaBean.member_id == loginInfo.member_id && qnaBean.secret == 'NO'}">
 				            <td>
 								<a href="detail.qna?pageNumber=${pageInfo.pageNumber}&qna_number=${qnaBean.qna_number}">
 				                    ${qnaBean.title}
@@ -247,7 +247,7 @@
 <br>
 
     <div class="row">
-        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="padding-right: 200px;">
             <a href="insert.qna" class="btn btn-dark me-md-2" role="button" id="write-article">글쓰기</a>
         	<c:if test="${ loginInfo.member_id == 'admin' }">
             	<a href="delete.qna" class="btn btn-dark me-md-2" role="button" id="write-article">삭제</a>

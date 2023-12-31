@@ -67,14 +67,13 @@ public class ProductUpdateController {
 		System.out.println(pb.getContent());
 		
 
-		String uploadPath = servletContext.getRealPath("/resources/product/image"); 
-		String uploadPath2 = servletContext.getRealPath("/resources/product/content"); 
+		String uploadPath = servletContext.getRealPath("/resources/productImage"); 
 
 		File destination0 = new File(uploadPath+File.separator+prevImage); 
 		File destination = new File(uploadPath+File.separator+pb.getImage());
 		
-		File destination1 = new File(uploadPath2+File.separator+prevContent); 
-		File destination2 = new File(uploadPath2+File.separator+pb.getContent()); 
+		File destination1 = new File(uploadPath+File.separator+prevContent); 
+		File destination2 = new File(uploadPath+File.separator+pb.getContent()); 
 
 		MultipartFile multi = pb.getpImage();
 		MultipartFile multi2 = pb.getpContent();
