@@ -13,6 +13,27 @@
 	th{
 		text-align: right;
 	}
+	.page-link {
+	  color: #000; 
+	  background-color: #fff;
+	  border: 1px solid #ccc; 
+	}
+	
+	.page-item.active .page-link {
+	 z-index: 1;
+	 color: #555;
+	 font-weight:bold;
+	 background-color: #f1f1f1;
+	 border-color: #ccc;
+	 
+	}
+	
+	.page-link:focus, .page-link:hover {
+	  color: #000;
+	  background-color: #fafafa; 
+	  border-color: #ccc;
+	text-align: right;
+	}
 </style>
 
 <div class="container">
@@ -67,6 +88,6 @@
 	
 	
 	<footer class="my-5 pt-5 text-body-secondary text-center text-small">
-	  <p class="mb-1">© 2023 Minhyeok, Byeon</p>
+	  <p class="mb-1">© 2023 Team, Clothes secretaryn</p>
 	</footer>
 </div>

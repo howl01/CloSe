@@ -7,6 +7,11 @@
 <%@ include file= "../main/top.jsp" %>
 
 <style type="text/css">
+   #mainNav {
+          font-size: 15pt;
+          font-weight: 700;
+          padding-top: 3px;
+      }
    .body {
       width: 100%;
       overflow-x: hidden;
@@ -23,6 +28,10 @@
    
    .custom-height{
    		height:  171px;
+   }
+   .ptab {
+		text-decoration: none;
+		color: black;
    }
 </style>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
@@ -107,7 +116,6 @@ window.navigator.geolocation.getCurrentPosition(function(pos) {
  	 }
    
    	 function productList(bigcate){
-   		 alert(bigcate);
    		 location.href="list.product?bigcategory_name="+bigcate;
    	 }
    	 
@@ -237,7 +245,12 @@ window.navigator.geolocation.getCurrentPosition(function(pos) {
 
          <div>
             Most Popular <br>
-            인기 상품 <br>
+            <h4>인기 상품
+            	<font size="2" style="float: right; margin-top:20;">
+					<a href="list.product?sort=sale" class="ptab">전체보기</a>
+				</font>
+				</h4>
+             <br>
          </div>
          <div class="album py-5">
             <div class="container">
@@ -264,7 +277,11 @@ window.navigator.geolocation.getCurrentPosition(function(pos) {
 
          <div>
             Style <br>
-            코디 모음 <br>
+            <h4>코디 모음
+	            <font size="2" style="float: right; margin-top:20;">
+					<a href="mainView.style" class="ptab">전체보기</a>
+				</font>
+			</h4> 
          </div>
          <div class="album py-5">
             <div class="container">

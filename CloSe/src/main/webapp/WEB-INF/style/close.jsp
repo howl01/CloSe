@@ -8,6 +8,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Photo Tagging</title>
     <style>
+	   #closeNav {
+	          font-size: 15pt;
+	          font-weight: 700;
+	          padding-top: 3px;
+	      }
         #photo-container {
             position: relative;
             width: 30%;
@@ -29,21 +34,21 @@
         }
         
         #img{
-        	width: 80%;
-        	height: 100%;
-        	border-radius: 50%;
+           width: 80%;
+           height: 100%;
+           border-radius: 50%;
         }
         #imgDiv{
-        	text-align: center;
+           text-align: center;
         }
         #imgContainer{
-        	width: 66%;
-        	margin: auto;
+           width: 66%;
+           margin: auto;
         }
         
         #styleContainer{
-        	width: 100%;
-        	margin: auto;
+           width: 100%;
+           margin: auto;
         }
         #wrapper-bg {
 		    background-size: cover; /* 배경 이미지가 항상 전체를 덮도록 설정합니다. */
@@ -58,7 +63,6 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-	
     let queryUrl = "https://api.openweathermap.org/data/2.5/weather?";
     let apiKey = "appid=27f0e2dcc40e953d16644b55e897423d&";
     let apiOptions = "units=metric";
@@ -83,29 +87,29 @@ $(document).ready(function() {
     });
 
     function fetchFile(){
-	fetch(file)
-	.then((response) => response.json())
-	.then((data) => {
-		// Weather main data
-		var main = data.weather[0].main;
-		var temp = data.main.temp;
-		var description = data.weather[0].description;
-		var feelTemperature = data.main.feels_like;
-		
-		document.getElementById("wrapper-temp").innerHTML = temp + "°C";
-		document.getElementById("wrapper-feelTemperature-span").innerHTML = "(체감 온도 : " + feelTemperature + "°C)";
-		document.getElementById("wrapper-description").innerHTML = description;
-		
-		let iconBaseUrl = "http://openweathermap.org/img/wn/";
-		let iconFormat = ".webp";
-		var iconCode = data.weather[0].icon;
-		
-		let iconFullyUrl = iconBaseUrl + iconCode + iconFormat;
-		let iconElement = document.getElementById("wrapper-icon-today");
-		if (iconElement) {
-		    iconElement.src = iconFullyUrl;
-		} else {
-		}
+   fetch(file)
+   .then((response) => response.json())
+   .then((data) => {
+      // Weather main data
+      var main = data.weather[0].main;
+      var temp = data.main.temp;
+      var description = data.weather[0].description;
+      var feelTemperature = data.main.feels_like;
+      
+      document.getElementById("wrapper-temp").innerHTML = temp + "°C";
+      document.getElementById("wrapper-feelTemperature-span").innerHTML = "(체감 온도 : " + feelTemperature + "°C)";
+      document.getElementById("wrapper-description").innerHTML = description;
+      
+      let iconBaseUrl = "http://openweathermap.org/img/wn/";
+      let iconFormat = ".webp";
+      var iconCode = data.weather[0].icon;
+      
+      let iconFullyUrl = iconBaseUrl + iconCode + iconFormat;
+      let iconElement = document.getElementById("wrapper-icon-today");
+      if (iconElement) {
+          iconElement.src = iconFullyUrl;
+      } else {
+      }
 
 		// Backgrounds
 		switch (main) {
@@ -297,7 +301,7 @@ $(document).ready(function() {
         </button>
         <div class="collapse" id="orders-collapse" style="margin-left: 30px;">
           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small" id="style">
-          	<li><input type="checkbox" style="accent-color: black;" name="style" value="로맨틱"> 로맨틱</li>
+             <li><input type="checkbox" style="accent-color: black;" name="style" value="로맨틱"> 로맨틱</li>
             <li><input type="checkbox" style="accent-color: black;" name="style" value="모던"> 모던</li>
             <li><input type="checkbox" style="accent-color: black;" name="style" value="미니멀"> 미니멀</li>
             <li><input type="checkbox" style="accent-color: black;" name="style" value="빈티지"> 빈티지</li>
@@ -374,5 +378,4 @@ $(document).ready(function() {
 </div>
 </div>
 <%@ include file="../main/bottom.jsp" %>
-
 

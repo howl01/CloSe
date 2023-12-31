@@ -533,18 +533,18 @@
     <div class="container d-flex flex-wrap" style="width:66%;">
       <ul class="nav me-auto">
       	<c:if test="${empty loginInfo and empty kakaoLoginInfo}">
-	        <li class="nav-item"><a href="view.main" class="nav-link link-body-emphasis px-2">HOME</a></li>
-	        <li class="nav-item"><a href="login.member" class="nav-link link-body-emphasis px-2">오늘의 옷비서</a></li>
+	        <li class="nav-item"><a href="view.main" id="mainNav" class="nav-link link-body-emphasis px-2">HOME</a></li>
+	        <li class="nav-item"><a href="login.member" id="closeNav" class="nav-link link-body-emphasis px-2">오늘의 옷비서</a></li>
 	        <li class="nav-item"><a href="mainView.style" id="styleNav" class="nav-link link-body-emphasis px-2">STYLE</a></li>
-	        <li class="nav-item"><a href="list.product" class="nav-link link-body-emphasis px-2">SHOP</a></li>
-	        <li class="nav-item"><a href="event.member" class="nav-link link-body-emphasis px-2">EVENT</a></li>
+	        <li class="nav-item"><a href="list.product" id="shopNav" class="nav-link link-body-emphasis px-2">SHOP</a></li>
+	        <li class="nav-item"><a href="event.member" id="eventNav" class="nav-link link-body-emphasis px-2">EVENT</a></li>
       	</c:if>
       	<c:if test="${not empty loginInfo or not empty kakaoLoginInfo}">
-      		<li class="nav-item"><a href="view.main" class="nav-link link-body-emphasis px-2">HOME</a></li>
-	        <li class="nav-item"><a href="view.style" class="nav-link link-body-emphasis px-2">오늘의 옷비서</a></li>
+      		<li class="nav-item"><a href="view.main" id="mainNav" class="nav-link link-body-emphasis px-2">HOME</a></li>
+	        <li class="nav-item"><a href="view.style" id="closeNav" class="nav-link link-body-emphasis px-2">오늘의 옷비서</a></li>
 	        <li class="nav-item"><a href="mainView.style" id="styleNav" class="nav-link link-body-emphasis px-2">STYLE</a></li>
-	        <li class="nav-item"><a href="list.product" class="nav-link link-body-emphasis px-2">SHOP</a></li>
-	        <li class="nav-item"><a href="event.member" class="nav-link link-body-emphasis px-2">EVENT</a></li>
+	        <li class="nav-item"><a href="list.product" id="shopNav" class="nav-link link-body-emphasis px-2">SHOP</a></li>
+	        <li class="nav-item"><a href="event.member" id="eventNav" class="nav-link link-body-emphasis px-2">EVENT</a></li>
       	</c:if>
       </ul> 
       <ul class="nav">

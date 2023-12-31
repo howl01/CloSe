@@ -25,8 +25,7 @@
     
 <div class="body">
    <div class="row">
-      <div class="col-lg-2"></div>
-      <div class="col-lg-8">
+      <div>
          <div style="padding:20 10 20 10">
             <div style="">
                <h3 style="padding: 22 0 22 0">주문내역</h3>
@@ -35,12 +34,12 @@
             <table class="table">
                     <thead>
                         <tr>
-                            <th scope="col">이미지</th>
-                            <th scope="col">상품정보</th>
-                            <th scope="col">가격</th>
-                            <th scope="col">옵션</th>
-                            <th scope="col">주문수량</th>
-                            <th scope="col">소계</th>
+                            <td align="center"><b>이미지</b></td>
+                            <td align="center"><b>상품정보</b></td>
+                            <td align="center"><b>가격</b></td>
+                            <th>옵션</th>
+                            <th>주문수량</th>
+                            <th>소계</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -49,7 +48,7 @@
                             <tr>
                                 <td>
                                     <img id="preview" width="100px"
-                                        src='<c:url value='/resources/product/image/'/>${oi.image }'
+                                        src='<c:url value='/resources/productImage/'/>${oi.image }'
                                         class="rounded" />
                                 </td>
                                 <td>
@@ -145,9 +144,9 @@
                   </tr>
                </tbody>
             </table>
-            <input type="button" class="btn btn-Dark me-md-2" value="목록보기" onClick="location.href='adminPage.member?pageNumber=${ pageInfo.pageNumber }'">
-            <input type="button" class="btn btn-Dark me-md-2" value="환불하기" onclick="location.href='refund.orders?order_id=${order_id}&pageNumber=${pageNumber }'">
-             
+            <input type="button" style="float: right;" class="btn btn-Dark me-md-2" value="목록보기" onClick="location.href='adminPage.member?pageNumber=${ pageInfo.pageNumber }'">
+            <input type="button" style="float: right;" class="btn btn-Dark me-md-2" value="환불하기" onclick="location.href='refund.orders?order_id=${order_id}&pageNumber=${pageNumber }'">
+            
          </div>
       </div>
 
@@ -156,6 +155,6 @@
 </div>
 
 	<footer class="my-5 pt-5 text-body-secondary text-center text-small">
-	  <p class="mb-1">© 2023 Minhyeok, Byeon</p>
+	  <p class="mb-1">© 2023 Team, Clothes secretary</p>
 	</footer>
 </div>

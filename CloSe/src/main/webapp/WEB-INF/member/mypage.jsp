@@ -168,7 +168,7 @@
 	        // 받은 데이터를 기반으로 새로운 테이블 행을 동적으로 생성하고 삽입합니다.
 	        $(data).each(function () {
 	            var newRow = $("<tr>");
-	            newRow.append("<td><img id='preview' width='100px' src='<%=request.getContextPath()%>/resources/product/image/" + this.image + "' class='rounded' /></td>");
+	            newRow.append("<td><img id='preview' width='100px' src='<%=request.getContextPath()%>/resources/productImage/" + this.image + "' class='rounded' /></td>");
 	            
 	            // Splitting the product_name based on '/'
 	            var productNameParts = this.product_name.split('/');

@@ -19,8 +19,8 @@
 	</typeAliases>
 	
 	<mappers>
-		<mapper resource="mybatis/cart.xml"/>
-		<mapper resource="mybatis/category.xml"/>
+        <mapper resource="mybatis/cart.xml"/>
+        <mapper resource="mybatis/category.xml"/>
 		<mapper resource="mybatis/member.xml"/>
 		<mapper resource="mybatis/notice.xml"/>
 		<mapper resource="mybatis/orders.xml"/>
@@ -31,7 +31,7 @@
 		<mapper resource="mybatis/orderdetail.xml"/> 
 		<mapper resource="mybatis/review.xml"/>
 		<mapper resource="mybatis/event.xml"/>
-		<mapper resource="mybatis/heart.xml"/>
+        <mapper resource="mybatis/heart.xml"/>
 	</mappers>
 </configuration>
 <!-- SqlMapConfig.xml -->

@@ -66,7 +66,7 @@ public class StyleFilterController {
 		List<StyleBean> lists = styleDao.styleFilter(map);
 
 		System.out.println("전체 FilterLists 크기: " + lists.size());
-		org.json.simple.JSONArray jsonArr = new org.json.simple.JSONArray();	
+		org.json.simple.JSONArray jsonArr = new org.json.simple.JSONArray();
 		for (StyleBean styleBean : lists) {
 			System.out.println("title : " + styleBean.getTitle());
 			System.out.println("style_number : " + styleBean.getStyle_number());

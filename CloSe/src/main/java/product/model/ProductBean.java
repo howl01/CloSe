@@ -10,7 +10,7 @@ public class ProductBean {
    private int product_number;
    
    @NotEmpty(message = "상품명을 입력해 주세요.")
-   @Pattern(regexp = "^.{1,14}/.{1,}$", message = "형식에 맞게 입력해주세요.")
+   @Pattern(regexp = "^.{1,}/.{1,}$", message = "형식에 맞게 입력해주세요.(브랜드명/상품명)")
    private String product_name;
    
    @NotEmpty(message = "상품 사진을 등록해주세요.")

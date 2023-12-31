@@ -13,49 +13,54 @@
 	<select id="getOneProduct" resultType="ProductBean">
 		select * from product where product_number = #{product_number}
 	</select>
+	
 	<select id="getCountByBigcategory" resultType="int">
 		SELECT count(*) FROM product p 
 		INNER JOIN category c 
 		ON p.smallcategory_name = c.smallcategory_name
 		WHERE c.bigcategory_name = #{bigcategory_name} 
-		and (p.s_stock>0 or p.M_STOCK>0 or p.L_STOCK>0 or p.Xl_STOCK>0)
-	</select>
-	
+	</select> 
 	<select id="getCountBySmallcategory" resultType="int">
 		SELECT count(*) FROM product 
 		WHERE smallcategory_name = #{smallcategory_name} 
-		and (s_stock>0 or M_STOCK>0 or L_STOCK>0 or XL_STOCK>0)
+	</select> 
+	<select id="getCountByKeyword" resultType="int">
+		SELECT count(*) FROM product
+		where product_name like #{keyword}
+	</select>
+	<select id="getCountByBrand" resultType="int">
+		SELECT count(*) FROM product 
+		WHERE product_name like #{brand} 
+	</select> 
+	<select id="getProductAllCount" resultType="int">
+		select count(*) from product
 	</select>
 	
-	<select id="getProductByBigcategory" resultType="ProductBean">
-		SELECT p.*, AVG(r.rating) AS average_rating
-		FROM product p
-		INNER JOIN category c ON p.smallcategory_name = c.smallcategory_name
-		LEFT JOIN orderdetail o ON p.product_number = o.product_number
-		LEFT JOIN review r ON o.orderdetail_number = r.orderdetail_number
-		WHERE c.bigcategory_name = #{bigcategory_name}
-		AND (p.s_stock > 0 OR p.m_stock > 0 OR p.l_stock > 0 OR p.xl_stock > 0)
-		GROUP BY p.product_number, p.product_name, p.image, p.price, p.content, p.temperature,
-		p.s_stock, p.m_stock, p.l_stock, p.xl_stock, p.smallcategory_name, c.bigcategory_name
-		order by p.product_number desc
-	</select> 
-	<select id="getProductBySmallcategory" resultType="ProductBean">
-		SELECT * FROM product 
-		WHERE smallcategory_name = #{smallcategory_name} 
-		and (s_stock>0 or M_STOCK>0 or L_STOCK>0 or XL_STOCK>0)
-		order by product_number desc
-	</select> 
-	<select id="getProductByBrand" resultType="ProductBean">
-		SELECT p.*, AVG(r.rating) AS average_rating
-		FROM product p
-		INNER JOIN category c ON p.smallcategory_name = c.smallcategory_name
-		LEFT JOIN orderdetail o ON p.product_number = o.product_number
-		LEFT JOIN review r ON o.orderdetail_number = r.orderdetail_number
-		WHERE p.PRODUCT_NAME like #{brand}
-		AND (p.s_stock > 0 OR p.m_stock > 0 OR p.l_stock > 0 OR p.xl_stock > 0)
-		GROUP BY p.product_number, p.product_name, p.image, p.price, p.content, p.temperature,
-		p.s_stock, p.m_stock, p.l_stock, p.xl_stock, p.smallcategory_name, c.bigcategory_name
-		order by p.product_number desc
+	<select id="getIFCount" resultType="int">
+		SELECT count(*) FROM product p 
+		INNER JOIN category c 
+		ON p.smallcategory_name = c.smallcategory_name
+		where 1=1
+		<if test="whatColumn != null">
+        	<if test="!keyword.equals('%null%')">
+				and p.product_name like #{keyword}
+			</if>
+		</if>   
+		<if test="bigcategory_name != null">
+			<if test="!bigcategory_name.equals('null')">
+				and c.bigcategory_name = #{bigcategory_name}
+			</if>
+		</if>
+		<if test="smallcategory_name != null">
+			<if test="!smallcategory_name.equals('null')">
+				and p.smallcategory_name = #{smallcategory_name}
+			</if>
+		</if>
+		<if test="brand != null">
+			<if test="!brand.equals('%null%')">
+				and p.product_name like #{brand}
+			</if>
+		</if>
 	</select>
 	
 	
@@ -68,8 +73,10 @@
 		LEFT JOIN orderdetail od ON p.product_number = od.product_number
 		LEFT JOIN review r ON od.orderdetail_number = r.orderdetail_number
 		where 1=1
-        <if test="whatColumn == 'product_name'">
-			and product_name like #{keyword}
+        <if test="whatColumn != null">
+        	<if test="!keyword.equals('%null%')">
+				and product_name like #{keyword}
+			</if>
 		</if>   
 		<if test="bigcategory_name != null">
 			<if test="!bigcategory_name.equals('null')">
@@ -109,15 +116,9 @@
 		</if>
 	</select>
 	
-	<select id="getCountByBrand" resultType="int">
-		SELECT count(*) FROM product 
-		WHERE product_name like #{brand} 
-		and (s_stock>0 or M_STOCK>0 or L_STOCK>0 or XL_STOCK>0)
-	</select> 
 	
-	<select id="getProductAllCount" resultType="int">
-		select count(*) from product
-	</select>
+	
+	
 	
 	<update id="updateStock">
 		update product 

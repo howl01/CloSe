@@ -223,11 +223,11 @@ window.addEventListener('scroll', function() {
 		if(pageNum)
 		$("#review").html("");
 		$.ajax({
-            url: "list.review?product_number=${pb.product_number }&start="+pagingUtil.getStartOffset(pageNum,1)+"&end=1", 
+            url: "list.review?product_number=${pb.product_number }&start="+pagingUtil.getStartOffset(pageNum,1)+"&end=5", 
             type: "post", 
             contentType: "application/json; charset=utf8",
             success: function(data) {
-            	if (data.rlists.length === 0) {
+            	if (data.rlists.length === 0) { 
             		
             		pageNum = pageNum-1;
 		            // 데이터가 비어있을 경우 메시지를 표시하는 HTML을 생성
@@ -274,7 +274,7 @@ window.addEventListener('scroll', function() {
 	                    reviewHtml += "</tr>";
 						
 	                    $("#review").append(reviewHtml);
-	                    document.getElementById("pagination").innerHTML = pagingUtil.pagingView(pageNum, "1", data.totalCount, "reviewList");
+	                    document.getElementById("pagination").innerHTML = pagingUtil.pagingView(pageNum, "5", data.totalCount, "reviewList");
 	                    
 	            	});
 	            }
@@ -369,64 +369,6 @@ window.addEventListener('scroll', function() {
 	    }
 	}
 	//=====페이지끝
-	
-	
-	
-	
-	//=======
-	function reviewList(pageNum){
-		$.ajax({
-            url: "list.review?product_number=${pb.product_number }", 
-            type: "post", 
-            contentType: "application/json; charset=utf8",
-            success: function(data) {
-            	if (data.length === 0) {
-		            // 데이터가 비어있을 경우 메시지를 표시하는 HTML을 생성
-		            var noReviewHtml = "<tr>";
-		            noReviewHtml += "<td align='center' height='200px;'>등록된 리뷰가 없습니다.</td>";
-		            noReviewHtml += "</tr>";
-		
-		            // 생성한 메시지를 화면에 추가
-		            $("#reviewsTable").append(noReviewHtml);
-		        } else {
-	            	$(data).each(function () {
-	            		// 각 리뷰에 대한 정보를 가져와서 HTML로 구성
-	            		
-	                    var reviewHtml = "<tr>";
-	                    reviewHtml += "<td>";
-	                    reviewHtml += "<fieldset>";
-	                    
-	                    // 별점 출력
-	                    for (var i = 1; i <= 5; i++) {
-	                        if (i <= 5 - this.rating) {
-	                            reviewHtml += "<label id='gstar'>★</label>";
-	                        } else {
-	                            reviewHtml += "<label id='star'>★</label>";
-	                        }
-	                    }
-	                    
-	                    reviewHtml += "</fieldset>";
-	                    reviewHtml += "</td>";
-	                    reviewHtml += "<td> | " + this.write_date + "</td>";
-	                    reviewHtml += "<td> | " + this.member_id + "</td>";
-	                    reviewHtml += "</tr>";
-	                    reviewHtml += "<tr>";
-	                    reviewHtml += "<td><b>선택한 옵션: " + this.product_size + "</b></td>";
-	                    reviewHtml += "</tr>";
-	                    reviewHtml += "<tr style='border-bottom: 0.5px solid rgba(0, 0, 0, .1);'>";
-	                    reviewHtml += "<td>" + this.text + "</td>";
-	                    reviewHtml += "</tr>";
-						
-	                    $("#review").append(reviewHtml);
-	                    document.getElementById("pagination").innerHTML = pagingUtil.pagingView(pageNum, "1", data.length, "reviewList()");
-	            	});
-	            }
-            	
-            }
-        });
-	}
-	
-	
 	
 	
 	$(document).ready(function() {
@@ -563,7 +505,6 @@ window.addEventListener('scroll', function() {
 
 		    $('#cart-total').html(totalSum.toLocaleString());
 		}
-	});
 </script>
 
 <div class="body">
@@ -584,7 +525,7 @@ window.addEventListener('scroll', function() {
 			<table border="0" width="100%">
 				<tr>
 					<td><img id="preview" width="100%"
-						src='<%=request.getContextPath()%>/resources/product/image/${pb.image }' />
+						src='<%=request.getContextPath()%>/resources/productImage/${pb.image }' />
 				</tr>
 			</table>
 		</div>
@@ -752,7 +693,7 @@ window.addEventListener('scroll', function() {
 	        <hr>
 	        <div style="width: 800; margin:auto;">
 	        	<img id="preview" width="100%"
-						src='<c:url value='/resources/product/content/'/>${pb.content }' />
+						src='<c:url value='/resources/productImage/'/>${pb.content }' />
 	        </div>
 	    </div>
 	

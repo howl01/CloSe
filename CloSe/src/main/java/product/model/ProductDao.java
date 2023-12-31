@@ -106,4 +106,12 @@ public class ProductDao {
 		return sqlSessionTemplate.selectOne(namespace + ".getProductAllCount");
 	}
 
+	public int getCountByKeyword(String keyword) {
+		return sqlSessionTemplate.selectOne(namespace + ".getCountByKeyword");
+	}
+
+	public int getIFCount(Map<String, String> map) {
+		return sqlSessionTemplate.selectOne(namespace + ".getIFCount", map);
+	} 
+	
 }

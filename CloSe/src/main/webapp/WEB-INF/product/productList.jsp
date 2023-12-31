@@ -7,6 +7,11 @@
 <%@ include file="../main/top.jsp"%>
 
 <style type="text/css">
+	#shopNav {
+        font-size: 15pt;
+        font-weight: 700;
+        padding-top: 3px;
+	}
 	.plist{
 		display: flex;
         flex-direction: row;
@@ -78,19 +83,35 @@ $(document).ready(function(){
         $(this).siblings("#small-" + bigCategoryId).stop().slideToggle();
     });
 });
-function sort(sortType, keyword){
-	alert(sortType); 
-	alert(keyword); 
+function sort(sortType){
 	
 	var urlParams = new URLSearchParams(window.location.search);
 	var bigcategory = urlParams.get("bigcategory_name");
 	var smallcategory = urlParams.get("smallcategory_name");
+	var keyword = urlParams.get("searchWord");
+	var whatColumn = urlParams.get("whatColumn");
 	var brand = urlParams.get("brand");
-	alert(bigcategory);
-	alert(smallcategory);
-	alert(brand);
-	location.href="list.product?bigcategory_name="+bigcategory+"&smallcategory_name="+smallcategory+"&brand="+brand+"&sort="+sortType+"&keyword="+keyword+"&whatColumn=product_name";
+	location.href="list.product?bigcategory_name="+bigcategory+"&smallcategory_name="+smallcategory+"&brand="+brand+"&sort="+sortType+"&searchWord="+keyword+"&whatColumn="+whatColumn;
 }
+function sfilter(smallcategory){
+	
+	var urlParams = new URLSearchParams(window.location.search);
+	var bigcategory = urlParams.get("bigcategory_name");
+	var keyword = urlParams.get("searchWord");
+	var whatColumn = urlParams.get("whatColumn");
+	var brand = urlParams.get("brand");
+	location.href="list.product?bigcategory_name="+bigcategory+"&smallcategory_name="+smallcategory+"&brand="+brand+"&searchWord="+keyword+"&whatColumn="+whatColumn;
+}
+function bfilter(bigcategory){
+	
+	var urlParams = new URLSearchParams(window.location.search);
+	var smallcategory = urlParams.get("smallcategory_name");
+	var keyword = urlParams.get("searchWord");
+	var whatColumn = urlParams.get("whatColumn");
+	var brand = urlParams.get("brand");
+	location.href="list.product?bigcategory_name="+bigcategory+"&smallcategory_name="+smallcategory+"&brand="+brand+"&searchWord="+keyword+"&whatColumn="+whatColumn;
+}
+
 </script>
 
 <div class="body">
@@ -113,12 +134,12 @@ function sort(sortType, keyword){
 			                    <h2 class="bc">${category.bigcategory_name}</h2>
 			                </li>
 			                <li class="small-category" id="small-${category.bigcategory_name}">
-			            		<a class="category" href="list.product?bigcategory_name=${category.bigcategory_name}">전체</a>
+			            		<a class="category" onclick="bfilter('${category.bigcategory_name}')">전체</a>
 			            	</li>
 			            </c:if>
 			            
 			            	<li class="small-category" id="small-${category.bigcategory_name}">
-			            		<a  class="category" href="list.product?smallcategory_name=${category.smallcategory_name}">${category.smallcategory_name}</a>
+			            		<a  class="category" onclick="sfilter('${category.smallcategory_name}')">${category.smallcategory_name}</a>
 			            	</li>
 			            
 			            <c:set var="previousBigCategory" value="${category.bigcategory_name}" />
@@ -170,7 +191,7 @@ function sort(sortType, keyword){
 						          <div style=" height: 250px;">  
 						           <a href="detail.product?product_number=${pb.product_number }">
 						          	<img id="preview" width="100%" height="100%"
-									src='<%=request.getContextPath()%>/resources/productImage/${pb.image}' />
+									src='<%=request.getContextPath()%>/resources/productImage/${pb.image}' /> 
 						           </a> 
 						          </div>  
 						          <hr>

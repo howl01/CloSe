@@ -4,6 +4,11 @@
 <%@ include file= "../main/top.jsp" %>
 
 <style>
+	#eventNav {
+	    font-size: 15pt;
+	    font-weight: 700;
+	    padding-top: 3px;
+	}
 	table{
 		width: 1050px;
 		margin: auto;
