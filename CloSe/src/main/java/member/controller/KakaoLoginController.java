@@ -49,22 +49,11 @@ public class KakaoLoginController {
 				if (!now.after(ban_expiration)) {
 					out.println("<script>alert('규칙 위반으로 계정 이용 정지 기간입니다.'); location.href='" + gotoPage + "';</script>");
 					out.flush();
-				} else {
-					session.setAttribute("kakaoLoginInfo", memberBean);
-					if (prevPage != null && !prevPage.isEmpty()
-							&& !prevPage.equals("http://localhost:8080/ex/register.member")) {
-						session.removeAttribute("prevPage");
-						out.println("<script>alert('로그인 되었습니다.'); location.href='" + prevPage + "';</script>");
-						out.flush();
-					} else {
-						out.println("<script>alert('로그인 되었습니다.'); location.href='" + gotoPage + "';</script>");
-						out.flush();
-					}
-				}
+				} 
 			} else {
 				session.setAttribute("kakaoLoginInfo", memberBean);
 				if (prevPage != null && !prevPage.isEmpty()
-						&& !prevPage.equals("http://localhost:8080/ex/register.member")) {
+						&& !prevPage.equals("http://localhost:8080/ex/kakaoRegister.member")) {
 					session.removeAttribute("prevPage");
 					out.println("<script>alert('로그인 되었습니다.'); location.href='" + prevPage + "';</script>");
 					out.flush();

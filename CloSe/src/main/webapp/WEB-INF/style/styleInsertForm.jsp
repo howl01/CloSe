@@ -79,11 +79,25 @@
 	  background-repeat: no-repeat;
 	}
 	
+	#pimage{
+      width:6vw;
+      height:9vh;
+      margin: auto;
+   }
+   
+   ol{
+      font-size: 8pt;
+   }
+   
+   .custom-height{
+      70vw;   
+   }
+	
 </style>
 
 <script type="text/javascript">
+var contextPath = '<%= request.getContextPath() %>';
 
-//중복 체크 함수
 function isProductNumberAlreadySet(productNumber) {
     for (var i = 1; i <= 4; i++) {
         var inputId = "#product_number" + i;
@@ -94,6 +108,23 @@ function isProductNumberAlreadySet(productNumber) {
     }
     return false; // 중복이 아닌 경우 false 반환
 }
+
+function removeTagImage(productNumberIndex) {
+   alert(productNumberIndex);
+    var tagImageDiv = document.getElementById('tagimage'+productNumberIndex);
+    alert(tagImageDiv);
+    
+    if (tagImageDiv) {
+      // Remove the tagImage div
+      tagImageDiv.parentNode.removeChild(tagImageDiv);
+
+      // Reset the input value
+      var inputElement = document.getElementById('product_number' + productNumberIndex);
+      if (inputElement) {
+        inputElement.value = ''; // You can set it to any default value if needed
+      }
+    }
+  }
 
 $(document).ready(function () {
 	// 이미지 업로드, 내용 입력, 스타일 선택 여부에 따라 submit 버튼 활성화/비활성화
@@ -128,21 +159,6 @@ $(document).ready(function () {
 
     // 초기 로딩 시에도 업데이트 수행
     updateSubmitButton();
-	
-	var bsComponent = $(".bs-component");
-    var initialPosition = bsComponent.offset().top;
-
-    $(window).scroll(function() {
-      var scrollPosition = $(window).scrollTop();
-      var windowHeight = window.innerHeight;
-      var elementHeight = bsComponent.outerHeight();
-
-      // 새로운 top 위치 계산하여 요소를 수직으로 중앙에 배치
-      var newPosition = (windowHeight - elementHeight) / 2 + scrollPosition - initialPosition;
-
-      // 새로운 top 위치를 부드러운 애니메이션으로 적용
-      bsComponent.stop().animate({"margin-top": newPosition + "px"}, 700);
-    });
     
     $("#searchWord2").on("input", function () {
         var searchWord2 = $(this).val().trim();
@@ -159,13 +175,12 @@ $(document).ready(function () {
                         var html = '<ol class="list-group" style="cursor:pointer;">';
                         var jsonArray = JSON.parse(json);
                         $(document).data('jsonArray', jsonArray);
-                        var contextPath = '<%= request.getContextPath() %>';
                         $.each(jsonArray, function (index, item) {
-                        	html += '<li class="list-group-item d-flex justify-content-between align-items-start">';
-              			   	html += '<div><img id="displayList2_img" src="' + contextPath +"/resources/productImage/"+ item.image + '"></div>';
-              			    html += '<div class="ms-2 me-auto my-auto">';
-              			    html += '<div class="fw-bold">'+item.product_name+'</div>₩ '+item.price+'</div>';
-              			    html += '<span class="badge bg-black rounded-pill my-auto">'+item.smallcategory_name+'</span></li>';
+                           html += '<li id="scpro" class="list-group-item d-flex justify-content-between align-items-start">';
+                           html += '<div><img id="displayList2_img" src="' + contextPath +"/resources/productImage/"+ item.image + '"></div>';
+                           html += '<div class="ms-2 me-auto my-auto">';
+                           html += '<div class="fw-bold">'+item.product_name+'</div>₩ '+item.price+'</div>';
+                           html += '<span class="badge bg-black rounded-pill my-auto">'+item.smallcategory_name+'</span></li>';
                         });
                         
                         html += '</ol>';
@@ -183,20 +198,22 @@ $(document).ready(function () {
         }
     });
 
-    $(document).on('click', ".list-group-item", function () {
-        var word = $(this).text();
+    $(document).on('click', "#scpro", function () {
         var jsonArray = $(document).data('jsonArray');
         var itemIndex = $(this).index(); // 클릭된 항목의 인덱스 가져오기
         var productNumber = jsonArray[itemIndex].product_number;
-        var image = jsonArray[itemIndex].image;
+        var image = contextPath + "/resources/productImage/" + jsonArray[itemIndex].image;
         var price = jsonArray[itemIndex].price;
         var productName = jsonArray[itemIndex].product_name;
-    
-     	// 중복 체크
+        
+        // 중복 체크
         if (isProductNumberAlreadySet(productNumber)) {
             alert("이미 선택된 제품입니다.");
             return; // 중복이면 추가 작업을 수행하지 않고 함수 종료
         }
+        
+
+        // 사용 예시
 
         // 최대 4개까지의 hidden input에 값을 설정
         var isSet = false;
@@ -207,19 +224,37 @@ $(document).ready(function () {
                 $("#displayList2").hide(); // 예시에 따라 displayList1, displayList2, ... 가려주기
                 isSet = true; // 값을 설정한 경우 isSet을 true로 변경
                 
-             // Assuming you have a container div with id 'tagImage'
-                var tagImageContainer = $("#tagImage");
+             // Create a new list item for the clicked product
+                var newItem = $("<li>").addClass("list-group-item me-3").attr("id", "tagimage" + i).css({
+                    "width": "25%",
+                    "border-left": "1px solid #dee2e6",
+                    "border-radius": "10%",
+                    "padding": "5px",
+                    "align-self": "center"
+                });
 
-                // Create HTML elements for image, product_name, and price
-                var imageElement = $("<img>").attr("src", image);
-                var productNameElement = $("<div>").text(productName);
-                var priceElement = $("<div>").text(price);
+                // Create elements for the new list item
+                var removeLink = $("<a>").attr("href", "javascript:removeTagImage(" + i + ")").css("float", "right");
+                removeLink.append('<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-x-square" viewBox="0 0 16 16"><path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/><path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/></svg>');
+                
+                var imageDiv = $("<div>").css("text-align", "center").append($("<img>").attr({
+                    "src": image,
+                    "id": "pimage"
+                }));
+                
+                var infoDiv = $("<div>").addClass("ms-2 me-auto my-auto").css("text-align", "center");
+                infoDiv.append($("<div>").html(productName.split('/').join('<br>')));
+                var customFormattedPrice = price.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + " 원";
+                infoDiv.append($("<div>").addClass("fw-bold").text(customFormattedPrice));
 
-                // Append the elements to the container
-                tagImageContainer.append(imageElement, productNameElement, priceElement);
+                // Append elements to the new list item
+                newItem.append(removeLink, imageDiv, infoDiv);
+
+                // Append the new list item to the container
+                $("#tagImageOl").append(newItem);
             }
         }
-
+        
         // 4개 이상 클릭 시 알림 띄우기
         if (!isSet) {
             alert("최대 4개까지만 선택할 수 있습니다.");
@@ -345,10 +380,10 @@ $(document).ready(function () {
 		<div class="col-lg-6">
 		<form:form name="f" commandName="styleBean" action="insert.style" method="post" enctype="multipart/form-data">
 			<input type="hidden" name="member_id" <c:if test="${not empty loginInfo}">value="${loginInfo.member_id }"</c:if> <c:if test="${not empty kakaoLoginInfo}">value="${kakaoLoginInfo.member_id}"</c:if>>
-			<input type="hidden" name="product_number1" id="product_number1" value="${styleBean.product_number1}">
-			<input type="hidden" name="product_number2" id="product_number2" value="${styleBean.product_number2}">
-			<input type="hidden" name="product_number3" id="product_number3" value="${styleBean.product_number3}">
-			<input type="hidden" name="product_number4" id="product_number4" value="${styleBean.product_number4}">
+			<input type="hidden" name="product_number1" id="product_number1">
+			<input type="hidden" name="product_number2" id="product_number2">
+			<input type="hidden" name="product_number3" id="product_number3">
+			<input type="hidden" name="product_number4" id="product_number4">
 			
 			<h3 style="padding: 22 0 22 0">Style Write</h3>
 		
@@ -380,7 +415,10 @@ $(document).ready(function () {
 				<div class="col-7 align-self-center" id="drop_the_text">
 					<div><input type="text" class="form-control mb-1" id="searchWord2" name="searchWord2" autocomplete= 'off' placeholder="브랜드, 상품명을 검색하세요." ></div>
 					<div id="displayList2" style="overflow: auto; border-top: 0px; margin-top: -4px;"></div>
-					<div class="d-flex justify-content-start" id="tagImage"></div>
+					<div class="d-flex justify-content-start" id="tagImage">
+					<ol class="list-group list-group-horizontal" style="width:100%; background: none; box-shadow: none;" id="tagImageOl">
+					</ol>
+					</div>
 				</div>
 				<div class="col-2"></div>
 			</div>
@@ -439,7 +477,7 @@ $(document).ready(function () {
            </form:form>
            
   </div>
-
+	<div class="col-lg-2"></div>
   </div>
   
 </div>

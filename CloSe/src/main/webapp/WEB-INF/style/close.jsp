@@ -29,38 +29,36 @@
         }
         
         #img{
-        	width: 80%;
-        	height: 100%;
-        	border-radius: 50%;
+           width: 80%;
+           height: 100%;
+           border-radius: 50%;
         }
         #imgDiv{
-        	text-align: center;
+           text-align: center;
         }
         #imgContainer{
-        	width: 66%;
-        	margin: auto;
+           width: 66%;
+           margin: auto;
         }
         
         #styleContainer{
-        	width: 100%;
-        	margin: auto;
+           width: 100%;
+           margin: auto;
         }
         #wrapper-bg {
-		    background-size: cover; /* 배경 이미지가 항상 전체를 덮도록 설정합니다. */
-		    background-position: center; /* 배경 이미지가 항상 중앙에 위치하도록 설정합니다. */
-		}
-		#result{
-			float: left;
-			width: 1000px;
-		}
+          background-size: cover; /* 배경 이미지가 항상 전체를 덮도록 설정합니다. */
+          background-position: center; /* 배경 이미지가 항상 중앙에 위치하도록 설정합니다. */
+      }
+      #result{
+         float: left;
+         width: 1000px;
+      }
     </style>
 </head>
 
 <script type="text/javascript">
 $(document).ready(function() {
-	var image1 = ${styleBean.image1};
-	alert(image1);
-	
+   
     let queryUrl = "https://api.openweathermap.org/data/2.5/weather?";
     let apiKey = "appid=27f0e2dcc40e953d16644b55e897423d&";
     let apiOptions = "units=metric";
@@ -85,95 +83,95 @@ $(document).ready(function() {
     });
 
     function fetchFile(){
-	fetch(file)
-	.then((response) => response.json())
-	.then((data) => {
-		// Weather main data
-		var main = data.weather[0].main;
-		var temp = data.main.temp;
-		var description = data.weather[0].description;
-		var feelTemperature = data.main.feels_like;
-		
-		document.getElementById("wrapper-temp").innerHTML = temp + "°C";
-		document.getElementById("wrapper-feelTemperature-span").innerHTML = "(체감 온도 : " + feelTemperature + "°C)";
-		document.getElementById("wrapper-description").innerHTML = description;
-		
-		let iconBaseUrl = "http://openweathermap.org/img/wn/";
-		let iconFormat = ".webp";
-		var iconCode = data.weather[0].icon;
-		
-		let iconFullyUrl = iconBaseUrl + iconCode + iconFormat;
-		let iconElement = document.getElementById("wrapper-icon-today");
-		if (iconElement) {
-		    iconElement.src = iconFullyUrl;
-		} else {
-		}
+   fetch(file)
+   .then((response) => response.json())
+   .then((data) => {
+      // Weather main data
+      var main = data.weather[0].main;
+      var temp = data.main.temp;
+      var description = data.weather[0].description;
+      var feelTemperature = data.main.feels_like;
+      
+      document.getElementById("wrapper-temp").innerHTML = temp + "°C";
+      document.getElementById("wrapper-feelTemperature-span").innerHTML = "(체감 온도 : " + feelTemperature + "°C)";
+      document.getElementById("wrapper-description").innerHTML = description;
+      
+      let iconBaseUrl = "http://openweathermap.org/img/wn/";
+      let iconFormat = ".webp";
+      var iconCode = data.weather[0].icon;
+      
+      let iconFullyUrl = iconBaseUrl + iconCode + iconFormat;
+      let iconElement = document.getElementById("wrapper-icon-today");
+      if (iconElement) {
+          iconElement.src = iconFullyUrl;
+      } else {
+      }
 
-		// Backgrounds
-		switch (main) {
-		case "Snow":
-		document.getElementById("wrapper-bg").style.backgroundImage =
-		"url('https://mdbgo.io/ascensus/mdb-advanced/img/snow.gif')";
-		break;
-		case "Clouds":
-		document.getElementById("wrapper-bg").style.backgroundImage =
-		"url('https://mdbgo.io/ascensus/mdb-advanced/img/clouds.gif')";
-		break;
-		case "Fog":
-		document.getElementById("wrapper-bg").style.backgroundImage =
-		"url('https://mdbgo.io/ascensus/mdb-advanced/img/fog.gif')";
-		break;
-		case "Rain":
-		document.getElementById("wrapper-bg").style.backgroundImage =
-		"url('https://mdbgo.io/ascensus/mdb-advanced/img/rain.gif')";
-		break;
-		case "Clear":
-		document.getElementById("wrapper-bg").style.backgroundImage =
-		"url('https://mdbgo.io/ascensus/mdb-advanced/img/clear.gif')";
-		break;
-		case "Thunderstorm":
-		document.getElementById("wrapper-bg").style.backgroundImage =
-		"url('https://mdbgo.io/ascensus/mdb-advanced/img/thunderstorm.gif')";
-		break;
-		default:
-		document.getElementById("wrapper-bg").style.backgroundImage =
-		"url('https://mdbgo.io/ascensus/mdb-advanced/img/clear.gif')";
-		break;
-		}
-	});
-	
-	callRequest();
-	
-	$("input[type='checkbox']").change(function() {
-	    callRequest();
-	});
-	
-	function callRequest() {
-	    var checkboxSeasonValues = $("input[name='season']:checked").map(function() {
-	        return this.value;
-	    }).get();
-	    var checkboxGenderValues = $("input[name='gender']:checked").map(function() {
-	        return this.value;
-	    }).get();
-	    var checkboxStyleValues = $("input[name='style']:checked").map(function() {
-	        return this.value;
-	    }).get();
-	    
-	    var tempValue = "${temp}";
+      // Backgrounds
+      switch (main) {
+      case "Snow":
+      document.getElementById("wrapper-bg").style.backgroundImage =
+      "url('https://mdbgo.io/ascensus/mdb-advanced/img/snow.gif')";
+      break;
+      case "Clouds":
+      document.getElementById("wrapper-bg").style.backgroundImage =
+      "url('https://mdbgo.io/ascensus/mdb-advanced/img/clouds.gif')";
+      break;
+      case "Fog":
+      document.getElementById("wrapper-bg").style.backgroundImage =
+      "url('https://mdbgo.io/ascensus/mdb-advanced/img/fog.gif')";
+      break;
+      case "Rain":
+      document.getElementById("wrapper-bg").style.backgroundImage =
+      "url('https://mdbgo.io/ascensus/mdb-advanced/img/rain.gif')";
+      break;
+      case "Clear":
+      document.getElementById("wrapper-bg").style.backgroundImage =
+      "url('https://mdbgo.io/ascensus/mdb-advanced/img/clear.gif')";
+      break;
+      case "Thunderstorm":
+      document.getElementById("wrapper-bg").style.backgroundImage =
+      "url('https://mdbgo.io/ascensus/mdb-advanced/img/thunderstorm.gif')";
+      break;
+      default:
+      document.getElementById("wrapper-bg").style.backgroundImage =
+      "url('https://mdbgo.io/ascensus/mdb-advanced/img/clear.gif')";
+      break;
+      }
+   });
+   
+   callRequest();
+   
+   $("input[type='checkbox']").change(function() {
+       callRequest();
+   });
+   
+   function callRequest() {
+       var checkboxSeasonValues = $("input[name='season']:checked").map(function() {
+           return this.value;
+       }).get();
+       var checkboxGenderValues = $("input[name='gender']:checked").map(function() {
+           return this.value;
+       }).get();
+       var checkboxStyleValues = $("input[name='style']:checked").map(function() {
+           return this.value;
+       }).get();
+       
+       var tempValue = "${temp}";
 
-	    $.ajax({
-	        url: 'styleFilter.style',
-	        method: 'POST',
-	        data: {
-	            'seasonArray': checkboxSeasonValues,
-	            'genderArray': checkboxGenderValues,
-	            'styleArray': checkboxStyleValues,
-	            'temp': tempValue
-	        },
-	        success: function(response) {
-	        	var contextPath = "<%= request.getContextPath() %>";
-            	var jsonArray = JSON.parse(response);
-            	if (!(jsonArray instanceof Array)) { // jsonArray가 배열이 아닌 경우
+       $.ajax({
+           url: 'styleFilter.style',
+           method: 'POST',
+           data: {
+               'seasonArray': checkboxSeasonValues,
+               'genderArray': checkboxGenderValues,
+               'styleArray': checkboxStyleValues,
+               'temp': tempValue
+           },
+           success: function(response) {
+              var contextPath = "<%= request.getContextPath() %>";
+               var jsonArray = JSON.parse(response);
+               if (!(jsonArray instanceof Array)) { // jsonArray가 배열이 아닌 경우
                     jsonArray = [jsonArray]; // jsonArray를 배열로 변환
                 }
                 $(document).data('jsonArray', jsonArray);
@@ -249,13 +247,13 @@ $(document).ready(function() {
                     }
                 });
                 alert("성공");
-	        },
-	        error: function (jqXHR, textStatus, errorThrown) {
-	            console.error('AJAX Error:', textStatus, errorThrown);
-	            alert("실패");
-	        }
-	    });
-	}
+           },
+           error: function (jqXHR, textStatus, errorThrown) {
+               console.error('AJAX Error:', textStatus, errorThrown);
+               alert("실패");
+           }
+       });
+   }
     }
 });
 </script>
@@ -299,7 +297,7 @@ $(document).ready(function() {
         </button>
         <div class="collapse" id="orders-collapse" style="margin-left: 30px;">
           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small" id="style">
-          	<li><input type="checkbox" style="accent-color: black;" name="style" value="로맨틱"> 로맨틱</li>
+             <li><input type="checkbox" style="accent-color: black;" name="style" value="로맨틱"> 로맨틱</li>
             <li><input type="checkbox" style="accent-color: black;" name="style" value="모던"> 모던</li>
             <li><input type="checkbox" style="accent-color: black;" name="style" value="미니멀"> 미니멀</li>
             <li><input type="checkbox" style="accent-color: black;" name="style" value="빈티지"> 빈티지</li>
@@ -314,8 +312,8 @@ $(document).ready(function() {
     </ul>
   </div>
  </div> 
-  		
-  		<div class="flex-column" style="width:100%; margin-left: 50px;">
+        
+        <div class="flex-column" style="width:100%; margin-left: 50px;">
       <div class="col-md-9 col-md-7 col-xl-5" style="width:70%;">
         <div id="wrapper-bg" class="card text-white bg-image shadow-4-strong" style="height: 400px; margin-left: 150px;">
           <!-- Main current data -->
@@ -332,35 +330,35 @@ $(document).ready(function() {
           <div class="card-body p-0">
             <div class="row align-items-center">
               <div class="col-sm-12 text-center">
-              	<strong>
-              	<span>추천 옷 - </span>
-                <span class="">			
-	                <c:if test="${ temp <= 4.0 }">
-						패딩, 두꺼운코트, 목도리, 기모제품
-					</c:if>
-					<c:if test="${ temp > 4.0 && temp <= 8.0 }">
-						코트, 가죽자켓, 히트텍, 니트, 레깅스
-					</c:if>
-					<c:if test="${ temp > 8.0 && temp <= 12.0 }">
-						자켓, 트렌치코트, 야상, 니트, 청바지, 스타킹
-					</c:if>
-					<c:if test="${ temp > 12.0 && temp <= 16.0 }">
-						자켓, 가디건, 야상, 스타킹, 청바지, 면바지
-					</c:if>
-					<c:if test="${ temp > 16.0 && temp <= 19.0 }">
-						얇은 니트, 맨투맨, 가디건, 청바지
-					</c:if>
-					<c:if test="${ temp > 19.0 && temp <= 22.0 }">
-						얇은 가디건, 긴팔, 면바지, 청바지
-					</c:if>
-					<c:if test="${ temp > 22.0 && temp <= 27.0 }">
-						반팔, 얇은 셔츠, 반바지, 면바지
-					</c:if>
-					<c:if test="${ temp > 27.0 }">
-						민소매, 반팔, 반바지, 원피스
-					</c:if>
-				</span>
-				</strong>
+                 <strong>
+                 <span>추천 옷 - </span>
+                <span class="">         
+                   <c:if test="${ temp <= 4.0 }">
+                  패딩, 두꺼운코트, 목도리, 기모제품
+               </c:if>
+               <c:if test="${ temp > 4.0 && temp <= 8.0 }">
+                  코트, 가죽자켓, 히트텍, 니트, 레깅스
+               </c:if>
+               <c:if test="${ temp > 8.0 && temp <= 12.0 }">
+                  자켓, 트렌치코트, 야상, 니트, 청바지, 스타킹
+               </c:if>
+               <c:if test="${ temp > 12.0 && temp <= 16.0 }">
+                  자켓, 가디건, 야상, 스타킹, 청바지, 면바지
+               </c:if>
+               <c:if test="${ temp > 16.0 && temp <= 19.0 }">
+                  얇은 니트, 맨투맨, 가디건, 청바지
+               </c:if>
+               <c:if test="${ temp > 19.0 && temp <= 22.0 }">
+                  얇은 가디건, 긴팔, 면바지, 청바지
+               </c:if>
+               <c:if test="${ temp > 22.0 && temp <= 27.0 }">
+                  반팔, 얇은 셔츠, 반바지, 면바지
+               </c:if>
+               <c:if test="${ temp > 27.0 }">
+                  민소매, 반팔, 반바지, 원피스
+               </c:if>
+            </span>
+            </strong>
               </div>
 
             </div>
@@ -369,12 +367,11 @@ $(document).ready(function() {
           </div>
         </div>
         </div>
-        	<div id="result" class="d-flex flex-wrap"></div>
+           <div id="result" class="d-flex flex-wrap"></div>
       </div>
 
   
 </div>
 </div>
 <%@ include file="../main/bottom.jsp" %>
-
 

@@ -163,20 +163,6 @@ $(document).ready(function () {
     // 초기 로딩 시에도 업데이트 수행
     updateSubmitButton();
    
-   var bsComponent = $(".bs-component");
-    var initialPosition = bsComponent.offset().top;
-
-    $(window).scroll(function() {
-      var scrollPosition = $(window).scrollTop();
-      var windowHeight = window.innerHeight;
-      var elementHeight = bsComponent.outerHeight();
-
-      // 새로운 top 위치 계산하여 요소를 수직으로 중앙에 배치
-      var newPosition = (windowHeight - elementHeight) / 2 + scrollPosition - initialPosition;
-
-      // 새로운 top 위치를 부드러운 애니메이션으로 적용
-      bsComponent.stop().animate({"margin-top": newPosition + "px"}, 700);
-    });
     
     $("#searchWord2").on("input", function () {
         var searchWord2 = $(this).val().trim();

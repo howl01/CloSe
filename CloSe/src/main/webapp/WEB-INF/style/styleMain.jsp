@@ -119,9 +119,13 @@ function loadMoreData() {
 	                    }
 	                    html += '<a href="detail.style?style_number=' + styleBean.style_number + '" class="link-dark link-underline-opacity-0">';
 	                    html += '<div class="card-body p-0">';
-	                    html += '<img src="' + contextPath + '/resources/styleImage/' + styleBean.image1 + '" style="max-height: 350px;" class="card-img-top">';
+	                    html += '<img src="' + contextPath + '/resources/styleImage/' + styleBean.image1 + '" style="max-height: 450px;" class="card-img-top">';
 	                    html += '<div class="d-flex align-items-center">';
-	                    html += '<img src="' + contextPath + '/resources/memberImage/' + styleBean.member_image + '" id="profile" style="width:2vw; height: 2vw; margin-top: 5px; border-radius: 100%; border: 0.5px solid #C0C0C0;">';
+	                    if(styleBean.member_image == null){
+	                    	html += '<img src = "https://static.nid.naver.com/images/web/user/default.png" id="profile" style="width:2vw; height: 2vw; margin-top: 5px; border-radius: 100%; border: 0.5px solid #C0C0C0;">';
+	                    } else if(styleBean.member_image != null) {
+	                    	html += '<img src="' + contextPath + '/resources/memberImage/' + styleBean.member_image + '" id="profile" style="width:2vw; height: 2vw; margin-top: 5px; border-radius: 100%; border: 0.5px solid #C0C0C0;">';
+	                    }
 	                    html += '&nbsp;' + styleBean.nickname;
 	                    if(!styleBean.heartFlag){
 	                    	html += '<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#C0C0C0" style="margin-left:9vw;" class="bi bi-heart" viewBox="0 0 16 16"><path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/></svg>'
@@ -149,9 +153,13 @@ function loadMoreData() {
 	                    }
 	                    html += '<a href="detail.style?style_number=' + styleBean.style_number + '" class="link-dark link-underline-opacity-0">';
 	                    html += '<div class="card-body p-0">';
-	                    html += '<img src="' + contextPath + '/resources/styleImage/' + styleBean.image1 + '" style="max-height: 370px;" class="card-img-top">';
+	                    html += '<img src="' + contextPath + '/resources/styleImage/' + styleBean.image1 + '" style="max-height: 450px;" class="card-img-top">';
 	                    html += '<div class="d-flex align-items-center">';
-	                    html += '<img src="' + contextPath + '/resources/memberImage/' + styleBean.member_image + '" id="profile" style="width:2vw; height: 2vw; margin-top: 5px; border-radius: 100%; border: 0.5px solid #C0C0C0;">';
+	                    if(styleBean.member_image == null){
+	                    	html += '<img src = "https://static.nid.naver.com/images/web/user/default.png" id="profile" style="width:2vw; height: 2vw; margin-top: 5px; border-radius: 100%; border: 0.5px solid #C0C0C0;">';
+	                    } else if(styleBean.member_image != null) {
+	                    	html += '<img src="' + contextPath + '/resources/memberImage/' + styleBean.member_image + '" id="profile" style="width:2vw; height: 2vw; margin-top: 5px; border-radius: 100%; border: 0.5px solid #C0C0C0;">';
+	                    }
 	                    html += '&nbsp;' + styleBean.nickname;
 	                    if(!styleBean.heartFlag){
 	                    	html += '<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#C0C0C0" style="margin-left:9vw;" class="bi bi-heart" viewBox="0 0 16 16"><path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/></svg>'
@@ -179,9 +187,13 @@ function loadMoreData() {
 	                    }
 	                    html += '<a href="detail.style?style_number=' + styleBean.style_number + '" class="link-dark link-underline-opacity-0">';
 	                    html += '<div class="card-body p-0">';
-	                    html += '<img src="' + contextPath + '/resources/styleImage/' + styleBean.image1 + '" style="max-height: 400px;" class="card-img-top">';
+	                    html += '<img src="' + contextPath + '/resources/styleImage/' + styleBean.image1 + '" style="max-height: 450px;" class="card-img-top">';
 	                    html += '<div class="d-flex align-items-center">';
-	                    html += '<img src="' + contextPath + '/resources/memberImage/' + styleBean.member_image + '" id="profile" style="width:2vw; height: 2vw; margin-top: 5px; border-radius: 100%; border: 0.5px solid #C0C0C0;">';
+	                    if(styleBean.member_image == null){
+	                    	html += '<img src = "https://static.nid.naver.com/images/web/user/default.png" id="profile" style="width:2vw; height: 2vw; margin-top: 5px; border-radius: 100%; border: 0.5px solid #C0C0C0;">';
+	                    } else if(styleBean.member_image != null) {
+	                    	html += '<img src="' + contextPath + '/resources/memberImage/' + styleBean.member_image + '" id="profile" style="width:2vw; height: 2vw; margin-top: 5px; border-radius: 100%; border: 0.5px solid #C0C0C0;">';
+	                    }
 	                    html += '&nbsp;' + styleBean.nickname;
 	                    if(!styleBean.heartFlag){
 	                    	html += '<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#C0C0C0" style="margin-left:9vw;" class="bi bi-heart" viewBox="0 0 16 16"><path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/></svg>'
@@ -209,9 +221,13 @@ function loadMoreData() {
 	                    }
                     	html += '<a href="detail.style?style_number=' + styleBean.style_number + '" class="link-dark link-underline-opacity-0">';
 	                    html += '<div class="card-body p-0">';
-	                    html += '<img src="' + contextPath + '/resources/styleImage/' + styleBean.image1 + '" style="max-height: 430px;" class="card-img-top">';
+	                    html += '<img src="' + contextPath + '/resources/styleImage/' + styleBean.image1 + '" style="max-height: 450px;" class="card-img-top">';
 	                    html += '<div class="d-flex align-items-center">';
-	                    html += '<img src="' + contextPath + '/resources/memberImage/' + styleBean.member_image + '" id="profile" style="width:2vw; height: 2vw; margin-top: 5px; border-radius: 100%; border: 0.5px solid #C0C0C0;">';
+	                    if(styleBean.member_image == null){
+	                    	html += '<img src = "https://static.nid.naver.com/images/web/user/default.png" id="profile" style="width:2vw; height: 2vw; margin-top: 5px; border-radius: 100%; border: 0.5px solid #C0C0C0;">';
+	                    } else if(styleBean.member_image != null) {
+	                    	html += '<img src="' + contextPath + '/resources/memberImage/' + styleBean.member_image + '" id="profile" style="width:2vw; height: 2vw; margin-top: 5px; border-radius: 100%; border: 0.5px solid #C0C0C0;">';
+	                    }
 	                    html += '&nbsp;' + styleBean.nickname;
 	                    if(!styleBean.heartFlag){
 	                    	html += '<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#C0C0C0" style="margin-left:9vw;" class="bi bi-heart" viewBox="0 0 16 16"><path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/></svg>'

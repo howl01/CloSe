@@ -584,7 +584,7 @@ window.addEventListener('scroll', function() {
 			<table border="0" width="100%">
 				<tr>
 					<td><img id="preview" width="100%"
-						src='<%=request.getContextPath()%>/resources/product/image/${pb.image }' />
+						src='<%=request.getContextPath()%>/resources/productImage/${pb.image }' />
 				</tr>
 			</table>
 		</div>

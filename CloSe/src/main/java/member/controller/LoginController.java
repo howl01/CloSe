@@ -44,8 +44,9 @@ public class LoginController {
 		MemberBean memberBean = memberDao.getDetail(mb.getMember_id());
 
 		if (memberBean == null) {
-			out.println("<script>alert('가입하지 않은 회원입니다.'); location.href='" + viewPage + "';</script>");
+			out.println("<script>alert('가입하지 않은 회원입니다.');</script>");
 			out.flush();
+			return viewPage;
 		} else { // 아이디 존재함
 			if (memberBean.getPassword().equals(mb.getPassword())) { // 비번이 일치함
 				if (memberBean.getBan_count() > 0 && memberBean.getBan_expiration() != null) {
