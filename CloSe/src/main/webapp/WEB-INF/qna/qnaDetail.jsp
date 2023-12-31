@@ -99,10 +99,10 @@
 		location.href="insert.qna";
 	}
 	function reply(ref, re_level, pageNumber){
-		window.open('reply.qna?ref='+ref+"&re_level="+re_level+"&pageNumber="+pageNumber, '답변 작성', 'width=420, height=280, top	=120px, left=500px, scrollbars=yes');
+		window.open('reply.qna?ref='+ref+"&re_level="+re_level+"&pageNumber="+pageNumber, '답변 작성', 'width=430px, height=360px, top=120px, left=400px, scrollbars=yes');
 	}
 	function update(ref, re_level, pageNumber){
-		window.open('update.qna?ref='+ref+"&re_level="+re_level+"&pageNumber="+pageNumber, '답변 작성', 'width=420, height=280, top	=120px, left=500px, scrollbars=yes');
+		window.open('update.qna?ref='+ref+"&re_level="+re_level+"&pageNumber="+pageNumber, '답변 작성', 'width=420px, height=280px, top=120px, left=500px, scrollbars=yes');
 	}
 </script>
 
@@ -273,7 +273,7 @@
 					<td colspan="6">
 						내용 : 
 						<c:if test="${ qnaBean.image != null }">
-							<img src="<%= request.getContextPath() %>/resources/uploadQna/${ qnaBean.image }" width="150px">
+							<img src="<%= request.getContextPath() %>/resources/qnaImage/${ qnaBean.image }" width="150px"><br><br>
 						</c:if>
 						${ content } <br><br><br><hr>
 						<c:forEach var="lists2" items="${ lists2 }">

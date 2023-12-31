@@ -94,7 +94,7 @@
 				<th>사진첨부</th>
 				<td>
 					<c:if test="${ qnaBean.image != null }">
-						<img src="<%= request.getContextPath() %>/resources/uploadQna/${ qnaBean.image }" width="150px" />
+						<img src="<%= request.getContextPath() %>/resources/qnaImage/${ qnaBean.image }" width="150px" />
 					</c:if>
 					<div style="width: 300px;">
 					<input type="file" class="form-control" name="upload" value="${ qnaBean.image }">

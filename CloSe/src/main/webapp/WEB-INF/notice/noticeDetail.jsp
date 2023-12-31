@@ -136,7 +136,7 @@
 		<tr>
 			<td colspan="2">
 				<c:if test="${ noticeBean.image != null }">
-					<img src="<%= request.getContextPath() %>/resources/uploadFolder/${ noticeBean.image }" width="150px">
+					<img src="<%= request.getContextPath() %>/resources/noticeImage/${ noticeBean.image }" width="150px"><br><br>
 				</c:if>
 				${ noticeBean.content }
 			</td>

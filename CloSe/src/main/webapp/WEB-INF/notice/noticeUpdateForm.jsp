@@ -103,7 +103,7 @@
 				<th>사진첨부</th>
 				<td>
 					<c:if test="${ noticeBean.image != null }">
-						<img src="<%= request.getContextPath() %>/resources/uploadFolder/${ noticeBean.image }" width="150px" />
+						<img src="<%= request.getContextPath() %>/resources/noticeImage/${ noticeBean.image }" width="150px" />
 					</c:if>
 					<div style="width: 300px;">
 						<input type="file" class="form-control" name="upload" value="${ noticeBean.image }">

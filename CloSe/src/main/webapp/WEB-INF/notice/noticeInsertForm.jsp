@@ -97,7 +97,7 @@
 		<tr>
 			<th>제목</th>
 			<td>
-				<input type="text" name="title" value="${ noticeBean.title }">
+				<input type="text" name="title" value="${ noticeBean.title }" maxlength="15">
 				<form:errors cssClass="err" path="title" />
 			</td>
 		</tr>
@@ -114,6 +114,7 @@
 			<td>
 				<div style="width: 300px;">
 					<input type="file" class="form-control" name="upload" value="${ noticeBean.image }">
+					<input type="hidden" name="image" value="${ noticeBean.image }">
 				</div>
 			</td>
 		</tr>

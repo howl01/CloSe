@@ -72,7 +72,7 @@ public class NoticeDeleteController {
 			for(Integer notice_number : chk_number) {
 				NoticeBean noticeBean = noticeDao.selectNotice(notice_number);
 				noticeDao.deleteNotice(notice_number);
-				String uploadPath = servletContext.getRealPath("/resources/uploadNotice");
+				String uploadPath = servletContext.getRealPath("/resources/noticeImage");
 				File image = new File(uploadPath+File.separator+noticeBean.getImage());
 				image.delete();
 			}

@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import qna.model.QnaBean;
@@ -42,16 +43,23 @@ public class QnaInsertController {
 	@RequestMapping(value = command, method = RequestMethod.POST)
 	public String insert(@Valid QnaBean qnaBean,
 							BindingResult bResult,
-							HttpServletResponse response) throws IOException {
+							Model model) throws IOException {
+		
+		System.out.println("문의유형 : " + qnaBean.getQna_category());
+		System.out.println("제목 : " + qnaBean.getTitle());
+		System.out.println("내용 : " + qnaBean.getContent());
+		System.out.println("사진첨부 : " + qnaBean.getImage());
+		
+		if(qnaBean.getSecret() == null) {
+			qnaBean.setSecret("NO");
+		}
 		
 		if(bResult.hasErrors()) {
 			return viewPage;
 		}
 		qnaBean.setWrite_date(new Timestamp(System.currentTimeMillis()));
-		String uploadPath = servletContext.getRealPath("/resources/uploadQna/");
 		
-		response.setContentType("text/html; charset=UTF-8");
-		PrintWriter out = response.getWriter();
+		String uploadPath = servletContext.getRealPath("/resources/qnaImage");
 		
 		int cnt = qnaDao.insertQna(qnaBean);
 		File destination = new File(uploadPath+File.separator+qnaBean.getImage());
@@ -62,11 +70,8 @@ public class QnaInsertController {
 		}catch(Exception e) {
 			e.printStackTrace();
 		} 
-		if(cnt == -1) {
-			out.println("<script>alert('올바른 형식이 아닙니다.');</script>");
-			out.flush();
-			return viewPage;
-		}
+		
+		
 		return gotoPage;
 	}
 	

@@ -33,7 +33,7 @@ public class QnaDeleteController {
 		QnaBean qnaBean = qnaDao.selectQna(qna_number);
 		qnaDao.deleteQna(qna_number);
 		
-		String uploadPath =  servletContext.getRealPath("/resources/uploadQna/");
+		String uploadPath =  servletContext.getRealPath("/resources/qnaImage/");
 		
 		File image = new File(uploadPath+File.separator+qnaBean.getImage());
 		

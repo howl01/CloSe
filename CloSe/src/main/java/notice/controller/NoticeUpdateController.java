@@ -59,7 +59,7 @@ public class NoticeUpdateController {
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		
-		String uploadPath = servletContext.getRealPath("/resources/uploadNotice/");
+		String uploadPath = servletContext.getRealPath("/resources/noticeImage/");
 		
 		int cnt = noticeDao.updateNotice(noticeBean);
 		File destination = new File(uploadPath+File.separator+noticeBean.getImage());

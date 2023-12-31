@@ -47,7 +47,7 @@ public class NoticeInsertController {
 			return viewPage;
 		}
 		noticeBean.setWrite_date(new Timestamp(System.currentTimeMillis()));
-		String uploadPath = servletContext.getRealPath("/resources/uploadNotice");
+		String uploadPath = servletContext.getRealPath("/resources/noticeImage");
 		
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
@@ -56,11 +56,6 @@ public class NoticeInsertController {
 		File destination = new File(uploadPath+File.separator+noticeBean.getImage());
 		
 		MultipartFile multi = noticeBean.getUpload();
-		if(cnt == -1) {
-			out.println("<script>alert('올바른 형식이 아닙니다.');</script>");
-			out.flush();
-			return viewPage;
-		}
 		try {
 			multi.transferTo(destination);
 		}catch(Exception e) {

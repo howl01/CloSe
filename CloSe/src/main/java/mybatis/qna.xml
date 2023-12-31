@@ -71,8 +71,8 @@
 	</select>
 	
 	<insert id="insertQna">
-		insert into qna (qna_number, image, title, secret,content, write_date, ref, re_level, qna_category, member_id)
-		values (qna_seq.nextval, #{image}, #{title}, #{secret},#{content}, #{write_date}, qna_seq.currval, 0, #{qna_category}, #{member_id})
+		insert into qna (qna_number, image, title, content, write_date, secret, ref, re_level, qna_category, member_id)
+		values (qna_seq.nextval, #{image}, #{title}, #{content}, #{write_date}, #{secret}, qna_seq.currval, 0, #{qna_category}, #{member_id})
 	</insert>
 	
 	<select id="detailQna" resultType="String">

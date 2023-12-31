@@ -73,7 +73,7 @@ public class QnaUpdateController {
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		
-		String uploadPath = servletContext.getRealPath("/resources/uploadQna/");
+		String uploadPath = servletContext.getRealPath("/resources/qnaImage/");
 		
 		if(qnaBean.getSecret() == null) {
 			qnaBean.setSecret("NO");

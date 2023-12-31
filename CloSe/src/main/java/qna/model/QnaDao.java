@@ -51,6 +51,7 @@ public class QnaDao {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
+		System.out.println("insertQna : " + cnt);
 		return cnt;
 	}
 
