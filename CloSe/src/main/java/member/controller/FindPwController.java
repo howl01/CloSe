@@ -49,13 +49,13 @@ public class FindPwController {
 		//메일 관련 정보
 		String host = "smtp.naver.com";
 		final String username = "ksg980105";
-		final String password = "비밀번호";
+		final String password = "@rlatjdrb12";
 		int port=465; //네이버 STMP 포트 번호
 		
 		//메일 내용
 		String recipient = email; //메일을 발송할 이메일 주소
 		String subject = "[옷비서, 나만의 스타일리스트] 비밀번호 알림 메일"; //메일 발송시 제목
-		String body = "회원님의 비밀번호는 \" + mempassword + \"입니다."; //메일 발송시 내용
+		String body = "회원님의 비밀번호는" + mempassword + "입니다."; //메일 발송시 내용
 		
 		Properties props = System.getProperties();
 		

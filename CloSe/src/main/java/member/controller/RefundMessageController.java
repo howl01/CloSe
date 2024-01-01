@@ -21,8 +21,8 @@ public class RefundMessageController {
 
 		String phone = request.getParameter("phone");
 		System.out.println(phone);
-		String api_key = "api_key";
-		String api_secret = "api_secret";
+		String api_key = "NCSAYCE2ZL54SKXP";
+		String api_secret = "ZDMHUGQ0R4DEIJQFY4LB7TDCWYAZUQSY";
 		Message coolsms = new Message(api_key, api_secret);
 
 		HashMap<String, String> set = new HashMap<String, String>();
