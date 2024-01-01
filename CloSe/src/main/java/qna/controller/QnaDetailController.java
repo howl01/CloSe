@@ -42,7 +42,7 @@ public class QnaDetailController {
 		 int totalCount = qnaDao.getTotalCount(map);
 		 String url = request.getContextPath() + command;
 		 
-		 Paging pageInfo = new Paging(pageNumber, "10", totalCount, url, whatColumn, keyword);
+		 Paging pageInfo = new Paging(pageNumber, "5", totalCount, url, whatColumn, keyword);
 		 
 		 map.put("begin", String.valueOf(pageInfo.getBeginRow())); 
 		 map.put("end", String.valueOf(pageInfo.getEndRow()));

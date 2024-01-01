@@ -249,7 +249,7 @@
     <div class="row">
         <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="padding-right: 200px;">
         	<c:if test="${ loginInfo.member_id == null }">
-        		<a href="loginForm.jsp" class="btn btn-dark me-md-2" role="button" id="write-article">글쓰기</a>
+        		<a href="login.member" class="btn btn-dark me-md-2" role="button" id="write-article">글쓰기</a>
         	</c:if>
         	<c:if test="${ loginInfo.member_id != null }">
         		<a href="insert.qna" class="btn btn-dark me-md-2" role="button" id="write-article">글쓰기</a>

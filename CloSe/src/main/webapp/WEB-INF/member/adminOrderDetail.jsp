@@ -145,8 +145,6 @@
                </tbody>
             </table>
             <input type="button" style="float: right;" class="btn btn-Dark me-md-2" value="목록보기" onClick="location.href='adminPage.member?pageNumber=${ pageInfo.pageNumber }'">
-            <input type="button" style="float: right;" class="btn btn-Dark me-md-2" value="환불하기" onclick="location.href='refund.orders?order_id=${order_id}&pageNumber=${pageNumber }'">
-            
          </div>
       </div>
 

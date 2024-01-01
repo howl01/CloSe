@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 <link href="css/star-rating.css" media="all" rel="stylesheet" type="text/css" />
 <style>
-	#myform fieldset{
+   #myform fieldset{
     display: inline-block;
     direction: rtl;
     border:0;
@@ -29,6 +29,9 @@
 #myform input[type=radio]:checked ~ label{
     text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
 }
+.form-control{
+   font-size: 20px; 
+}
 </style>
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -50,12 +53,12 @@
                     data: formData,
                     async: false,
                     success: function (data) {
-                    	if(data=="o"){
-	                        alert("리뷰가 성공적으로 등록되었습니다.");
-                    	} else if(data=="x"){
-                    		alert("이미 리뷰을 등록한 주문입니다.");
-                    	}
-                    	
+                       if(data=="o"){
+                           alert("리뷰가 성공적으로 등록되었습니다.");
+                       } else if(data=="x"){
+                          alert("이미 리뷰을 등록한 주문입니다.");
+                       }
+                       
                         window.close();
                     },
                     error: function (error) {
@@ -67,22 +70,22 @@
     });
 </script>    
 <form id="myform" method="post">
-	<input type="hidden" name="orderdetail_number" value="${param.orderDetailNumber }">
-    <textarea name="text" cssClass="form-control" cols="20" rows="2"></textarea><br>
-    평점: 
-    <fieldset>
+   <input type="hidden" name="orderdetail_number" value="${param.orderDetailNumber }">
+    <textarea name="text" class="form-control" cols="30" rows="2" maxlength="30"></textarea><br>
+    평점:  
+    <fieldset> 
     <div style="caret-color: transparent;">
-		<input type="radio" name="rating" value="5" id="rate1"><label
-			for="rate1">★</label>
-		<input type="radio" name="rating" value="4" id="rate2"><label
-			for="rate2">★</label>
-		<input type="radio" name="rating" value="3" id="rate3"><label
-			for="rate3">★</label>
-		<input type="radio" name="rating" value="2" id="rate4"><label
-			for="rate4">★</label>
-		<input type="radio" name="rating" value="1" id="rate5"><label
-			for="rate5">★</label>
-	</div>
-	</fieldset><br>
+      <input type="radio" name="rating" value="5" id="rate1"><label
+         for="rate1">★</label>
+      <input type="radio" name="rating" value="4" id="rate2"><label
+         for="rate2">★</label>
+      <input type="radio" name="rating" value="3" id="rate3"><label
+         for="rate3">★</label>
+      <input type="radio" name="rating" value="2" id="rate4"><label
+         for="rate4">★</label>
+      <input type="radio" name="rating" value="1" id="rate5"><label
+         for="rate5">★</label>
+   </div>
+   </fieldset><br>
     <button class="btn btn-dark" type="submit">리뷰 등록</button>
 </form>

@@ -131,7 +131,7 @@ public class OrdersController {
 		}
 		System.out.println("쿠폰번호:"+coupon_number);
 		if(coupon_number!=null) {
-			if(!coupon_number.equals("null")) {
+			if(!coupon_number.equals("null") && !coupon_number.equals("")) {
 				eventDao.useCoupon(coupon_number);
 			}
 		}

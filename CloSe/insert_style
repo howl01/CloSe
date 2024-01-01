@@ -57,10 +57,6 @@ values (style_seq.nextval, '157. 모델사진.jpg', '157. 모델사진2.jpg', '�
 
 insert into style (style_number, image1, image2, title, content, style, read_count, recommend_count, write_date, product_number1, product_number2, product_number3, product_number4, member_id)
 values (style_seq.nextval, '00. 모델사진.jpg', '00. 모델사진2.jpg', '센스 있는 조합', '퍼 재킷과 미니스커트를 매치하고 헌팅캡으로 마무리한 로맨틱 룩', '로맨틱',0,0,sysdate,66,67,68,69,'wook');
-insert into style (style_number, image1, image2, title, content, style, read_count, recommend_count, write_date, product_number1, product_number2, product_number3, product_number4, member_id)
-values (style_seq.nextval, '12. 모델사진.jpg', '12. 모델사진2.jpg', '남친 룩의 정석', '후드 디테일의 체크 패턴 셔츠에 코튼 팬츠를 매치하고 더플코트를 컬쳐 마무리한 아메카지 룩', '아메카지',0,0,sysdate,70,71,72,73,'user');
-insert into style (style_number, image1, image2, title, content, style, read_count, recommend_count, write_date, product_number1, product_number2, product_number3, product_number4, member_id)
-values (style_seq.nextval, '13. 모델사진.jpg', '13. 모델사진2.jpg', '윈터 데일리 룩', '오렌지 컬러 니트에 코튼 팬츠를 매치하고 숏 패딩을 걸쳐 마무리한 캐주얼 룩', '캐주얼',0,0,sysdate,74,75,76,77,'user');
 
 insert into style (style_number, image1, image2, title, content, style, read_count, recommend_count, write_date, product_number1, product_number2, product_number3, product_number4, member_id)
 values (style_seq.nextval, '12. 모델사진.jpg', '12. 모델사진2.jpg', '남친 룩의 정석', '후드 디테일의 체크 패턴 셔츠에 코튼 팬츠를 매치하고 더플코트를 컬쳐 마무리한 아메카지 룩', '아메카지',0,0,sysdate,70,71,72,73,'jang');

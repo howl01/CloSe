@@ -35,6 +35,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
+import orders.model.OrdersBean;
 import orders.model.OrdersDao;
 
 @Controller 
@@ -58,6 +59,11 @@ public class OrdersRefundController {
 		String token = paymentService.getToken();
 		System.out.println(token);
 		paymentService.payMentCancle(token, orders_id);
+		
+		OrdersBean ob = ordersDao.getOrderById(orders_id);
+	      if(ob.getStatus().equals("환불처리")) {
+	         return "x";
+	      }
 		
 		ordersDao.refundOrder(orders_id);
 		

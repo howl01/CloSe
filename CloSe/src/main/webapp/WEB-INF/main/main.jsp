@@ -33,6 +33,11 @@
       text-decoration: none;
       color: black;
    }
+   #imageMulti{
+      position: absolute;
+      top:5px;
+      left: 13vw;
+  }
 </style>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script type="text/javascript">
@@ -160,35 +165,47 @@ window.navigator.geolocation.getCurrentPosition(function(pos) {
             <div class="container">
                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
 
-              <a href="view.style" class="link-dark link-underline-opacity-0">
-                     <div class="col" align="center">
+           <c:if test="${loginInfo!=null or kakaoLoginInfo != null}">
+                <a href="view.style" class="link-dark link-underline-opacity-0">
+                    <div class="col" align="center">
                         <img class="bd-placeholder-img card-img-top" width="100%" height="150"
                               style="border-radius: 20%;" id="par" src="resources/img/close.png">
                         오늘의 옷비서
-                     </div>
-                  </a>
+                    </div>
+                </a>
+            </c:if>
+            <c:if test="${loginInfo==null and kakaoLoginInfo == null}">
+                <a href="login.member" class="link-dark link-underline-opacity-0">
+                    <div class="col" align="center">
+                        <img class="bd-placeholder-img card-img-top" width="100%" height="150"
+                              style="border-radius: 20%;" id="par" src="resources/img/close.png">
+                        오늘의 옷비서
+                    </div>
+                </a>
+            </c:if>
 
-              <a href="#" class="link-dark link-underline-opacity-0">
+
+              <a href="mainView.style" class="link-dark link-underline-opacity-0">
                      <div class="col" align="center">
-                        <img class="bd-placeholder-img card-img-top" src="resources/img/man.png" width="100%" height="150"
+                        <img class="bd-placeholder-img card-img-top" src="resources/img/style.jpeg" width="100%" height="150"
                               style="border-radius: 20%;">
-                        남자 코디
+                        STYLE
                      </div>
                   </a>
 
-              <a href="#" class="link-dark link-underline-opacity-0">
+              <a href="list.product" class="link-dark link-underline-opacity-0">
                      <div class="col" align="center">
-                        <img class="bd-placeholder-img card-img-top" src="resources/img/woman.png" width="100%" height="150"
+                        <img class="bd-placeholder-img card-img-top" src="resources/img/shop.jpeg" width="100%" height="150"
                               style="border-radius: 20%;">
-                        여자 코디
+                        SHOP
                      </div>
                   </a>
 
-              <a href="#" class="link-dark link-underline-opacity-0">
+              <a href="event.member" class="link-dark link-underline-opacity-0">
                      <div class="col" align="center">
                         <img class="bd-placeholder-img card-img-top" src="resources/img/cou.png" width="100%" height="150"
                               style="border-radius: 20%;">
-                        쿠폰
+                        EVENT
                      </div>
                   </a>
 
@@ -278,29 +295,29 @@ window.navigator.geolocation.getCurrentPosition(function(pos) {
                <c:forEach var="mainStyleBean" items="${mainStyleList}">
                <div class="card m-2 border-0" style="width:23%;">
                <c:if test="${not empty mainStyleBean.image2}"> 
-				    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#C0C0C0" class="bi bi-images" id="imageMulti" viewBox="0 0 16 16">
-				        <path d="M4.502 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3"/>
-				        <path d="M14.002 13a2 2 0 0 1-2 2h-10a2 2 0 0 1-2-2V5A2 2 0 0 1 2 3a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v8a2 2 0 0 1-1.998 2M14 2H4a1 1 0 0 0-1 1h9.002a2 2 0 0 1 2 2v7A1 1 0 0 0 15 11V3a1 1 0 0 0-1-1M2.002 4a1 1 0 0 0-1 1v8l2.646-2.354a.5.5 0 0 1 .63-.062l2.66 1.773 3.71-3.71a.5.5 0 0 1 .577-.094l1.777 1.947V5a1 1 0 0 0-1-1h-10"/>
-				    </svg>
-			    </c:if>
-			    <a href="detail.style?style_number=${mainStyleBean.style_number}" class="link-dark link-underline-opacity-0">
-			        <div class="card-body p-0">
-			            <img src="<%=request.getContextPath()%>/resources/styleImage/${mainStyleBean.image1}" style="max-height: 320px;" class="card-img-top">
-			            <div class="d-flex align-items-center">
-			            	<c:if test="${empty mainStyleBean.member_image}">
-			                <img src="https://static.nid.naver.com/images/web/user/default.png" id="profile" style="width:2vw; height: 2vw; margin-top: 5px; border-radius: 100%; border: 0.5px solid #C0C0C0;">
-			               </c:if>
-			            	<c:if test="${not empty mainStyleBean.member_image}">
-			                <img src="<%=request.getContextPath()%>/resources/memberImage/${mainStyleBean.member_image}" id="profile" style="width:2vw; height: 2vw; margin-top: 5px; border-radius: 100%; border: 0.5px solid #C0C0C0;">
-			               </c:if>
-			                &nbsp; ${mainStyleBean.nickname}
-			            </div>
-		                <p class="card-text" style="font-size: 10pt; margin-top: 5px;">${mainStyleBean.title}</p>
-			        </div>
-			    </a>
-			</div>
-			</c:forEach>
-			</div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#C0C0C0" class="bi bi-images" id="imageMulti" viewBox="0 0 16 16">
+                    <path d="M4.502 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3"/>
+                    <path d="M14.002 13a2 2 0 0 1-2 2h-10a2 2 0 0 1-2-2V5A2 2 0 0 1 2 3a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v8a2 2 0 0 1-1.998 2M14 2H4a1 1 0 0 0-1 1h9.002a2 2 0 0 1 2 2v7A1 1 0 0 0 15 11V3a1 1 0 0 0-1-1M2.002 4a1 1 0 0 0-1 1v8l2.646-2.354a.5.5 0 0 1 .63-.062l2.66 1.773 3.71-3.71a.5.5 0 0 1 .577-.094l1.777 1.947V5a1 1 0 0 0-1-1h-10"/>
+                </svg>
+             </c:if>
+             <a href="detail.style?style_number=${mainStyleBean.style_number}" class="link-dark link-underline-opacity-0">
+                 <div class="card-body p-0">
+                     <img src="<%=request.getContextPath()%>/resources/styleImage/${mainStyleBean.image1}" style="max-height: 320px;" class="card-img-top">
+                     <div class="d-flex align-items-center">
+                        <c:if test="${empty mainStyleBean.member_image}">
+                         <img src="https://static.nid.naver.com/images/web/user/default.png" id="profile" style="width:2vw; height: 2vw; margin-top: 5px; border-radius: 100%; border: 0.5px solid #C0C0C0;">
+                        </c:if>
+                        <c:if test="${not empty mainStyleBean.member_image}">
+                         <img src="<%=request.getContextPath()%>/resources/memberImage/${mainStyleBean.member_image}" id="profile" style="width:2vw; height: 2vw; margin-top: 5px; border-radius: 100%; border: 0.5px solid #C0C0C0;">
+                        </c:if>
+                         &nbsp; ${mainStyleBean.nickname}
+                     </div>
+                      <p class="card-text" style="font-size: 10pt; margin-top: 5px;">${mainStyleBean.title}</p>
+                 </div>
+             </a>
+         </div>
+         </c:forEach>
+         </div>
             </div>
          </div>
       </div>

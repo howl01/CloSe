@@ -60,15 +60,16 @@ CREATE TABLE member (
 );
 
 CREATE TABLE coupon (
-	coupon_num	number	PRIMARY KEY,
-	member_id	varchar2(30),
-	coupon_name	varchar2(30),
-	coupon_discount number
+   coupon_num   number   PRIMARY KEY,
+   member_id   varchar2(30),
+   coupon_name   varchar2(30),
+   coupon_discount number,
+   FOREIGN KEY (member_id) REFERENCES member(member_id) on delete cascade
 );
 
 CREATE TABLE category (
-	smallcategory_name	varchar2(20)	PRIMARY KEY,
-	bigcategory_name	varchar2(15)	NOT NULL
+   smallcategory_name   varchar2(20)   PRIMARY KEY,
+   bigcategory_name   varchar2(15)   NOT NULL
 );
 
 CREATE TABLE product (
@@ -184,7 +185,7 @@ CREATE TABLE notice (
 CREATE TABLE review (
     review_number NUMBER PRIMARY KEY,
     rating NUMBER NOT NULL,
-    text VARCHAR2(20), -- Fixed the typo here
+    text VARCHAR2(100), -- Fixed the typo here
     orderdetail_number number NOT NULL,
     member_id VARCHAR2(30) NOT NULL,
     write_date DATE,
@@ -193,8 +194,8 @@ CREATE TABLE review (
 );
 
 CREATE TABLE pop(
-	keyword varchar2(100),
-	count number
+   keyword varchar2(100),
+   count number
 );
 
 CREATE TABLE heart(

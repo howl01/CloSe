@@ -84,34 +84,30 @@ $(document).ready(function(){
     });
 });
 function sort(sortType){
-	
-	var urlParams = new URLSearchParams(window.location.search);
-	var bigcategory = urlParams.get("bigcategory_name");
-	var smallcategory = urlParams.get("smallcategory_name");
-	var keyword = urlParams.get("searchWord");
-	var whatColumn = urlParams.get("whatColumn");
-	var brand = urlParams.get("brand");
-	location.href="list.product?bigcategory_name="+bigcategory+"&smallcategory_name="+smallcategory+"&brand="+brand+"&sort="+sortType+"&searchWord="+keyword+"&whatColumn="+whatColumn;
-}
-function sfilter(smallcategory){
-	
-	var urlParams = new URLSearchParams(window.location.search);
-	var bigcategory = urlParams.get("bigcategory_name");
-	var keyword = urlParams.get("searchWord");
-	var whatColumn = urlParams.get("whatColumn");
-	var brand = urlParams.get("brand");
-	location.href="list.product?bigcategory_name="+bigcategory+"&smallcategory_name="+smallcategory+"&brand="+brand+"&searchWord="+keyword+"&whatColumn="+whatColumn;
-}
-function bfilter(bigcategory){
-	
-	var urlParams = new URLSearchParams(window.location.search);
-	var smallcategory = urlParams.get("smallcategory_name");
-	var keyword = urlParams.get("searchWord");
-	var whatColumn = urlParams.get("whatColumn");
-	var brand = urlParams.get("brand");
-	location.href="list.product?bigcategory_name="+bigcategory+"&smallcategory_name="+smallcategory+"&brand="+brand+"&searchWord="+keyword+"&whatColumn="+whatColumn;
-}
-
+	   
+	   var urlParams = new URLSearchParams(window.location.search);
+	   var bigcategory = urlParams.get("bigcategory_name");
+	   var smallcategory = urlParams.get("smallcategory_name");
+	   var keyword = urlParams.get("searchWord");
+	   var brand = urlParams.get("brand");
+	   location.href="list.product?bigcategory_name="+bigcategory+"&smallcategory_name="+smallcategory+"&brand="+brand+"&sort="+sortType+"&searchWord="+keyword+"&whatColumn=product_name";
+	}
+	function sfilter(smallcategory){
+	   
+	   var urlParams = new URLSearchParams(window.location.search);
+	   var bigcategory = urlParams.get("bigcategory_name");
+	   var keyword = urlParams.get("searchWord");
+	   var brand = urlParams.get("brand");
+	   location.href="list.product?bigcategory_name="+bigcategory+"&smallcategory_name="+smallcategory+"&brand="+brand+"&searchWord="+keyword+"&whatColumn=product_name";
+	}
+	function bfilter(bigcategory){
+	   
+	   var urlParams = new URLSearchParams(window.location.search);
+	   var smallcategory = urlParams.get("smallcategory_name");
+	   var keyword = urlParams.get("searchWord");
+	   var brand = urlParams.get("brand");
+	   location.href="list.product?bigcategory_name="+bigcategory+"&smallcategory_name="+smallcategory+"&brand="+brand+"&searchWord="+keyword+"&whatColumn=product_name";
+	}
 </script>
 
 <div class="body">
