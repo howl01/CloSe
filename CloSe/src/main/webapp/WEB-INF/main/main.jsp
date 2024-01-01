@@ -278,24 +278,29 @@ window.navigator.geolocation.getCurrentPosition(function(pos) {
                <c:forEach var="mainStyleBean" items="${mainStyleList}">
                <div class="card m-2 border-0" style="width:23%;">
                <c:if test="${not empty mainStyleBean.image2}"> 
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#C0C0C0" class="bi bi-images" id="imageMulti" viewBox="0 0 16 16">
-                    <path d="M4.502 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3"/>
-                    <path d="M14.002 13a2 2 0 0 1-2 2h-10a2 2 0 0 1-2-2V5A2 2 0 0 1 2 3a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v8a2 2 0 0 1-1.998 2M14 2H4a1 1 0 0 0-1 1h9.002a2 2 0 0 1 2 2v7A1 1 0 0 0 15 11V3a1 1 0 0 0-1-1M2.002 4a1 1 0 0 0-1 1v8l2.646-2.354a.5.5 0 0 1 .63-.062l2.66 1.773 3.71-3.71a.5.5 0 0 1 .577-.094l1.777 1.947V5a1 1 0 0 0-1-1h-10"/>
-                </svg>
-             </c:if>
-             <a href="detail.style?style_number=${mainStyleBean.style_number}" class="link-dark link-underline-opacity-0">
-                 <div class="card-body p-0">
-                     <img src="<%=request.getContextPath()%>/resources/styleImage/${mainStyleBean.image1}" style="max-height: 320px;" class="card-img-top">
-                     <div class="d-flex align-items-center">
-                         <img src="<%=request.getContextPath()%>/resources/memberImage/${mainStyleBean.member_image}" id="profile" style="width:2vw; height: 2vw; margin-top: 5px; border-radius: 100%; border: 0.5px solid #C0C0C0;">
-                         &nbsp; ${mainStyleBean.nickname}
-                     </div>
-                      <p class="card-text" style="font-size: 10pt; margin-top: 5px;">${mainStyleBean.title}</p>
-                 </div>
-             </a>
-         </div>
-         </c:forEach>
-         </div>
+				    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#C0C0C0" class="bi bi-images" id="imageMulti" viewBox="0 0 16 16">
+				        <path d="M4.502 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3"/>
+				        <path d="M14.002 13a2 2 0 0 1-2 2h-10a2 2 0 0 1-2-2V5A2 2 0 0 1 2 3a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v8a2 2 0 0 1-1.998 2M14 2H4a1 1 0 0 0-1 1h9.002a2 2 0 0 1 2 2v7A1 1 0 0 0 15 11V3a1 1 0 0 0-1-1M2.002 4a1 1 0 0 0-1 1v8l2.646-2.354a.5.5 0 0 1 .63-.062l2.66 1.773 3.71-3.71a.5.5 0 0 1 .577-.094l1.777 1.947V5a1 1 0 0 0-1-1h-10"/>
+				    </svg>
+			    </c:if>
+			    <a href="detail.style?style_number=${mainStyleBean.style_number}" class="link-dark link-underline-opacity-0">
+			        <div class="card-body p-0">
+			            <img src="<%=request.getContextPath()%>/resources/styleImage/${mainStyleBean.image1}" style="max-height: 320px;" class="card-img-top">
+			            <div class="d-flex align-items-center">
+			            	<c:if test="${empty mainStyleBean.member_image}">
+			                <img src="https://static.nid.naver.com/images/web/user/default.png" id="profile" style="width:2vw; height: 2vw; margin-top: 5px; border-radius: 100%; border: 0.5px solid #C0C0C0;">
+			               </c:if>
+			            	<c:if test="${not empty mainStyleBean.member_image}">
+			                <img src="<%=request.getContextPath()%>/resources/memberImage/${mainStyleBean.member_image}" id="profile" style="width:2vw; height: 2vw; margin-top: 5px; border-radius: 100%; border: 0.5px solid #C0C0C0;">
+			               </c:if>
+			                &nbsp; ${mainStyleBean.nickname}
+			            </div>
+		                <p class="card-text" style="font-size: 10pt; margin-top: 5px;">${mainStyleBean.title}</p>
+			        </div>
+			    </a>
+			</div>
+			</c:forEach>
+			</div>
             </div>
          </div>
       </div>

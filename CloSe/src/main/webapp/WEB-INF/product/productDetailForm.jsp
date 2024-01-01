@@ -30,8 +30,11 @@
 .layer {
 	display: none;
 }
-
-
+	#shopNav {
+        font-size: 15pt;
+        font-weight: 700;
+        padding-top: 3px;
+	}
 .td {
 	position: relative;
 	box-sizing: border-box;

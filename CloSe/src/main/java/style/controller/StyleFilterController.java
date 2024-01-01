@@ -33,29 +33,6 @@ public class StyleFilterController {
 			@RequestParam(value = "temp", required = false) String temp, Model model, HttpServletResponse response)
 			throws IOException {
 
-		if (seasonLists != null) {
-			for (String z : seasonLists) {
-				System.out.println("z : " + z);
-			}
-		} else {
-			System.out.println("없어");
-		}
-
-		if (genderLists != null) {
-			for (String x : genderLists) {
-				System.out.println("x : " + x);
-			}
-		} else {
-			System.out.println("없어");
-		}
-
-		if (styleLists != null) {
-			for (String y : styleLists) {
-				System.out.println("y : " + y);
-			}
-		} else {
-			System.out.println("없어");
-		}
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("seasonLists", seasonLists);
@@ -68,8 +45,6 @@ public class StyleFilterController {
 		System.out.println("전체 FilterLists 크기: " + lists.size());
 		org.json.simple.JSONArray jsonArr = new org.json.simple.JSONArray();
 		for (StyleBean styleBean : lists) {
-			System.out.println("title : " + styleBean.getTitle());
-			System.out.println("style_number : " + styleBean.getStyle_number());
 			org.json.simple.JSONObject jsonObj = new org.json.simple.JSONObject();
 			jsonObj.put("style_number", styleBean.getStyle_number());
 			jsonObj.put("avg_temperature", styleBean.getAvg_temperature());

@@ -36,32 +36,32 @@ public class KakaoLoginController {
 
       MemberBean memberBean = memberDao.findwithId(member_id);// 가입한 아이디가 있는지 확인
 
-      if (memberBean == null) {
-         out.println("<script>alert('등록된 정보가없어 회원가입페이지로 이동합니다.'); location.href='" + request.getContextPath()
-               + "/kakaoRegister.member';</script>");
-         out.flush();
-      } else {
-         Date now = new Date();
-         Date ban_expiration = memberBean.getBan_expiration();
-         System.out.println("now : " + now);
-         System.out.println("ban_expiration : " + ban_expiration);
-         if (memberBean.getBan_count() > 0 && memberBean.getBan_expiration() != null) {
-            if (!now.after(ban_expiration)) {
-               out.println("<script>alert('규칙 위반으로 계정 이용 정지 기간입니다.'); location.href='" + gotoPage + "';</script>");
-               out.flush();
-            } 
-         } else {
-            session.setAttribute("loginInfo", memberBean);
-            if (prevPage != null && !prevPage.isEmpty()
-                  && !prevPage.equals("http://localhost:8080/ex/kakaoRegister.member")) {
-               session.removeAttribute("prevPage");
-               out.println("<script>alert('로그인 되었습니다.'); location.href='" + prevPage + "';</script>");
-               out.flush();
-            } else {
-               out.println("<script>alert('로그인 되었습니다.'); location.href='" + gotoPage + "';</script>");
-               out.flush();
-            }
-         }
-      }
-   }
+		if (memberBean == null) {
+			out.println("<script>alert('등록된 정보가없어 회원가입페이지로 이동합니다.'); location.href='" + request.getContextPath()
+					+ "/kakaoRegister.member';</script>");
+			out.flush();
+		} else {
+			Date now = new Date();
+			Date ban_expiration = memberBean.getBan_expiration();
+			System.out.println("now : " + now);
+			System.out.println("ban_expiration : " + ban_expiration);
+			if (memberBean.getBan_count() > 0 && memberBean.getBan_expiration() != null) {
+				if (!now.after(ban_expiration)) {
+					out.println("<script>alert('규칙 위반으로 계정 이용 정지 기간입니다.'); location.href='" + gotoPage + "';</script>");
+					out.flush();
+				} 
+			} else {
+				session.setAttribute("kakaoLoginInfo", memberBean);
+				if (prevPage != null && !prevPage.isEmpty()
+						&& !prevPage.equals("http://localhost:8080/ex/kakaoRegister.member")) {
+					session.removeAttribute("prevPage");
+					out.println("<script>alert('로그인 되었습니다.'); location.href='" + prevPage + "';</script>");
+					out.flush();
+				} else {
+					out.println("<script>alert('로그인 되었습니다.'); location.href='" + gotoPage + "';</script>");
+					out.flush();
+				}
+			}
+		}
+	}
 }

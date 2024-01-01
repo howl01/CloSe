@@ -250,11 +250,9 @@ $(document).ready(function() {
                         styleContainer.append(html);
                     }
                 });
-                alert("성공");
            },
            error: function (jqXHR, textStatus, errorThrown) {
                console.error('AJAX Error:', textStatus, errorThrown);
-               alert("실패");
            }
        });
    }

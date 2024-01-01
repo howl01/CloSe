@@ -16,7 +16,11 @@
 	width: 100%;
 	margin: auto;
 }
-
+	#shopNav {
+        font-size: 15pt;
+        font-weight: 700;
+        padding-top: 3px;
+	}
 #par {
 	position: relative;
 }
