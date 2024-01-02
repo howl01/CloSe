@@ -51,7 +51,7 @@
 
          <button class="btn btn-dark w-100 py-2" type="submit">비밀번호 찾기</button>&nbsp;
          <input type="button" class="btn btn-dark w-100 py-2" value="로그인하러 가기" onclick="goLogin()">
-         <p class="mt-5 mb-3 text-body-secondary">© 2023 Minhyeok, Byeon</p>
+         <p class="mt-5 mb-3 text-body-secondary">© 2023 Team, Clothes secretary</p>
       </form>
    </main>
 

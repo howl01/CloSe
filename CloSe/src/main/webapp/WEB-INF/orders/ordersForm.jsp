@@ -20,7 +20,7 @@
 <script type="text/javascript" src = "resources/js/script.js"></script>
 <script type="text/javascript">
 function updatePrices() {
-    var totalPrice = parseInt(document.getElementById('totalPrice').innerText.replace(',' , ''));
+    var totalPrice = parseInt(document.getElementById('totalPrice').innerText.replace(/,/g , ''));
     var deliveryPrice = totalPrice <= 50000 ? 4000 : 0;
     var deliveryPrice2 = totalPrice <= 50000 ? 4000 : 0;
     var total = totalPrice + deliveryPrice;
@@ -32,8 +32,8 @@ function updatePrices() {
 }
 
 function updateTotalAmount() {
-    var totalPrice = parseInt(document.getElementById('totalPrice').innerText.replace(',' , ''));
-    var deliveryPrice = parseInt(document.getElementById('deliveryPrice').innerText.replace(',' , ''));
+    var totalPrice = parseInt(document.getElementById('totalPrice').innerText.replace(/,/g , ''));
+    var deliveryPrice = parseInt(document.getElementById('deliveryPrice').innerText.replace(/,/g , ''));
     var selectedCouponOption = document.getElementById('couponSelect');
     
     var selectedCouponDiscount = selectedCouponOption.options[selectedCouponOption.selectedIndex].getAttribute('data-discount');
@@ -137,7 +137,6 @@ function pay() {
     }
     
     var totalP = document.getElementById('total').innerText;
-    alert(totalP.replace(',',''));
     // 원포트 관리자 페이지 -> 내정보 -> 가맹점식별코드
     // ''안에 띄어쓰기 없이 가맹점 식별코드를 붙여넣어주세요. 안그러면 결제창이 안뜹니다.
     IMP.request_pay({
@@ -145,7 +144,7 @@ function pay() {
         pay_method: 'card', // 'card'만 지원됩니다.
         merchant_uid: 'merchant_' + new Date().getTime(), // 상점에서 관리하는 주문 번호
         name: '옷비서 결제', // 상품 이름
-        amount: 100, //totalP.replace(',',''),  // 결제창에 표시될 금액. 
+        amount: 100, //totalP.replace(/,/g,''),  // 결제창에 표시될 금액. 
         buyer_email: '${mb.email}',
         buyer_name: '${mb.name}', 
         buyer_tel: '${mb.phone}',
@@ -298,7 +297,7 @@ function pay() {
                
 				<br>
 				<!-- 약관 동의 체크박스 -->
-				<input type="checkbox" class="term" id="term" onclick="rowCheck()"> 개인 정보 수집 및 이용 동의 <a href="#" onclick="openDetailWindow()">자세히</a> <br>
+				<input type="checkbox" class="term" id="term"> 개인 정보 수집 및 이용 동의 <a href="#" onclick="openDetailWindow()">자세히</a> <br>
                
                <button class='btn btn-dark btn-md' onclick="goCart()">장바구니</button>
                <button class='btn btn-dark btn-md' onclick="pay()">결제하기</button>

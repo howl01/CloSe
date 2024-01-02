@@ -171,7 +171,7 @@
          	</div>
          </div>
          
-         <p class="mt-5 mb-3 text-body-secondary">© 2023 Minhyeok, Byeon</p>
+         <p class="mt-5 mb-3 text-body-secondary">© 2023 Team, Clothes secretary</p>
       </form>
    </main>
 

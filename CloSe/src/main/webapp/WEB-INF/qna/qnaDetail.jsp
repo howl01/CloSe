@@ -313,5 +313,11 @@
 
 <br>
 <br>
-<center>${pageInfo.pagingHtml}</center>
+<div class="row">
+    <div class="col-lg-12 text-center">
+        <div class="d-flex justify-content-center">
+            ${pageInfo.pagingHtml}
+        </div>
+    </div>
+</div>
 

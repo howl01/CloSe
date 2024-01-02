@@ -72,7 +72,7 @@
 	      background-color: rgba(255, 255, 255, 0);
 	   	}
 	   	
-	   	.overlay2 ol {
+	   	.overlay2 ul {
 		    position: absolute;
 		    top: 35%; /* 원하는 위치로 조절할 수 있습니다. */
 		    left: 35%; /* 원하는 위치로 조절할 수 있습니다. */
@@ -151,7 +151,7 @@
 <body>
 	
 	<div id="overlay2" class="overlay2" onclick="javascript:hideOverlay2();">
-		<ol class="list-group" style="cursor: pointer;">
+		<ul class="list-group" style="cursor: pointer;">
 			<c:if test="${loginInfo.member_id == styleBean.member_id or kakaoLoginInfo.member_id == styleBean.member_id}">
 				<li class="list-group-item d-flex justify-content-center" onclick="location.href='update.style?style_number=${styleBean.style_number}'">게시물 수정</li>
 			</c:if>
@@ -161,7 +161,7 @@
 			<li class="list-group-item d-flex justify-content-center" <c:if test="${not empty loginInfo or not empty kakaoLoginInfo}">onclick="location.href='styleReport.report?style_number=${styleBean.style_number}'"</c:if>
 			<c:if test="${empty loginInfo and empty kakaoLoginInfo}">onclick="javascript:goLogin2()"</c:if>><font color="red">유저 신고</font></li>
 	        <li class="list-group-item d-flex justify-content-center" onclick="javascript:hideOverlay2()">취소</li>
-	    </ol>
+	    </ul>
 	</div>
 	
 	<div id="styleDetailContainer">

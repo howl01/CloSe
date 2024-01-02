@@ -61,8 +61,9 @@
    var cert = false;
    var registercheck = false;
    
-   function sendSMS(콜) {
+   function sendSMS(phone) {
        alert('인증번호를 요청했습니다.');
+       
        // Ajax 요청
        $.ajax({
            type: "GET",
@@ -163,6 +164,9 @@
          $("#receiver").empty();
          $("#receipt").empty();
          
+         var tableHeader = $("<thead><tr><th scope='col'>이미지</th><th scope='col'>상품정보</th><th scope='col'>가격</th><th scope='col'>옵션</th><th scope='col'>주문수량</th><th scope='col'>소계</th></tr></thead>");
+         $("#orderdetail").append(tableHeader);
+         
          var totalPrice = 0;
          var firstElement = data[0];
            // 받은 데이터를 기반으로 새로운 테이블 행을 동적으로 생성하고 삽입합니다.
@@ -220,11 +224,11 @@
                            "</tr>" +
                            "<tr>" +
                               "<td>할인</td>" +
-                              "<td>" + ((totalPrice + (totalPrice>5000? 0 : 4000)) - firstElement.totalamount).toLocaleString() + "원</td>" +
+                              "<td>" + ((totalPrice + (totalPrice>50000? 0 : 4000)) - firstElement.totalamount).toLocaleString() + "원</td>" +
                            "</tr>" +
                            "<tr>" +
                               "<td>배송비</td>" +
-                              "<td>" + (totalPrice>5000? 0 : 4000).toLocaleString() + "원</td>" +
+                              "<td>" + (totalPrice>50000? 0 : 4000).toLocaleString() + "원</td>" +
                            "</tr>" +
                            "<tr>" +
                               "<td>총 주문금액</td>" +
@@ -243,7 +247,6 @@
    } 
    
    function openReviewFormWindow(orderDetailNumber) {
-      alert(orderDetailNumber);
        // 새 창을 열기
        window.open("reviewRegister.jsp?orderDetailNumber="+orderDetailNumber, "reviewWindow", "menubar=no,toolbar=no,width=500,height=200");
    }
@@ -564,7 +567,7 @@
                <thead>
                   <tr>
                      <th>
-                        주문 날짜 
+                        주문 날짜
                      </th>
                      <th>
                         주문   번호 
@@ -580,6 +583,13 @@
                      </th>
                   </tr>   
                </thead>
+               <c:if test="${empty olists }">
+                  <tbody>
+                     <tr>
+                        <td colspan="5">등록된 상품이 없습니다.</td>
+                     </tr>
+                   </tbody>
+               </c:if>
                <tbody>
                   <c:forEach var="ob" items="${olists }">
                      <tr>
@@ -655,47 +665,22 @@
       <div class="tab-pane fade" id="coupon" role="tabpanel">
          <div class="row">
             <table class="table" id="article-table">
-                 <c:if test="${not empty loginInfo or not empty kakaoLoginInfo}">
                     <tr>
-                       <th>닉네임</th>
+                       <th>아이디</th>
                        <th>보유쿠폰</th>
                        <th>할인률</th>
                     </tr>
-                    <c:forEach var="loginList" items="${loginLists}">
+                 <c:if test="${not empty clist}">
+                    <c:forEach var="coupon" items="${clist}">
                        <tr>
                            <td>
-                               <c:if test="${not empty loginInfo}">
-                                   ${loginInfo.nickname}
-                               </c:if>
+                              ${coupon.member_id}
                            </td>
                            <td>
-                               <c:if test="${not empty loginInfo}">
-                                   ${loginList.coupon_name}
-                               </c:if>
+                              ${coupon.coupon_name}
                            </td>
                            <td>
-                               <c:if test="${not empty loginInfo}">
-                                   ${loginList.coupon_discount}
-                               </c:if>
-                           </td>
-                       </tr>
-                   </c:forEach>
-                   <c:forEach var="kakaoLoginList" items="${kakaoLoginLists}">
-                       <tr>
-                           <td>
-                               <c:if test="${not empty kakaoLoginInfo}">
-                                   ${kakaoLoginInfo.nickname}
-                               </c:if>
-                           </td>
-                           <td>
-                               <c:if test="${not empty kakaoLoginInfo}">
-                                   ${kakaoLoginList.coupon_name}
-                               </c:if>
-                           </td>
-                           <td>
-                               <c:if test="${not empty kakaoLoginInfo}">
-                                   ${kakaoLoginList.coupon_discount} %
-                               </c:if>
+                              ${coupon.coupon_discount}
                            </td>
                        </tr>
                    </c:forEach>
@@ -768,6 +753,6 @@
    </div>
    
    <footer class="my-5 pt-5 text-body-secondary text-center text-small">
-     <p class="mb-1">© 2023 Minhyeok, Byeon</p>
+     <p class="mb-1">© 2023 Team, Clothes secretary</p>
    </footer>
 </div>

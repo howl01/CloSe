@@ -113,7 +113,11 @@ public class MyPageController {
 
 		MemberBean mb = memberDao.getMember(member_id);
 		model.addAttribute("mb", mb);
-
+		
+		
+		List<EventBean> clists = eventDao.selectCoupon(member_id);
+		model.addAttribute("clists", clists);  
+		
 		// List<OrdersBean> olists = ordersDao.getOrderByMember_Id(member_id);
 		model.addAttribute("olists", olists);
 		model.addAttribute("pageInfo", pageInfo);

@@ -168,7 +168,7 @@ $(document).ready(function() {
 					<c:forEach var="orderLists" items="${ orderLists }">
 						<tr>
 							<td><a href="adminOrderDetail.member?orders_id=${ orderLists.orders_id }">${ orderLists.orders_number }</a></td>
-							<td><a href="adminMemberOrderDetail.member?member_id=${ orderLists.member_id }">${ orderLists.member_id }</a></td>
+							<td>${ orderLists.member_id }</td>
 							<td>${ orderLists.status }</td>
 							<td>${ orderLists.totalamount }</td>
 							<td>${ orderLists.orders_date }</td>

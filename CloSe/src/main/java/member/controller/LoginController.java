@@ -64,7 +64,8 @@ public class LoginController {
                if (prevPage != null && !prevPage.isEmpty()
                      && !prevPage.equals("http://localhost:8080/ex/register.member")
                      && !prevPage.equals("http://localhost:8080/ex/findid.member")
-                     && !prevPage.equals("http://localhost:8080/ex/findpw.member")) {
+                     && !prevPage.equals("http://localhost:8080/ex/findpw.member")
+                     && !prevPage.contains("http://localhost:8080/ex/sendEmail.member")) {
                   // 이전 페이지의 URL을 세션에서 제거
                   session.removeAttribute("prevPage");
                   out.println("<script>alert('로그인 되었습니다.'); location.href='" + prevPage + "';</script>");
@@ -75,9 +76,6 @@ public class LoginController {
                   out.flush();
                }
             }
-         } else { // 비번이 일치안함
-            out.println("<script>alert('비번이 잘못되었습니다.')</script>");
-            out.flush();
          }
       }
       out.println("<script>alert('비밀번호가 일치하지 않습니다.');</script>");

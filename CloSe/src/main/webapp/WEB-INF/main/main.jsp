@@ -33,11 +33,6 @@
       text-decoration: none;
       color: black;
    }
-   #imageMulti{
-      position: absolute;
-      top:5px;
-      left: 13vw;
-  }
 </style>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script type="text/javascript">
@@ -165,47 +160,35 @@ window.navigator.geolocation.getCurrentPosition(function(pos) {
             <div class="container">
                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
 
-           <c:if test="${loginInfo!=null or kakaoLoginInfo != null}">
-                <a href="view.style" class="link-dark link-underline-opacity-0">
-                    <div class="col" align="center">
+              <a href="view.style" class="link-dark link-underline-opacity-0">
+                     <div class="col" align="center">
                         <img class="bd-placeholder-img card-img-top" width="100%" height="150"
                               style="border-radius: 20%;" id="par" src="resources/img/close.png">
                         오늘의 옷비서
-                    </div>
-                </a>
-            </c:if>
-            <c:if test="${loginInfo==null and kakaoLoginInfo == null}">
-                <a href="login.member" class="link-dark link-underline-opacity-0">
-                    <div class="col" align="center">
-                        <img class="bd-placeholder-img card-img-top" width="100%" height="150"
-                              style="border-radius: 20%;" id="par" src="resources/img/close.png">
-                        오늘의 옷비서
-                    </div>
-                </a>
-            </c:if>
-
-
-              <a href="mainView.style" class="link-dark link-underline-opacity-0">
-                     <div class="col" align="center">
-                        <img class="bd-placeholder-img card-img-top" src="resources/img/style.jpeg" width="100%" height="150"
-                              style="border-radius: 20%;">
-                        STYLE
                      </div>
                   </a>
 
-              <a href="list.product" class="link-dark link-underline-opacity-0">
+              <a href="#" class="link-dark link-underline-opacity-0">
                      <div class="col" align="center">
-                        <img class="bd-placeholder-img card-img-top" src="resources/img/shop.jpeg" width="100%" height="150"
+                        <img class="bd-placeholder-img card-img-top" src="resources/img/man.png" width="100%" height="150"
                               style="border-radius: 20%;">
-                        SHOP
+                        남자 코디
                      </div>
                   </a>
 
-              <a href="event.member" class="link-dark link-underline-opacity-0">
+              <a href="#" class="link-dark link-underline-opacity-0">
+                     <div class="col" align="center">
+                        <img class="bd-placeholder-img card-img-top" src="resources/img/woman.png" width="100%" height="150"
+                              style="border-radius: 20%;">
+                        여자 코디
+                     </div>
+                  </a>
+
+              <a href="#" class="link-dark link-underline-opacity-0">
                      <div class="col" align="center">
                         <img class="bd-placeholder-img card-img-top" src="resources/img/cou.png" width="100%" height="150"
                               style="border-radius: 20%;">
-                        EVENT
+                        쿠폰
                      </div>
                   </a>
 
@@ -304,12 +287,7 @@ window.navigator.geolocation.getCurrentPosition(function(pos) {
                  <div class="card-body p-0">
                      <img src="<%=request.getContextPath()%>/resources/styleImage/${mainStyleBean.image1}" style="max-height: 320px;" class="card-img-top">
                      <div class="d-flex align-items-center">
-                        <c:if test="${empty mainStyleBean.member_image}">
-                         <img src="https://static.nid.naver.com/images/web/user/default.png" id="profile" style="width:2vw; height: 2vw; margin-top: 5px; border-radius: 100%; border: 0.5px solid #C0C0C0;">
-                        </c:if>
-                        <c:if test="${not empty mainStyleBean.member_image}">
                          <img src="<%=request.getContextPath()%>/resources/memberImage/${mainStyleBean.member_image}" id="profile" style="width:2vw; height: 2vw; margin-top: 5px; border-radius: 100%; border: 0.5px solid #C0C0C0;">
-                        </c:if>
                          &nbsp; ${mainStyleBean.nickname}
                      </div>
                       <p class="card-text" style="font-size: 10pt; margin-top: 5px;">${mainStyleBean.title}</p>

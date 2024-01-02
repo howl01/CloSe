@@ -46,10 +46,10 @@ public class FindPwController {
 	public void sendEmail(@RequestParam("mempassword") String mempassword,
             			  @RequestParam("email") String email,
             			  HttpServletRequest request, HttpServletResponse response) throws AddressException, MessagingException, IOException {
-		//메일 관련 정보
+		//메일 관련 정보 
 		String host = "smtp.naver.com";
-		final String username = "ksg980105";
-		final String password = "@rlatjdrb12";
+		final String username = "";
+		final String password = "";
 		int port=465; //네이버 STMP 포트 번호
 		
 		//메일 내용

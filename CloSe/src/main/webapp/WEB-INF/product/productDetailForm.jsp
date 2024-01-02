@@ -176,7 +176,9 @@ window.addEventListener('scroll', function() {
         updateTotalPrice(size, $input.val());
     }
    function deleteProduct(pnum){
-      location.href="delete.product?product_number="+pnum;
+	   if(confirm("품절처리하시겠습니까?")){
+      	location.href="delete.product?product_number="+pnum;
+	   }
    }
    function updateProduct(pnum){
       location.href="update.product?product_number="+pnum;
@@ -436,7 +438,7 @@ window.addEventListener('scroll', function() {
            
            var totalSum = 0;
           $('.quantity-selection .total-price').each(function () {
-              totalSum += Number($(this).text().replace(',',""));
+              totalSum += Number($(this).text().replace(/,/g,""));
           });
 
           $('#cart-total').html(totalSum.toLocaleString());
@@ -488,7 +490,7 @@ window.addEventListener('scroll', function() {
           $(button).closest('.quantity-selection').remove();
           var totalSum = 0;
           $('.quantity-selection .total-price').each(function () {
-              totalSum += Number($(this).text().replace(',',""));
+              totalSum += Number($(this).text().replace(/,/g,""));
           });
 
           $('#cart-total').html(totalSum.toLocaleString());
@@ -496,12 +498,11 @@ window.addEventListener('scroll', function() {
       function updateTotalPrice(selectedSize, quantity) {
           var productPrice = ${pb.price};
           var totalPrice = productPrice * quantity;
-          alert(totalPrice);
           $('.quantity-selection[data-size="' + selectedSize + '"] .total-price').text(totalPrice.toLocaleString());
           
           var totalSum = 0;
           $('.quantity-selection .total-price').each(function () {
-              totalSum += Number($(this).text().replace(',',""));
+              totalSum += Number($(this).text().replace(/,/g,""));
           });
 
           $('#cart-total').html(totalSum.toLocaleString());
@@ -647,7 +648,7 @@ window.addEventListener('scroll', function() {
                  <button type="button" style="width: 150px; margin-left: 100px; height: 40px;"
                          class="btn btn-dark" onclick="updateProduct('${pb.product_number}')">수정하기</button>
                  <button type="button" style="width: 150px; height: 40px;"
-                         class="btn btn-dark" onclick="deleteProduct('${pb.product_number}')">삭제하기</button>
+                         class="btn btn-dark" onclick="deleteProduct('${pb.product_number}')">품절처리</button>
              </c:when>
              <c:otherwise>
                  <button type="button" style="width: 150px; margin-left: 100px; height: 40px;"

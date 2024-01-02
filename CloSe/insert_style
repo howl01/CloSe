@@ -174,9 +174,6 @@ insert into style (style_number, image1, image2, image3, image4, image5, title, 
 values (style_seq.nextval, 'detail_36700_1_500.jpg', 'detail_36700_5_500.jpg', 'detail_36700_2_500.jpg', 'detail_36700_3_500.jpg', 'detail_36700_4_500.jpg', '영 캐주얼', '모노톤 컬러 조합에 체크 셔츠로 포인트를 더한 캐주얼 룩', '캐주얼',0,0,'2023-12-28',194,195,196,197,'gyu');
 
 insert into style (style_number, image1, title, content, style, read_count, recommend_count, write_date, product_number1, product_number2, product_number3, product_number4, member_id)
-values (style_seq.nextval, '15. 모델사진.jpg', '뉴트럴 톤의 매력', '후드 디테일 셔츠 재킷에 카고 팬츠를 매치하고 롱 패딩 점퍼를 걸쳐 마무리한 아메카지 룩', '캐주얼,',0,0,'2023-12-26',198,199,200,201,'jang');
-
-insert into style (style_number, image1, title, content, style, read_count, recommend_count, write_date, product_number1, product_number2, product_number3, product_number4, member_id)
 values (style_seq.nextval, '17. 모델사진.jpg', '연말 느낌 가득', '레드 컬러가 돋보이는 니트 집업에 코듀로이 팬츠를 매치하고 패딩 점퍼를 걸쳐 마무리한 캐주얼 룩', '캐주얼,',0,0,'2023-12-26',202,203,204,205,'gyu');
 
 insert into style (style_number, image1, title, content, style, read_count, recommend_count, write_date, product_number1, product_number2, product_number3, product_number4, member_id)

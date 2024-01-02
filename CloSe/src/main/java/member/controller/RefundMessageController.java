@@ -18,18 +18,19 @@ public class RefundMessageController {
 	@RequestMapping(value = "/sendSms.member")
 	@ResponseBody
 	public String sendSms(HttpServletRequest request) throws Exception {
-
+		
+		// 문자인증 api
 		String phone = request.getParameter("phone");
 		System.out.println(phone);
-		String api_key = "NCSAYCE2ZL54SKXP";
-		String api_secret = "ZDMHUGQ0R4DEIJQFY4LB7TDCWYAZUQSY";
+		String api_key = "api_key";
+		String api_secret = "api_secret";
 		Message coolsms = new Message(api_key, api_secret);
 
 		HashMap<String, String> set = new HashMap<String, String>();
 		set.put("to", phone);
 
 		String random = String.valueOf((int)(Math.random()*999999+10000));
-		set.put("from", "01048165732");
+		set.put("from", "phone");
 		set.put("text", "인증번호는 ["+random+"] 입니다.");
 		set.put("type", "sms");
 		set.put("app_version", "test app 1.2"); 

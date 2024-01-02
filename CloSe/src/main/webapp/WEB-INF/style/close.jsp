@@ -64,7 +64,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
     let queryUrl = "https://api.openweathermap.org/data/2.5/weather?";
-    let apiKey = "appid=27f0e2dcc40e953d16644b55e897423d&";
+    let apiKey = "apiKey";
     let apiOptions = "units=metric";
     let file;
     let lat = null;

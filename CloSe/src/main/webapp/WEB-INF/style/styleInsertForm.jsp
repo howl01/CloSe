@@ -110,9 +110,7 @@ function isProductNumberAlreadySet(productNumber) {
 }
 
 function removeTagImage(productNumberIndex) {
-   alert(productNumberIndex);
     var tagImageDiv = document.getElementById('tagimage'+productNumberIndex);
-    alert(tagImageDiv);
     
     if (tagImageDiv) {
       // Remove the tagImage div
