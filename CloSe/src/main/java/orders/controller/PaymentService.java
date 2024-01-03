@@ -18,8 +18,8 @@ import com.google.gson.JsonObject;
 @Service("PaymentService")
 public class PaymentService {
 	
-	private String impKey = "";
-	private String impSecret = "";
+	private String impKey = "5602454715881162";
+	private String impSecret = "iZrNQssyqJle3qH7fGNCLmSEX4f7Vbwgyep2Y7gCuz59IYhZ9ROwUFn01WDnuGx0AW3T526KEZagwGRK";
 	
 	public String getToken() throws IOException {
 

@@ -30,7 +30,7 @@ public class RefundMessageController {
 		set.put("to", phone);
 
 		String random = String.valueOf((int)(Math.random()*999999+10000));
-		set.put("from", "phone");
+		set.put("from", "01071760097");
 		set.put("text", "인증번호는 ["+random+"] 입니다.");
 		set.put("type", "sms");
 		set.put("app_version", "test app 1.2"); 
